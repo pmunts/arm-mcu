@@ -1,0 +1,83 @@
+{ Simple HID device program for the STM32F4-Discovery board }
+
+{ $Id$ }
+
+{ Copyright (C)2015, Philip Munts, President, Munts AM Corp.             }
+{                                                                             }
+{ Redistribution and use in source and binary forms, with or without          }
+{ modification, are permitted provided that the following conditions are met: }
+{                                                                             }
+{ * Redistributions of source code must retain the above copyright notice,    }
+{   this list of conditions and the following disclaimer.                     }
+{                                                                             }
+{ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" }
+{ AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE   }
+{ IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE  }
+{ ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE   }
+{ LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR         }
+{ CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF        }
+{ SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS    }
+{ INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN     }
+{ CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)     }
+{ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE  }
+{ POSSIBILITY OF SUCH DAMAGE.                                                 }
+
+PROGRAM test_usbhid;
+
+VAR
+  LED1     : sbit AT GPIOD_ODR.B12;
+  LED2     : sbit AT GPIOD_ODR.B13;
+  LED3     : sbit AT GPIOD_ODR.B14;
+  LED4     : sbit AT GPIOD_ODR.B15;
+  cnt      : byte;
+  readbuf  : string[65];
+  writebuf : string[65];
+
+BEGIN
+
+  { Initialize USB HID library }
+
+  HID_Enable(@readbuf, @writebuf);
+
+  { Configure LED outputs }
+
+  GPIO_Digital_Output(@GPIOD_BASE, _GPIO_PINMASK_12);
+  GPIO_Digital_Output(@GPIOD_BASE, _GPIO_PINMASK_13);
+  GPIO_Digital_Output(@GPIOD_BASE, _GPIO_PINMASK_14);
+  GPIO_Digital_Output(@GPIOD_BASE, _GPIO_PINMASK_15);
+
+  { Initialize LED outputs }
+
+  LED1 := false;
+  LED2 := false;
+  LED3 := false;
+  LED4 := false;
+
+  { Event loop }
+ 
+  WHILE TRUE DO
+    BEGIN
+      USB_Polling_Proc();
+
+      { Check for message from host }
+
+      IF (HID_Read() <> 0) THEN
+        BEGIN
+          IF strncmp(readbuf, 'LEDON', 5) = 0 THEN
+            BEGIN
+              LED1 := true;
+              LED2 := true;
+              LED3 := true;
+              LED4 := true;
+            END;
+
+          IF strncmp(readbuf, 'LEDOFF', 6) = 0 THEN
+            BEGIN
+              LED1 := false;
+              LED2 := false;
+              LED3 := false;
+              LED4 := false;
+            END;
+        END
+    END
+END.

@@ -1,0 +1,57 @@
+<h1>NXP (nee Philips) LPC17xx ARM Cortex-M3 Microcontroller Framework</h1>
+<h2>Credits</h2>
+<p>The C run time startup code <tt>lpc17xx.S</tt> and linker script
+<tt>lpc17xx.ld</tt> were written by myself based on various examples on the
+Internet and in <a href=
+"http://www.amazon.com/Definitive-Guide-Cortex-M3-Embedded-Technology/dp/0750685344">
+The Definitive Guide to the ARM Cortex-M3</a>.</p>
+<p>The <a href=
+"http://www.arm.com/products/processors/cortex-m/cortex-microcontroller-software-interface-standard.php">
+CMSIS</a> library came from <a href=
+"http://ics.nxp.com/support/lpcxpresso">NXP</a>, with some minor customization
+by myself.</p>
+<p>Other files are original works by myself.</p>
+<h2>Memory Map (LPC1768)</h2>
+<table summary="layout control" cellpadding="5%">
+<tr>
+<td>Code Flash:</td>
+<td><tt>0x00000000 to 0x0007FFFF</tt></td>
+<td>512 KB</td>
+</tr>
+<tr>
+<td>Data RAM:</td>
+<td><tt>0x10000000 to 0x10007FFF</tt></td>
+<td>32 KB</td>
+</tr>
+</table>
+<h2>Other Devices</h2>
+<p>This framework may be used for other devices in the NXP LPC17xx family,
+provided the following files are modified:</p>
+<table summary="layout control" cellpadding="5%">
+<tr>
+<td><tt>lpc17xx.ld</tt></td>
+<td>The RAM and ROM sizes must match the device.</td>
+</tr>
+<tr>
+<td><tt>lpc17xx.S</tt></td>
+<td>The interrupt vector table must match the device.</td>
+</tr>
+<tr>
+<td><tt>lpc17xx.debugjlink</tt></td>
+<td>The memory regions reported to GDB must match the device.</td>
+</tr>
+</table>
+<h2>Test Platform</h2>
+<p>This framework is validated on the following LPC17xx development boards:</p>
+<ul>
+<li><a href="http://mbed.org/handbook/mbed-NXP-LPC1768">mbed LPC1768</a></li>
+<li><a href=
+"http://www.hotmcu.com/lpc1768minidk2-development-board-p-55.html">LPC1768-Mini-DK2</a></li>
+</ul>
+<p><i>Tested on 10 June 2015 with gcc 4.9.2.</i></p>
+<hr>
+Questions or comments to Philip Munts <a href=
+"mailto:phil@munts.net">phil@munts.net</a>
+<p><i>$Id$</i></p>
+<p>I am available for custom system development (hardware and software) of
+products using the LPC17xx or other microcontrollers.</p>

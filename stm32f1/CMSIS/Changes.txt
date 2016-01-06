@@ -1,0 +1,7 @@
+Changes to STM32F1xx CMSIS Library
+----------------------------------
+
+$Id$
+
+1. Imported STM32F1xx CMSIS library from stm32cube1.zip, Version 1.0.0,
+   from http://www.st.com/web/catalog/tools/FM146/CL2167/SC2004/PF260820.

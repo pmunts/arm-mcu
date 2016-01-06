@@ -1,0 +1,70 @@
+<h1>STMicroelectronics STM32F1 Cortex-M3 ARM Microcontroller Framework</h1>
+<h2>Credits</h2>
+<p>The C run time startup code <tt>stm32f1xxxx.S</tt> and linker scripts
+<tt>stm32f1xxxx.ld</tt> were written by myself based on various examples on the
+Internet and in <a href=
+"http://www.amazon.com/Definitive-Guide-Cortex-M3-Embedded-Technology/dp/0750685344">
+The Definitive Guide to the ARM Cortex-M3</a>.</p>
+<p>The <a href=
+"http://www.arm.com/products/processors/cortex-m/cortex-microcontroller-software-interface-standard.php">
+CMSIS</a> library came from <a href="http://www.st.com">STMicroelectronics</a>,
+extracted from the <a href=
+"http://www.st.com/web/en/catalog/tools/PF260820">STM32CubeF1</a> software
+package.</p>
+<p>Other files are original works by myself.</p>
+<h2>Memory Map (STM32F103RB)</h2>
+<table summary="layout control" cellpadding="5%">
+<tr>
+<td>Code Flash:</td>
+<td><tt>0x00000000 to 0x0001FFFF</tt></td>
+<td>128 KB</td>
+</tr>
+<tr>
+<td>Data RAM:</td>
+<td><tt>0x20000000 to 0x20004FFF</tt></td>
+<td>20 KB</td>
+</tr>
+</table>
+<p>The STM32F1 microcontrollers can have any of code flash at 0x08000000,
+system ROM (boot loader) at 0x1FFFF000, or data RAM at 0x20000000 mapped to
+address 0x00000000, depending on the <tt>BOOT0</tt> and <tt>BOOT1</tt> pins.
+This framework assumes <tt>BOOT0</tt> is strapped low, mapping code flash to
+0x00000000.</p>
+<p>This framework assumes a single stack for both thread and handler modes,
+using MSP (Main Stack Pointer) at the top of RAM. The C heap is placed at the
+end of BSS data.</p>
+<h2>Other Devices</h2>
+<p>This framework may be used for other devices in the STM32F1 family, provided
+the following files are modified:</p>
+<table summary="layout control" cellpadding="5%">
+<tr>
+<td><tt>stm32f1xxxx.ld</tt></td>
+<td>The RAM and ROM sizes must match the device.</td>
+</tr>
+<tr>
+<td><tt>stm32f1xxxx.S</tt></td>
+<td>The interrupt vector table must match the device.</td>
+</tr>
+<tr>
+<td><tt>stm32f1xxxx.debugjlink</tt></td>
+<td>The memory regions reported to GDB must match the device.</td>
+</tr>
+</table>
+<h2>Test Platform</h2>
+<p>This framework is validated on the following STM32F1xx development
+boards:</p>
+<ul>
+<li><a href=
+"http://www.st.com/web/catalog/tools/FM116/SC959/SS1532/LN1847/PF259875">NUCLEO-F103RB</a></li>
+<li><a href="http://www.olimex.com/dev/stm32-p103.html">Olimex
+STM32-P103</a></li>
+<li><a href="http://www.olimex.com/dev/stm32-p107.html">Olimex
+STM32-P107</a></li>
+</ul>
+<p><i>Tested on 10 June 2015 with gcc 4.9.2.</i></p>
+<hr>
+Questions or comments to Philip Munts <a href=
+"mailto:phil@munts.net">phil@munts.net</a>
+<p><i>$Id$</i></p>
+<p>I am available for custom system development (hardware and software) of
+products using the STM32F1 or other microcontrollers.</p>

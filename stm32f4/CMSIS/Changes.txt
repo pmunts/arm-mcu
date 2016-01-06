@@ -1,0 +1,7 @@
+Changes to STM32F4xx CMSIS Library
+----------------------------------
+
+$Id$
+
+1. Imported STM32F4xx CMSIS library from stm32cube4.zip, Version 1.5.0,
+   from http://www.st.com/web/en/catalog/tools/PF259243.

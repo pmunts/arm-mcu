@@ -1,0 +1,53 @@
+<h1>Silicon Labs EFM32 ARM Cortex-M3 Microcontroller Framework</h1>
+<h2>Credits</h2>
+<p>The C run time startup code <tt>efm32xxxx.S</tt> and linker script
+<tt>efm32xxxx.ld</tt> were written by myself based on various examples on the
+Internet and in <a href=
+"http://www.amazon.com/Definitive-Guide-Cortex-M3-Embedded-Technology/dp/0750685344">
+The Definitive Guide to the ARM Cortex-M3</a>.</p>
+<p>The files in the <tt>SDK/</tt> subdirectory were extracted from the EFM32
+SDK v4.0.0, which was itself extracted from <a href=
+"http://www.silabs.com/products/mcu/Pages/simplicity-studio.aspx">Simplicity
+Studio v3.1</a>.</p>
+<p>Other files are original works by myself.</p>
+<h2>Memory Map (EFM32G890F128)</h2>
+<table summary="layout control" cellpadding="5%">
+<tr>
+<td>Code Flash:</td>
+<td><tt>0x00000000 to 0x0001FFFF</tt></td>
+<td>128 KB</td>
+</tr>
+<tr>
+<td>Data RAM:</td>
+<td><tt>0x20000000 to 0x20003FFF</tt></td>
+<td>16 KB</td>
+</tr>
+</table>
+<h2>Other Devices</h2>
+<p>This framework may be used for other devices in the Silicon Labs EFM32
+family, provided the following files are modified:</p>
+<table summary="layout control" cellpadding="5%">
+<tr>
+<td><tt>efm32xxxx.ld</tt></td>
+<td>The flash ROM and/or RAM sizes may need be changed.</td>
+</tr>
+<tr>
+<td><tt>efm32xxxx.S</tt></td>
+<td>The interrupt vector table must match the device.</td>
+</tr>
+<tr>
+<td><tt>efm32xxxx.debugjlink</tt></td>
+<td>The memory regions reported to GDB must match the device.</td>
+</tr>
+</table>
+<h2>Test Platform</h2>
+<p>This framework is validated on the <a href=
+"http://www.silabs.com/products/mcu/lowpower/Pages/efm32-g8xx-stk.aspx">EFM32
+Gecko Starter Kit</a> development board.</p>
+<p><i>Tested on 17 September 2015 with gcc 5.2.0.</i></p>
+<hr>
+Questions or comments to Philip Munts <a href=
+"mailto:phil@munts.net">phil@munts.net</a>
+<p><i>$Id$</i></p>
+<p>I am available for custom system development (hardware and software) of
+products using the EFM32G890F128 or other microcontrollers.</p>

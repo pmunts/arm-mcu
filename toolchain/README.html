@@ -1,0 +1,22 @@
+<h1>ARM Microcontroller Toolchain Notes</h1>
+<p>This toolchain includes <b>binutils</b>, <b>gcc</b>, <b>newlib</b>, and
+<b>gdb</b>. It may be built for Linux, MacOS (using <a href=
+"http://www.finkproject.org">Fink</a>), OpenBSD, and Windows (using <a href=
+"http://www.cygwin.com">Cygwin</a>) development hosts. The toolchains produce
+identical results on every host operating system: This is the reason I created
+my own toolchain; I routinely flip back and forth among Linux, MacOS, OpenBSD,
+and Windows development environments. It is even possible to build the
+toolchain as a <a href=
+"http://en.wikipedia.org/wiki/Cross_compiler#Canadian_Cross">Canadian Cross</a>
+to run on a small Linux system such as the <a href=
+"http://www.raspberrypi.org">Raspberry Pi</a>. See <a href=
+"http://tech.munts.com/MCU/Frameworks/ARM/toolchain/Makefile.rpi"><tt>Makefile.rpi</tt></a>
+for an example.</p>
+<p>My toolchain builds multilibs for the various Cortex-Mx devices, including
+hardware floating point for the Cortex-M4.</p>
+<hr>
+Questions or comments to Philip Munts <a href=
+"mailto:phil@munts.net">phil@munts.net</a>
+<p><i>$Id$</i></p>
+<p>I am available for custom system development (hardware and software) of
+products using ARM or other microcontrollers.</p>

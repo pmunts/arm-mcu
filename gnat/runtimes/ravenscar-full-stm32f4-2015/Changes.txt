@@ -1,0 +1,23 @@
+Changes to the Adacore Libre GNAT GPL Ravenscar profile RTS for STM32F4
+-----------------------------------------------------------------------
+
+$Id$
+
+1. Imported Ravenscar Full Profile RTS source files from AdaCore Libre
+   GNAT GPL 2015 for STM32F4.
+
+2. Changed the console serial port from USART1 to USART2 on pins
+   PA2 and PA3, for compatibility with my C language framework.
+
+3. Renamed s-bbpara.ads to s-bbpara.ads.original, and setup_pll.adb to
+   setup_pll.adb.original.
+
+4. Added customized s-bbpara.ads and setup_pll.adb for the
+   STMicroelectronics NUCLEO-F411RE board.
+
+5. Added customized memory map linker script for the NUCLEO-F411RE.
+
+6. Removed previous memory map linker scripts for other boards.
+
+7. Added support for the FEZ_CERB40, NETDUINOPLUS2, STM32F4_DISCOVERY
+   and STM32_M4_NINI boards.

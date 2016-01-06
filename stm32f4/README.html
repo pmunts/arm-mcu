@@ -1,0 +1,80 @@
+<h1>STMicroelectronics STM32F4 Cortex-M4 ARM Microcontroller Framework</h1>
+<h2>Credits</h2>
+<p>The C run time startup code <tt>stm32f4xxxx.S</tt> and linker scripts
+<tt>stm32f4xxxx.ld</tt> were written by myself based on various examples on the
+Internet and in <a href=
+"http://www.amazon.com/Definitive-Guide-Cortex-M3-Embedded-Technology/dp/0750685344">
+The Definitive Guide to the ARM Cortex-M3</a>.</p>
+<p>The <a href=
+"http://www.arm.com/products/processors/cortex-m/cortex-microcontroller-software-interface-standard.php">
+CMSIS</a> library came from <a href="http://www.st.com">STMicroelectronics</a>,
+extracted from the <a href=
+"http://www.st.com/web/en/catalog/tools/PF259243">STM32CubeF4</a> software
+package.</p>
+<p>Other files are original works by myself.</p>
+<h2>Memory Map (STM32F407VG)</h2>
+<table summary="layout control" cellpadding="5%">
+<tr>
+<td>Code Flash:</td>
+<td><tt>0x00000000 to 0x000FFFFF</tt></td>
+<td>1024 KB</td>
+</tr>
+<tr>
+<td>Data RAM:</td>
+<td><tt>0x20000000 to 0x2001FFFF</tt></td>
+<td>128 KB</td>
+</tr>
+<tr>
+<td>CCM RAM:</td>
+<td><tt>0x10000000 to 0x1000FFFF</tt></td>
+<td>64 KB</td>
+</tr>
+</table>
+<p>The STM32F4 microcontrollers can have any of code flash at 0x08000000,
+system ROM (boot loader) at 0x1FFF0000, or data RAM at 0x20000000 mapped to
+address 0x00000000, depending on the <tt>BOOT0</tt> and <tt>BOOT1</tt> pins.
+This framework assumes <tt>BOOT0</tt> is strapped low, mapping code flash to
+0x00000000.</p>
+<p>This framework assumes a single stack for both thread and handler modes,
+using MSP (Main Stack Pointer) at the top of RAM. The C heap is placed at the
+end of BSS data.</p>
+<p><i>Note: CCM RAM is inaccessible to peripherals (DMA/Ethernet/USB).</i></p>
+<h2>Other Devices</h2>
+<p>This framework may be used for other devices in the STM32F4 family, provided
+the following files are modified:</p>
+<table summary="layout control" cellpadding="5%">
+<tr>
+<td><tt>stm32f4xxxx.ld</tt></td>
+<td>The RAM and ROM sizes must match the device.</td>
+</tr>
+<tr>
+<td><tt>stm32f4xxxx.S</tt></td>
+<td>The interrupt vector table must match the device.</td>
+</tr>
+<tr>
+<td><tt>stm32f4xxxx.debugjlink</tt></td>
+<td>The memory regions reported to GDB must match the device.</td>
+</tr>
+</table>
+<h2>Test Platform</h2>
+<p>This framework is validated on the following STM32F4xx development
+boards:</p>
+<ul>
+<li><a href=
+"http://www.st.com/web/catalog/tools/FM116/SC959/SS1532/LN1847/PF260320">NUCLEO-F411RE</a></li>
+<li><a href="http://www.ghielectronics.com/catalog/product/353">FEZ
+Cerb40</a></li>
+<li><a href="http://netduino.com/netduinoplus2/specs.htm">Netduino Plus
+2</a></li>
+<li><a href="http://www.mikroe.com/mini/stm32">MINI-M4 for STM32</a></li>
+<li><a href="http://www.mikroe.com/stm32/clicker/">STM32 M4 Clicker</a></li>
+<li><a href="http://www.st.com/internet/evalboard/product/252419.jsp">STM32F4
+Discovery</a></li>
+</ul>
+<p><i>Tested on 10 June 2015 with gcc 4.9.2.</i></p>
+<hr>
+Questions or comments to Philip Munts <a href=
+"mailto:phil@munts.net">phil@munts.net</a>
+<p><i>$Id$</i></p>
+<p>I am available for custom system development (hardware and software) of
+products using the STM32F4 or other microcontrollers.</p>

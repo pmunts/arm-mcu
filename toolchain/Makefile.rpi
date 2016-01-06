@@ -1,0 +1,55 @@
+# Build a Canadian Cross Compiler running on Raspbian, targeting ARM microcontrollers
+
+# It is not easy to build this toolchain natively on the Raspberry Pi, because of how
+# much memory and disk space is required to build GCC.  Using the Candian Cross
+# technique, we can build the toolchain on an x86 Linux system (build machine) to
+# run on the Raspberry Pi (host machine) to generate code for an ARM microcontroller
+# (target machine).
+
+# $Id$
+
+# Build machine definitions
+
+BUILD_CONFIG_NAME		= --build=i686-pc-linux-gnu
+BUILD_HOST_TOOLCHAIN_DIR	= /usr/local/gcc-linaro-arm-linux-gnueabihf-raspbian/bin
+BUILD_MCU_TOOLCHAIN_DIR		= /usr/local/arm-mcu-tools/bin
+
+# Host machine definitions
+
+HOST_CONFIG_NAME		= --host=arm-linux-gnueabihf
+HOST_OSNAME			= rpi
+HOST_PKGARCH			= armhf
+HOST_PKGSUFFIX			= $(HOST_OSNAME)-$(HOST_PKGARCH)
+
+# GDB requires ncurses and termcap, which are available for linking from the
+# following library from MuntsOS.  At run time on the Raspberry Pi, the normal
+# Raspbian libraries are used.
+
+HOST_LIBS_DIR	 		= $(shell pwd)/../../ARM-Linux/libs/libs-RaspberryPi-gcc-linaro-arm-linux-gnueabihf-raspbian
+
+# The following make flags enable the Canadian Cross Compiler build
+
+CROSSMAKEFLAGS			:= PATH="$(PATH):$(BUILD_HOST_TOOLCHAIN_DIR):$(BUILD_MCU_TOOLCHAIN_DIR)" BUILDCONFIG="$(BUILD_CONFIG_NAME) $(HOST_CONFIG_NAME)" OSNAME=$(HOST_OSNAME) PKGARCH=$(HOST_PKGARCH) PKGSUFFIX=$(HOST_PKGSUFFIX) CFLAGS=-I$(HOST_LIBS_DIR)/include CXXFLAGS=-I$(HOST_LIBS_DIR)/include LDFLAGS=-L$(HOST_LIBS_DIR)/lib
+
+# The following build targets are available
+
+default:
+	$(MAKE) $@ $(CROSSMAKEFLAGS)
+
+download:
+	$(MAKE) $@ $(CROSSMAKEFLAGS)
+
+source.done:
+	$(MAKE) $@ $(CROSSMAKEFLAGS)
+
+tarball:
+	$(MAKE) $@ $(CROSSMAKEFLAGS)
+
+package.deb:
+	$(MAKE) $@ $(CROSSMAKEFLAGS)
+
+clean:
+	$(MAKE) $@ $(CROSSMAKEFLAGS)
+
+distclean:
+	$(MAKE) $@ $(CROSSMAKEFLAGS)

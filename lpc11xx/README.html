@@ -1,0 +1,60 @@
+<h1>NXP (nee Philips) LPC11xx ARM Cortex-M0 Microcontroller Framework</h1>
+<h2>Credits</h2>
+<p>The C run time startup code <tt>lpc11xxxx.S</tt> and linker scripts
+<tt>lpc11xxxx.ld</tt> were written by myself based on various examples on the
+Internet and in <a href=
+"http://www.amazon.com/Definitive-Guide-Cortex-M3-Embedded-Technology/dp/0750685344">
+The Definitive Guide to the ARM Cortex-M3</a>.</p>
+<p>The <a href=
+"http://www.arm.com/products/processors/cortex-m/cortex-microcontroller-software-interface-standard.php">
+CMSIS</a> library came from <a href=
+"http://ics.nxp.com/support/lpcxpresso">NXP</a>, with some minor customization
+by myself.</p>
+<p>Other files are original works by myself.</p>
+<h2>Memory Map (LPC1114/102)</h2>
+<table summary="layout control" cellpadding="5%">
+<tr>
+<td>Code Flash:</td>
+<td><tt>0x00000000 to 0x00007FFF</tt></td>
+<td>32 KB</td>
+</tr>
+<tr>
+<td>Data RAM:</td>
+<td><tt>0x10000000 to 0x10000FFF</tt></td>
+<td>4 KB</td>
+</tr>
+</table>
+<h2>Other Devices</h2>
+<p>This framework may be used for other devices in the NXP LPC11xx family,
+provided the following files are modified:</p>
+<table summary="layout control" cellpadding="5%">
+<tr>
+<td><tt>lpc11xxxx.ld</tt></td>
+<td>The RAM and ROM sizes must match the device.</td>
+</tr>
+<tr>
+<td><tt>lpc11xxxx.S</tt></td>
+<td>The interrupt vector table must match the device.</td>
+</tr>
+<tr>
+<td><tt>lpc11xxxx.debugjlink</tt></td>
+<td>The memory regions reported to GDB must match the device.</td>
+</tr>
+</table>
+<h2>Test Platform</h2>
+<p>This framework is validated on the following LPC11x development boards:</p>
+<ul>
+<li><a href=
+"http://tech.munts.com/MCU/Frameworks/RaspberryPi/expansion/LPC1114">Raspberry
+Pi LPC1114 I/O Processor expansion board</a></li>
+<li>Bare <a href=
+"http://www.nxp.com/products/microcontrollers/cortex_m0/lpc1100_x_l/LPC1114FN28.html">
+LPC1114FN28/102</a> 28-pin DIP plugged into a solderless breadboard.</li>
+</ul>
+<p><i>Tested on 9 August 2013 with gcc 4.8.1.</i></p>
+<hr>
+Questions or comments to Philip Munts <a href=
+"mailto:phil@munts.net">phil@munts.net</a>
+<p><i>$Id$</i></p>
+<p>I am available for custom system development (hardware and software) of
+products using the LPC11xx or other microcontrollers.</p>

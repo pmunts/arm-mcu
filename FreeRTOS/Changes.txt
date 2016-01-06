@@ -1,0 +1,12 @@
+Changes Made to FreeRTOS Source Distribution
+--------------------------------------------
+
+$Id$
+
+1. Downloaded FreeRTOS v8.2.2.
+
+2. Removed demos and other unnecessary files.
+
+3. Removed all target port directories except GCC CMx.
+
+4. Ran all files through dos2unix.
