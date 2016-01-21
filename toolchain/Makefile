@@ -34,14 +34,14 @@ CXX		= g++
 FIND		= find
 TAR		= tar
 
-BINUTILVER	= 2.25
+BINUTILVER	= 2.25.1
 BINUTILSERVER	= http://ftp.gnu.org/pub/gnu/binutils
 BINUTILDIST	= $(TEMP)/binutils-$(BINUTILVER).tar.bz2
 BINUTILURL	= $(BINUTILSERVER)/`basename $(BINUTILDIST)`
 BINUTILSRC	= binutils-$(BINUTILVER)
 BINUTILBLD	= build/binutils-$(BINUTILVER)
 
-GCCVER		= 5.2.0
+GCCVER		= 5.3.0
 GCCSERVER	= http://ftp.gnu.org/pub/gnu/gcc/gcc-$(GCCVER)
 GCCDIST		= $(TEMP)/gcc-$(GCCVER).tar.bz2
 GCCURL		= $(GCCSERVER)/`basename $(GCCDIST)`
@@ -54,7 +54,7 @@ LIBICONVDIST	= $(TEMP)/libiconv-$(LIBICONVVER).tar.gz
 LIBICONVURL	= $(LIBICONVSERVER)/`basename $(LIBICONVDIST)`
 LIBICONVSRC	= libiconv-$(LIBICONVVER)
 
-NEWLIBVER	= 2.2.0
+NEWLIBVER	= 2.3.0.20160104
 NEWLIBSERVER	= http://mirrors.kernel.org/sources.redhat.com/newlib
 NEWLIBDIST	= $(TEMP)/newlib-$(NEWLIBVER).tar.gz
 NEWLIBURL	= $(NEWLIBSERVER)/`basename $(NEWLIBDIST)`
@@ -64,7 +64,7 @@ LIBMPDFURL	= $(NEWLIBSERVER)/libm.pdf
 LIBCPDF		= $(TEMP)/libc.pdf
 LIBMPDF		= $(TEMP)/libm.pdf
 
-GDBVER		= 7.10
+GDBVER		= 7.10.1
 GDBSERVER	= http://ftp.gnu.org/gnu/gdb
 GDBDIST		= $(TEMP)/gdb-$(GDBVER).tar.gz
 GDBURL		= $(GDBSERVER)/`basename $(GDBDIST)`
