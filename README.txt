@@ -76,6 +76,8 @@ News
        modernized support for the [17]Silicon Labs (formerly Energy Micro)
        EFM32 microcontroller family.
      * 18 September 2015 -- Upgraded FreeRTOS to 8.2.2.
+     * 21 January 2016 -- Upgraded binutils to 2.25.1, gcc to 5.3.0,
+       newlib to 2.3.0, and gdb to 0.7.1.
 
 Git Repository
 
