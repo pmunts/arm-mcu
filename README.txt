@@ -84,7 +84,8 @@ Git Repository
    The source code is available at: [18]http://git.munts.com
 
    Use the following command to clone it:
-git clone http://git.munts.com/arm-mcu.git
+
+   git clone http://git.munts.com/arm-mcu.git
 
 Copyright:
 
