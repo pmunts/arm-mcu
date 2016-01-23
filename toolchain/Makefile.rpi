@@ -11,7 +11,7 @@
 # Build machine definitions
 
 BUILD_CONFIG_NAME		= --build=i686-pc-linux-gnu
-BUILD_HOST_TOOLCHAIN_DIR	= /usr/local/gcc-linaro-arm-linux-gnueabihf-raspbian/bin
+BUILD_HOST_TOOLCHAIN_DIR	= /usr/local/gcc-linaro-arm-linux-gnueabihf-RaspberryPi/bin
 BUILD_MCU_TOOLCHAIN_DIR		= /usr/local/arm-mcu-tools/bin
 
 # Host machine definitions
@@ -21,15 +21,9 @@ HOST_OSNAME			= rpi
 HOST_PKGARCH			= armhf
 HOST_PKGSUFFIX			= $(HOST_OSNAME)-$(HOST_PKGARCH)
 
-# GDB requires ncurses and termcap, which are available for linking from the
-# following library from MuntsOS.  At run time on the Raspberry Pi, the normal
-# Raspbian libraries are used.
-
-HOST_LIBS_DIR	 		= $(shell pwd)/../../ARM-Linux/libs/libs-RaspberryPi-gcc-linaro-arm-linux-gnueabihf-raspbian
-
 # The following make flags enable the Canadian Cross Compiler build
 
-CROSSMAKEFLAGS			:= PATH="$(PATH):$(BUILD_HOST_TOOLCHAIN_DIR):$(BUILD_MCU_TOOLCHAIN_DIR)" BUILDCONFIG="$(BUILD_CONFIG_NAME) $(HOST_CONFIG_NAME)" OSNAME=$(HOST_OSNAME) PKGARCH=$(HOST_PKGARCH) PKGSUFFIX=$(HOST_PKGSUFFIX) CFLAGS=-I$(HOST_LIBS_DIR)/include CXXFLAGS=-I$(HOST_LIBS_DIR)/include LDFLAGS=-L$(HOST_LIBS_DIR)/lib
+CROSSMAKEFLAGS			:= PATH="$(PATH):$(BUILD_HOST_TOOLCHAIN_DIR):$(BUILD_MCU_TOOLCHAIN_DIR)" BUILDCONFIG="$(BUILD_CONFIG_NAME) $(HOST_CONFIG_NAME)" OSNAME=$(HOST_OSNAME) PKGARCH=$(HOST_PKGARCH) PKGSUFFIX=$(HOST_PKGSUFFIX)
 
 # The following build targets are available
 
