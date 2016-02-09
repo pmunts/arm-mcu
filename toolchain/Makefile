@@ -2,7 +2,7 @@
 
 # $Id$
 
-# Copyright (C)2013-2015, Philip Munts, President, Munts AM Corp.
+# Copyright (C)2013-2016, Philip Munts, President, Munts AM Corp.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
