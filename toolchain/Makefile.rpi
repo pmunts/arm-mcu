@@ -11,7 +11,7 @@
 # Build machine definitions
 
 BUILD_CONFIG_NAME		= --build=i686-pc-linux-gnu
-BUILD_HOST_TOOLCHAIN_DIR	= /usr/local/gcc-linaro-arm-linux-gnueabihf-RaspberryPi/bin
+BUILD_HOST_TOOLCHAIN_DIR	= /usr/local/gcc-arm-linux-gnueabihf-linaro-RaspberryPi/bin
 BUILD_MCU_TOOLCHAIN_DIR		= /usr/local/arm-mcu-tools/bin
 
 # Host machine definitions
