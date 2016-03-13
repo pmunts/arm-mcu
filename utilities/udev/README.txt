@@ -10,8 +10,6 @@
 
    Questions or comments to Philip Munts [1]phil@munts.net
 
-   $Id: README.txt 9309 2015-08-26 08:12:51Z svn $
-
    I am available for custom system development (hardware and software) of
    products using ARM or othermicrocontrollers.
 
