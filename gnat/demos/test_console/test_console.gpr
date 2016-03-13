@@ -1,6 +1,6 @@
 -- STM32F4-Discovery serial console test
 
--- $Id$
+-- $Id: test_console.gpr 9918 2016-02-09 07:53:15Z svn $
 
 -- Copyright (C)2015-2016, Philip Munts, President, Munts AM Corp.
 --

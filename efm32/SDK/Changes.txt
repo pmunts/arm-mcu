@@ -1,7 +1,7 @@
 Changes to the EFM32 SDK
 ------------------------
 
-$Id$
+$Id: Changes.txt 9381 2015-09-17 09:40:20Z svn $
 
 1. 17 September 2015 -- Imported the minimum necessary set of files from the
    EFM32 SDK v4.0, which was extracted from Simplicity Studio 3.1.

@@ -1,6 +1,6 @@
 /* ARM microcontroller common definitions */
 
-// $Id$
+// $Id: arm.h 9918 2016-02-09 07:53:15Z svn $
 
 // Copyright (C)2013-2016, Philip Munts, President, Munts AM Corp.
 //

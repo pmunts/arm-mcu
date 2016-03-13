@@ -49,7 +49,7 @@ Test Platform
 
    Questions or comments to Philip Munts [8]phil@munts.net
 
-   $Id$
+   $Id: README.txt 9101 2015-06-10 10:09:46Z svn $
 
    I am available for custom system development (hardware and software) of
    products using the STM32F1 or other microcontrollers.

@@ -1,6 +1,6 @@
 /* Simple FreeRTOS test program */
 
-// $Id$
+// $Id: test_freertos.c 9918 2016-02-09 07:53:15Z svn $
 
 // Copyright (C)2013-2016, Philip Munts, President, Munts AM Corp.
 //
@@ -22,7 +22,7 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-static const char revision[] = "$Id$";
+static const char revision[] = "$Id: test_freertos.c 9918 2016-02-09 07:53:15Z svn $";
 
 #ifndef FREERTOS
 #error You must define FREERTOS to compile this FreeRTOS application (WITH_FREERTOS=yes)

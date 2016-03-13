@@ -55,7 +55,7 @@ Test Platform
 
    Questions or comments to Philip Munts [11]phil@munts.net
 
-   $Id$
+   $Id: README.txt 9102 2015-06-10 10:13:36Z svn $
 
    I am available for custom system development (hardware and software) of
    products using the STM32F4 or other microcontrollers.

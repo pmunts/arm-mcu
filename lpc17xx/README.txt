@@ -38,7 +38,7 @@ Test Platform
 
    Questions or comments to Philip Munts [6]phil@munts.net
 
-   $Id$
+   $Id: README.txt 9099 2015-06-10 09:19:07Z svn $
 
    I am available for custom system development (hardware and software) of
    products using the LPC17xx or other microcontrollers.

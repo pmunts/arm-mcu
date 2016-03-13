@@ -1,6 +1,6 @@
 /* Startup for LPC11xx Cortex-M0 ARM MCU */
 
-// $Id$
+// $Id: LPC1114FN28.S 9918 2016-02-09 07:53:15Z svn $
 
 // Copyright (C)2013-2016, Philip Munts, President, Munts AM Corp.
 //

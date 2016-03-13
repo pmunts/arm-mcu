@@ -1,6 +1,6 @@
 /* Abstract services for controlling LPC11xx GPIO pins */
 
-// $Id$
+// $Id: gpio.h 9918 2016-02-09 07:53:15Z svn $
 
 // Copyright (C)2013-2016, Philip Munts, President, Munts AM Corp.
 //

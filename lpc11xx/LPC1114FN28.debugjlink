@@ -1,6 +1,6 @@
 # GDB startup script for debugging a program in flash ROM
 
-# $Id$
+# $Id: LPC1114FN28.debugjlink 9918 2016-02-09 07:53:15Z svn $
 
 # Copyright (C)2013-2016, Philip Munts, President, Munts AM Corp.
 #

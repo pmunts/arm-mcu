@@ -36,7 +36,7 @@ Test Platform
 
    Questions or comments to Philip Munts [4]phil@munts.net
 
-   $Id$
+   $Id: README.txt 9382 2015-09-17 09:45:48Z svn $
 
    I am available for custom system development (hardware and software) of
    products using the EFM32G890F128 or other microcontrollers.

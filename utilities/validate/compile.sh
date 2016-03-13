@@ -2,7 +2,7 @@
 
 # Script to validate the ARM Microcontroller Framework
 
-# $Id$
+# $Id: compile.sh 8974 2015-05-25 11:15:31Z svn $
 
 # Transform named parameters to environment variables
 

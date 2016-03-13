@@ -1,6 +1,6 @@
 /* Linker script for STM32F411RE Cortex-M4 ARM MCU */
 
-/* $Id$ */
+/* $Id: stm32f411re.ld 9918 2016-02-09 07:53:15Z svn $ */
 
 /* Copyright (C)2013-2016, Philip Munts, President, Munts AM Corp.		*/
 /*										*/

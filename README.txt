@@ -117,7 +117,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
    Questions or comments to Philip Munts [19]phil@munts.net
 
-   $Id$
+   $Id: README.txt 9918 2016-02-09 07:53:15Z svn $
 
    I am available for custom system development (hardware and software) of
    products using these ARM microcontrollers.

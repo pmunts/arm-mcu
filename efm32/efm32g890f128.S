@@ -1,6 +1,6 @@
 /* Startup for EFM32G890F128 Cortex-M3 ARM MCU */
 
-// $Id$
+// $Id: efm32g890f128.S 9918 2016-02-09 07:53:15Z svn $
 
 // Copyright (C)2012-2016, Philip Munts, President, Munts AM Corp.
 //

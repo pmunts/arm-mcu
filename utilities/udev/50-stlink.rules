@@ -6,7 +6,7 @@
 #
 # Cleaned up and modified by Philip Munts 2011
 #
-# $Id$
+# $Id: 50-stlink.rules 9309 2015-08-26 08:12:51Z svn $
 #
 # The STLink on the Discovery has a USB ID 0483:3744 and presents itself
 # as a mass storage (i.e. SCSI) device.  The SCSI emulation is signficantly

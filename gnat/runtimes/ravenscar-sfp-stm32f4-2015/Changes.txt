@@ -1,7 +1,7 @@
 Changes to the Adacore Libre GNAT GPL Ravenscar profile RTS for STM32F4
 -----------------------------------------------------------------------
 
-$Id$
+$Id: Changes.txt 9226 2015-07-01 07:08:45Z svn $
 
 1. Imported Ravenscar SFP (Small Footprint Profile) RTS source files
    from AdaCore Libre GNAT GPL 2015 for STM32F4.
