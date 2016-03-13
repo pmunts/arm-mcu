@@ -55,7 +55,6 @@ int main(void)
   cout << "(" << __DATE__ << " " <<  __TIME__ << ")";
   cout << "\n\n";
 
-  cout << revision;
   cout << "\n\n";
 
   cout << "Board:    " << BOARDNAME << "\n";

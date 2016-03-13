@@ -35,7 +35,6 @@ int main(void)
   semihosting_stdio("semihost::tt");
 
   printf("\033[H\033[2J%s Semi-Hosting Console Test (" __DATE__ " " __TIME__ ")\n\n", MCUFAMILYNAME);
-  puts(revision);
   printf("\nCPU Freq:%u Hz  Compiler:%s %s %s\n\n", (unsigned int) SystemCoreClock,
     __COMPILER__, __VERSION__, __ABI__);
 

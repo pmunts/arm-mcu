@@ -50,7 +50,6 @@ int main(void)
   serial_stdio(CONSOLE_PORT);
 
   printf("\033[H\033[2J%s System Tick Interrupt Test (" __DATE__ " " __TIME__ ")\n\n", MCUFAMILYNAME);
-  puts(revision);
   printf("\nCPU Freq:%u Hz  Compiler:%s %s %s\n\n", (unsigned int) SystemCoreClock,
     __COMPILER__, __VERSION__, __ABI__);
 
