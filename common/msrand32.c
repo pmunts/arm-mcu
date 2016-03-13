@@ -2,8 +2,6 @@
 /* Good Ones Are Hard To Find", Communications of the ACM, October 1988,     */
 /* Volume 31 Number 10.                                                      */
 
-// $Id: msrand32.c 9918 2016-02-09 07:53:15Z svn $
-
 // Copyright (C)2013-2016, Philip Munts, President, Munts AM Corp.
 //
 // Redistribution and use in source and binary forms, with or without

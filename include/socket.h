@@ -6,8 +6,6 @@
 /* manipulated via the formal file I/O functions such as open(), read() and   */
 /* like.                                                                      */
 
-// $Id: socket.h 9918 2016-02-09 07:53:15Z svn $
-
 // Copyright (C)2013-2016, Philip Munts, President, Munts AM Corp.
 //
 // Redistribution and use in source and binary forms, with or without

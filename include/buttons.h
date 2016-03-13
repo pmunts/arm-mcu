@@ -1,7 +1,5 @@
 /* Abstract services for reading buttons (momentary switches) */
 
-// $Id: leds.h 8475 2015-02-26 11:40:48Z svn $
-
 // Copyright (C)2013-2016, Philip Munts, President, Munts AM Corp.
 //
 // Redistribution and use in source and binary forms, with or without

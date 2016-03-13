@@ -6,8 +6,6 @@
 # run on the Raspberry Pi (host machine) to generate code for an ARM microcontroller
 # (target machine).
 
-# $Id: Makefile.rpi 10144 2016-03-08 10:20:21Z svn $
-
 # Build machine definitions
 
 BUILD_CONFIG_NAME		= --build=i686-pc-linux-gnu

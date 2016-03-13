@@ -1,7 +1,5 @@
 /* Abstract services for reading analog inputs */
 
-// $Id: adc.c 9918 2016-02-09 07:53:15Z svn $
-
 // Copyright (C)2013-2016, Philip Munts, President, Munts AM Corp.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -21,8 +19,6 @@
 // CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
-
-static const char revision[] = "$Id: adc.c 9918 2016-02-09 07:53:15Z svn $";
 
 #include <cpu.h>
 
