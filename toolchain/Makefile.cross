@@ -1,4 +1,4 @@
-# Build a Canadian Cross Compiler running on Raspbian, targeting ARM microcontrollers
+# Build a Canadian Cross Compiler targeting ARM microcontrollers
 
 # It is not easy to build this toolchain natively on the Raspberry Pi, because of how
 # much memory and disk space is required to build GCC.  Using the Candian Cross
@@ -6,18 +6,19 @@
 # run on the Raspberry Pi (host machine) to generate code for an ARM microcontroller
 # (target machine).
 
-# Build machine definitions
+# Host machine (where we want to run the cross-compiler) definitions
 
-BUILD_CONFIG_NAME		= --build=i686-pc-linux-gnu
-BUILD_HOST_TOOLCHAIN_DIR	= /usr/local/gcc-arm-linux-gnueabihf-linaro-RaspberryPi/bin
-BUILD_MCU_TOOLCHAIN_DIR		= /usr/local/arm-mcu-tools/bin
-
-# Host machine definitions
-
-HOST_CONFIG_NAME		= --host=arm-linux-gnueabihf
+HOST_PLATFORM_NAME		= RaspberryPi
 HOST_OSNAME			= rpi
+HOST_CONFIG_NAME		= --host=arm-linux-gnueabihf
 HOST_PKGARCH			= armhf
 HOST_PKGSUFFIX			= $(HOST_OSNAME)-$(HOST_PKGARCH)
+
+# Build machine (where we want to build the cross-compiler) definitions
+
+BUILD_CONFIG_NAME		= --build=i686-pc-linux-gnu
+BUILD_HOST_TOOLCHAIN_DIR	= /usr/local/gcc-arm-linux-gnueabihf-linaro-$(HOST_PLATFORM_NAME)/bin
+BUILD_MCU_TOOLCHAIN_DIR		= /usr/local/arm-mcu-tools/bin
 
 # The following make flags enable the Canadian Cross Compiler build
 
