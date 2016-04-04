@@ -21,16 +21,11 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
+CC		?= gcc
+CXX		?= g++
+FIND		?= find
+TAR		?= tar
 TEMP		?= /tmp
-
-TARGETNAME	= arm-none-eabi
-PKGNAME		= arm-mcu-tools
-INSTBASE	= $(shell pwd)/$(PKGNAME)
-
-CC		= gcc
-CXX		= g++
-FIND		= find
-TAR		= tar
 
 BINUTILVER	= 2.26
 BINUTILSERVER	= http://ftp.gnu.org/pub/gnu/binutils
@@ -69,11 +64,14 @@ GDBURL		= $(GDBSERVER)/`basename $(GDBDIST)`
 GDBSRC		= gdb-$(GDBVER)
 GDBBLD		= build/gdb-$(GDBVER)
 
-VERSION		= $(shell date +%Y-%j)
+PKGNAME		= arm-mcu-tools
+PKGVERSION	= $(shell date +%Y-%j)
+TARGETNAME	= arm-none-eabi
+INSTBASE	= $(shell pwd)/$(PKGNAME)
 
 ifeq ($(findstring CYGWIN, $(shell uname)), CYGWIN)
 PKGSUFFIX	= cygwin
-TARBALL		= $(PKGNAME)-$(VERSION)-$(PKGSUFFIX).tgz
+TARBALL		= $(PKGNAME)-$(PKGVERSION)-$(PKGSUFFIX).tgz
 TAROWNER	=
 TARGROUP	=
 endif
@@ -82,7 +80,7 @@ ifeq ($(shell uname), Darwin)
 CC		= gcc-4
 CXX		= g++-4
 PKGSUFFIX	= $(shell uname -s)-$(shell uname -r)-$(shell uname -m)
-TARBALL		= $(PKGNAME)-$(VERSION)-$(PKGSUFFIX).tgz
+TARBALL		= $(PKGNAME)-$(PKGVERSION)-$(PKGSUFFIX).tgz
 TAROWNER	= --owner root
 TARGROUP	= --group wheel
 endif
@@ -91,9 +89,9 @@ ifeq ($(shell uname), Linux)
 OSNAME		?= unknown
 PKGARCH		= $(shell dpkg --print-architecture)
 PKGSUFFIX	= $(OSNAME)-$(PKGARCH)
-PKGDIR		= $(PKGNAME)-$(VERSION)-$(PKGSUFFIX)
+PKGDIR		= $(PKGNAME)-$(PKGVERSION)-$(PKGSUFFIX)
 PKGFILE		= $(PKGDIR).deb
-TARBALL		= $(PKGNAME)-$(VERSION)-$(PKGSUFFIX).tgz
+TARBALL		= $(PKGNAME)-$(PKGVERSION)-$(PKGSUFFIX).tgz
 TAROWNER	= --owner root
 TARGROUP	= --group root
 endif
@@ -102,7 +100,7 @@ ifeq ($(shell uname), OpenBSD)
 CC		= egcc
 CXX		= eg++
 TAR		= gtar
-PKGFILE		= $(PKGNAME)-$(VERSION)-$(shell uname -p)_$(shell uname -r).tgz
+PKGFILE		= $(PKGNAME)-$(PKGVERSION)-$(shell uname -p)-$(shell uname -r).tgz
 endif
 
 BUILDCONFIG	= CC=$(CC) CXX=$(CXX)
@@ -113,7 +111,7 @@ default: readme.done
 
 DISTFILES	= $(BINUTILDIST) $(GCCDIST) $(LIBICONVDIST) $(NEWLIBDIST) $(GDBDIST) $(LIBCPDF) $(LIBMPDF)
 
-# Download all source distributions
+# Download source distributions
 
 download: $(DISTFILES)
 
@@ -251,7 +249,7 @@ package.deb: readme.done
 	install -cm 0644 control.template		$(PKGDIR)/DEBIAN/control
 	sed -i s/@@ARCH@@/$(PKGARCH)/g			$(PKGDIR)/DEBIAN/control
 	sed -i s/@@NAME@@/$(PKGNAME)/g			$(PKGDIR)/DEBIAN/control
-	sed -i s/@@VERSION@@/$(VERSION)/g		$(PKGDIR)/DEBIAN/control
+	sed -i s/@@VERSION@@/$(PKGVERSION)/g		$(PKGDIR)/DEBIAN/control
 	sed -i /Version:/s/_/-/g			$(PKGDIR)/DEBIAN/control
 	cp -R -P -p $(PKGNAME)				$(PKGDIR)/usr/local
 	chmod -R ugo-w					$(PKGDIR)/usr/local/$(PKGNAME)
