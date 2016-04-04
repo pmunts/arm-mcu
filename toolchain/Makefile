@@ -32,7 +32,7 @@ CXX		= g++
 FIND		= find
 TAR		= tar
 
-BINUTILVER	= 2.25.1
+BINUTILVER	= 2.26
 BINUTILSERVER	= http://ftp.gnu.org/pub/gnu/binutils
 BINUTILDIST	= $(TEMP)/binutils-$(BINUTILVER).tar.bz2
 BINUTILURL	= $(BINUTILSERVER)/`basename $(BINUTILDIST)`
@@ -52,7 +52,7 @@ LIBICONVDIST	= $(TEMP)/libiconv-$(LIBICONVVER).tar.gz
 LIBICONVURL	= $(LIBICONVSERVER)/`basename $(LIBICONVDIST)`
 LIBICONVSRC	= libiconv-$(LIBICONVVER)
 
-NEWLIBVER	= 2.3.0.20160104
+NEWLIBVER	= 2.4.0
 NEWLIBSERVER	= http://mirrors.kernel.org/sources.redhat.com/newlib
 NEWLIBDIST	= $(TEMP)/newlib-$(NEWLIBVER).tar.gz
 NEWLIBURL	= $(NEWLIBSERVER)/`basename $(NEWLIBDIST)`
@@ -62,15 +62,14 @@ LIBMPDFURL	= $(NEWLIBSERVER)/libm.pdf
 LIBCPDF		= $(TEMP)/libc.pdf
 LIBMPDF		= $(TEMP)/libm.pdf
 
-GDBVER		= 7.10.1
+GDBVER		= 7.11
 GDBSERVER	= http://ftp.gnu.org/gnu/gdb
 GDBDIST		= $(TEMP)/gdb-$(GDBVER).tar.gz
 GDBURL		= $(GDBSERVER)/`basename $(GDBDIST)`
 GDBSRC		= gdb-$(GDBVER)
 GDBBLD		= build/gdb-$(GDBVER)
 
-VERSION		= $(BINUTILVER)_$(GCCVER)_$(NEWLIBVER)_$(GDBVER)
-RELEASE		= 1
+VERSION		= $(shell date +%Y-%j)
 
 ifeq ($(findstring CYGWIN, $(shell uname)), CYGWIN)
 PKGSUFFIX	= cygwin
@@ -261,24 +260,6 @@ package.deb: readme.done
 
 ################################################################################
 
-# Create RPM package
-
-fakeroot.rpm: readme.done
-	mkdir -p fakeroot.rpm/usr/local
-	cp -R -P -p $(PKGNAME) fakeroot.rpm/usr/local
-
-specfile: specfile.template fakeroot.rpm
-	sed s/@@PKGNAME@@/$(PKGNAME)/g <specfile.template | sed s/@@VERSION@@/$(VERSION)/g | sed s/@@RELEASE@@/$(RELEASE)/g >specfile
-	$(FIND) fakeroot.rpm/usr/local/$(PKGNAME) -type d | awk '{ printf("%%dir /%s\n", substr($$1, 14)); }' >>specfile
-	$(FIND) fakeroot.rpm/usr/local/$(PKGNAME) -type f | cut -c 13- >>specfile
-	$(FIND) fakeroot.rpm/usr/local/$(PKGNAME) -type l | cut -c 13- >>specfile
-
-package.rpm: specfile
-	rpmbuild --buildroot=`pwd`/fakeroot.rpm --define="_topdir `pwd`/rpmbuild" -bb specfile
-	cp rpmbuild/RPMS/*/*.rpm .
-
-################################################################################
-
 # Create OpenBSD package
 
 fakeroot.openbsd: readme.done
@@ -318,6 +299,6 @@ clean:
 	rm -rf $(LIBICONVSRC)
 	rm -rf $(NEWLIBSRC)
 	rm -rf $(GDBSRC)
-	rm -rf build fakeroot.* specfile rpmbuild *.done *.deb *.rpm *.tgz $(PKGDIR)
+	rm -rf build fakeroot.* *.done *.deb *.tgz $(PKGDIR)
 
 distclean: clean
