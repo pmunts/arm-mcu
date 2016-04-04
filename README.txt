@@ -78,8 +78,8 @@ News
      * 18 September 2015 -- Upgraded FreeRTOS to 8.2.2.
      * 21 January 2016 -- Upgraded binutils to 2.25.1, gcc to 5.3.0,
        newlib to 2.3.0, and gdb to 0.7.1.
-     * 4 April 2016 -- Upgraded binutils to 2.26, newlib to 2.4.0 and gdb
-       to 7.11.
+     * 4 April 2016 -- Toolchain release 2016-095: Upgraded binutils to
+       2.26, newlib to 2.4.0 and gdb to 7.11.
 
 Git Repository
 
