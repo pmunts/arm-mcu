@@ -65,7 +65,7 @@ GDBSRC		= gdb-$(GDBVER)
 GDBBLD		= build/gdb-$(GDBVER)
 
 PKGNAME		= arm-mcu-tools
-PKGVERSION	= $(shell date +%Y-%j)
+PKGVERSION	= $(shell date +%Y.%j)
 TARGETNAME	= arm-none-eabi
 INSTBASE	= $(shell pwd)/$(PKGNAME)
 
