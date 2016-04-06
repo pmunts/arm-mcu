@@ -21,10 +21,11 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-CC		?= gcc
-CXX		?= g++
-FIND		?= find
-TAR		?= tar
+CC		= gcc
+CXX		= g++
+FIND		= find
+SED		= sed
+TAR		= tar
 TEMP		?= /tmp
 
 BINUTILVER	= 2.26
@@ -247,10 +248,10 @@ package.deb: readme.done
 	mkdir -p					$(PKGDIR)/DEBIAN
 	mkdir -p					$(PKGDIR)/usr/local
 	install -cm 0644 control.template		$(PKGDIR)/DEBIAN/control
-	sed -i s/@@ARCH@@/$(PKGARCH)/g			$(PKGDIR)/DEBIAN/control
-	sed -i s/@@NAME@@/$(PKGNAME)/g			$(PKGDIR)/DEBIAN/control
-	sed -i s/@@VERSION@@/$(PKGVERSION)/g		$(PKGDIR)/DEBIAN/control
-	sed -i /Version:/s/_/-/g			$(PKGDIR)/DEBIAN/control
+	$(SED) -i s/@@ARCH@@/$(PKGARCH)/g		$(PKGDIR)/DEBIAN/control
+	$(SED) -i s/@@NAME@@/$(PKGNAME)/g		$(PKGDIR)/DEBIAN/control
+	$(SED) -i s/@@VERSION@@/$(PKGVERSION)/g		$(PKGDIR)/DEBIAN/control
+	$(SED) -i /Version:/s/_/-/g			$(PKGDIR)/DEBIAN/control
 	cp -R -P -p $(PKGNAME)				$(PKGDIR)/usr/local
 	chmod -R ugo-w					$(PKGDIR)/usr/local/$(PKGNAME)
 	fakeroot dpkg-deb --build			$(PKGDIR)
