@@ -73,14 +73,12 @@ INSTBASE	= $(shell pwd)/$(PKGNAME)
 ifeq ($(findstring CYGWIN, $(shell uname)), CYGWIN)
 PKGSUFFIX	= cygwin
 TARBALL		= $(PKGNAME)-$(PKGVERSION)-$(PKGSUFFIX).tgz
-TAROWNER	=
-TARGROUP	=
 endif
 
 ifeq ($(shell uname), Darwin)
-CC		= gcc-4
-CXX		= g++-4
 PKGSUFFIX	= $(shell uname -s)-$(shell uname -r)-$(shell uname -m)
+SED		= gsed
+TAR		= gnutar
 TARBALL		= $(PKGNAME)-$(PKGVERSION)-$(PKGSUFFIX).tgz
 TAROWNER	= --owner root
 TARGROUP	= --group wheel
