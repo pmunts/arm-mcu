@@ -21,7 +21,6 @@
 // POSSIBILITY OF SUCH DAMAGE.
 
 #include <cpu.h>
-#include <stdio.h>
 
 #define MAX_I2C_PORTS           1
 
@@ -146,7 +145,6 @@ ssize_t i2c_slave_receive(unsigned port, uint8_t *buf, size_t size)
         return count;
 
       default :
-        printf("DEBUG: i2c_slave_receive(): Unexpected state => %02lX\n", LPC_I2C->STAT);
         errno_r = EIO;
         return -1;
     }
@@ -214,7 +212,6 @@ ssize_t i2c_slave_transmit(unsigned port, uint8_t *buf, size_t size)
         return count;
 
       default :
-        printf("DEBUG: i2c_slave_transmit(): Unexpected state => %02lX\n", LPC_I2C->STAT);
         errno_r = EIO;
         return -1;
     }
