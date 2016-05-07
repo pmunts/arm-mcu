@@ -26,6 +26,10 @@ ifeq ($(findstring CYGWIN, $(shell uname)), CYGWIN)
 LDFLAGS		+= -lhidapi
 endif
 
+ifeq ($(shell uname), Darwin)
+LDFLAGS		+= -lhidapi
+endif
+
 ifeq ($(shell uname), Linux)
 LDFLAGS		+= -lhidapi-hidraw
 endif
