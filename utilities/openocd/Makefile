@@ -88,7 +88,7 @@ package.rpm: specfile
 
 package.deb: fakeroot
 	mkdir -p $(PKGDIR)/DEBIAN
-	install -cm 0444 control.template		$(PKGDIR)/DEBIAN/control
+	install -cm 0444 control			$(PKGDIR)/DEBIAN
 	sed -i s/@@ARCH@@/$(PKGARCH)/g			$(PKGDIR)/DEBIAN/control
 	sed -i s/@@NAME@@/$(PKGNAME)/g			$(PKGDIR)/DEBIAN/control
 	sed -i s/@@VERSION@@/$(PKGVERSION)/g		$(PKGDIR)/DEBIAN/control

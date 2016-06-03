@@ -66,7 +66,7 @@ uninstall:
 
 package.deb: $(STLINKFLASH)
 	mkdir -p					$(PKGDIR)/DEBIAN
-	install -cm 0644 control.template		$(PKGDIR)/DEBIAN/control
+	install -cm 0644 control			$(PKGDIR)/DEBIAN
 	sed -i 's/@@ARCH@@/$(PKGARCH)/g'		$(PKGDIR)/DEBIAN/control
 	sed -i 's/@@NAME@@/$(PKGNAME)/g'		$(PKGDIR)/DEBIAN/control
 	sed -i 's/@@VERSION@@/$(PKGVERSION)/g'		$(PKGDIR)/DEBIAN/control

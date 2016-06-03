@@ -245,7 +245,7 @@ tarball: readme.done
 package.deb: readme.done
 	mkdir -p					$(PKGDIR)/DEBIAN
 	mkdir -p					$(PKGDIR)/usr/local
-	install -cm 0644 control.template		$(PKGDIR)/DEBIAN/control
+	install -cm 0644 control			$(PKGDIR)/DEBIAN
 	$(SED) -i s/@@ARCH@@/$(PKGARCH)/g		$(PKGDIR)/DEBIAN/control
 	$(SED) -i s/@@NAME@@/$(PKGNAME)/g		$(PKGDIR)/DEBIAN/control
 	$(SED) -i s/@@VERSION@@/$(PKGVERSION)/g		$(PKGDIR)/DEBIAN/control
