@@ -27,6 +27,7 @@
 #include <buttons.h>
 #include <device.h>
 #include <gpiopins.h>
+#include <i2c.h>
 #include <leds.h>
 #include <serial.h>
 #include <spi.h>
