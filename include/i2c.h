@@ -25,7 +25,7 @@
 
 _BEGIN_STD_C
 
-int i2c_init(unsigned port, uint8_t addr);
+int i2c_slave_init(unsigned port, uint8_t addr);
 
 ssize_t i2c_slave_receive(unsigned port, uint8_t *buf, size_t size);
 

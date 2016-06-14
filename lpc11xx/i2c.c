@@ -24,7 +24,7 @@
 
 #define MAX_I2C_PORTS           1
 
-int i2c_init(unsigned port, uint8_t addr)
+int i2c_slave_init(unsigned port, uint8_t addr)
 {
   volatile int i;
 
