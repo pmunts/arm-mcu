@@ -25,6 +25,8 @@ MCUFAMILY	= lpc17xx
 BOARDNAME	?= LPC1768_MINI_DK2
 #BOARDNAME	?= MBED_LPC1768
 
+default: lib
+
 include $(ARMSRC)/include/ARM.mk
 
 lib: ARM_mk_lib

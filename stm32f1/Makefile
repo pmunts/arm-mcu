@@ -26,6 +26,8 @@ BOARDNAME	?= NUCLEO_F103RB
 #BOARDNAME	?= OLIMEX_STM32_P103
 #BOARDNAME	?= OLIMEX_STM32_P107
 
+default: lib
+
 include $(ARMSRC)/include/ARM.mk
 
 lib: ARM_mk_lib

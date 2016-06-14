@@ -26,6 +26,8 @@ MCUFAMILY	= lpc11xx
 BOARDNAME	?= PROTOBOARD_LPC1114FN28
 #BOARDNAME	?= RASPBERRYPI_LPC1114
 
+default: lib
+
 include $(ARMSRC)/include/ARM.mk
 
 lib: ARM_mk_lib

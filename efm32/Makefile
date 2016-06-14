@@ -25,6 +25,8 @@ MCUFAMILY	= efm32
 BOARDNAME	?= EFM32_G8XX_STK
 #BOARDNAME	?= EFM32G230F128_PROTOTYPE
 
+default: lib
+
 include $(ARMSRC)/include/ARM.mk
 
 lib: ARM_mk_lib

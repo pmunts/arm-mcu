@@ -29,6 +29,8 @@ BOARDNAME	?= NUCLEO_F411RE
 #BOARDNAME	?= STM32_M4_MINI
 #BOARDNAME	?= STM32_M4_CLICKER
 
+default: lib
+
 include $(ARMSRC)/include/ARM.mk
 
 lib: ARM_mk_lib
