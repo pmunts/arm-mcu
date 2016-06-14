@@ -31,5 +31,16 @@ ssize_t i2c_slave_receive(unsigned port, uint8_t *buf, size_t size);
 
 ssize_t i2c_slave_transmit(unsigned port, uint8_t *buf, size_t size);
 
+int i2c_master_init(unsigned port);
+
+ssize_t i2c_master_transmit(unsigned port, uint8_t slaveaddr,
+  uint8_t *txbuf, size_t txsize);
+
+ssize_t i2c_master_receive(unsigned port, uint8_t slaveaddr,
+  uint8_t *rxbuf, size_t rxsize);
+
+int i2c_master_transaction(unsigned port, uint8_t slaveaddr,
+  uint8_t *txbuf, size_t txsize, uint8_t *rxbuf, size_t rxsize);
+
 _END_STD_C
 #endif
