@@ -146,6 +146,8 @@ ssize_t i2c_master_read(unsigned port, uint8_t slaveaddr,
 
   dev = I2C_PORTS[port];
 
+  dev->CR1 &= ~I2C_CR1_POS;
+
   // Assert START
 
   dev->CR1 |= I2C_CR1_START;
@@ -156,23 +158,36 @@ ssize_t i2c_master_read(unsigned port, uint8_t slaveaddr,
   dev->DR = (slaveaddr << 1) + 1;
   while ((dev->SR1 & I2C_SR1_ADDR) == 0);
   dev->SR2;
-
-  // Enable ACK
-
-  dev->CR1 &= ~I2C_CR1_POS;
-  dev->CR1 |= I2C_CR1_ACK;
+  while ((dev->SR1 & I2C_SR1_ADDR) != 0);
 
   // Receive bytes
 
-  while (rxsize--)
+  if (rxsize == 1)
   {
-    while ((dev->SR1 & (I2C_SR1_BTF | I2C_SR1_RXNE)) == 0);
-    *rxbuf++ = dev->DR;
+    dev->CR1 &= ~I2C_CR1_ACK;
+    dev->CR1 |= I2C_CR1_STOP;
+  }
+  else
+  {
+    dev->CR1 |= I2C_CR1_ACK;
   }
 
-  // Assert STOP
+  while (rxsize--)
+  {
+    while ((dev->SR1 & I2C_SR1_RXNE) == 0);
+    *rxbuf++ = dev->DR;
 
-  dev->CR1 |= I2C_CR1_STOP;
+    // Post NACK and STOP on just before last byte
+
+    if (rxsize == 1)
+    {
+      dev->CR1 &= ~I2C_CR1_ACK;
+      dev->CR1 |= I2C_CR1_STOP;
+    }
+  }
+
+  // Wait for STOP
+
   while (dev->CR1 & I2C_CR1_STOP);
 
   return 0;
