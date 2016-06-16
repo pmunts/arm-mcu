@@ -27,17 +27,17 @@ _BEGIN_STD_C
 
 int i2c_slave_init(unsigned port, uint8_t addr);
 
-ssize_t i2c_slave_receive(unsigned port, uint8_t *buf, size_t size);
+ssize_t i2c_slave_read(unsigned port, uint8_t *rxbuf, size_t rxsize);
 
-ssize_t i2c_slave_transmit(unsigned port, uint8_t *buf, size_t size);
+ssize_t i2c_slave_write(unsigned port, uint8_t *txbuf, size_t txsize);
 
 int i2c_master_init(unsigned port);
 
-ssize_t i2c_master_transmit(unsigned port, uint8_t slaveaddr,
-  uint8_t *txbuf, size_t txsize);
-
-ssize_t i2c_master_receive(unsigned port, uint8_t slaveaddr,
+ssize_t i2c_master_read(unsigned port, uint8_t slaveaddr,
   uint8_t *rxbuf, size_t rxsize);
+
+ssize_t i2c_master_write(unsigned port, uint8_t slaveaddr,
+  uint8_t *txbuf, size_t txsize);
 
 int i2c_master_transaction(unsigned port, uint8_t slaveaddr,
   uint8_t *txbuf, size_t txsize, uint8_t *rxbuf, size_t rxsize);

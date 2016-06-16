@@ -21,6 +21,7 @@
 // POSSIBILITY OF SUCH DAMAGE.
 
 #include <cpu.h>
+#include <stdio.h>
 
 #define MAX_I2C_PORTS		2
 
@@ -91,10 +92,11 @@ int i2c_master_init(unsigned port)
       break;
   }
 
-  // Configure for APB1 at 36 MHz
+  // Configure for APB1 at 36 MHz (27.78 ns)
 
   dev->CR2 = 0x0024;
-  dev->TRISE = 37;
+  dev->TRISE = 37;	// 1000 ns rise time
+  dev->CCR = 180;	// 5000 ns pulse width
 
   // Enable I2C device
 
@@ -103,7 +105,80 @@ int i2c_master_init(unsigned port)
   return 0;
 }
 
-ssize_t i2c_master_transmit(unsigned port, uint8_t slaveaddr,
+ssize_t i2c_master_read(unsigned port, uint8_t slaveaddr,
+  uint8_t *rxbuf, size_t rxsize)
+{
+  I2C_TypeDef *dev;
+
+  errno_r = 0;
+
+  // Validate parameters
+
+  if ((port < 1) && (port > MAX_I2C_PORTS))
+  {
+    errno_r = ENODEV;
+    return -1;
+  }
+
+  if (slaveaddr <= RESERVED_ADDRESS_LOW)
+  {
+    errno_r = EINVAL;
+    return -1;
+  }
+
+  if (slaveaddr >= RESERVED_ADDRESS_HIGH)
+  {
+    errno_r = EINVAL;
+    return -1;
+  }
+
+  if (rxbuf == NULL)
+  {
+    errno_r = EINVAL;
+    return -1;
+  }
+
+  if (rxsize == 0)
+  {
+    errno_r = EINVAL;
+    return -1;
+  }
+
+  dev = I2C_PORTS[port];
+
+  // Assert START
+
+  dev->CR1 |= I2C_CR1_START;
+  while ((dev->SR1 & I2C_SR1_SB) == 0);
+
+  // Address slave
+
+  dev->DR = (slaveaddr << 1) + 1;
+  while ((dev->SR1 & I2C_SR1_ADDR) == 0);
+  dev->SR2;
+
+  // Enable ACK
+
+  dev->CR1 &= ~I2C_CR1_POS;
+  dev->CR1 |= I2C_CR1_ACK;
+
+  // Receive bytes
+
+  while (rxsize--)
+  {
+    while ((dev->SR1 & (I2C_SR1_BTF | I2C_SR1_RXNE)) == 0);
+    *rxbuf++ = dev->DR;
+  }
+
+  // Assert STOP
+
+  dev->CR1 |= I2C_CR1_STOP;
+  while (dev->CR1 & I2C_CR1_STOP);
+
+  return 0;
+}
+
+ssize_t i2c_master_write(unsigned port, uint8_t slaveaddr,
   uint8_t *txbuf, size_t txsize)
 {
   I2C_TypeDef *dev;
@@ -155,60 +230,18 @@ ssize_t i2c_master_transmit(unsigned port, uint8_t slaveaddr,
   while ((dev->SR1 & I2C_SR1_ADDR) == 0);
   dev->SR2;
 
+  // Transmit bytes
+
   while (txsize--)
   {
     dev->DR = *txbuf++;
-    while ((dev->SR1 & I2C_SR1_BTF) == 0);
+    while ((dev->SR1 & (I2C_SR1_BTF|I2C_SR1_TXE)) == 0);
   }
 
   // Assert STOP
 
   dev->CR1 |= I2C_CR1_STOP;
   while (dev->CR1 & I2C_CR1_STOP);
-
-  return 0;
-}
-
-ssize_t i2c_master_receive(unsigned port, uint8_t slaveaddr,
-  uint8_t *rxbuf, size_t rxsize)
-{
-  I2C_TypeDef *dev;
-
-  errno_r = 0;
-
-  // Validate parameters
-
-  if ((port < 1) && (port > MAX_I2C_PORTS))
-  {
-    errno_r = ENODEV;
-    return -1;
-  }
-
-  if (slaveaddr <= RESERVED_ADDRESS_LOW)
-  {
-    errno_r = EINVAL;
-    return -1;
-  }
-
-  if (slaveaddr >= RESERVED_ADDRESS_HIGH)
-  {
-    errno_r = EINVAL;
-    return -1;
-  }
-
-  if (rxbuf == NULL)
-  {
-    errno_r = EINVAL;
-    return -1;
-  }
-
-  if (rxsize == 0)
-  {
-    errno_r = EINVAL;
-    return -1;
-  }
-
-  dev = I2C_PORTS[port];
 
   return 0;
 }
