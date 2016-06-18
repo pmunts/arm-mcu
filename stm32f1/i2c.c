@@ -23,7 +23,11 @@
 #include <cpu.h>
 #include <stdio.h>
 
+#ifdef I2C2
 #define MAX_I2C_PORTS		2
+#else
+#define MAX_I2C_PORTS		1
+#endif
 
 #define GPIO_CONFIG_SCL		0xF
 #define GPIO_CONFIG_SDA		0xF
@@ -58,6 +62,7 @@ int i2c_master_init(unsigned port)
 
   switch (port)
   {
+#ifdef I2C1
     case 0 :
       // Enable peripheral clocks
 
@@ -90,6 +95,27 @@ int i2c_master_init(unsigned port)
       GPIOB->CRL |= GPIO_CONFIG_SDA << 28;
 #endif
       break;
+#endif
+
+#ifdef I2C2
+    case 1 :
+      // Enable peripheral clocks
+
+      RCC->APB1ENR |= RCC_APB1ENR_I2C2EN;
+      RCC->APB2ENR |= RCC_APB2ENR_AFIOEN;
+
+      // SCL on PB10
+      // SDA on PB11
+
+      RCC->APB2ENR |= RCC_APB2ENR_IOPBEN;
+
+      GPIOB->CRH &= ~(0xF << 8);
+      GPIOB->CRH |= GPIO_CONFIG_SCL << 8;
+
+      GPIOB->CRH &= ~(0xF << 12);
+      GPIOB->CRH |= GPIO_CONFIG_SDA << 12;
+      break;
+#endif
   }
 
   // Configure for APB1 at 36 MHz (27.78 ns)
@@ -250,7 +276,7 @@ ssize_t i2c_master_write(unsigned port, uint8_t slaveaddr,
   while (txsize--)
   {
     dev->DR = *txbuf++;
-    while ((dev->SR1 & (I2C_SR1_BTF|I2C_SR1_TXE)) == 0);
+    while ((dev->SR1 & I2C_SR1_TXE) == 0);
   }
 
   // Assert STOP
