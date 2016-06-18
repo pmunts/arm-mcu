@@ -46,8 +46,6 @@ int i2c_master_init(unsigned port)
 {
   I2C_TypeDef *dev;
 
-  errno_r = 0;
-
   // Validate parameters
 
   if ((port < 1) && (port > MAX_I2C_PORTS))
@@ -132,6 +130,7 @@ int i2c_master_init(unsigned port)
 
   dev->CR1 = I2C_CR1_PE;
 
+  errno_r = 0;
   return 0;
 }
 
@@ -139,8 +138,7 @@ ssize_t i2c_master_read(unsigned port, uint8_t slaveaddr,
   uint8_t *rxbuf, size_t rxsize)
 {
   I2C_TypeDef *dev;
-
-  errno_r = 0;
+  ssize_t count = 0;
 
   // Validate parameters
 
@@ -206,6 +204,7 @@ ssize_t i2c_master_read(unsigned port, uint8_t slaveaddr,
   {
     while ((dev->SR1 & I2C_SR1_RXNE) == 0);
     *rxbuf++ = dev->DR;
+    count++;
 
     // Post NACK and STOP on just before last byte
 
@@ -220,15 +219,15 @@ ssize_t i2c_master_read(unsigned port, uint8_t slaveaddr,
 
   while (dev->CR1 & I2C_CR1_STOP);
 
-  return 0;
+  errno_r = 0;
+  return count;
 }
 
 ssize_t i2c_master_write(unsigned port, uint8_t slaveaddr,
   uint8_t *txbuf, size_t txsize)
 {
   I2C_TypeDef *dev;
-
-  errno_r = 0;
+  ssize_t count = 0;
 
   // Validate parameters
 
@@ -280,6 +279,7 @@ ssize_t i2c_master_write(unsigned port, uint8_t slaveaddr,
   while (txsize--)
   {
     dev->DR = *txbuf++;
+    count++;
     while ((dev->SR1 & I2C_SR1_TXE) == 0);
   }
 
@@ -288,5 +288,6 @@ ssize_t i2c_master_write(unsigned port, uint8_t slaveaddr,
   dev->CR1 |= I2C_CR1_STOP;
   while (dev->CR1 & I2C_CR1_STOP);
 
-  return 0;
+  errno_r = 0;
+  return count;
 }
