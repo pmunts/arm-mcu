@@ -116,6 +116,10 @@ int i2c_master_init(unsigned port)
       GPIOB->CRH |= GPIO_CONFIG_SDA << 12;
       break;
 #endif
+
+    default :
+      errno_r = ENODEV;
+      return -1;
   }
 
   // Configure for APB1 at 36 MHz (27.78 ns)
