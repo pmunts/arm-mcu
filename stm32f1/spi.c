@@ -154,8 +154,8 @@ int spi_master_init(uint32_t port, uint32_t wordsize, uint32_t clockmode,
     case SPI_PORT1 :
       // Enable peripheral clocks
 
-      RCC->APB2ENR |= RCC_APB2ENR_SPI1EN;
       RCC->APB2ENR |= RCC_APB2ENR_AFIOEN;
+      RCC->APB2ENR |= RCC_APB2ENR_SPI1EN;
 
       // Configure GPIO pins
       //   CLK on PA5
@@ -165,18 +165,18 @@ int spi_master_init(uint32_t port, uint32_t wordsize, uint32_t clockmode,
       RCC->APB2ENR |= RCC_APB2ENR_IOPAEN;
       AFIO->MAPR &= ~AFIO_MAPR_SPI1_REMAP;
 
-      GPIOB->CRL &= ~(0xF << 20);
-      GPIOB->CRL |= 0xB << 20;
+      GPIOA->CRL &= ~(0xF << 20);
+      GPIOA->CRL |= 0xB << 20;
 
-      GPIOB->CRL &= ~(0xF << 24);
-      GPIOB->CRL |= 0x4 << 24;
+      GPIOA->CRL &= ~(0xF << 24);
+      GPIOA->CRL |= 0x4 << 24;
 
-      GPIOB->CRL &= ~(0xF << 28);
-      GPIOB->CRL |= 0xB << 28;
+      GPIOA->CRL &= ~(0xF << 28);
+      GPIOA->CRL |= 0xB << 28;
 
       // Configure the SPI controller
 
-      SPI1->CR1 = 0x0044		|
+      SPI1->CR1 = 0x0344		|
         ((wordsize == 8 ? 0 : 1) << 11)	|
         ((bitorder ? 0 : 1) << 7)	|
         (prescaler << 3)		|
