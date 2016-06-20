@@ -25,8 +25,34 @@
 
 _BEGIN_STD_C
 
-#define SPI_MSBFIRST		1
-#define SPI_LSBFIRST		0
+typedef enum
+{
+  SPI_PORT1,
+  SPI_PORT2,
+  SPI_PORT3,
+  SPI_PORT4,
+  SPI_PORT5,
+  SPI_PORT6,
+  SPI_PORT7,
+  SPI_PORT8
+} SPI_PORT_t;
+
+typedef enum
+{
+  SPI_MODE0,
+  SPI_MODE1,
+  SPI_MODE2,
+  SPI_MODE3
+} SPI_MODE_t;
+
+typedef enum
+{
+  SPI_LSBFIRST,
+  SPI_MSBFIRST
+} SPI_BITORDER_t;
+
+// Define SPI port numbers (counting from zero).  These are not all
+// available on any particular MCU
 
 // Initialize SPI port for bidirectional master mode
 
