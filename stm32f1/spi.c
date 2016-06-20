@@ -30,7 +30,7 @@
 #define MAX_SPI_PORTS		1
 #endif
 
-// Map SPI port number to control structure
+// Map SPI port number to device structure pointer
 
 static SPI_TypeDef * const SPI_PORTS[MAX_SPI_PORTS] =
 {
@@ -45,15 +45,78 @@ static SPI_TypeDef * const SPI_PORTS[MAX_SPI_PORTS] =
 
 /*****************************************************************************/
 
+// Calculate the SPI clock prescaler for a given SPI clock rate.  Return an
+// error if the requested SPI clock rate isn't possible.
+
+static int SPI_Clock_Prescaler(uint32_t port,
+                               uint32_t speed,
+                               uint32_t *prescaler)
+{
+  uint32_t PCLK;
+
+// Different SPI ports use PCLK1 or PCLK2 peripheral clock
+
+  switch (port)
+  {
+    case SPI_PORT1 :
+      PCLK = SystemCoreClock;	// SPI1 is on APB2=HCLK
+      break;
+
+#ifdef SPI2
+    case SPI_PORT2 :
+      PCLK = SystemCoreClock/2;	// SPI2 is on APB1=HCLK/2
+      break;
+#endif
+
+#ifdef SPI3
+    case SPI_PORT3 :
+      PCLK = SystemCoreClock/2;	// SPI3 is on APB1=HCLK/2
+      break;
+#endif
+
+    default :
+      errno_r = ENODEV;
+      return -1;
+  }
+
+// Calculate SPI clock prescaler from desired SPI clock rate and PCLK rate
+
+  if (speed == PCLK/256)
+    *prescaler = 7;
+  else if (speed == PCLK/128)
+    *prescaler = 6;
+  else if (speed == PCLK/64)
+    *prescaler = 5;
+  else if (speed == PCLK/32)
+    *prescaler = 4;
+  else if (speed == PCLK/16)
+    *prescaler = 3;
+  else if (speed == PCLK/8)
+    *prescaler = 2;
+  else if (speed == PCLK/4)
+    *prescaler = 1;
+  else if (speed == PCLK/2)
+    *prescaler = 0;
+
+// Only the above SPI clock rates are possible.  Others are unrealizable.
+
+  else
+  {
+    errno_r = EINVAL;
+    return -1;
+  }
+
+  return 0;
+}
+
+/*****************************************************************************/
+
 // Initialize SPI port for bidirectional master mode
 
-int spi_master_init(uint32_t port,
-                    uint32_t wordsize,
-                    uint32_t clockmode,
-                    uint32_t speed,
-                    uint32_t bitorder)
+int spi_master_init(uint32_t port, uint32_t wordsize, uint32_t clockmode,
+  uint32_t speed, uint32_t bitorder)
 {
-  SPI_TypeDef *dev;
+  uint32_t prescaler;
 
   // Validate parameters
 
@@ -75,21 +138,56 @@ int spi_master_init(uint32_t port,
     return -1;
   }
 
+  if (SPI_Clock_Prescaler(port, speed, &prescaler))
+    return -1;
+
   if (bitorder > 1)
   {
     errno_r = EINVAL;
     return -1;
   }
 
-  dev = SPI_PORTS[port];
-
-  // Configure clocks and GPIO pins
+  // Configure hardware
 
   switch (port)
   {
-  }
+    case SPI_PORT1 :
+      // Enable peripheral clocks
 
-  // Configure the SPI controller
+      RCC->APB2ENR |= RCC_APB2ENR_SPI1EN;
+      RCC->APB2ENR |= RCC_APB2ENR_AFIOEN;
+
+      // Configure GPIO pins
+      //   CLK on PA5
+      //   MISO on PA6
+      //   MOSI on PA7
+
+      RCC->APB2ENR |= RCC_APB2ENR_IOPAEN;
+      AFIO->MAPR &= ~AFIO_MAPR_SPI1_REMAP;
+
+      GPIOB->CRL &= ~(0xF << 20);
+      GPIOB->CRL |= 0xB << 20;
+
+      GPIOB->CRL &= ~(0xF << 24);
+      GPIOB->CRL |= 0x4 << 24;
+
+      GPIOB->CRL &= ~(0xF << 28);
+      GPIOB->CRL |= 0xB << 28;
+
+      // Configure the SPI controller
+
+      SPI1->CR1 = 0x0044		|
+        ((wordsize == 8 ? 0 : 1) << 11)	|
+        ((bitorder ? 0 : 1) << 7)	|
+        (prescaler << 3)		|
+        clockmode;
+      SPI1->CR2 = 0x00000000;
+      break;
+
+    default :
+      errno_r = EINVAL;
+      return -1;
+  }
 
   errno_r = 0;
   return 0;
@@ -99,11 +197,8 @@ int spi_master_init(uint32_t port,
 
 // Transmit command and/or receive result in bidirectional master mode
 
-int spi_master_transfer(uint32_t port,
-                        uint8_t *txbuf,
-                        uint32_t txcount,
-                        uint8_t *rxbuf,
-                        uint32_t rxcount)
+int spi_master_transfer(uint32_t port, uint8_t *txbuf, uint32_t txcount,
+  uint8_t *rxbuf, uint32_t rxcount)
 {
   SPI_TypeDef *dev;
 
