@@ -29,6 +29,18 @@
 
 _BEGIN_STD_C
 
+typedef enum
+{
+  SERIAL_PORT1,
+  SERIAL_PORT2,
+  SERIAL_PORT3,
+  SERIAL_PORT4,
+  SERIAL_PORT5,
+  SERIAL_PORT6,
+  SERIAL_PORT7,
+  SERIAL_PORT8
+} SERIAL_PORT_t;
+
 /* Map serial port name to port number (subdevice) */
 
 int serial_name_to_port(char *name);

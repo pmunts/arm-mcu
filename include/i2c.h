@@ -25,6 +25,18 @@
 
 _BEGIN_STD_C
 
+typedef enum
+{
+  I2C_PORT1,
+  I2C_PORT2,
+  I2C_PORT3,
+  I2C_PORT4,
+  I2C_PORT5,
+  I2C_PORT6,
+  I2C_PORT7,
+  I2C_PORT8
+} I2C_PORT_t;
+
 int i2c_slave_init(unsigned port, uint8_t addr);
 
 ssize_t i2c_slave_read(unsigned port, uint8_t *rxbuf, size_t rxsize);
