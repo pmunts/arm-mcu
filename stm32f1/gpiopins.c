@@ -112,7 +112,6 @@ typedef struct
 {
   unsigned devpin;
   unsigned gpiopin;
-  unsigned defaultmap;
   unsigned config;
   unsigned remap1;
   unsigned remap2;
@@ -171,7 +170,7 @@ static const PINMAPPING_t AllowedMappings[] =
   { GPIOPIN_USART3_TXD, GPIOPIN56, GPIO_CONFIG_TXD,  0x00000030, 0x00000000 }, // PD8
   { GPIOPIN_USART3_RXD, GPIOPIN57, GPIO_CONFIG_RXD,  0x00000030, 0x00000000 }, // PD9
 #endif
-  { 0xFFFFFFFF, 0, 0, 0, 0, 0 }
+  { 0xFFFFFFFF, 0, 0, 0, 0 }
 };
 
 static unsigned ActualMappings[(int)GPIOPIN_DEVICEPINS_SENTINEL];
@@ -251,7 +250,7 @@ int gpiopin_device_configure(unsigned int devpin)
   pin  = mapping->gpiopin % PINS_PER_GPIO_PORT;
   assert(port < MAX_GPIO_PORTS);
 
-  // Enable the peripheral clock
+  // Enable the GPIO port peripheral clock
 
   RCC->APB2ENR |= RCC_APB2ENR_AFIOEN|(1 << (port + 2));
 
