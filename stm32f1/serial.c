@@ -140,7 +140,7 @@ static unsigned CalcBRR(unsigned port, unsigned baudrate)
 
   switch (port)
   {
-    case 0 :
+    case SERIAL_PORT1 : // aka USART1 aka com1:
       // Serial ports on APB2
       switch (RCC->CFGR & RCC_CFGR_PPRE2)
       {
@@ -169,8 +169,8 @@ static unsigned CalcBRR(unsigned port, unsigned baudrate)
       }
       break;
 
-    case 1 :
-    case 2 :
+    case SERIAL_PORT2 : // aka USART2 aka com2:
+    case SERIAL_PORT3 : // aka USART3 aka com3:
       // Serial ports on APB1
       switch (RCC->CFGR & RCC_CFGR_PPRE1)
       {
@@ -270,7 +270,7 @@ int serial_open(char *name, unsigned *subdevice)
   switch (port)
   {
 #ifdef USART1
-    case 0 :
+    case SERIAL_PORT1 : // aka USART1 aka com1:
 
 // Initialize ring buffers
 
@@ -305,7 +305,7 @@ int serial_open(char *name, unsigned *subdevice)
 #endif
 
 #ifdef USART2
-    case 1 :
+    case SERIAL_PORT2 : // aka USART2 aka com2:
 
 // Initialize ring buffers
 
@@ -340,7 +340,7 @@ int serial_open(char *name, unsigned *subdevice)
 #endif
 
 #ifdef USART3
-    case 2 :
+    case SERIAL_PORT3 : // aka USART3 aka com3:
 
 // Initialize ring buffers
 
