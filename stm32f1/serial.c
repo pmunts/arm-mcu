@@ -279,8 +279,11 @@ int serial_open(char *name, unsigned *subdevice)
 
 // Configure GPIO pins
 
-      gpiopin_device_configure(GPIOPIN_USART1_TXD);
-      gpiopin_device_configure(GPIOPIN_USART1_RXD);
+      if (gpiopin_device_configure(GPIOPIN_USART1_TXD))
+        return -1;
+
+      if (gpiopin_device_configure(GPIOPIN_USART1_RXD))
+        return -1;
 
 // Turn on USART1 peripheral clock
 
@@ -311,8 +314,11 @@ int serial_open(char *name, unsigned *subdevice)
 
 // Configure GPIO pins
 
-      gpiopin_device_configure(GPIOPIN_USART2_TXD);
-      gpiopin_device_configure(GPIOPIN_USART2_RXD);
+      if (gpiopin_device_configure(GPIOPIN_USART2_TXD))
+        return -1;
+
+      if (gpiopin_device_configure(GPIOPIN_USART2_RXD))
+        return -1;
 
 // Turn on USART2 peripheral clock
 
@@ -343,8 +349,11 @@ int serial_open(char *name, unsigned *subdevice)
 
 // Configure GPIO pins
 
-      gpiopin_device_configure(GPIOPIN_USART3_TXD);
-      gpiopin_device_configure(GPIOPIN_USART3_RXD);
+      if (gpiopin_device_configure(GPIOPIN_USART3_TXD))
+        return -1;
+
+      if (gpiopin_device_configure(GPIOPIN_USART3_RXD))
+        return -1;
 
 // Turn on USART3 peripheral clock
 

@@ -66,8 +66,11 @@ int i2c_master_init(unsigned port)
 
       // Configure GPIO pins
 
-      gpiopin_device_configure(GPIOPIN_I2C1_SCL);
-      gpiopin_device_configure(GPIOPIN_I2C1_SDA);
+      if (gpiopin_device_configure(GPIOPIN_I2C1_SCL))
+        return -1;
+
+      if (gpiopin_device_configure(GPIOPIN_I2C1_SDA))
+        return -1;
       break;
 #endif
 
@@ -79,8 +82,11 @@ int i2c_master_init(unsigned port)
 
       // Configure GPIO pins
 
-      gpiopin_device_configure(GPIOPIN_I2C2_SCL);
-      gpiopin_device_configure(GPIOPIN_I2C2_SDA);
+      if (gpiopin_device_configure(GPIOPIN_I2C2_SCL))
+        return -1;
+
+      if (gpiopin_device_configure(GPIOPIN_I2C2_SDA))
+        return -1;
       break;
 #endif
 
