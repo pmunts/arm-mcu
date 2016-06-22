@@ -59,7 +59,7 @@ int i2c_master_init(unsigned port)
   switch (port)
   {
 #ifdef I2C1
-    case 0 :
+    case I2C_PORT1 :
       // Enable peripheral clock
 
       RCC->APB1ENR |= RCC_APB1ENR_I2C1EN;
@@ -75,7 +75,7 @@ int i2c_master_init(unsigned port)
 #endif
 
 #ifdef I2C2
-    case 1 :
+    case I2C_PORT2 :
       // Enable peripheral clock
 
       RCC->APB1ENR |= RCC_APB1ENR_I2C2EN;
