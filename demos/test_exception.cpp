@@ -55,8 +55,6 @@ int main(void)
   cout << "(" << __DATE__ << " " <<  __TIME__ << ")";
   cout << "\n\n";
 
-  cout << "\n\n";
-
   cout << "Board:    " << BOARDNAME << "\n";
   cout << "CPU Freq: " << SystemCoreClock/1000000 << " MHz\n";
   cout << "Compiler: " << __COMPILER__ << " " << __VERSION__ << " " << __ABI__ << "\n\n";

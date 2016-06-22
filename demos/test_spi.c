@@ -55,7 +55,7 @@ int main(void)
   serial_stdio(CONSOLE_PORT);
 
   printf("\033[H\033[2J%s SPI Master Test (" __DATE__ " " __TIME__ ")\n\n", MCUFAMILYNAME);
-  printf("\nCPU Freq:%u Hz  Compiler:%s %s %s\n\n", (unsigned int) SystemCoreClock,
+  printf("CPU Freq:%u Hz  Compiler:%s %s %s\n\n", (unsigned int) SystemCoreClock,
     __COMPILER__, __VERSION__, __ABI__);
 
   if ((status = spi_master_init(SPI_PORT, 8, 0, 281250, SPI_MSBFIRST)))

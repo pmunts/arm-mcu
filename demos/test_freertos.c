@@ -84,7 +84,7 @@ int main(void)
 // Display version information
 
   printf("\033[H\033[2J%s FreeRTOS Test (" __DATE__ " " __TIME__ ")\n\n", MCUFAMILYNAME);
-  printf("\nCPU Freq:%u Hz  Compiler:%s %s %s  FreeRTOS:%s\n\n", (unsigned int) SystemCoreClock,
+  printf("CPU Freq:%u Hz  Compiler:%s %s %s  FreeRTOS:%s\n\n", (unsigned int) SystemCoreClock,
     __COMPILER__, __VERSION__, __ABI__, tskKERNEL_VERSION_NUMBER);
 
 // Create mutex to arbitrate console output

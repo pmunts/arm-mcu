@@ -33,7 +33,7 @@ int main(void)
   serial_stdio(CONSOLE_PORT);
 
   printf("\033[H\033[2J%s Up Time Test (" __DATE__ " " __TIME__ ")\n\n", MCUFAMILYNAME);
-  printf("\nCPU Freq:%u Hz  Compiler:%s %s %s\n\n", (unsigned int) SystemCoreClock,
+  printf("CPU Freq:%u Hz  Compiler:%s %s %s\n\n", (unsigned int) SystemCoreClock,
     __COMPILER__, __VERSION__, __ABI__);
 
   for (;;)
