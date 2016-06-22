@@ -80,10 +80,10 @@ News
        newlib to 2.3.0, and gdb to 0.7.1.
      * 6 April 2016 -- New toolchain release 2016.097: Upgraded binutils
        to 2.26, newlib to 2.4.0 and gdb to 7.11.
-     * 22 June 2016 -- Added I2C and SPI support for STM32F1 devices.
-       Added STM32F1 peripheral pin remapping services, allowing all board
-       dependent code to be removed from driver modules i2c., serial.c,
-       and spi.c.
+     * 22 June 2016 -- Added I2C master and SPI master support for STM32F1
+       devices. Added STM32F1 peripheral pin remapping services, allowing
+       all board dependent code to be removed from driver modules i2c.,
+       serial.c, and spi.c.
 
 Git Repository
 
