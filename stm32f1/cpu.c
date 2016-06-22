@@ -186,4 +186,26 @@ void cpu_init(unsigned long int frequency)
   SystemInit();
   ConfigurePLL();
   SystemCoreClockUpdate();
+  gpiopin_device_defaults();
+
+  // Remap GPIO pins as necessary
+
+#ifdef NUCLEO_F103RB
+  gpiopin_device_map(GPIOPIN_I2C1_SCL, GPIOPIN24);	// PB8
+  gpiopin_device_map(GPIOPIN_I2C1_SDA, GPIOPIN25);	// PB9
+  gpiopin_device_map(GPIOPIN_USART3_TXD, GPIOPIN42);	// PC10
+  gpiopin_device_map(GPIOPIN_USART3_RXD, GPIOPIN43);	// PC11
+#endif
+
+#ifdef OLIMEX_STM32_P103
+#endif
+
+#ifdef OLIMEX_STM32_P107
+  gpiopin_device_map(GPIOPIN_USART1_TXD, GPIOPIN22);	// PB6
+  gpiopin_device_map(GPIOPIN_USART1_RXD, GPIOPIN23);	// PB7
+  gpiopin_device_map(GPIOPIN_USART2_TXD, GPIOPIN53);	// PD5
+  gpiopin_device_map(GPIOPIN_USART2_RXD, GPIOPIN54);	// PD6
+  gpiopin_device_map(GPIOPIN_USART3_TXD, GPIOPIN56);	// PD8
+  gpiopin_device_map(GPIOPIN_USART3_RXD, GPIOPIN57);	// PD9
+#endif
 }

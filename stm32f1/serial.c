@@ -33,9 +33,6 @@
 #define MAX_SERIAL_PORTS	5	// com1: through com5:
 #define BUFSIZE			64	// Must be power of 2!
 
-#define GPIO_CONFIG_TX		0xB	// 50 MHz AF push-pull output
-#define GPIO_CONFIG_RX		0x4	// Floating input
-
 typedef struct
 {
   uint8_t data[BUFSIZE];
@@ -280,40 +277,14 @@ int serial_open(char *name, unsigned *subdevice)
       if (InitializeRingBuffers(port))
         return -1;
 
+// Configure GPIO pins
+
+      gpiopin_device_configure(GPIOPIN_USART1_TXD);
+      gpiopin_device_configure(GPIOPIN_USART1_RXD);
+
 // Turn on USART1 peripheral clock
 
-      RCC->APB2ENR |= RCC_APB2ENR_AFIOEN;
       RCC->APB2ENR |= RCC_APB2ENR_USART1EN;
-
-#if defined(OLIMEX_STM32_P107)
-// Configure TX pin on PB6
-
-      RCC->APB2ENR |= RCC_APB2ENR_IOPBEN;
-
-      GPIOB->CRL &= ~(0xF << 24);
-      GPIOB->CRL |= GPIO_CONFIG_TX << 24;
-
-// Configure RX pin on PB7
-
-      RCC->APB2ENR |= RCC_APB2ENR_IOPBEN;
-
-      GPIOB->CRL &= ~(0xF << 28);
-      GPIOB->CRL |= GPIO_CONFIG_RX << 28;
-#else
-// Configure TX pin on PA9
-
-      RCC->APB2ENR |= RCC_APB2ENR_IOPAEN;
-
-      GPIOA->CRH &= ~(0xF << 4);
-      GPIOA->CRH |= GPIO_CONFIG_TX << 4;
-
-// Configure RX pin on PA10
-
-      RCC->APB2ENR |= RCC_APB2ENR_IOPAEN;
-
-      GPIOA->CRH &= ~(0xF << 8);
-      GPIOA->CRH |= GPIO_CONFIG_RX << 8;
-#endif
 
 // Configure USART1
 
@@ -338,40 +309,14 @@ int serial_open(char *name, unsigned *subdevice)
       if (InitializeRingBuffers(port))
         return -1;
 
+// Configure GPIO pins
+
+      gpiopin_device_configure(GPIOPIN_USART2_TXD);
+      gpiopin_device_configure(GPIOPIN_USART2_RXD);
+
 // Turn on USART2 peripheral clock
 
-      RCC->APB2ENR |= RCC_APB2ENR_AFIOEN;
       RCC->APB1ENR |= RCC_APB1ENR_USART2EN;
-
-#if defined(OLIMEX_STM32_P107)
-// Configure TX pin on PD5
-
-      RCC->APB2ENR |= RCC_APB2ENR_IOPDEN;
-
-      GPIOD->CRL &= ~(0xF << 20);
-      GPIOD->CRL |= GPIO_CONFIG_TX << 20;
-
-// Configure RX pin on PD6
-
-      RCC->APB2ENR |= RCC_APB2ENR_IOPDEN;
-
-      GPIOD->CRL &= ~(0xF << 24);
-      GPIOD->CRL |= GPIO_CONFIG_RX << 24;
-#else
-// Configure TX pin on PA2
-
-      RCC->APB2ENR |= RCC_APB2ENR_IOPAEN;
-
-      GPIOA->CRL &= ~(0xF << 8);
-      GPIOA->CRL |= GPIO_CONFIG_TX << 8;
-
-// Configure RX pin on PA3
-
-      RCC->APB2ENR |= RCC_APB2ENR_IOPAEN;
-
-      GPIOA->CRL &= ~(0xF << 12);
-      GPIOA->CRL |= GPIO_CONFIG_RX << 12;
-#endif
 
 // Configure USART2
 
@@ -396,59 +341,14 @@ int serial_open(char *name, unsigned *subdevice)
       if (InitializeRingBuffers(port))
         return -1;
 
+// Configure GPIO pins
+
+      gpiopin_device_configure(GPIOPIN_USART3_TXD);
+      gpiopin_device_configure(GPIOPIN_USART3_RXD);
+
 // Turn on USART3 peripheral clock
 
-      RCC->APB2ENR |= RCC_APB2ENR_AFIOEN;
       RCC->APB1ENR |= RCC_APB1ENR_USART3EN;
-
-#if defined(NUCLEO_F103RB)
-      AFIO->MAPR |= AFIO_MAPR_USART3_REMAP_PARTIALREMAP;
-
-// Configure TX pin on PC10 (wire-wrap CN7 pin 1 to CN10 pin 35 for Arduino D1/TX)
-
-      RCC->APB2ENR |= RCC_APB2ENR_IOPCEN;
-
-      GPIOC->CRH &= ~(0xF << 8);
-      GPIOC->CRH |= GPIO_CONFIG_TX << 8;
-
-// Configure RX pin on PC11 (wire-wrap CN7 pin 2 to CN10 pin 37 for Arduino D0/RX)
-
-      RCC->APB2ENR |= RCC_APB2ENR_IOPCEN;
-
-      GPIOC->CRH &= ~(0xF << 12);
-      GPIOC->CRH |= GPIO_CONFIG_RX << 12;
-
-#elif defined(OLIMEX_STM32_P107)
-      AFIO->MAPR |= AFIO_MAPR_USART3_REMAP_FULLREMAP;
-
-// Configure TX pin on PD8
-
-      RCC->APB2ENR |= RCC_APB2ENR_IOPDEN;
-
-      GPIOD->CRH &= ~(0xF << 0);
-      GPIOD->CRH |= GPIO_CONFIG_TX << 0;
-
-// Configure RX pin on PD9
-
-      RCC->APB2ENR |= RCC_APB2ENR_IOPDEN;
-
-      GPIOD->CRH &= ~(0xF << 4);
-      GPIOD->CRH |= GPIO_CONFIG_RX << 4;
-#else
-// Configure TX pin on PB10
-
-      RCC->APB2ENR |= RCC_APB2ENR_IOPBEN;
-
-      GPIOB->CRH &= ~(0xF << 8);
-      GPIOB->CRH |= GPIO_CONFIG_TX << 8;
-
-// Configure RX pin on PB11
-
-      RCC->APB2ENR |= RCC_APB2ENR_IOPBEN;
-
-      GPIOB->CRH &= ~(0xF << 12);
-      GPIOB->CRH |= GPIO_CONFIG_RX << 12;
-#endif
 
 // Configure USART3
 

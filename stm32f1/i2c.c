@@ -29,8 +29,6 @@
 #define MAX_I2C_PORTS		1
 #endif
 
-#define GPIO_CONFIG_SCL		0xF
-#define GPIO_CONFIG_SDA		0xF
 #define RESERVED_ADDRESS_LOW	0x07
 #define RESERVED_ADDRESS_HIGH	0x78
 
@@ -56,62 +54,33 @@ int i2c_master_init(unsigned port)
 
   dev = I2C_PORTS[port];
 
-  // Configure I2C pins
+  // Perform port specific configuration
 
   switch (port)
   {
 #ifdef I2C1
     case 0 :
-      // Enable peripheral clocks
+      // Enable peripheral clock
 
       RCC->APB1ENR |= RCC_APB1ENR_I2C1EN;
-      RCC->APB2ENR |= RCC_APB2ENR_AFIOEN;
 
-#if defined(NUCLEO_F103RB) || defined(OLIMEX_STM32_P107)
-      // SCL on PB8 (remap)
-      // SDA on PB9 (remap)
+      // Configure GPIO pins
 
-      RCC->APB2ENR |= RCC_APB2ENR_IOPBEN;
-      AFIO->MAPR |= AFIO_MAPR_I2C1_REMAP;
-
-      GPIOB->CRH &= ~(0xF << 0);
-      GPIOB->CRH |= GPIO_CONFIG_SCL << 0;
-
-      GPIOB->CRH &= ~(0xF << 4);
-      GPIOB->CRH |= GPIO_CONFIG_SDA << 4;
-#else
-      // SCL on PB6
-      // SDA on PB7
-
-      RCC->APB2ENR |= RCC_APB2ENR_IOPBEN;
-      AFIO->MAPR &= ~AFIO_MAPR_I2C1_REMAP
-
-      GPIOB->CRL &= ~(0xF << 24);
-      GPIOB->CRL |= GPIO_CONFIG_SCL << 24;
-
-      GPIOB->CRL &= ~(0xF << 28);
-      GPIOB->CRL |= GPIO_CONFIG_SDA << 28;
-#endif
+      gpiopin_device_configure(GPIOPIN_I2C1_SCL);
+      gpiopin_device_configure(GPIOPIN_I2C1_SDA);
       break;
 #endif
 
 #ifdef I2C2
     case 1 :
-      // Enable peripheral clocks
+      // Enable peripheral clock
 
       RCC->APB1ENR |= RCC_APB1ENR_I2C2EN;
-      RCC->APB2ENR |= RCC_APB2ENR_AFIOEN;
 
-      // SCL on PB10
-      // SDA on PB11
+      // Configure GPIO pins
 
-      RCC->APB2ENR |= RCC_APB2ENR_IOPBEN;
-
-      GPIOB->CRH &= ~(0xF << 8);
-      GPIOB->CRH |= GPIO_CONFIG_SCL << 8;
-
-      GPIOB->CRH &= ~(0xF << 12);
-      GPIOB->CRH |= GPIO_CONFIG_SDA << 12;
+      gpiopin_device_configure(GPIOPIN_I2C2_SCL);
+      gpiopin_device_configure(GPIOPIN_I2C2_SDA);
       break;
 #endif
 

@@ -40,14 +40,6 @@
 
 _BEGIN_STD_C
 
-typedef enum
-{
-  GPIOPIN_INPUT,
-  GPIOPIN_OUTPUT,
-} gpiopin_direction_t;
-
-int gpiopin_configure(unsigned int pin, gpiopin_direction_t direction);
-
 // PA0 is GPIOPIN0
 #define GPIOPIN0	0
 #define GPIOPIN0IN	(*((unsigned long int *) 0x42210100))
@@ -613,6 +605,65 @@ int gpiopin_configure(unsigned int pin, gpiopin_direction_t direction);
 #define GPIOPIN111IN	(*((unsigned long int *) 0x4224013C))
 #define GPIOPIN111OUT	(*((unsigned long int *) 0x422401BC))
 #endif
+
+typedef enum
+{
+  GPIOPIN_INPUT,
+  GPIOPIN_OUTPUT,
+} gpiopin_direction_t;
+
+int gpiopin_configure(unsigned int pin, gpiopin_direction_t direction);
+
+// These are all of the device pins that can be mapped.
+
+typedef enum
+{
+#ifdef I2C1
+  GPIOPIN_I2C1_SCL,
+  GPIOPIN_I2C1_SDA,
+#endif
+#ifdef I2C2
+  GPIOPIN_I2C2_SCL,
+  GPIOPIN_I2C2_SDA,
+#endif
+#ifdef SPI1
+  GPIOPIN_SPI1_NSS,
+  GPIOPIN_SPI1_SCK,
+  GPIOPIN_SPI1_MISO,
+  GPIOPIN_SPI1_MOSI,
+#endif
+#ifdef SPI2
+  GPIOPIN_SPI2_NSS,
+  GPIOPIN_SPI2_SCK,
+  GPIOPIN_SPI2_MISO,
+  GPIOPIN_SPI2_MOSI,
+#endif
+#ifdef SPI3
+  GPIOPIN_SPI3_NSS,
+  GPIOPIN_SPI3_SCK,
+  GPIOPIN_SPI3_MISO,
+  GPIOPIN_SPI3_MOSI,
+#endif
+#ifdef USART1
+  GPIOPIN_USART1_RXD,
+  GPIOPIN_USART1_TXD,
+#endif
+#ifdef USART2
+  GPIOPIN_USART2_RXD,
+  GPIOPIN_USART2_TXD,
+#endif
+#ifdef USART3
+  GPIOPIN_USART3_RXD,
+  GPIOPIN_USART3_TXD,
+#endif
+  GPIOPIN_DEVICEPINS_SENTINEL
+} DEVICEPINS_t;
+
+void gpiopin_device_defaults(void);
+
+int gpiopin_device_map(unsigned int devpin, unsigned int gpiopin);
+
+int gpiopin_device_configure(unsigned int devpin);
 
 _END_STD_C
 #endif

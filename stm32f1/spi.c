@@ -151,28 +151,17 @@ int spi_master_init(uint32_t port, uint32_t wordsize, uint32_t clockmode,
 
   switch (port)
   {
+#ifdef SPI1
     case SPI_PORT1 :
-      // Enable peripheral clocks
+      // Enable peripheral clock
 
-      RCC->APB2ENR |= RCC_APB2ENR_AFIOEN;
       RCC->APB2ENR |= RCC_APB2ENR_SPI1EN;
 
       // Configure GPIO pins
-      //   CLK on PA5
-      //   MISO on PA6
-      //   MOSI on PA7
 
-      RCC->APB2ENR |= RCC_APB2ENR_IOPAEN;
-      AFIO->MAPR &= ~AFIO_MAPR_SPI1_REMAP;
-
-      GPIOA->CRL &= ~(0xF << 20);
-      GPIOA->CRL |= 0xB << 20;
-
-      GPIOA->CRL &= ~(0xF << 24);
-      GPIOA->CRL |= 0x4 << 24;
-
-      GPIOA->CRL &= ~(0xF << 28);
-      GPIOA->CRL |= 0xB << 28;
+      gpiopin_device_configure(GPIOPIN_SPI1_SCK);
+      gpiopin_device_configure(GPIOPIN_SPI1_MISO);
+      gpiopin_device_configure(GPIOPIN_SPI1_MOSI);
 
       // Configure the SPI controller
 
@@ -183,6 +172,53 @@ int spi_master_init(uint32_t port, uint32_t wordsize, uint32_t clockmode,
         clockmode;
       SPI1->CR2 = 0x00000000;
       break;
+#endif
+
+#ifdef SPI2
+    case SPI_PORT2 :
+      // Enable peripheral clock
+
+      RCC->APB1ENR |= RCC_APB1ENR_SPI2EN;
+
+      // Configure GPIO pins
+
+      gpiopin_device_configure(GPIOPIN_SPI2_SCK);
+      gpiopin_device_configure(GPIOPIN_SPI2_MISO);
+      gpiopin_device_configure(GPIOPIN_SPI2_MOSI);
+
+      // Configure the SPI controller
+
+      SPI2->CR1 = 0x0344		|
+        ((wordsize == 8 ? 0 : 1) << 11)	|
+        ((bitorder ? 0 : 1) << 7)	|
+        (prescaler << 3)		|
+        clockmode;
+      SPI2->CR2 = 0x00000000;
+      break;
+#endif
+
+#ifdef SPI3
+    case SPI_PORT3 :
+      // Enable peripheral clock
+
+      RCC->APB1ENR |= RCC_APB1ENR_SPI3EN;
+
+      // Configure GPIO pins
+
+      gpiopin_device_configure(GPIOPIN_SPI3_SCK);
+      gpiopin_device_configure(GPIOPIN_SPI3_MISO);
+      gpiopin_device_configure(GPIOPIN_SPI3_MOSI);
+
+      // Configure the SPI controller
+
+      SPI3->CR1 = 0x0344		|
+        ((wordsize == 8 ? 0 : 1) << 11)	|
+        ((bitorder ? 0 : 1) << 7)	|
+        (prescaler << 3)		|
+        clockmode;
+      SPI3->CR2 = 0x00000000;
+      break;
+#endif
 
     default :
       errno_r = EINVAL;

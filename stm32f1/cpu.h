@@ -23,6 +23,8 @@
 #ifndef _CPU_H
 #define _CPU_H
 
+#include <stm32f1xx.h>
+
 #include <arm.h>
 #include <buttons.h>
 #include <device.h>
@@ -32,7 +34,6 @@
 #include <serial.h>
 #include <spi.h>
 #include <systick.h>
-#include <stm32f1xx.h>
 
 #define DEFAULT_CPU_FREQ	0
 
