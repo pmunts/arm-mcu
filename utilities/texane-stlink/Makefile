@@ -22,6 +22,7 @@
 
 STLINKURL	= http://github.com/texane/stlink.git
 STLINKSRC	= stlink
+STLINKSHA	= 62fa371b421ce929b216a2265931f9c1546d1a69
 STLINKFLASH	= stlink-flash
 STLINKGDB	= stlink-gdbserver
 
@@ -40,7 +41,8 @@ default: $(STLINKFLASH)
 # Download stlink-gdbserver source distribution
 
 $(STLINKSRC):
-	git clone --depth 1 $(STLINKURL) $(STLINKSRC)
+	git clone $(STLINKURL) $(STLINKSRC)
+	cd $(STLINKSRC) && git checkout $(STLINKSHA)
 	cd $(STLINKSRC) && ./autogen.sh && ./configure USB_CFLAGS="$(LIBUSBCFLAGS)"
 
 # Compile stlink-gdbserver
