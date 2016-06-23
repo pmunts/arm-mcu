@@ -84,6 +84,9 @@ News
        devices. Added STM32F1 peripheral pin remapping services, allowing
        all board dependent code to be removed from driver modules i2c.,
        serial.c, and spi.c.
+     * 23 June 2016 -- Added support for non-blocking I/O (O_NONBLOCK).
+       Changed device_read_raw() to block by default, waiting for at least
+       one byte of data.
 
 Git Repository
 

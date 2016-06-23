@@ -96,6 +96,9 @@ newlib to 2.4.0 and gdb to 7.11.</li>
 devices. Added STM32F1 peripheral pin remapping services, allowing all board
 dependent code to be removed from driver modules <tt>i2c.</tt>,
 <tt>serial.c</tt>, and <tt>spi.c</tt>.</li>
+<li>23 June 2016 -- Added support for non-blocking I/O (<tt>O_NONBLOCK</tt>).
+Changed <tt>device_read_raw()</tt> to block by default, waiting for at least
+one byte of data.</li>
 </ul>
 <h2>Git Repository</h2>
 <p>The source code is available at: <a href=
