@@ -503,7 +503,8 @@ int device_ready_write(int fd)
 
 int device_read_raw(int fd, char *s, unsigned int count)
 {
-  errno_r = 0;
+  device_t *d;
+  int status;
 
   if ((fd < 0) || (fd >= MAX_DEVICES))
   {
@@ -511,31 +512,48 @@ int device_read_raw(int fd, char *s, unsigned int count)
     return -1;
   }
 
-  if (device_table[fd].type == DEVICE_TYPE_UNUSED)
+  d = &device_table[fd];
+
+  if (d->type == DEVICE_TYPE_UNUSED)
   {
     errno_r = ENODEV;
     return -1;
   }
 
-  if (!device_table[fd].isopen)
+  if (!d->isopen)
   {
     errno_r = EIO;
     return -1;
   }
 
-  if (device_table[fd].read == NULL)
+  if (d->read == NULL)
   {
     errno_r = EIO;
     return -1;
   }
 
-  if ((device_table[fd].flags & O_ACCMODE) == O_WRONLY)
+  if ((d->flags & O_ACCMODE) == O_WRONLY)
   {
     errno_r = EBADF;
     return -1;
   }
 
-  return device_table[fd].read(device_table[fd].subdevice, s, count);
+  // Wait for data if ready method is availabe and the device
+  // is not O_NONBLOCK
+
+  if ((d->read_ready != NULL) && !(d->flags & O_NONBLOCK))
+  {
+    while ((status = d->read_ready(d->subdevice)) == 0)
+    {
+#ifdef FREERTOS
+      if (xTaskGetCurrentTaskHandle() != NULL)
+        taskYIELD();
+#endif
+    }
+    if (status < 0) return status;
+  }
+
+  return d->read(d->subdevice, s, count);
 }
 
 /* Read cooked input from a device */
@@ -585,19 +603,6 @@ int device_read_cooked(int fd, char *s, unsigned int count)
 
   for (p = s; p < s + count - 1;)
   {
-    if (d->read_ready != NULL)
-    {
-      do
-      {
-#ifdef FREERTOS
-        if (xTaskGetCurrentTaskHandle() != NULL)
-          taskYIELD();
-#endif
-      }
-      while ((status = d->read_ready(d->subdevice)) == 0);
-      if (status < 0) return status;
-    }
-
     status = d->read(d->subdevice, &c, 1);
     if (status < 0) return status;
     if (status == 0) continue;
