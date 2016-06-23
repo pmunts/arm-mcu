@@ -35,17 +35,26 @@ _BEGIN_STD_C
 // Network byte order macros
 
 #if BYTE_ORDER == BIG_ENDIAN
-#define htonl(x)	(x)
-#define ntohl(x)	(x)
-#define htons(x)	(x)
-#define ntohs(x)	(x)
-#elif BYTE_ORDER == LITTLE_ENDIAN
-#define htonl(x)	__bswap_32(x)
-#define ntohl(x)	__bswap_32(x)
-#define htons(x)	(((x << 8) & 0xff00) | ((x >> 8) & 0x00ff))
-#define ntohs(x)	(((x << 8) & 0xff00) | ((x >> 8) & 0x00ff))
+
+#define htons(n) (n)
+#define ntohs(n) (n)
+#define htonl(n) (n)
+#define ntohl(n) (n)
+
 #else
-#error "Unsupported byte order!"
+
+#define htons(n) (((((unsigned short)(n) & 0xFF)) << 8) | (((unsigned short)(n) & 0xFF00) >> 8))
+#define ntohs(n) (((((unsigned short)(n) & 0xFF)) << 8) | (((unsigned short)(n) & 0xFF00) >> 8))
+
+#define htonl(n) (((((unsigned long)(n) & 0xFF)) << 24) | \
+                  ((((unsigned long)(n) & 0xFF00)) << 8) | \
+                  ((((unsigned long)(n) & 0xFF0000)) >> 8) | \
+                  ((((unsigned long)(n) & 0xFF000000)) >> 24))
+
+#define ntohl(n) (((((unsigned long)(n) & 0xFF)) << 24) | \
+                  ((((unsigned long)(n) & 0xFF00)) << 8) | \
+                  ((((unsigned long)(n) & 0xFF0000)) >> 8) | \
+                  ((((unsigned long)(n) & 0xFF000000)) >> 24))
 #endif
 
 #define INET_ADDRSTRLEN		16
