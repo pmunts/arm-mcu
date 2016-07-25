@@ -1,4 +1,4 @@
-// Simple async stream message framing library
+// Simple byte stream message framing library
 
 // Copyright (C)2016, Philip Munts, President, Munts AM Corp.
 //
