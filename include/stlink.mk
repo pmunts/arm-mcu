@@ -30,11 +30,11 @@ STLINKDEBUG		?= $(ARMSRC)/common/main.gdb
 STLINKGDB		?= stlink-gdbserver
 STLINKGDBOPTS		?= -p $(GDBSERVERPORT)
 
-# ST Microelectronics ST-LINK_CLI.exe
+# ST Microelectronics ST-LINK_CLI.exe for Windows
 
-#STLINKFLASH		?=ST-LINK_CLI.exe
-#STLINKFLASHOPTS1	?=-c SWD -ME -P
-#STLINKFLASHOPTS2	?=$(FLASHWRITEADDR) -Rst
+#STLINKFLASH		?= ST-LINK_CLI.exe
+#STLINKFLASHOPTS1	?= -c SWD -ME -P
+#STLINKFLASHOPTS2	?= $(FLASHWRITEADDR) -Rst
 
 .SUFFIXES: .bin .debugstlink .elf .flashstlink .hex
 
