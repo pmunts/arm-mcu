@@ -42,7 +42,7 @@
 #include "stream_framing.h"
 #include "messages.h"
 
-#define FIRMWARE_VERSION	10794
+#define FIRMWARE_VERSION	10800
 
 #ifdef NUCLEO_F103RB
 #define CONTROLPORT		SERIAL_PORT3
