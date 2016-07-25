@@ -582,7 +582,7 @@ int serial_open(char *name, unsigned *subdevice)
       GPIOA->OSPEEDR |= GPIO_OSPEEDER_OSPEEDR11_1;
       GPIOA->PUPDR &= ~GPIO_PUPDR_PUPDR11;
 
-// Configure RX pin on PA12 (aka Arduino D0, wire wrap CN10 pin 37 to CN 10 pin 12)
+// Configure RX pin on PA12 (aka Arduino D0, wire wrap CN10 pin 37 to CN10 pin 12)
 
       RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN;
 
