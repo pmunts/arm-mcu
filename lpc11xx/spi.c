@@ -36,25 +36,25 @@ int spi_slave_init(uint32_t port,
   if (port >= MAX_SPI_PORTS)
   {
     errno_r = ENODEV;
-    return __LINE__ - 3;
+    return -1;
   }
 
   if ((wordsize < 4) || (wordsize > 16))
   {
     errno_r = EINVAL;
-    return __LINE__ - 3;
+    return -1;
   }
 
   if (clockmode > 3)
   {
     errno_r = EINVAL;
-    return __LINE__ - 3;
+    return -1;
   }
 
   if (bitorder != SPI_MSBFIRST) // LPC11xx doesn't support LSB first
   {
     errno_r = EINVAL;
-    return __LINE__ - 3;
+    return -1;
   }
 
   switch (port)
@@ -89,7 +89,7 @@ int spi_slave_init(uint32_t port,
 
     case 1 :
       errno_r = ENODEV;				// SSP1 is not pinned out
-      return __LINE__ - 1;
+      return -1;
       break;
   }
 

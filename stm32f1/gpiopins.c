@@ -69,13 +69,13 @@ int gpiopin_configure(unsigned int pin, gpiopin_direction_t direction)
   if (port >= MAX_GPIO_PORTS)
   {
     errno_r = EINVAL;
-    return __LINE__ - 3;
+    return -1;
   }
 
   if (direction > GPIOPIN_OUTPUT)
   {
     errno_r = EINVAL;
-    return __LINE__ - 3;
+    return -1;
   }
 
 // Enable the peripheral clock
@@ -202,7 +202,7 @@ int gpiopin_device_map(unsigned int devpin, unsigned int gpiopin)
   if (devpin >= GPIOPIN_DEVICEPINS_SENTINEL)
   {
     errno_r = ENODEV;
-    return __LINE__ - 3;
+    return -1;
   }
 
   // Look for a matching pin mapping
@@ -222,7 +222,7 @@ int gpiopin_device_map(unsigned int devpin, unsigned int gpiopin)
   // No matching pin mapping available
 
   errno_r = EINVAL;
-  return __LINE__ - 1;
+  return -1;
 }
 
 int gpiopin_device_configure(unsigned int devpin)
@@ -236,7 +236,7 @@ int gpiopin_device_configure(unsigned int devpin)
   if (devpin >= GPIOPIN_DEVICEPINS_SENTINEL)
   {
     errno_r = ENODEV;
-    return __LINE__ - 3;
+    return -1;
   }
 
   // Get pin mapping
@@ -251,7 +251,7 @@ int gpiopin_device_configure(unsigned int devpin)
   if (port >= MAX_GPIO_PORTS)
   {
     errno_r = ENODEV;
-    return __LINE__ - 3;
+    return -1;
   }
 
   // Enable the GPIO port peripheral clock

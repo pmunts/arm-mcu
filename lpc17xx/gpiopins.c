@@ -48,13 +48,13 @@ int gpiopin_configure(unsigned int pin, gpiopin_direction_t direction)
   if (port >= MAX_GPIO_PORTS)
   {
     errno_r = EINVAL;
-    return __LINE__ - 3;
+    return -1;
   }
 
   if (direction > GPIOPIN_OUTPUT)
   {
     errno_r = EINVAL;
-    return __LINE__ - 3;
+    return -1;
   }
 
 // Configure the pin
