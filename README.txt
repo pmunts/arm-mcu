@@ -87,6 +87,7 @@ News
      * 23 June 2016 -- Added support for non-blocking I/O (O_NONBLOCK).
        Changed device_read_raw() to block by default, waiting for at least
        one byte of data.
+     * 25 July 2016 -- Added byte stream framing library and demo program.
 
 Git Repository
 
