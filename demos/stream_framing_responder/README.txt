@@ -1,4 +1,4 @@
-                     Stream Framing Responder Demo Program
+                   Byte Stream Framing Responder Demo Program
 
    This program demonstrates how to write a [1]FreeRTOS program that
    accepts and responds to stream framed commands on a serial port.
