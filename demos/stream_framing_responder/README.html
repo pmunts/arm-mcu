@@ -1,0 +1,66 @@
+<h1>Stream Framing Responder Demo Program</h1>
+<p>This program demonstrates how to write a <a href=
+"http://www.freertos.org">FreeRTOS</a> program that accepts and responds to
+stream framed commands on a serial port.</p>
+<h2>Supported Targets</h2>
+<ul>
+<li><a href=
+"http://www.st.com/content/st_com/en/products/evaluation-tools/product-evaluation-tools/mcu-eval-tools/stm32-mcu-eval-tools/stm32-mcu-nucleo/nucleo-f103rb.html">
+Nucleo-F103RB</a> using <tt>USART3</tt>. If you wire wrap <tt>CN7</tt> pin 1 to
+<tt>CN10</tt> pin 35 and <tt>CN7</tt> pin 2 to <tt>CN10</tt> pin 37 on the
+bottom of the board, then <tt>USART3</tt> will be connected to the Arduino
+expansion header pins <tt>D0</tt> and <tt>D1</tt>.</li>
+<li><a href=
+"http://www.st.com/content/st_com/en/products/evaluation-tools/product-evaluation-tools/mcu-eval-tools/stm32-mcu-eval-tools/stm32-mcu-nucleo/nucleo-f411re.html">
+Nucleo-F411RE</a> using <tt>USART6</tt>. If you wire wrap <tt>CN10</tt> pin 14
+to <tt>CN10</tt> pin 35 and <tt>CN10</tt> pin 12 to <tt>CN10</tt> pin 37 on the
+bottom of the board, then <tt>USART6</tt> will be connected to the Arduino
+expansion header pins <tt>D0</tt> and <tt>D1</tt>.</li>
+</ul>
+<p>Other targets can be supported by defining the macros <tt>CONTROLPORT</tt>
+and <tt>CONTROLPORTNAME</tt> to select the serial port to receive commands
+on.</p>
+<h2>WiFi Test Setup</h2>
+<ol>
+<li>Wire wrap the Arduino expansion serial port pins as described above.</li>
+<li>Install an <a href="https://www.sparkfun.com/products/13287">ESP8266
+Shield</a> flashed with <a href=
+"https://github.com/jeelabs/esp-link">ESP-LINK</a> firmware into the Arduino
+expansion headers.</li>
+<li>Configure the ESP-LINK firmware, following these <a href=
+"https://github.com/jeelabs/esp-link#configuration-details">instructions</a>.
+The bridged serial port should be configured for 115200 baud.</li>
+<li>Compile the client test program with <tt>make client</tt>.</li>
+<li>Run the client test program with <tt>./client
+&lt;hostname&lt;&gt;</tt>.</li>
+</ol>
+<h2>Copyright:</h2>
+<p>Original works herein are copyrighted as follows:</p>
+<pre>
+Copyright (C)2016, Philip Munts, President, Munts AM Corp.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+* Redistributions of source code must retain the above copyright notice,
+  this list of conditions and the following disclaimer.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE.
+</pre>
+<p>Redistributed works herein are copyrighted and/or licensed by their
+respective authors.</p>
+<hr>
+Questions or comments to Philip Munts <a href=
+"mailto:phil@munts.net">phil@munts.net</a>
+<p>I am available for custom system development (hardware and software) of
+products using ARM or other microcontrollers.</p>
