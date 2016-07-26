@@ -1,7 +1,22 @@
                    Byte Stream Framing Responder Demo Program
 
-   This program demonstrates how to write a [1]FreeRTOS program that
+   This project demonstrates how to write a [1]FreeRTOS program that
    accepts and responds to stream framed commands on a serial port.
+
+   The program is decomposed into four FreeRTOS tasks, which communicate
+   with each other via message queues:
+
+     * ReceiverTask -- Receives incoming byte stream frames from the
+       control port, decodes them, and pushes command messages onto the
+       command queue.
+     * ExecutorTask -- Pops command messages from the command queue,
+       executes them, and pushes response messages onto the response
+       queue.
+     * TransmitterTask -- Pops response messages from the response queue,
+       encodes them into byte stream frames, and transmits the frames out
+       the control port.
+     * StatisticsTask -- Periodically prints out some global error
+       counters.
 
 Supported Targets
 
@@ -14,8 +29,8 @@ Supported Targets
        then USART6 will be connected to the Arduino expansion header pins
        D0 and D1.
 
-   Other targets can be supported by defining the macros CONTROLPORT and
-   CONTROLPORTNAME to select the serial port to receive commands on.
+   Other targets can be supported by defining the macro CONTROLPORT to
+   select the serial port to receive commands from.
 
 WiFi Test Setup
 

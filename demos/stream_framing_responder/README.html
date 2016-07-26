@@ -1,7 +1,21 @@
 <h1>Byte Stream Framing Responder Demo Program</h1>
-<p>This program demonstrates how to write a <a href=
+<p>This project demonstrates how to write a <a href=
 "http://www.freertos.org">FreeRTOS</a> program that accepts and responds to
 stream framed commands on a serial port.</p>
+<p>The program is decomposed into four FreeRTOS tasks, which communicate with
+each other via message queues:</p>
+<ul>
+<li><tt>ReceiverTask</tt> -- Receives incoming byte stream frames from the
+control port, decodes them, and pushes command messages onto the command
+queue.</li>
+<li><tt>ExecutorTask</tt> -- Pops command messages from the command queue,
+executes them, and pushes response messages onto the response queue.</li>
+<li><tt>TransmitterTask</tt> -- Pops response messages from the response queue,
+encodes them into byte stream frames, and transmits the frames out the control
+port.</li>
+<li><tt>StatisticsTask</tt> -- Periodically prints out some global error
+counters.</li>
+</ul>
 <h2>Supported Targets</h2>
 <ul>
 <li><a href=
@@ -17,9 +31,8 @@ to <tt>CN10</tt> pin 35 and <tt>CN10</tt> pin 12 to <tt>CN10</tt> pin 37 on the
 bottom of the board, then <tt>USART6</tt> will be connected to the Arduino
 expansion header pins <tt>D0</tt> and <tt>D1</tt>.</li>
 </ul>
-<p>Other targets can be supported by defining the macros <tt>CONTROLPORT</tt>
-and <tt>CONTROLPORTNAME</tt> to select the serial port to receive commands
-on.</p>
+<p>Other targets can be supported by defining the macro <tt>CONTROLPORT</tt> to
+select the serial port to receive commands from.</p>
 <h2>WiFi Test Setup</h2>
 <ol>
 <li>Wire wrap the Arduino expansion serial port pins as described above.</li>
