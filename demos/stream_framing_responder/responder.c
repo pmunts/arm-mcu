@@ -42,16 +42,14 @@
 #include "stream_framing.h"
 #include "messages.h"
 
-#define FIRMWARE_VERSION	10805
+#define FIRMWARE_VERSION	10806
 
 #ifdef NUCLEO_F103RB
-#define CONTROLPORT		SERIAL_PORT3
-#define CONTROLPORTNAME		"com3:115200,n8,1"
+#define CONTROLPORT		"com3:115200,n8,1"
 #endif
 
 #ifdef NUCLEO_F411RE
-#define CONTROLPORT		SERIAL_PORT6
-#define CONTROLPORTNAME		"com6:115200,n8,1"
+#define CONTROLPORT		"com6:115200,n8,1"
 #endif
 
 //***************************************************************************
@@ -304,13 +302,13 @@ int main(void)
 
   // Initialize the serial port connected to the controlling device
 
-  if (serial_register(CONTROLPORTNAME) < 0)
+  if (serial_register(CONTROLPORT) < 0)
   {
     fprintf(stderr, "ERROR: serial_register() for control port failed, %s\n", strerror(errno));
     exit(1);
   }
 
-  fd = open(CONTROLPORTNAME, O_RDWR|O_BINARY);
+  fd = open(CONTROLPORT, O_RDWR|O_BINARY);
   if (fd < 0)
   {
     fprintf(stderr, "ERROR: open() for control port failed, %s\n", strerror(errno));
