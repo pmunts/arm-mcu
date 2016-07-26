@@ -42,7 +42,7 @@
 #include "stream_framing.h"
 #include "messages.h"
 
-#define FIRMWARE_VERSION	10800
+#define FIRMWARE_VERSION	10804
 
 #ifdef NUCLEO_F103RB
 #define CONTROLPORT		SERIAL_PORT3
@@ -105,6 +105,7 @@ volatile unsigned transmit_errors = 0;
 
 void ReceiverTask(void *parameters)
 {
+  int fd = (int) parameters;
   uint8_t inbuf[256];
   size_t inlen;
   uint8_t *p;
@@ -125,22 +126,9 @@ void ReceiverTask(void *parameters)
     {
       size_t len;
 
-      // Wait for serial data available
-
-      while ((status = serial_rxready(CONTROLPORT)) == 0)
-        taskYIELD();
-
-      if (status < 0)
-      {
-        inlen = 0;
-        p = inbuf;
-        receive_errors++;
-        continue;
-      }
-
       // Read from the I/O stream
 
-      if ((len = serial_read(CONTROLPORT, (char *) p, 1)) < 0)
+      if ((len = read(fd, p, 1)) < 0)
       {
         inlen = 0;
         p = inbuf;
@@ -219,6 +207,7 @@ void ReceiverTask(void *parameters)
 
 void TransmitterTask(void *parameters)
 {
+  int fd = (int) parameters;
   RESPONSEMSG_t resp;
   uint8_t outbuf[2*sizeof(resp)+8];
   size_t outlen;
@@ -250,7 +239,7 @@ void TransmitterTask(void *parameters)
 
     // Transmit the response message
 
-    if (serial_write(CONTROLPORT, (char *) outbuf, outlen) < 0)
+    if (write(fd, outbuf, outlen) < 0)
       transmit_errors++;
   }
 }
@@ -301,6 +290,7 @@ void vApplicationStackOverflowHook(xTaskHandle *pxTask, signed char *pcTaskName)
 
 int main(void)
 {
+  int fd;
   xTaskHandle tasks[4];
 
   cpu_init(DEFAULT_CPU_FREQ);
@@ -315,10 +305,17 @@ int main(void)
 
   // Initialize the serial port connected to the controlling device
 
-  if (serial_open(CONTROLPORTNAME, NULL) < 0)
+  if (serial_register(CONTROLPORTNAME) < 0)
   {
-    fprintf(stderr, "ERROR: serial_open() for com6: failed, %s\n", strerror(errno));
-    assert(false);
+    fprintf(stderr, "ERROR: serial_register() for control port failed, %s\n", strerror(errno));
+    exit(1);
+  }
+
+  fd = open(CONTROLPORTNAME, O_RDWR|O_BINARY);
+  if (fd < 0)
+  {
+    fprintf(stderr, "ERROR: open() for control port failed, %s\n", strerror(errno));
+    exit(1);
   }
 
   // Create message queues
@@ -327,45 +324,45 @@ int main(void)
   if (CommandQueue == NULL)
   {
     fprintf(stderr, "ERROR: Cannot create Command Queue\n");
-    assert(false);
+    exit(1);
   }
 
   ResponseQueue = xQueueCreate(10, sizeof(RESPONSEMSG_t));
   if (ResponseQueue == NULL)
   {
     fprintf(stderr, "ERROR: Cannot create Response Queue\n");
-    assert(false);
+    exit(1);
   }
 
   // Create tasks
 
-  if (xTaskCreate(ReceiverTask, "Receiver", 512, NULL, 1, &tasks[0]) != pdPASS)
+  if (xTaskCreate(ReceiverTask, "Receiver", 512, (void *) fd, 1, &tasks[0]) != pdPASS)
   {
     fprintf(stderr, "ERROR: xTaskCreate() for Receiver task failed!\n");
-    assert(false);
+    exit(1);
   }
 
-  if (xTaskCreate(TransmitterTask, "Transmitter", 512, NULL, 1, &tasks[1]) != pdPASS)
+  if (xTaskCreate(TransmitterTask, "Transmitter", 512, (void *) fd, 1, &tasks[1]) != pdPASS)
   {
     fprintf(stderr, "ERROR: xTaskCreate() for Transmitter task failed!\n");
-    assert(false);
+    exit(1);
   }
 
   if (xTaskCreate(ExecutorTask, "Executor", 512, NULL, 1, &tasks[2]) != pdPASS)
   {
     fprintf(stderr, "ERROR: xTaskCreate() for Executor task failed!\n");
-    assert(false);
+    exit(1);
   }
 
   if (xTaskCreate(StatisticsTask, "Statistics", 512, NULL, 1, &tasks[2]) != pdPASS)
   {
     fprintf(stderr, "ERROR: xTaskCreate() for Statistics task failed!\n");
-    assert(false);
+    exit(1);
   }
 
   // Start FreeRTOS scheduler, enter multitasking mode
 
   vTaskStartScheduler();
   fprintf(stderr, "ERROR: vTaskStartScheduler returned!\n");
-  assert(false);
+  exit(1);
 }
