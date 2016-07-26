@@ -42,7 +42,7 @@
 #include "stream_framing.h"
 #include "messages.h"
 
-#define FIRMWARE_VERSION	10804
+#define FIRMWARE_VERSION	10805
 
 #ifdef NUCLEO_F103RB
 #define CONTROLPORT		SERIAL_PORT3
@@ -109,7 +109,6 @@ void ReceiverTask(void *parameters)
   uint8_t inbuf[256];
   size_t inlen;
   uint8_t *p;
-  int status;
   COMMANDMSG_t cmd;
   size_t cmdlen;
 
@@ -124,7 +123,7 @@ void ReceiverTask(void *parameters)
 
     for (;;)
     {
-      size_t len;
+      ssize_t len;
 
       // Read from the I/O stream
 
