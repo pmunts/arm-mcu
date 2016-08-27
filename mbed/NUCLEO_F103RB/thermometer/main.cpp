@@ -6,7 +6,7 @@
 // * Mikroelektronika Arduino Uno click shield, P/N MIKROE-1581
 // * Mikroelektronika Thermo 3 click, P/N MIKROE-1885, in slot 1
 // * Mikroelektronika 7seg click, P/N MIKROE-1201, in slot 2
- 
+
 // Copyright (C)2016, Philip Munts, President, Munts AM Corp.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -48,45 +48,45 @@ class TMP102
 public:
 
     // TMP102 object constructor
-    
+
     TMP102(I2C *i2c, uint8_t address)
     {
         uint8_t buf[3];
-        
+
         this->i2c = i2c;
         this->address = address;
-       
+
         buf[0] = TMP102_REG_CONFIG;
         buf[1] = 0x00;
         buf[2] = 0x40;
-        
+
         if (this->i2c->write(this->address, (char *) buf, 3))
         {
             printf("ERROR: i2c.write() failed");
             exit(1);
         }
     }
-    
+
     // Get current temperature
 
     double get(void)
     {
         uint8_t buf[2];
-        
+
         buf[0] = TMP102_REG_TEMP;
-        
+
         if (this->i2c->write(this->address, (char *) buf, 1))
         {
             printf("ERROR: i2c.write() failed");
             exit(1);
         }
-        
+
         if (this->i2c->read(this->address, (char *) buf, 2))
         {
             printf("ERROR: i2c.read() failed");
             exit(1);
         }
-        
+
         int16_t rawtemp = buf[0]*256 + buf[1];
         return rawtemp*TMP102_SCALE_FACTOR;
     }
@@ -156,30 +156,30 @@ public:
         this->pwm = pwm;
         this->reset = reset;
         this->latch = latch;
-        
+
         this->pwm->write(1);
         this->reset->write(1);
         this->latch->write(1);
-    
+
         this->spi->format(16, 0);
         this->spi->frequency(4000000);
-    
+
         this->write_segments(0x0000);
     }
-    
+
     void write_segments(uint16_t segments)
     {
         this->latch->write(0);
         this->spi->write(segments);
-        this->latch->write(1);        
+        this->latch->write(1);
     }
-    
+
     void write(uint8_t n)
     {
         if (n > 99) n = 99;
         this->write_segments(PermuteSegments[GlyphTable[n % 10]]*256 + PermuteSegments[GlyphTable[n / 10]]);
     }
-    
+
     void writehex(uint8_t n)
     {
         this->write_segments(PermuteSegments[GlyphTable[n % 16]]*256 + PermuteSegments[GlyphTable[n / 16]]);
@@ -191,41 +191,47 @@ int main()
     // Configure console
 
     Serial console(USBTX, USBRX);
-    console.baud (115200);
-    
-    printf("\033[H\033[2JNUCLEO-F103RB Thermometer (compiled " __DATE__ " " __TIME__ ")\r\n\n");
-    
+    console.baud(115200);
+
+    // Configure serial port to ESP8266 (optional)
+
+    Serial network(PC_10, PC_11);
+    network.baud(115200);
+
+    console.printf("\033[H\033[2JNUCLEO-F103RB Thermometer (compiled " __DATE__ " " __TIME__ ")\r\n\n");
+
     // Configure hardware subsystems
-    
+
     DigitalOut pwm(PB_4);
     DigitalOut reset(PA_4);
     DigitalOut latch(PC_7);
     I2C i2c(PB_9, PB_8);
     SPI spi(PA_7, PA_6, PA_5);
-    
+
     // Configure temperature sensor
-    
+
     TMP102 sensor(&i2c, TMP102_ADDR);
-    
+
     // Configure display
-    
+
     Display display(&spi, &pwm, &reset, &latch);
 
     // Wait for temperature sensor to stabilize
-    
-    printf("Waiting for sensor to stabilize...");
-    fflush(stdout);
+
+    console.printf("Waiting for sensor to stabilize...");
     wait(5.0);
 
     // Main loop: Read temperature and display it
-    
+
     for (;;)
     {
         double temp = sensor.get();
-        
+
         // Print temperature to console
-        printf("\rTemperature is %1.1f deg Celsius   ", temp);
-        fflush(stdout);
+        console.printf("\rTemperature is %1.1f deg Celsius   ", temp);
+
+        // Print temperature to ESP8266
+        network.printf("Temperature is %1.1f\r\n", temp);
 
         // No sign indicator available, so only display positive values
         if (temp >= 0.0) display.write((int)(temp + 0.5));
