@@ -3,6 +3,7 @@
 // The board stack (bottom to top) consists of:
 
 // * STMicroelectronics NUCLEO-F103RB development board
+// * Sparkfun Electronics ESP8266 WiFi Shield (optional, for network access)
 // * Mikroelektronika Arduino Uno click shield, P/N MIKROE-1581
 // * Mikroelektronika Thermo 3 click, P/N MIKROE-1885, in slot 1
 // * Mikroelektronika 7seg click, P/N MIKROE-1201, in slot 2
@@ -188,12 +189,12 @@ public:
 
 int main()
 {
-    // Configure console
+    // Configure console serial port
 
     Serial console(USBTX, USBRX);
     console.baud(115200);
 
-    // Configure serial port to ESP8266 (optional)
+    // Configure serial port to Sparkfun Electronics ESP8266 WiFi Shield (optional)
 
     Serial network(PC_10, PC_11);
     network.baud(115200);
