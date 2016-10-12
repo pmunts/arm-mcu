@@ -28,7 +28,7 @@
 // The following CRC16-CCITT subroutine came from:
 // http://stackoverflow.com/questions/10564491/function-to-calculate-a-crc16-checksum
 
-uint16_t crc16(const uint8_t* data_p, uint8_t length){
+static uint16_t crc16(const uint8_t* data_p, uint8_t length){
     uint8_t x;
     uint16_t crc = 0x1D0F;
 
@@ -45,7 +45,7 @@ uint16_t crc16(const uint8_t* data_p, uint8_t length){
 // be twice the size of the source buffer, plus 8 bytes worst case.
 // Return zero if successfully encoded.
 
-int EncodeFrame(void *src, size_t srclen, void *dst, size_t dstsize, size_t *dstlen)
+int StreamEncodeFrame(void *src, size_t srclen, void *dst, size_t dstsize, size_t *dstlen)
 {
   uint8_t *p = src;
   uint8_t *q = dst;
@@ -120,7 +120,7 @@ int EncodeFrame(void *src, size_t srclen, void *dst, size_t dstsize, size_t *dst
 // Decode a message frame, with DLE byte stuffing and CRC16-CCITT
 // frame check sequence.  Return zero if successfully decoded.
 
-int DecodeFrame(void *src, size_t srclen, void *dst, size_t dstsize, size_t *dstlen)
+int StreamDecodeFrame(void *src, size_t srclen, void *dst, size_t dstsize, size_t *dstlen)
 {
   uint8_t *p = src;
   uint8_t *q = dst;

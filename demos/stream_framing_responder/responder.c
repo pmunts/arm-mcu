@@ -171,7 +171,7 @@ void ReceiverTask(void *parameters)
 
     // Decode the command message frame
 
-    if (DecodeFrame(inbuf, inlen, &cmd, sizeof(cmd), &cmdlen))
+    if (StreamDecodeFrame(inbuf, inlen, &cmd, sizeof(cmd), &cmdlen))
     {
       receive_errors++;
       continue;
@@ -228,7 +228,7 @@ void TransmitterTask(void *parameters)
 
     // Encode the response message
 
-    if (EncodeFrame(&resp, sizeof(resp), outbuf, sizeof(outbuf), &outlen))
+    if (StreamEncodeFrame(&resp, sizeof(resp), outbuf, sizeof(outbuf), &outlen))
     {
       transmit_errors++;
       continue;

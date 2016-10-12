@@ -1,5 +1,6 @@
 #include <assert.h>
 #include <errno.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -23,13 +24,13 @@ void SendCommand(int fd, uint32_t sequence, uint32_t command, uint32_t payload)
   printf("Command:  sequence=%d command=%d payload=%d\n",
     ntohl(cmd.sequence), ntohl(cmd.command), ntohl(cmd.payload));
   
-  if (EncodeFrame(&cmd, sizeof(cmd), cmdbuf, sizeof(cmdbuf), &cmdlen))
+  if (StreamEncodeFrame(&cmd, sizeof(cmd), cmdbuf, sizeof(cmdbuf), &cmdlen))
   {
-    puts("ERROR: EncodeFrame() failed");
+    puts("ERROR: StreamEncodeFrame() failed");
     return;
   }
 
-  printf("Sending  %d bytes: ", cmdlen);
+  printf("Sending  %ld bytes: ", cmdlen);
   for (i = 0; i < cmdlen; i++)
     printf("%02X ", cmdbuf[i]);
   putchar('\n');
@@ -62,15 +63,15 @@ void ReceiveResponse(int fd)
       break;
   }
 
-  printf("Received %d bytes: ", len);
+  printf("Received %ld bytes: ", len);
 
   for (i = 0; i < len; i++)
     printf("%02X ", buf[i]);
   putchar('\n');
 
-  if (DecodeFrame(buf, len, &resp, sizeof(resp), &respsize))
+  if (StreamDecodeFrame(buf, len, &resp, sizeof(resp), &respsize))
   {
-    puts("ERROR: DecodeFrame() failed");
+    puts("ERROR: StreamDecodeFrame() failed");
     return;
   }
 

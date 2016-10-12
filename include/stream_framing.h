@@ -20,15 +20,17 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef _FRAMING_H
-#define _FRAMING_H
+#ifndef _STREAM_FRAMING_H
+#define _STREAM_FRAMING_H
+
+#include <stddef.h>
 
 #define DLE	0x10
 #define STX	0x02
 #define ETX	0x03
 
-int EncodeFrame(void *src, size_t srclen, void *dst, size_t dstsize, size_t *dstlen);
+int StreamEncodeFrame(void *src, size_t srclen, void *dst, size_t dstsize, size_t *dstlen);
 
-int DecodeFrame(void *src, size_t srclen, void *dst, size_t dstsize, size_t *dstlen);
+int StreamDecodeFrame(void *src, size_t srclen, void *dst, size_t dstsize, size_t *dstlen);
 
 #endif
