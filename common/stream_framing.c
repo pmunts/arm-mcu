@@ -81,9 +81,9 @@ int EncodeFrame(void *src, size_t srclen, void *dst, size_t dstsize, size_t *dst
     if (*dstlen == dstsize) return -1;
   }
 
-  // Append frame check sequence low byte
+  // Append frame check sequence high byte
 
-  *q++ = crc & 0xFF;
+  *q++ = crc >> 8;
   *dstlen += 1;
   if (*dstlen == dstsize) return -1;
 
@@ -94,9 +94,9 @@ int EncodeFrame(void *src, size_t srclen, void *dst, size_t dstsize, size_t *dst
     if (*dstlen == dstsize) return -1;
   }
 
-  // Append frame check sequence high byte
+  // Append frame check sequence low byte
 
-  *q++ = crc >> 8;
+  *q++ = crc & 0xFF;
   *dstlen += 1;
   if (*dstlen == dstsize) return -1;
 
@@ -187,12 +187,12 @@ int DecodeFrame(void *src, size_t srclen, void *dst, size_t dstsize, size_t *dst
   if (*p == DLE)
     p++;
 
-  crcsent = *p++;
+  crcsent = *p++ << 8;
 
   if (*p == DLE)
     p++;
 
-  crcsent += *p << 8;
+  crcsent += *p;
 
   // Compare expected and received frame check sequences
 
