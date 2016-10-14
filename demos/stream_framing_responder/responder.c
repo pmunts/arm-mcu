@@ -42,7 +42,7 @@
 #include "stream_framing.h"
 #include "messages.h"
 
-#define FIRMWARE_VERSION	11277
+#define FIRMWARE_VERSION	11278
 
 #ifdef NUCLEO_F103RB
 #define CONTROLPORT		"com3:115200,n8,1"
@@ -91,6 +91,7 @@ xQueueHandle ResponseQueue;
 
 // Statistics counters
 
+volatile unsigned processed_commands = 0;
 volatile unsigned dropped_commands = 0;
 volatile unsigned dropped_responses = 0;
 volatile unsigned receive_errors = 0;
@@ -215,6 +216,8 @@ void ExecutorTask(void *parameters)
 
     ExecuteCommand(&cmd, &resp);
 
+    processed_commands++;
+
     if (xQueueSend(ResponseQueue, &resp, 0) != pdPASS)
       dropped_responses++;
   };
@@ -225,9 +228,11 @@ void StatisticsTask(void *parameters)
   for (;;)
   {
     vTaskDelay(30000/portTICK_RATE_MS);
-    printf("Dropped commands: %d Dropped responses: %d\n",
+    printf("Process commands: %-4d\n",
+      processed_commands);
+    printf("Dropped commands: %-4d Dropped responses: %-4d\n",
       dropped_commands, dropped_responses);
-    printf("Receive errors: %d Transmit errors: %d\n",
+    printf("Receive errors:   %-4d Transmit errors:   %-4d\n",
       receive_errors, transmit_errors);
     fflush(stdout);
   }
