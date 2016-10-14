@@ -30,7 +30,7 @@ default: responder.bin
 install: responder.flashstlink
 
 client: client.c
-	gcc -Wall -I$(ARMSRC)/include -o$@ $< $(ARMSRC)/common/stream_framing.c
+	gcc -Wall -I/usr/local/include -I$(ARMSRC)/include -o$@ $< $(ARMSRC)/common/stream_framing.c
 
 include $(ARMSRC)/include/ARM.mk
 

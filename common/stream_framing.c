@@ -20,10 +20,27 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
+#ifdef MCUFAMILYNAME
+#include <arm.h>
+#ifdef errno
+#undef errno
+#define errno (*(__errno()))
+#endif
+#else
+#include <cplusplus.h>
+#include <errno.h>
 #include <stddef.h>
 #include <stdint.h>
+#endif
 
-#include "stream_framing.h"
+#include <stream_framing.h>
+#include <unistd.h>
+
+// Frame delimiters
+
+#define DLE	0x10
+#define STX	0x02
+#define ETX	0x03
 
 // The following CRC16-CCITT subroutine came from:
 // http://stackoverflow.com/questions/10564491/function-to-calculate-a-crc16-checksum
@@ -200,4 +217,96 @@ int StreamDecodeFrame(void *src, size_t srclen, void *dst, size_t dstsize, size_
     return 0;
   else
     return -1;
+}
+
+#define FAILIF(c, e) if (c) { *framesize = 0; errno = e; return -1; }
+
+// Receive a frame, one byte at a time.  Return -1 on any error,
+// including EAGAIN (incomplete frame) and 0 on successful reception
+// of a frame.  Invalid frames are silently discarded with errno set
+// to EAGAIN.
+
+int StreamReceiveFrame(int fd, void *buf, size_t bufsize, size_t *framesize)
+{
+  int status;
+  uint8_t b;
+  uint8_t *bp = buf;
+
+  // Validate parameters
+
+  FAILIF((bufsize < 6), EINVAL);
+  FAILIF((*framesize >= bufsize), EINVAL);
+
+  // Read a byte from the stream
+
+  status = read(fd, &b, 1);
+
+  // Special check for O_NONBLOCK and EAGAIN
+
+  if ((status < 0) && (errno == EAGAIN)) return -1;
+
+  // Check for other errors
+
+  FAILIF((status < 0), errno);
+  FAILIF((status == 0), EPIPE);
+
+  // Process beginning frame delimiters
+
+  switch (*framesize)
+  {
+    case 0 :
+      FAILIF((b != DLE), EAGAIN);
+      bp[*framesize] = b;
+      *framesize += 1;
+      errno = EAGAIN;
+      return -1;
+
+    case 1 :
+      FAILIF((b != STX), EAGAIN);
+      bp[*framesize] = b;
+      *framesize += 1;
+      errno = EAGAIN;
+      return -1;
+
+    default :
+      bp[*framesize] = b;
+      *framesize += 1;
+      break;
+  }
+
+  // Check for complete frame
+
+  if ((*framesize >= 6) && (bp[*framesize-2] == DLE) && (bp[*framesize-1] == ETX))
+  {
+    unsigned i;
+    unsigned dc = 1;
+
+    // Count the DLE's before the ETX
+
+    for (i = 3;; i++)
+    {
+      if (bp[*framesize-i] == DLE)
+        dc++;
+      else
+        break;
+    }
+
+    // Odd number of DLE's implies complete frame
+    // Even number of DLE's implies DLE ETX in the payload data
+
+    if (dc & 0x01)
+    {
+      errno = 0;
+      return 0;
+    }
+  }
+
+  // Check for impending buffer overrun
+
+  FAILIF((*framesize == bufsize), EAGAIN);
+
+  // Frame is still incomplete; try again
+
+  errno = EAGAIN;
+  return -1;
 }

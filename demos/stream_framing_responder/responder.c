@@ -104,9 +104,9 @@ volatile unsigned transmit_errors = 0;
 void ReceiverTask(void *parameters)
 {
   int fd = (int) parameters;
+  int status;
   uint8_t inbuf[256];
   size_t inlen;
-  uint8_t *p;
   COMMANDMSG_t cmd;
   size_t cmdlen;
 
@@ -114,59 +114,15 @@ void ReceiverTask(void *parameters)
 
   for (;;)
   {
-    // Assemble an incoming frame
+    // Receive an incoming command message frame
 
     inlen = 0;
-    p = inbuf;
 
     for (;;)
     {
-      ssize_t len;
-
-      // Read from the I/O stream
-
-      if ((len = read(fd, p, 1)) < 0)
-      {
-        inlen = 0;
-        p = inbuf;
-        receive_errors++;
-        continue;
-      }
-
-      p += len;
-      inlen += len;
-
-      // Check for frame start delimiter
-
-      if ((inlen == 1) && (inbuf[0] != DLE))
-      {
-        inlen = 0;
-        p = inbuf;
-        continue;
-      }
-
-      if ((inlen == 2) && (inbuf[1] != STX))
-      {
-        inlen = 0;
-        p = inbuf;
-        continue;
-      }
-
-      // Check for buffer overflow
-
-      if (inlen >= sizeof(inbuf))
-      {
-        inlen = 0;
-        p = inbuf;
-        receive_errors++;
-        continue;
-      }
-
-      // Check for complete frame
-
-      if ((inlen > 6) && (inbuf[0] == DLE) && (inbuf[1] == STX) &&
-          (inbuf[inlen-2] == DLE) && (inbuf[inlen-1] == ETX))
-        break;
+      status = StreamReceiveFrame(fd, inbuf, sizeof(inbuf), &inlen);
+      if (status == 0) break;
+      if ((status < 0) && (errno != EAGAIN)) receive_errors++;
     }
 
     // Decode the command message frame
@@ -236,7 +192,7 @@ void TransmitterTask(void *parameters)
 
     // Transmit the response message
 
-    if (write(fd, outbuf, outlen) < 0)
+    if (StreamSendFrame(fd, outbuf, outlen) < 0)
       transmit_errors++;
   }
 }

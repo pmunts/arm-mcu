@@ -23,14 +23,16 @@
 #ifndef _STREAM_FRAMING_H
 #define _STREAM_FRAMING_H
 
-#include <stddef.h>
-
-#define DLE	0x10
-#define STX	0x02
-#define ETX	0x03
+_BEGIN_STD_C
 
 int StreamEncodeFrame(void *src, size_t srclen, void *dst, size_t dstsize, size_t *dstlen);
 
 int StreamDecodeFrame(void *src, size_t srclen, void *dst, size_t dstsize, size_t *dstlen);
+
+int StreamReceiveFrame(int fd, void *buf, size_t bufsize, size_t *framesize);
+
+_END_STD_C
+
+#define StreamSendFrame(fd, buf, count) write(fd, buf, count)
 
 #endif

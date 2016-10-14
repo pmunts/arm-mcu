@@ -6,6 +6,7 @@
 #include <string.h>
 #include <unistd.h>
 
+#include "cplusplus.h"
 #include "messages.h"
 #include "stream_framing.h"
 #include "tcp.h"
@@ -35,41 +36,36 @@ void SendCommand(int fd, uint32_t sequence, uint32_t command, uint32_t payload)
     printf("%02X ", cmdbuf[i]);
   putchar('\n');
 
-  write(fd, cmdbuf, cmdlen);
+  StreamSendFrame(fd, cmdbuf, cmdlen);
 }
 
 void ReceiveResponse(int fd)
 {
-  uint8_t buf[256];
-  size_t len;
-  uint8_t *p;
   int status;
+  uint8_t inbuf[256];
+  size_t inlen;
   RESPONSEMSG_t resp;
   size_t respsize;
   int i;
 
-  p = buf;
-  len = 0;
+  inlen = 0;
 
   for (;;)
   {
-    status = read(fd, p, 1);
-    if (status < 1) return;
-
-    p++;
-    len++;
-
-    if ((buf[len-2] == DLE) && (buf[len-1] == ETX))
-      break;
+    status = StreamReceiveFrame(fd, inbuf, sizeof(inbuf), &inlen);
+    if (status == 0) break;
+    if ((status < 0) && (errno == EAGAIN)) continue;
+    puts("ERROR: StreamReceiveFrame() failed");
+    return;
   }
 
-  printf("Received %ld bytes: ", len);
+  printf("Received %ld bytes: ", inlen);
 
-  for (i = 0; i < len; i++)
-    printf("%02X ", buf[i]);
+  for (i = 0; i < inlen; i++)
+    printf("%02X ", inbuf[i]);
   putchar('\n');
 
-  if (StreamDecodeFrame(buf, len, &resp, sizeof(resp), &respsize))
+  if (StreamDecodeFrame(inbuf, inlen, &resp, sizeof(resp), &respsize))
   {
     puts("ERROR: StreamDecodeFrame() failed");
     return;
