@@ -42,7 +42,7 @@
 #include "stream_framing.h"
 #include "messages.h"
 
-#define FIRMWARE_VERSION	10806
+#define FIRMWARE_VERSION	11277
 
 #ifdef NUCLEO_F103RB
 #define CONTROLPORT		"com3:115200,n8,1"
