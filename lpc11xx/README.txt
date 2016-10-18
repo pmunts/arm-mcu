@@ -46,6 +46,6 @@ References
    1. http://www.amazon.com/Definitive-Guide-Cortex-M3-Embedded-Technology/dp/0750685344
    2. http://www.arm.com/products/processors/cortex-m/cortex-microcontroller-software-interface-standard.php
    3. http://ics.nxp.com/support/lpcxpresso
-   4. http://tech.munts.com/MCU/Frameworks/RaspberryPi/expansion/LPC1114
+   4. http://git.munts.com/rpi-mcu/expansion/LPC1114
    5. http://www.nxp.com/products/microcontrollers/cortex_m0/lpc1100_x_l/LPC1114FN28.html
    6. mailto:phil@munts.net
