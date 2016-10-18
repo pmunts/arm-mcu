@@ -29,6 +29,6 @@ References
    4. http://en.wikipedia.org/wiki/Cross_compiler#Canadian_Cross
    5. http://www.raspberrypi.org/
    6. http://beagleboard.org/bone
-   7. http://tech.munts.com/MCU/Frameworks/ARM/toolchain/Makefile.cross
+   7. file:///home/pmunts/src/ARM/toolchain/Makefile.cross
    8. http://repo.munts.com/
    9. mailto:phil@munts.net
