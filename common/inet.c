@@ -24,7 +24,7 @@
 #include <string.h>
 
 #include <cpu.h>
-#include <inet.h>
+#include <arpa/inet.h>
 
 char *inet_ntop(int af, const void *src, char *dst, int size)
 {

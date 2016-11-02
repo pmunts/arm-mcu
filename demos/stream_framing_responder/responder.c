@@ -24,10 +24,10 @@
 #error You must define FREERTOS to compile this FreeRTOS application (WITH_FREERTOS=yes)
 #endif
 
+#include <arpa/inet.h>
 #include <assert.h>
 #include <errno.h>
 #include <fcntl.h>
-#include <inet.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
