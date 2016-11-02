@@ -20,19 +20,25 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef _STREAM_FRAMING_H
-#define _STREAM_FRAMING_H
+#ifndef _LIBSTREAM_H
+#define _LIBSTREAM_H
+
+#include <unistd.h>
+#ifndef _BEGIN_STD_C
+#include <cplusplus.h>
+#endif
+#include <stdint.h>
 
 _BEGIN_STD_C
 
-int StreamEncodeFrame(void *src, size_t srclen, void *dst, size_t dstsize, size_t *dstlen);
+extern void STREAM_encode_frame(void *src, int32_t srclen, void *dst, int32_t dstsize, int32_t *dstlen, int32_t *error);
 
-int StreamDecodeFrame(void *src, size_t srclen, void *dst, size_t dstsize, size_t *dstlen);
+extern void STREAM_decode_frame(void *src, int32_t srclen, void *dst, int32_t dstsize, int32_t *dstlen, int32_t *error);
 
-int StreamReceiveFrame(int fd, void *buf, size_t bufsize, size_t *framesize);
+extern void STREAM_receive_frame(int32_t fd, void *buf, int32_t bufsize, int32_t *framesize, int32_t *error);
+
+extern void STREAM_send_frame(int32_t fd, void *buf, int32_t bufsize, int32_t *count, int32_t *error);
 
 _END_STD_C
-
-#define StreamSendFrame(fd, buf, count) write(fd, buf, count)
 
 #endif

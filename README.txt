@@ -88,10 +88,13 @@ News
        Changed device_read_raw() to block by default, waiting for at least
        one byte of data.
      * 25 July 2016 -- Added byte stream framing library and demo program.
+     * 2 November 2016 -- Modified device_read_raw() to return EAGAIN in
+       errno if there is no data available on a stream with O_NONBLOCK
+       set. Imported liblinx and libstream from [18]libsimpleio.
 
 Git Repository
 
-   The source code is available at: [18]http://git.munts.com
+   The source code is available at: [19]http://git.munts.com
 
    Use the following command to clone it:
 
@@ -125,7 +128,7 @@ POSSIBILITY OF SUCH DAMAGE.
    respective authors.
    ___________________________________________________________________
 
-   Questions or comments to Philip Munts [19]phil@munts.net
+   Questions or comments to Philip Munts [20]phil@munts.net
 
    I am available for custom system development (hardware and software) of
    products using these ARM microcontrollers.
@@ -149,5 +152,6 @@ References
   15. http://www.st.com/web/catalog/tools/FM116/SC959/SS1532/LN1847/PF259875
   16. http://www.arm.com/products/processors/cortex-m/cortex-microcontroller-software-interface-standard.php
   17. http://www.silabs.com/products/mcu/32-bit/Pages/32-bit-microcontrollers.aspx
-  18. http://git.munts.com/
-  19. mailto:phil@munts.net
+  18. http://git.munts.com/libsimpleio
+  19. http://git.munts.com/
+  20. mailto:phil@munts.net

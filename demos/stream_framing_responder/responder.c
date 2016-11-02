@@ -24,7 +24,6 @@
 #error You must define FREERTOS to compile this FreeRTOS application (WITH_FREERTOS=yes)
 #endif
 
-#include <arpa/inet.h>
 #include <assert.h>
 #include <errno.h>
 #include <fcntl.h>
@@ -32,6 +31,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
+#include <arpa/inet.h>
 
 #include <cpu.h>
 
@@ -39,7 +40,7 @@
 #include <task.h>
 #include <queue.h>
 
-#include "stream_framing.h"
+#include "libstream.h"
 #include "messages.h"
 
 #define FIRMWARE_VERSION	11278
@@ -105,11 +106,11 @@ volatile unsigned transmit_errors = 0;
 void ReceiverTask(void *parameters)
 {
   int fd = (int) parameters;
-  int status;
   uint8_t inbuf[256];
-  size_t inlen;
+  int32_t inlen;
+  int32_t error;
   COMMANDMSG_t cmd;
-  size_t cmdlen;
+  int32_t cmdlen;
 
   // Receiver task event loop
 
@@ -121,14 +122,16 @@ void ReceiverTask(void *parameters)
 
     for (;;)
     {
-      status = StreamReceiveFrame(fd, inbuf, sizeof(inbuf), &inlen);
-      if (status == 0) break;
-      if ((status < 0) && (errno != EAGAIN)) receive_errors++;
+      STREAM_receive_frame(fd, inbuf, sizeof(inbuf), &inlen, &error);
+      if (error == 0) break;
+      if (error != EAGAIN) receive_errors++;
     }
 
     // Decode the command message frame
 
-    if (StreamDecodeFrame(inbuf, inlen, &cmd, sizeof(cmd), &cmdlen))
+    STREAM_decode_frame(inbuf, inlen, &cmd, sizeof(cmd), &cmdlen, &error);
+
+    if (error)
     {
       receive_errors++;
       continue;
@@ -164,7 +167,9 @@ void TransmitterTask(void *parameters)
   int fd = (int) parameters;
   RESPONSEMSG_t resp;
   uint8_t outbuf[2*sizeof(resp)+8];
-  size_t outlen;
+  int32_t outlen;
+  int32_t error;
+  int32_t tcount;
 
   for (;;)
   {
@@ -185,7 +190,9 @@ void TransmitterTask(void *parameters)
 
     // Encode the response message
 
-    if (StreamEncodeFrame(&resp, sizeof(resp), outbuf, sizeof(outbuf), &outlen))
+    STREAM_encode_frame(&resp, sizeof(resp), outbuf, sizeof(outbuf), &outlen, &error);
+
+    if (error)
     {
       transmit_errors++;
       continue;
@@ -193,8 +200,13 @@ void TransmitterTask(void *parameters)
 
     // Transmit the response message
 
-    if (StreamSendFrame(fd, outbuf, outlen) < 0)
+    STREAM_send_frame(fd, outbuf, outlen, &tcount, &error);
+
+    if (error)
+    {
       transmit_errors++;
+      continue;
+    }
   }
 }
 

@@ -20,27 +20,18 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef MCUFAMILYNAME
-#include <arm.h>
-#ifdef errno
-#undef errno
-#define errno (*(__errno()))
-#endif
-#else
-#include <cplusplus.h>
 #include <errno.h>
-#include <stddef.h>
-#include <stdint.h>
-#endif
-
-#include <stream_framing.h>
 #include <unistd.h>
 
-// Frame delimiters
+#include "libstream.h"
 
 #define DLE	0x10
 #define STX	0x02
 #define ETX	0x03
+
+// Error check macro
+
+#define FAILIF(c) if (c) { *dstlen = 0; *error = EINVAL; return; }
 
 // The following CRC16-CCITT subroutine came from:
 // http://stackoverflow.com/questions/10564491/function-to-calculate-a-crc16-checksum
@@ -62,7 +53,7 @@ static uint16_t crc16(const uint8_t* data_p, uint8_t length){
 // be twice the size of the source buffer, plus 8 bytes worst case.
 // Return zero if successfully encoded.
 
-int StreamEncodeFrame(void *src, size_t srclen, void *dst, size_t dstsize, size_t *dstlen)
+void STREAM_encode_frame(void *src, int32_t srclen, void *dst, int32_t dstsize, int32_t *dstlen, int32_t *error)
 {
   uint8_t *p = src;
   uint8_t *q = dst;
@@ -70,7 +61,7 @@ int StreamEncodeFrame(void *src, size_t srclen, void *dst, size_t dstsize, size_
 
   // Verify parameters
 
-  if (dstsize < 6) return -1;
+  FAILIF(dstsize < 6);
 
   // Calculate frame check sequence (CRC16-CCITT of payload bytes)
 
@@ -90,54 +81,60 @@ int StreamEncodeFrame(void *src, size_t srclen, void *dst, size_t dstsize, size_
     {
       *q++ = DLE;
       *dstlen += 1;
-      if (*dstlen == dstsize) return -1;
+
+      FAILIF(*dstlen == dstsize);
     }
 
     *q++ = *p++;
     *dstlen += 1;
-    if (*dstlen == dstsize) return -1;
+
+    FAILIF(*dstlen == dstsize);
   }
 
   // Append frame check sequence high byte
 
   *q++ = crc >> 8;
   *dstlen += 1;
-  if (*dstlen == dstsize) return -1;
+
+  FAILIF(*dstlen == dstsize);
 
   if (q[-1] == DLE)
   {
     *q++ = DLE;
     *dstlen += 1;
-    if (*dstlen == dstsize) return -1;
+
+    FAILIF(*dstlen == dstsize);
   }
 
   // Append frame check sequence low byte
 
   *q++ = crc & 0xFF;
   *dstlen += 1;
-  if (*dstlen == dstsize) return -1;
+
+  FAILIF(*dstlen == dstsize);
 
   if (q[-1] == DLE)
   {
     *q++ = DLE;
     *dstlen += 1;
-    if (*dstlen == dstsize) return -1;
+    FAILIF(*dstlen == dstsize);
   }
 
   // Append end of frame delimiter
 
-  if (*dstlen + 2 > dstsize) return -1;
- 
+  FAILIF(*dstlen + 2 > dstsize);
+
   *q++ = DLE;
   *q++ = ETX;
   *dstlen += 2;
-  return 0;
+
+  *error = 0;
 }
 
 // Decode a message frame, with DLE byte stuffing and CRC16-CCITT
 // frame check sequence.  Return zero if successfully decoded.
 
-int StreamDecodeFrame(void *src, size_t srclen, void *dst, size_t dstsize, size_t *dstlen)
+void STREAM_decode_frame(void *src, int32_t srclen, void *dst, int32_t dstsize, int32_t *dstlen, int32_t *error)
 {
   uint8_t *p = src;
   uint8_t *q = dst;
@@ -148,14 +145,14 @@ int StreamDecodeFrame(void *src, size_t srclen, void *dst, size_t dstsize, size_
 
   // Verify minimum frame length
 
-  if (srclen < 6) return -1;
+  FAILIF(srclen < 6);
 
   // Verify frame delimiters
 
-  if (p[0] != DLE) return -1;
-  if (p[1] != STX) return -1;
-  if (p[srclen-2] != DLE) return -1;
-  if (p[srclen-1] != ETX) return -1;
+  FAILIF(p[0] != DLE);
+  FAILIF(p[1] != STX);
+  FAILIF(p[srclen-2] != DLE);
+  FAILIF(p[srclen-1] != ETX);
 
   // Skip delimiter bytes at both ends
 
@@ -168,15 +165,15 @@ int StreamDecodeFrame(void *src, size_t srclen, void *dst, size_t dstsize, size_
     srclen--;
   else if ((p[srclen-1] == DLE) && (p[srclen-2] == DLE))
     srclen -= 2;
-  else if ((p[srclen-1] == DLE) && (p[srclen-2] != DLE))
-    return -1;
+  else
+    FAILIF((p[srclen-1] == DLE) && (p[srclen-2] != DLE));
 
   if (p[srclen-1] != DLE)
     srclen--;
   else if ((p[srclen-1] == DLE) && (p[srclen-2] == DLE))
     srclen -= 2;
-  else if ((p[srclen-1] == DLE) && (p[srclen-2] != DLE))
-    return -1;
+  else
+    FAILIF((p[srclen-1] == DLE) && (p[srclen-2] != DLE));
 
   // Copy payload bytes, removing any stuffed DLE's
 
@@ -192,7 +189,7 @@ int StreamDecodeFrame(void *src, size_t srclen, void *dst, size_t dstsize, size_
     *dstlen += 1;
     srclen--;
 
-    if ((srclen > 0) && (*dstlen == dstsize)) return -1;
+    FAILIF((srclen > 0) && (*dstlen == dstsize));
   }
 
   // Calculate expected frame check sequence
@@ -213,20 +210,17 @@ int StreamDecodeFrame(void *src, size_t srclen, void *dst, size_t dstsize, size_
 
   // Compare expected and received frame check sequences
 
-  if (crccalc == crcsent)
-    return 0;
-  else
-    return -1;
+  FAILIF(crccalc != crcsent);
+
+  *error = 0;
 }
 
-#define FAILIF(c, e) if (c) { *framesize = 0; errno = e; return -1; }
+#undef FAILIF
+#define FAILIF(c, e) if (c) { *framesize = 0; *error = e; return; }
 
-// Receive a frame, one byte at a time.  Return -1 on any error,
-// including EAGAIN (incomplete frame) and 0 on successful reception
-// of a frame.  Invalid frames are silently discarded with errno set
-// to EAGAIN.
+// Receive a frame, one byte at a time
 
-int StreamReceiveFrame(int fd, void *buf, size_t bufsize, size_t *framesize)
+void STREAM_receive_frame(int32_t fd, void *buf, int32_t bufsize, int32_t *framesize, int32_t *error)
 {
   int status;
   uint8_t b;
@@ -241,11 +235,13 @@ int StreamReceiveFrame(int fd, void *buf, size_t bufsize, size_t *framesize)
 
   status = read(fd, &b, 1);
 
-  // Special check for O_NONBLOCK and EAGAIN
+  // Check for O_NONBLOCK and EAGAIN
 
-  if ((status < 0) && (errno == EAGAIN)) return -1;
-
-  // Check for other errors
+  if ((status < 0) && (errno == EAGAIN))
+  {
+    *error = EAGAIN;
+    return;
+  }
 
   FAILIF((status < 0), errno);
   FAILIF((status == 0), EPIPE);
@@ -258,15 +254,15 @@ int StreamReceiveFrame(int fd, void *buf, size_t bufsize, size_t *framesize)
       FAILIF((b != DLE), EAGAIN);
       bp[*framesize] = b;
       *framesize += 1;
-      errno = EAGAIN;
-      return -1;
+      *error = EAGAIN;
+      return;
 
     case 1 :
       FAILIF((b != STX), EAGAIN);
       bp[*framesize] = b;
       *framesize += 1;
-      errno = EAGAIN;
-      return -1;
+      *error = EAGAIN;
+      return;
 
     default :
       bp[*framesize] = b;
@@ -296,8 +292,8 @@ int StreamReceiveFrame(int fd, void *buf, size_t bufsize, size_t *framesize)
 
     if (dc & 0x01)
     {
-      errno = 0;
-      return 0;
+      *error = 0;
+      return;
     }
   }
 
@@ -307,6 +303,19 @@ int StreamReceiveFrame(int fd, void *buf, size_t bufsize, size_t *framesize)
 
   // Frame is still incomplete; try again
 
-  errno = EAGAIN;
-  return -1;
+  *error = EAGAIN;
+}
+
+void STREAM_send_frame(int32_t fd, void *buf, int32_t bufsize, int32_t *count, int32_t *error)
+{
+  int32_t len = write(fd, buf, bufsize);
+  if (len < 0)
+  {
+    *count = 0;
+    *error = errno;
+    return;
+  }
+
+  *count = len;
+  *error = 0;
 }

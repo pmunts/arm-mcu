@@ -5,18 +5,20 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <arpa/inet.h>
 
-#include "cplusplus.h"
 #include "messages.h"
-#include "stream_framing.h"
-#include "tcp.h"
+#include "libstream.h"
+#include "libtcp4.h"
 
 void SendCommand(int fd, uint32_t sequence, uint32_t command, uint32_t payload)
 {
   COMMANDMSG_t cmd;
   uint8_t cmdbuf[256];
-  size_t cmdlen;
+  int32_t cmdlen;
+  int32_t error;
   int i;
+  int32_t tcount;
 
   cmd.sequence = htonl(sequence);
   cmd.command = htonl(command);
@@ -24,50 +26,61 @@ void SendCommand(int fd, uint32_t sequence, uint32_t command, uint32_t payload)
 
   printf("Command:  sequence=%d command=%d payload=%d\n",
     ntohl(cmd.sequence), ntohl(cmd.command), ntohl(cmd.payload));
-  
-  if (StreamEncodeFrame(&cmd, sizeof(cmd), cmdbuf, sizeof(cmdbuf), &cmdlen))
+ 
+  STREAM_encode_frame(&cmd, sizeof(cmd), cmdbuf, sizeof(cmdbuf), &cmdlen, &error);
+ 
+  if (error)
   {
-    puts("ERROR: StreamEncodeFrame() failed");
+    fprintf(stderr, "ERROR: STREAM_encode_frame() failed, %s\n", strerror(error));
     return;
   }
 
-  printf("Sending  %ld bytes: ", cmdlen);
+  printf("Sending  %d bytes: ", cmdlen);
   for (i = 0; i < cmdlen; i++)
     printf("%02X ", cmdbuf[i]);
   putchar('\n');
 
-  StreamSendFrame(fd, cmdbuf, cmdlen);
+  STREAM_send_frame(fd, cmdbuf, cmdlen, &tcount, &error);
+
+  if (error)
+  {
+    fprintf(stderr, "ERROR: STREAM_send_frame() failed, %s\n", strerror(error));
+    return;
+  }
 }
 
 void ReceiveResponse(int fd)
 {
-  int status;
   uint8_t inbuf[256];
-  size_t inlen;
+  int32_t inlen;
+  int32_t error;
   RESPONSEMSG_t resp;
-  size_t respsize;
+  int32_t respsize;
   int i;
 
   inlen = 0;
 
   for (;;)
   {
-    status = StreamReceiveFrame(fd, inbuf, sizeof(inbuf), &inlen);
-    if (status == 0) break;
-    if ((status < 0) && (errno == EAGAIN)) continue;
-    puts("ERROR: StreamReceiveFrame() failed");
+    STREAM_receive_frame(fd, inbuf, sizeof(inbuf), &inlen, &error);
+
+    if (error == 0) break;
+    if (error == EAGAIN) continue;
+    fprintf(stderr, "ERROR: STREAM_receive_frame() failed, %s\n", strerror(error));
     return;
   }
 
-  printf("Received %ld bytes: ", inlen);
+  printf("Received %d bytes: ", inlen);
 
   for (i = 0; i < inlen; i++)
     printf("%02X ", inbuf[i]);
   putchar('\n');
 
-  if (StreamDecodeFrame(inbuf, inlen, &resp, sizeof(resp), &respsize))
+  STREAM_decode_frame(inbuf, inlen, &resp, sizeof(resp), &respsize, &error);
+
+  if (error)
   {
-    puts("ERROR: StreamDecodeFrame() failed");
+    fprintf(stderr, "ERROR: StreamDecodeFrame() failed, %s\n", strerror(error));
     return;
   }
 
@@ -78,18 +91,29 @@ void ReceiveResponse(int fd)
 
 int main(int argc, char *argv[])
 {
-  int fd;
+  IPV4_ADDR server;
+  int32_t fd;
+  int32_t error;
 
   if (argc != 2)
   {
-    printf("\nUsage: %s <servername>\n\n", argv[0]);
+    fprintf(stderr, "\nUsage: %s <servername>\n\n", argv[0]);
     exit(1);
   }
 
-  fd = tcp_call(resolve(argv[1]), 23);
-  if (fd < 0)
+  TCP4_resolve(argv[1], &server, &error);
+
+  if (error != 0)
   {
-    fprintf(stderr, "ERROR: tcp_call() failed, %s\n", strerror(errno));
+    fprintf(stderr, "ERROR: TCP4_resolve() failed, %s\n", strerror(error));
+    exit(1);
+  }
+
+  TCP4_connect(server, 23, &fd, &error);
+
+  if (error != 0)
+  {
+    fprintf(stderr, "ERROR: TCP4_connect() failed, %s\n", strerror(error));
     exit(1);
   }
 
@@ -102,6 +126,13 @@ int main(int argc, char *argv[])
   SendCommand(fd, 2, VERSION, 0);
   ReceiveResponse(fd);
 
-  close(fd);
+  TCP4_close(fd, &error);
+
+  if (error != 0)
+  {
+    fprintf(stderr, "ERROR: TCP4_close() failed, %s\n", strerror(error));
+    exit(1);
+  }
+
   exit(0);
 }

@@ -28,9 +28,10 @@ COMMON_OBJS	+= $(COMMON_DIR)/device.o
 COMMON_OBJS	+= $(COMMON_DIR)/inet.o
 COMMON_OBJS	+= $(COMMON_DIR)/leds.o
 COMMON_OBJS	+= $(COMMON_DIR)/lib_crc.o
+COMMON_OBJS	+= $(COMMON_DIR)/liblinx.o
+COMMON_OBJS	+= $(COMMON_DIR)/libstream.o
 COMMON_OBJS	+= $(COMMON_DIR)/msrand32.o
 COMMON_OBJS	+= $(COMMON_DIR)/semihosting.o
-COMMON_OBJS	+= $(COMMON_DIR)/stream_framing.o
 COMMON_OBJS	+= $(COMMON_DIR)/syscalls.o
 COMMON_OBJS	+= $(COMMON_DIR)/systick.o
 
