@@ -538,7 +538,7 @@ int device_read_raw(int fd, char *s, unsigned int count)
     return -1;
   }
 
-  // Wait for data if ready method is availabe and the device
+  // Wait for data if ready method is available and the device
   // is not O_NONBLOCK
 
   if ((d->read_ready != NULL) && !(d->flags & O_NONBLOCK))
@@ -553,7 +553,19 @@ int device_read_raw(int fd, char *s, unsigned int count)
     if (status < 0) return status;
   }
 
-  return d->read(d->subdevice, s, count);
+  // Attempt to read some data
+
+  status = d->read(d->subdevice, s, count);
+
+  // If no data was read, and O_NONBLOCK is in effect, set errno to EAGAIN
+
+  if ((status == 0) && (d->flags & O_NONBLOCK))
+  {
+    errno_r = EAGAIN;
+    return -1;
+  }
+
+  return status;
 }
 
 /* Read cooked input from a device */
