@@ -43,7 +43,7 @@
 #include "libstream.h"
 #include "messages.h"
 
-#define FIRMWARE_VERSION	11278
+#define FIRMWARE_VERSION	11449
 
 //***************************************************************************
 
