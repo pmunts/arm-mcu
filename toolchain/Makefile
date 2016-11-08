@@ -28,14 +28,14 @@ SED		= sed
 TAR		= tar
 TEMP		?= /tmp
 
-BINUTILVER	= 2.26
+BINUTILVER	= 2.27
 BINUTILSERVER	= http://ftp.gnu.org/pub/gnu/binutils
 BINUTILDIST	= $(TEMP)/binutils-$(BINUTILVER).tar.bz2
 BINUTILURL	= $(BINUTILSERVER)/`basename $(BINUTILDIST)`
 BINUTILSRC	= binutils-$(BINUTILVER)
 BINUTILBLD	= build/binutils-$(BINUTILVER)
 
-GCCVER		= 5.3.0
+GCCVER		= 5.4.0
 GCCSERVER	= http://ftp.gnu.org/pub/gnu/gcc/gcc-$(GCCVER)
 GCCDIST		= $(TEMP)/gcc-$(GCCVER).tar.bz2
 GCCURL		= $(GCCSERVER)/`basename $(GCCDIST)`
@@ -48,7 +48,7 @@ LIBICONVDIST	= $(TEMP)/libiconv-$(LIBICONVVER).tar.gz
 LIBICONVURL	= $(LIBICONVSERVER)/`basename $(LIBICONVDIST)`
 LIBICONVSRC	= libiconv-$(LIBICONVVER)
 
-NEWLIBVER	= 2.4.0
+NEWLIBVER	= 2.4.0.20160923
 NEWLIBSERVER	= http://mirrors.kernel.org/sources.redhat.com/newlib
 NEWLIBDIST	= $(TEMP)/newlib-$(NEWLIBVER).tar.gz
 NEWLIBURL	= $(NEWLIBSERVER)/`basename $(NEWLIBDIST)`
@@ -58,7 +58,7 @@ LIBMPDFURL	= $(NEWLIBSERVER)/libm.pdf
 LIBCPDF		= $(TEMP)/libc.pdf
 LIBMPDF		= $(TEMP)/libm.pdf
 
-GDBVER		= 7.11
+GDBVER		= 7.12
 GDBSERVER	= http://ftp.gnu.org/gnu/gdb
 GDBDIST		= $(TEMP)/gdb-$(GDBVER).tar.gz
 GDBURL		= $(GDBSERVER)/`basename $(GDBDIST)`
@@ -71,11 +71,13 @@ TARGETNAME	= arm-none-eabi
 INSTBASE	= $(shell pwd)/$(PKGNAME)
 
 ifeq ($(findstring CYGWIN, $(shell uname)), CYGWIN)
+DEFAULT		= tarball
 PKGSUFFIX	= cygwin
 TARBALL		= $(PKGNAME)-$(PKGVERSION)-$(PKGSUFFIX).tgz
 endif
 
 ifeq ($(shell uname), Darwin)
+DEFAULT		= tarball
 PKGSUFFIX	= $(shell uname -s)-$(shell uname -r)-$(shell uname -m)
 SED		= gsed
 TAR		= gnutar
@@ -85,6 +87,7 @@ TARGROUP	= --group wheel
 endif
 
 ifeq ($(shell uname), Linux)
+DEFAULT		= package.deb
 OSNAME		?= unknown
 PKGARCH		= $(shell dpkg --print-architecture)
 PKGSUFFIX	= $(OSNAME)-$(PKGARCH)
@@ -96,6 +99,7 @@ TARGROUP	= --group root
 endif
 
 ifeq ($(shell uname), OpenBSD)
+DEFAULT		= package.openbsd
 CC		= egcc
 CXX		= eg++
 TAR		= gtar
@@ -104,7 +108,7 @@ endif
 
 BUILDCONFIG	= CC=$(CC) CXX=$(CXX)
 
-default: readme.done
+default: $(DEFAULT)
 
 ################################################################################
 
