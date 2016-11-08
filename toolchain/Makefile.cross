@@ -37,7 +37,7 @@ HOST_PKGSUFFIX			= $(HOST_OSNAME)-$(HOST_PKGARCH)
 
 # Build machine (where we want to build the cross-compiler) definitions
 
-BUILD_CONFIG_NAME		= --build=i686-pc-linux-gnu
+BUILD_CONFIG_NAME		= --build=`gcc -v 2>&1 | awk '/Target:/ { print $$2 }'`
 BUILD_HOST_TOOLCHAIN_DIR	= /usr/local/gcc-arm-linux-gnueabihf-linaro-$(HOST_PLATFORM_NAME)/bin
 BUILD_MCU_TOOLCHAIN_DIR		= /usr/local/arm-mcu-tools/bin
 
