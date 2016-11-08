@@ -45,14 +45,6 @@
 
 #define FIRMWARE_VERSION	11278
 
-#ifdef NUCLEO_F103RB
-#define STREAMPORT		"com3:"
-#endif
-
-#ifdef NUCLEO_F411RE
-#define STREAMPORT		"com6:"
-#endif
-
 //***************************************************************************
 
 void ExecuteCommand(COMMANDMSG_t *cmd, RESPONSEMSG_t *resp)
@@ -275,13 +267,13 @@ int main(void)
 
   // Initialize the serial port connected to the controlling device
 
-  if (serial_register(STREAMPORT) < 0)
+  if (serial_register(AUX_PORT) < 0)
   {
     fprintf(stderr, "ERROR: serial_register() for control port failed, %s\n", strerror(errno));
     exit(1);
   }
 
-  fd = open(STREAMPORT "115200,N,8,1", O_RDWR|O_BINARY);
+  fd = open(AUX_PORT, O_RDWR|O_BINARY);
   if (fd < 0)
   {
     fprintf(stderr, "ERROR: open() for control port failed, %s\n", strerror(errno));
