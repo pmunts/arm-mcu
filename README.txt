@@ -91,10 +91,16 @@ News
      * 2 November 2016 -- Modified device_read_raw() to return EAGAIN in
        errno if there is no data available on a stream with O_NONBLOCK
        set. Imported liblinx and libstream from [18]libsimpleio.
+     * 8 November 2016 -- Upgraded binutils to 2.27. Upgraded gcc to
+       5.4.0. Upgraded newlib to 2.4.0.20160923. Upgraded gdb to 7.12.
+       Imported the [19]ut hash hash table library. Added [20]LabView LINX
+       Remote I/O demo servers written in both C (for any ARM
+       microcontroller) and C++ (only for ARM microcontrollers with a
+       large flash memory).
 
 Git Repository
 
-   The source code is available at: [19]http://git.munts.com
+   The source code is available at: [21]http://git.munts.com
 
    Use the following command to clone it:
 
@@ -128,7 +134,7 @@ POSSIBILITY OF SUCH DAMAGE.
    respective authors.
    ___________________________________________________________________
 
-   Questions or comments to Philip Munts [20]phil@munts.net
+   Questions or comments to Philip Munts [22]phil@munts.net
 
    I am available for custom system development (hardware and software) of
    products using these ARM microcontrollers.
@@ -153,5 +159,7 @@ References
   16. http://www.arm.com/products/processors/cortex-m/cortex-microcontroller-software-interface-standard.php
   17. http://www.silabs.com/products/mcu/32-bit/Pages/32-bit-microcontrollers.aspx
   18. http://git.munts.com/libsimpleio
-  19. http://git.munts.com/
-  20. mailto:phil@munts.net
+  19. http://troydhanson.github.io/uthash/index.html
+  20. https://www.labviewmakerhub.com/doku.php?id=learn:libraries:linx:spec:start
+  21. http://git.munts.com/
+  22. mailto:phil@munts.net
