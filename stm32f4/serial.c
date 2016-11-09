@@ -432,7 +432,7 @@ int serial_open(char *name, unsigned *subdevice)
 
 // Configure RX pin on PC11
 
-      RCC->AHB1ENR |= RCC_AHB1ENR_GPIOBEN;
+      RCC->AHB1ENR |= RCC_AHB1ENR_GPIOCEN;
 
       GPIOC->AFR[1] &= ~(0xF << 12);
       GPIOC->AFR[1] |= 7 << 12;
