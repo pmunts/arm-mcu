@@ -61,14 +61,14 @@ int main(void)
 
   if (serial_register((char *) AUX_PORT) < 0)
   {
-    fprintf(stderr, "ERROR: serial_register() for control port failed, %s\n", strerror(errno));
+    printf("ERROR: serial_register() for control port failed, %s\n", strerror(errno));
     exit(1);
   }
 
   fd = open((char *) AUX_PORT, O_RDWR|O_BINARY);
   if (fd < 0)
   {
-    fprintf(stderr, "ERROR: open() for control port failed, %s\n", strerror(errno));
+    printf("ERROR: open() for control port failed, %s\n", strerror(errno));
     exit(1);
   }
 

@@ -21,8 +21,6 @@
 // POSSIBILITY OF SUCH DAMAGE.
 
 #include <errno.h>
-#include <liblinx.h>
-#include <stdlib.h>
 #include <string.h>
 
 #include "common.h"
@@ -138,30 +136,30 @@ static void GetDeviceName(LINX_command_t *cmd, LINX_response_t *resp, int32_t *e
 
 void common_init(void)
 {
-  CommandTable[CMD_SYNC] = NoOperation;
-  CommandTable[CMD_DISCONNECT] = NoOperation;
-  CommandTable[CMD_FLUSH] = NoOperation;
-  CommandTable[CMD_SYSTEM_RESET] = NoOperation;
+  AddCommand(CMD_SYNC, NoOperation);
+  AddCommand(CMD_DISCONNECT, NoOperation);
+  AddCommand(CMD_FLUSH, NoOperation);
+  AddCommand(CMD_SYSTEM_RESET, NoOperation);
 
   // Device information commands
 
-  CommandTable[CMD_GET_DEVICE_ID] = GetDeviceID;
-  CommandTable[CMD_GET_LINX_API_VERSION] = GetAPIVersion;
-  CommandTable[CMD_SET_DEVICE_USER_ID] = SetDeviceUserID;
-  CommandTable[CMD_GET_DEVICE_USER_ID] = GetDeviceUserID;
-  CommandTable[CMD_GET_DEVICE_NAME] = GetDeviceName;
+  AddCommand(CMD_GET_DEVICE_ID, GetDeviceID);
+  AddCommand(CMD_GET_LINX_API_VERSION, GetAPIVersion);
+  AddCommand(CMD_SET_DEVICE_USER_ID, SetDeviceUserID);
+  AddCommand(CMD_GET_DEVICE_USER_ID, GetDeviceUserID);
+  AddCommand(CMD_GET_DEVICE_NAME, GetDeviceName);
 
   // Peripheral subsytem channels query commands
 
-  CommandTable[CMD_GET_ANALOG_IN_CHANNELS] = NoOperation;
-  CommandTable[CMD_GET_ANALOG_IN_REFERENCE] = NoOperation;
-  CommandTable[CMD_GET_ANALOG_OUT_CHANNELS] = NoOperation;
-  CommandTable[CMD_GET_CAN_CHANNELS] = NoOperation;
-  CommandTable[CMD_GET_GPIO_CHANNELS] = NoOperation;
-  CommandTable[CMD_GET_I2C_CHANNELS] = NoOperation;
-  CommandTable[CMD_GET_PWM_CHANNELS] = NoOperation;
-  CommandTable[CMD_GET_QE_CHANNELS] = NoOperation;
-  CommandTable[CMD_GET_SERVO_CHANNELS] = NoOperation;
-  CommandTable[CMD_GET_SPI_CHANNELS] = NoOperation;
-  CommandTable[CMD_GET_UART_CHANNELS] = NoOperation;
+  AddCommand(CMD_GET_ANALOG_IN_CHANNELS, NoOperation);
+  AddCommand(CMD_GET_ANALOG_IN_REFERENCE, NoOperation);
+  AddCommand(CMD_GET_ANALOG_OUT_CHANNELS, NoOperation);
+  AddCommand(CMD_GET_CAN_CHANNELS, NoOperation);
+  AddCommand(CMD_GET_GPIO_CHANNELS, NoOperation);
+  AddCommand(CMD_GET_I2C_CHANNELS, NoOperation);
+  AddCommand(CMD_GET_PWM_CHANNELS, NoOperation);
+  AddCommand(CMD_GET_QE_CHANNELS, NoOperation);
+  AddCommand(CMD_GET_SERVO_CHANNELS, NoOperation);
+  AddCommand(CMD_GET_SPI_CHANNELS, NoOperation);
+  AddCommand(CMD_GET_UART_CHANNELS, NoOperation);
 }

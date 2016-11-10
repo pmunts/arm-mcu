@@ -1,5 +1,3 @@
-// Common definitions
-
 // Copyright (C)2016, Philip Munts, President, Munts AM Corp.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -20,29 +18,27 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef _COMMON_H_
-#define _COMMON_H_
+#include <map>
 
-#include <liblinx.h>
+#include "common.h"
 
-#include "command.h"
+// Implement the command table as an STL map
 
-// Prepare the LINX response message structure
+static std::map<uint16_t, command_handler_t> CommandTable;
 
-#define PREPARE_RESPONSE					\
-  memset(resp, 0, sizeof(LINX_response_t));			\
-  resp->SoF = LINX_SOF;						\
-  resp->PacketSize = 6;						\
-  resp->PacketNum = cmd->PacketNum
+// Add a command handler.
 
-// Validate the LINX command message size
+void AddCommand(uint16_t number, command_handler_t handler)
+{
+  CommandTable[number] = handler;
+}
 
-#define CHECK_COMMAND_SIZE(low, high)				\
-  if ((cmd->PacketSize < low) || (cmd->PacketSize > high))	\
-  {								\
-    resp->Status = L_UNKNOWN_ERROR;				\
-    *error = EINVAL;						\
-    return;							\
-  }
+// Lookup command handler.  Return *handler=NULL if not found.
 
-#endif
+void LookupCommand(uint16_t number, command_handler_t *handler)
+{
+  if (CommandTable.find(number) == CommandTable.end())
+    *handler = NULL;
+  else
+    *handler = CommandTable[number];
+}

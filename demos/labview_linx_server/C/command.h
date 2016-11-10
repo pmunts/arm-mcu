@@ -1,5 +1,3 @@
-// Common definitions
-
 // Copyright (C)2016, Philip Munts, President, Munts AM Corp.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -20,29 +18,19 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef _COMMON_H_
-#define _COMMON_H_
+#ifndef _COMMAND_H
+#define _COMMAND_H
 
-#include <liblinx.h>
+// LINX command handler function pointer
 
-#include "command.h"
+typedef void (*command_handler_t)(LINX_command_t *cmd, LINX_response_t *resp, int32_t *error);
 
-// Prepare the LINX response message structure
+// Add a command handler.
 
-#define PREPARE_RESPONSE					\
-  memset(resp, 0, sizeof(LINX_response_t));			\
-  resp->SoF = LINX_SOF;						\
-  resp->PacketSize = 6;						\
-  resp->PacketNum = cmd->PacketNum
+void AddCommand(uint16_t number, command_handler_t handler);
 
-// Validate the LINX command message size
+// Lookup command handler.  Return *handler=NULL if not found.
 
-#define CHECK_COMMAND_SIZE(low, high)				\
-  if ((cmd->PacketSize < low) || (cmd->PacketSize > high))	\
-  {								\
-    resp->Status = L_UNKNOWN_ERROR;				\
-    *error = EINVAL;						\
-    return;							\
-  }
+void LookupCommand(uint16_t number, command_handler_t *handler);
 
 #endif

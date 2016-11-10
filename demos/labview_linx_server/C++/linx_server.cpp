@@ -22,7 +22,6 @@
 
 #include <errno.h>
 #include <fcntl.h>
-#include <liblinx.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -42,10 +41,6 @@ extern const char LINX_DEVICE_NAME[]		= BOARDNAME " C++ LabView LINX Remote I/O 
 
 extern void common_init(void);
 
-// Implement the command table as an STL map
-
-std::map<unsigned, command_handler_t> CommandTable;
-
 int main(void)
 {
   int32_t fd;
@@ -53,6 +48,7 @@ int main(void)
   int32_t error;
   LINX_command_t cmd;
   LINX_response_t resp;
+  command_handler_t handler;
 
   cpu_init(DEFAULT_CPU_FREQ);
   serial_stdio((char *) CONSOLE_PORT);
@@ -91,7 +87,8 @@ int main(void)
     switch (error)
     {
       case 0 :
-        if (CommandTable.find(cmd.Command) == CommandTable.end())
+        LookupCommand(cmd.Command, &handler);
+        if (handler == NULL)
         {
           printf("ERROR: Unrecognized command %04X\n", cmd.Command);
 
@@ -103,7 +100,7 @@ int main(void)
         }
         else
         {
-          CommandTable[cmd.Command](&cmd, &resp, &error);
+          handler(&cmd, &resp, &error);
           if (error)
           {
             printf("ERROR: Command %04X handler failed, %s\n", cmd.Command, strerror(error));

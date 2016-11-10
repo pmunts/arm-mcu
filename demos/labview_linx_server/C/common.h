@@ -23,17 +23,9 @@
 #ifndef _COMMON_H_
 #define _COMMON_H_
 
-#include <errno.h>
 #include <liblinx.h>
 
-// LINX command handler function pointer
-
-typedef void (*command_handler_t)(LINX_command_t *cmd, LINX_response_t *resp, int32_t *error);
-
-// LINX command hash table services
-
-extern void AddCommand(uint16_t number, command_handler_t handler);
-extern void LookupCommand(uint16_t number, command_handler_t *handler);
+#include "command.h"
 
 // Prepare the LINX response message structure
 

@@ -20,11 +20,12 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
+#include <errno.h>
 #include <string.h>
 
 #include "common.h"
 
-// External ID constants, defined in the main program file
+// External constants, defined in the main program file
 
 extern const uint8_t	LINX_DEVICE_FAMILY;
 extern const uint8_t	LINX_DEVICE_ID;
