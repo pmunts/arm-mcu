@@ -24,9 +24,10 @@ ARMSRC		?= ../../..
 MCUFAMILY	?= stm32f4
 BOARDNAME	?= NUCLEO_F411RE
 
-SOURCES		+= linx_server.c
+SOURCES		= main.c
 SOURCES		+= command.c
 SOURCES		+= common.c
+SOURCES		+= executive.c
 
 default: linx_server.bin
 
