@@ -1,4 +1,4 @@
-// LabView LINX Remote I/O Protocol Server Main Module
+// LabView LINX Remote I/O Protocol Command Executive Module
 
 // Copyright (C)2016, Philip Munts, President, Munts AM Corp.
 //
@@ -21,76 +21,38 @@
 // POSSIBILITY OF SUCH DAMAGE.
 
 #include <errno.h>
-#include <fcntl.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
-
-#include <cpu.h>
+#ifdef __linux__
+#include <syslog.h>
+#endif
 
 #include "common.h"
 
-// Device identification constants
+// This function will not return until a fatal error occurrs or the
+// connection is closed by the client.
 
-extern const uint8_t LINX_DEVICE_FAMILY		= 255;
-extern const uint8_t LINX_DEVICE_ID		= 4;
-extern const char LINX_DEVICE_NAME[]		= BOARDNAME " C++ LabView LINX Remote I/O Server";
-
-// Command handler installers
-
-extern void common_init(void);
-
-int main(void)
+void executive(int fd, int32_t *error)
 {
-  int32_t fd;
-  int32_t count = 0;
-  int32_t error;
   LINX_command_t cmd;
   LINX_response_t resp;
+  int32_t count = 0;
   command_handler_t handler;
-
-  cpu_init(DEFAULT_CPU_FREQ);
-  serial_stdio((char *) CONSOLE_PORT);
-
-  printf("\033[H\033[2J%s C++ LabView LINX Test Server (" __DATE__ " " __TIME__ ")\n\n", MCUFAMILYNAME);
-  printf("CPU Freq:%u Hz  Compiler:%s %s %s\n\n", (unsigned int) SystemCoreClock,
-    __COMPILER__, __VERSION__, __ABI__);
-
-  // Initialize the serial port connected to the controlling device
-
-  if (serial_register((char *) AUX_PORT) < 0)
-  {
-    printf("ERROR: serial_register() for control port failed, %s\n", strerror(errno));
-    exit(1);
-  }
-
-  fd = open((char *) AUX_PORT, O_RDWR|O_BINARY);
-  if (fd < 0)
-  {
-    printf("ERROR: open() for control port failed, %s\n", strerror(errno));
-    exit(1);
-  }
-
-  // Register command handlers
-
-  common_init();
-
-  // Message loop
 
   for (;;)
   {
-    LINX_receive_command(fd, &cmd, &count, &error);
+    LINX_receive_command(fd, &cmd, &count, error);
 
     // Process the various error cases
 
-    switch (error)
+    switch (*error)
     {
       case 0 :
         LookupCommand(cmd.Command, &handler);
         if (handler == NULL)
         {
-          printf("ERROR: Unrecognized command %04X\n", cmd.Command);
+#ifdef __linux__
+          syslog(LOG_ERR, "ERROR: Unrecognized command %04X", cmd.Command);
+#endif
 
           memset(&resp, 0, sizeof(LINX_response_t));
           resp.SoF = LINX_SOF;
@@ -100,17 +62,21 @@ int main(void)
         }
         else
         {
-          handler(&cmd, &resp, &error);
-          if (error)
+          handler(&cmd, &resp, error);
+          if (*error)
           {
-            printf("ERROR: Command %04X handler failed, %s\n", cmd.Command, strerror(error));
+#ifdef __linux__
+            syslog(LOG_ERR, "ERROR: Command %04X handler failed, %s", cmd.Command, strerror(*error));
+#endif
           }
         }
 
-        LINX_transmit_response(fd, &resp, &error);
-        if (error)
+        LINX_transmit_response(fd, &resp, error);
+        if (*error)
         {
-          printf("ERROR: LINX_transmit_response() failed, %s\n", strerror(error));
+#ifdef __linux__
+          syslog(LOG_ERR, "ERROR: LINX_transmit_response() failed, %s", strerror(*error));
+#endif
         }
         break;
 
@@ -118,16 +84,19 @@ int main(void)
       case EINVAL :
         continue;
 
+
       case EPIPE :
       case ECONNRESET :
-        printf("Connection closed.\n");
-        exit(1);
-        break;
+#ifdef __linux__
+        syslog(LOG_ERR, "Connection closed.");
+#endif
+        return;
 
       default :
-        printf("ERROR: LINX_receive_command() failed, %s\n",
-          strerror(error));
-        exit(1);
+#ifdef __linux__
+        syslog(LOG_ERR, "ERROR: LINX_receive_command() failed, %s", strerror(*error));
+#endif
+        return;
         break;
     }
   }

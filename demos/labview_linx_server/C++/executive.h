@@ -1,3 +1,5 @@
+// LabView LINX Remote I/O Protocol Command Executive Module
+
 // Copyright (C)2016, Philip Munts, President, Munts AM Corp.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -18,19 +20,12 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef _COMMAND_H
-#define _COMMAND_H
+#ifndef _EXECUTIVE_H
+#define _EXECTUIVE_H
 
-// LINX command handler function pointer
+// This function will not return until a fatal error occurrs or the
+// connection is closed by the client.
 
-typedef void (*command_handler_t)(LINX_command_t *cmd, LINX_response_t *resp, int32_t *error);
-
-// Add a command handler.
-
-extern void AddCommand(uint16_t number, command_handler_t handler);
-
-// Lookup command handler.  Return *handler=NULL if not found.
-
-extern void LookupCommand(uint16_t number, command_handler_t *handler);
+extern void executive(int fd, int32_t *error);
 
 #endif
