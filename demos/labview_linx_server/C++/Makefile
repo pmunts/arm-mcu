@@ -24,10 +24,11 @@ ARMSRC		?= ../../..
 MCUFAMILY	?= stm32f4
 BOARDNAME	?= NUCLEO_F411RE
 
-SOURCES		+= main.cpp
+SOURCES		= main.cpp
 SOURCES		+= command.cpp
 SOURCES		+= common.cpp
 SOURCES		+= executive.cpp
+SOURCES		+= gpio.cpp
 
 default: linx_server.bin
 
