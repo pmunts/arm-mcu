@@ -1,4 +1,4 @@
-// LabView LINX Remote I/O Protocol Command Executive Module
+// LabView LINX Remote I/O Protocol Command Executive module
 
 // Copyright (C)2016, Philip Munts, President, Munts AM Corp.
 //

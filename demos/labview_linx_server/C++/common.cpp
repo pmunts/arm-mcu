@@ -1,4 +1,4 @@
-// Command handlers that should be common to all LINX devices
+// LabView LINX Command Commands module
 
 // Copyright (C)2016, Philip Munts, President, Munts AM Corp.
 //

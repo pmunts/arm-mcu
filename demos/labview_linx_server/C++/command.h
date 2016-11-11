@@ -1,3 +1,5 @@
+// Labview LINX Command Table module
+
 // Copyright (C)2016, Philip Munts, President, Munts AM Corp.
 //
 // Redistribution and use in source and binary forms, with or without

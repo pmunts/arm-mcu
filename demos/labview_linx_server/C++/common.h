@@ -1,4 +1,4 @@
-// Common definitions
+// Labview LINX Common Commands module
 
 // Copyright (C)2016, Philip Munts, President, Munts AM Corp.
 //
@@ -44,5 +44,7 @@
     *error = EINVAL;						\
     return;							\
   }
+
+extern void common_init(void);
 
 #endif
