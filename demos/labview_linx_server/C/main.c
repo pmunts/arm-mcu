@@ -34,9 +34,9 @@
 
 // Device identification constants
 
-const uint8_t LINX_DEVICE_FAMILY	= 255;
-const uint8_t LINX_DEVICE_ID		= 3;
-const char LINX_DEVICE_NAME[]		= BOARDNAME " C LabView LINX Remote I/O Server";
+const uint8_t LINX_DEVICE_FAMILY = 255;
+const uint8_t LINX_DEVICE_ID	 = 3;
+const char LINX_DEVICE_NAME[]	 = BOARDNAME " C LabView LINX Remote I/O Server";
 
 // Command handler installers
 
