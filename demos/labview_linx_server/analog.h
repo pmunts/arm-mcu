@@ -1,5 +1,4 @@
-// LabView LINX Remote I/O Protocol
-// General Purpose Input/Output abstract interface module
+// LabView Linx Remote I/O Protocol Analog I/O abstract interface module
 
 // Copyright (C)2016, Philip Munts, President, Munts AM Corp.
 //
@@ -21,27 +20,36 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef _GPIO_INTERFACE_H
-#define _GPIO_INTERFACE_H
+#ifndef _ANALOG_INTERFACE_H
+#define _ANALOG_INTERFACE_H
 
 #include <stdint.h>
 
-class GPIO_Interface
+// Since the LabView LINX Remote I/O Protocol doesn't allow multiple
+// analog subsystems with differing resolutions or reference voltages,
+// all analog values are normalized to unsigned 32-bit with a 4.294967V
+// span (i.e. 1 nanovolt per step).
+
+class ADC_Interface
 {
   public:
-    virtual void configure(int32_t direction, int32_t *error) = 0;
-
-    virtual void read(int32_t *state, int32_t *error) = 0;
-
-    virtual void write(int32_t state, int32_t *error) = 0;
-
-    int32_t IsOutput;
+    virtual void read(uint32_t *nanovolts, int32_t *error) = 0;
 };
 
-typedef GPIO_Interface *GPIO_Interface_Ptr;
+class DAC_Interface
+{
+  public:
+    virtual void write(uint32_t *nanovolts, int32_t *error) = 0;
+};
 
-extern void gpio_add_channel(uint8_t number, GPIO_Interface_Ptr object);
+typedef ADC_Interface *ADC_Interface_Ptr;
 
-extern void gpio_init(void);
+typedef DAC_Interface *DAC_Interface_Ptr;
+
+extern void adc_add_channel(uint8_t number, ADC_Interface_Ptr object);
+
+extern void dac_add_channel(uint8_t number, DAC_Interface_Ptr object);
+
+extern void analog_init(void);
 
 #endif

@@ -1,5 +1,5 @@
 // LabView LINX Remote I/O Protocol
-// General Purpose Input/Output abstract interface module
+// Pulse Width Modulation output abstract interface module
 
 // Copyright (C)2016, Philip Munts, President, Munts AM Corp.
 //
@@ -21,27 +21,23 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef _GPIO_INTERFACE_H
-#define _GPIO_INTERFACE_H
+#ifndef _PWM_INTERFACE_H
+#define _PWM_INTERFACE_H
 
 #include <stdint.h>
 
-class GPIO_Interface
+class PWM_Interface
 {
   public:
-    virtual void configure(int32_t direction, int32_t *error) = 0;
+    virtual void set_frequency(uint32_t frequency, int32_t *error) = 0;
 
-    virtual void read(int32_t *state, int32_t *error) = 0;
-
-    virtual void write(int32_t state, int32_t *error) = 0;
-
-    int32_t IsOutput;
+    virtual void write(uint8_t dutycycle, int32_t *error) = 0;
 };
 
-typedef GPIO_Interface *GPIO_Interface_Ptr;
+typedef PWM_Interface *PWM_Interface_Ptr;
 
-extern void gpio_add_channel(uint8_t number, GPIO_Interface_Ptr object);
+extern void pwm_add_channel(uint8_t number, PWM_Interface_Ptr object);
 
-extern void gpio_init(void);
+extern void pwm_init(void);
 
 #endif

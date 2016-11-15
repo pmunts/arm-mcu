@@ -20,9 +20,6 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#include <errno.h>
-#include <string.h>
-
 #include "common.h"
 
 // External constants, defined in the main program file
@@ -152,8 +149,8 @@ void common_init(void)
   // Peripheral subsytem channels query commands
 
   AddCommand(CMD_GET_ANALOG_IN_CHANNELS, NoOperation);
-  AddCommand(CMD_GET_ANALOG_IN_REFERENCE, NoOperation);
   AddCommand(CMD_GET_ANALOG_OUT_CHANNELS, NoOperation);
+  AddCommand(CMD_GET_ANALOG_REFERENCE, NoOperation);
   AddCommand(CMD_GET_CAN_CHANNELS, NoOperation);
   AddCommand(CMD_GET_GPIO_CHANNELS, NoOperation);
   AddCommand(CMD_GET_I2C_CHANNELS, NoOperation);

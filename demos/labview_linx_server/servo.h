@@ -1,5 +1,4 @@
-// LabView LINX Remote I/O Protocol
-// General Purpose Input/Output abstract interface module
+// RC Servo abstract interface module
 
 // Copyright (C)2016, Philip Munts, President, Munts AM Corp.
 //
@@ -21,27 +20,21 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef _GPIO_INTERFACE_H
-#define _GPIO_INTERFACE_H
+#ifndef _SERVO_INTERFACE_H
+#define _SERVO_INTERFACE_H
 
 #include <stdint.h>
 
-class GPIO_Interface
+class Servo_Interface
 {
   public:
-    virtual void configure(int32_t direction, int32_t *error) = 0;
-
-    virtual void read(int32_t *state, int32_t *error) = 0;
-
-    virtual void write(int32_t state, int32_t *error) = 0;
-
-    int32_t IsOutput;
+    virtual void write(uint16_t pulsewidth, int32_t *error) = 0;
 };
 
-typedef GPIO_Interface *GPIO_Interface_Ptr;
+typedef Servo_Interface *Servo_Interface_Ptr;
 
-extern void gpio_add_channel(uint8_t number, GPIO_Interface_Ptr object);
+extern void servo_add_channel(uint8_t number, Servo_Interface_Ptr object);
 
-extern void gpio_init(void);
+extern void servo_init(void);
 
 #endif

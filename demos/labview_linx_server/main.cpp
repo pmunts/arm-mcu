@@ -30,8 +30,6 @@
 #include <cpu.h>
 
 #include "common.h"
-#include "executive.h"
-#include "gpio.h"
 
 // Device identification constants
 
@@ -69,7 +67,10 @@ int main(void)
   // Register command handlers
 
   common_init();
+  analog_init();
   gpio_init();
+  pwm_init();
+  servo_init();
 
   // Process commands
 

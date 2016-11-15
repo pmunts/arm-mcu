@@ -25,10 +25,13 @@ MCUFAMILY	?= stm32f4
 BOARDNAME	?= NUCLEO_F411RE
 
 SOURCES		= main.cpp
+SOURCES		+= analog.cpp
 SOURCES		+= command.cpp
 SOURCES		+= common.cpp
 SOURCES		+= executive.cpp
 SOURCES		+= gpio.cpp
+SOURCES		+= pwm.cpp
+SOURCES		+= servo.cpp
 
 default: linx_server.bin
 
