@@ -35,7 +35,7 @@ BINUTILURL	= $(BINUTILSERVER)/`basename $(BINUTILDIST)`
 BINUTILSRC	= binutils-$(BINUTILVER)
 BINUTILBLD	= build/binutils-$(BINUTILVER)
 
-GCCVER		= 5.4.0
+GCCVER		= 4.9.4
 GCCSERVER	= http://ftp.gnu.org/pub/gnu/gcc/gcc-$(GCCVER)
 GCCDIST		= $(TEMP)/gcc-$(GCCVER).tar.bz2
 GCCURL		= $(GCCSERVER)/`basename $(GCCDIST)`
@@ -48,7 +48,7 @@ LIBICONVDIST	= $(TEMP)/libiconv-$(LIBICONVVER).tar.gz
 LIBICONVURL	= $(LIBICONVSERVER)/`basename $(LIBICONVDIST)`
 LIBICONVSRC	= libiconv-$(LIBICONVVER)
 
-NEWLIBVER	= 2.4.0.20160923
+NEWLIBVER	= 2.4.0
 NEWLIBSERVER	= http://mirrors.kernel.org/sources.redhat.com/newlib
 NEWLIBDIST	= $(TEMP)/newlib-$(NEWLIBVER).tar.gz
 NEWLIBURL	= $(NEWLIBSERVER)/`basename $(NEWLIBDIST)`
