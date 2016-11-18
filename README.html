@@ -8,86 +8,6 @@ architecture single chip microcontrollers.</p>
 for debugging and flashing.</p>
 <h2>News</h2>
 <ul>
-<li>5 January 2015 -- Upgraded binutils to 2.25, gcc to 4.9.2, newlib to 2.2.0,
-and gdb to 7.8.1. With newlib 2.2.0, the <tt>INTEGER_STDIO</tt> and
-<tt>CONIO_STDIO</tt> options are no longer needed. <tt>CONIO_STDIO</tt> is
-still supported, mostly for other tool chains such as <a href=
-"http://launchpad.net/gcc-arm-embedded">GNU ARM Embedded</a>. It is enabled by
-adding <tt>WITH_CONIO=yes</tt> to the <tt>make</tt> command line options.</li>
-<li>21 January 2015 -- Upgraded gdb to 7.8.2. Build gcc prequisites, including
-libiconv, from source. Added auxiliary makefile for building a Canadian Cross
-ARM microcontroller toolchain for the Raspberry Pi.</li>
-<li>13 April 2015 -- Renamed NETDUINO2 (which is STM32F2) to NETDUNIOPLUS2
-(which is STM32F4). Added support for programming STM32 flash with <a href=
-"http://dfu-util.sourceforge.net"><tt>dfu-util</tt></a>.</li>
-<li>27 April 2015 -- Upgraded the STM32F4 Standard Peripheral Library to
-version 1.5.0. Added support for the <a href=
-"http://www.st.com/web/catalog/tools/FM116/SC959/SS1532/LN1847/PF260320">NUCLEO-F411RE</a>
-board, and the corresponding STM32F411RE MCU.</li>
-<li>6 May 2015 -- Fixed a subtle bug in the linker scripts: <tt>(.data)</tt>
-should be <tt>(.data*)</tt> and <tt>(.bss)</tt> should be <tt>(.bss*)</tt>.
-This was preventing successful use of the <a href=
-"http://launchpad.net/gcc-arm-embedded">GNU ARM Embedded</a> toolchain, because
-some data sections were being discarded.</li>
-<li>7 May 2015 -- Define <tt>BOARDNAME</tt> C preprocessor macro. Eliminated
-the <tt>WITH_LIBSTDCPP</tt> <tt>make</tt> macro; always link with
-<tt>libstdc++</tt>. Added a C++ <tt>iostream</tt> library test. The C++
-<tt>iostream</tt> library now works, but adds over 200 kilobytes of code and
-will not fit in many of the smaller ARM microcontrollers. C++ container classes
-may or may not fit. Added system tick timer services, including
-<tt>millisleep()</tt> and <tt>sleep()</tt>.</li>
-<li>8 May 2015 -- Fixed a bug in <tt>device_write()</tt>. Added code to
-<tt>device.c</tt> to honor <tt>O_RDONLY</tt> and <tt>O_WRONLY</tt> flags. Moved
-I/O syscall definitions from <tt>syscalls.c</tt> to <tt>device.c</tt>, where
-they are aliased to <tt>device_xxxx()</tt> functions. This eliminates an
-unnecessary function call for each syscall operation.</li>
-<li>12 May 2015 -- More improvements in <tt>device.c</tt>: Eliminated some
-calls to <tt>memset()</tt>. Switched to <a href=
-"https://github.com/texane/stlink"><tt>texane/stlink</tt></a> even for Windows.
-Implemented interrupt driven serial I/O for the STM32F4 family.</li>
-<li>13 May 2015 -- Added even more error checking to <tt>device.c</tt>. Made
-the device table private to <tt>device.c</tt>. Added general support for
-<tt>fcntl()</tt>. The <tt>F_GETFL</tt> and <tt>F_SETFL</tt> operations are
-available for any file descriptor while other operations are delegated to the
-device specific <tt>fcntl()</tt> handler, if one was provided when the device
-was registered.</li>
-<li>25 May 2015 -- Stopped using the STM32F4 Standard Peripheral Library. Use
-<a href=
-"http://www.arm.com/products/processors/cortex-m/cortex-microcontroller-software-interface-standard.php">
-CMSIS</a> instead. Eliminated USB serial port console support from most
-targets. It was just too unstable and hard to maintain. It is so much easier to
-use dedicated a dedicated USB serial port device like the <a href=
-"http://www.ftdichip.com/Products/ICs/FT232R.htm">FT232R</a>. Changed STM32F4
-makefiles to always use the hardware FPU. With recent versions of
-<tt>newlib</tt>, there is no longer a code size penalty from enabling the
-FPU.</li>
-<li>10 June 2015 -- Another massive overhaul: Added support for the <a href=
-"http://www.mikroe.com/stm32/clicker">STM32 M4 Clicker</a> board. Dropped
-support for the <a href=
-"http://www.st.com/web/en/catalog/tools/FM116/SC959/SS1532/PF250863">STM32
-Value Line Discovery</a> board. (Its ST-Link/V1 is obsolete.) Dropped support
-for the obsolete AT91SAM7S, LPC23xx, and STR91x MCU families. Dropped support
-for the obsolete <a href="http://www.wiznet.co.kr/product-item/w5200">Wiznet
-W5200</a>. Dropped support for the <a href=
-"http://shop.ngxtechnologies.com/product_info.php?products_id=65">BlueBoard
-LPC1768</a>. Upgraded FreeRTOS to V8.2.1. Implemented interrupt driven serial
-I/O for the STM32F1 MCU family. Upgraded OpenOCD to 0.9.0. Added support for
-the <a href=
-"http://www.st.com/web/catalog/tools/FM116/SC959/SS1532/LN1847/PF259875">NUCLEO-F103RB</a>
-board. Use a common LED test for all targets. Implemented A/D services for the
-STM32F4 MCU family. Use a common A/D test for all targets. Added button
-(momentary switch) services. Stopped using the STM32F1 Standard Peripheral
-Library. Use <a href=
-"http://www.arm.com/products/processors/cortex-m/cortex-microcontroller-software-interface-standard.php">
-CMSIS</a> instead. Added code to each of the assembly language startup files to
-call <tt>_exit()</tt> if <tt>main()</tt> returns.</li>
-<li>6 August 2015 -- Upgraded GCC to 5.2.0. Upgraded GDB to 7.9.1.</li>
-<li>18 August 2015 -- Added support for systick callback function.</li>
-<li>17 September 2015 -- Upgraded GDB to 7.10. Resurrected and modernized
-support for the <a href=
-"http://www.silabs.com/products/mcu/32-bit/Pages/32-bit-microcontrollers.aspx">Silicon
-Labs (formerly Energy Micro) EFM32</a> microcontroller family.</li>
-<li>18 September 2015 -- Upgraded FreeRTOS to 8.2.2.</li>
 <li>21 January 2016 -- Upgraded binutils to 2.25.1, gcc to 5.3.0, newlib to
 2.3.0, and gdb to 0.7.1.</li>
 <li>6 April 2016 -- New toolchain release 2016.097: Upgraded binutils to 2.26,
@@ -109,9 +29,11 @@ Upgraded newlib to 2.4.0.20160923. Upgraded gdb to 7.12. Imported the <a href=
 "http://troydhanson.github.io/uthash/index.html">ut hash</a> hash table
 library. Added <a href=
 "https://www.labviewmakerhub.com/doku.php?id=learn:libraries:linx:spec:start">LabView
-LINX Remote I/O</a> demo servers written in both C (for any ARM
-microcontroller) and C++ (only for ARM microcontrollers with a large flash
-memory).</li>
+LINX Remote I/O</a> demo server, written in C++. It may need to be compiled
+with <tt>-O3</tt> or <tt>-Os</tt> optimzation to fit in devices with 128K
+flash.</li>
+<li>18 November 2016 -- Downgraded gcc to 4.9.4 because of some issues with GCC
+5.</li>
 </ul>
 <h2>Git Repository</h2>
 <p>The source code is available at: <a href=
