@@ -30,6 +30,7 @@ News
        with -O3 or -Os optimzation to fit in devices with 128K flash.
      * 18 November 2016 -- Downgraded gcc to 4.9.4 because of some issues
        with GCC 5.
+     * 21 November 2016 -- Upgraded gcc to 6.2.0.
 
 Git Repository
 
