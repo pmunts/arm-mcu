@@ -77,7 +77,7 @@ int main(void)
 
   try
   {
-#ifdef NUCLEO_F411
+#ifdef NUCLEO_F411RE
     // Arduino digital I/O pins on expansion headers CN9 and CN5.
     // Note that D0 and D1 are dedicated to the USART6 serial port and
     // are not available for digital I/O.
