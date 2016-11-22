@@ -30,6 +30,7 @@
 #include <cpu.h>
 
 #include "common.h"
+#include "gpio-gpiopins.h"
 
 // Device identification constants
 
@@ -71,6 +72,38 @@ int main(void)
   gpio_init();
   pwm_init();
   servo_init();
+
+  // Register peripheral channel objects
+
+  try
+  {
+#ifdef NUCLEO_F411
+    // Arduino digital I/O pins on expansion headers CN9 and CN5.
+    // Note that D0 and D1 are dedicated to the USART6 serial port and
+    // are not available for digital I/O.
+
+    gpio_add_channel(2,  new GPIO_GPIOPIN(GPIOPIN10, &GPIOPIN10IN, &GPIOPIN10OUT)); // PA10 aka Arduino D2
+    gpio_add_channel(3,  new GPIO_GPIOPIN(GPIOPIN19, &GPIOPIN19IN, &GPIOPIN19OUT)); // PB3  aka Arduino D3
+    gpio_add_channel(4,  new GPIO_GPIOPIN(GPIOPIN21, &GPIOPIN21IN, &GPIOPIN21OUT)); // PB5  aka Arduino D4
+    gpio_add_channel(5,  new GPIO_GPIOPIN(GPIOPIN20, &GPIOPIN20IN, &GPIOPIN20OUT)); // PB4  aka Arduino D5
+    gpio_add_channel(6,  new GPIO_GPIOPIN(GPIOPIN26, &GPIOPIN26IN, &GPIOPIN26OUT)); // PB10 aka Arduino D6
+    gpio_add_channel(7,  new GPIO_GPIOPIN(GPIOPIN8,  &GPIOPIN8IN,  &GPIOPIN8OUT));  // PA8  aka Arduino D7
+    gpio_add_channel(8,  new GPIO_GPIOPIN(GPIOPIN9,  &GPIOPIN9IN,  &GPIOPIN9OUT));  // PA9  aka Arduino D8
+    gpio_add_channel(9,  new GPIO_GPIOPIN(GPIOPIN39, &GPIOPIN39IN, &GPIOPIN39OUT)); // PC7  aka Arduino D9
+    gpio_add_channel(10, new GPIO_GPIOPIN(GPIOPIN22, &GPIOPIN22IN, &GPIOPIN22OUT)); // PB6  aka Arduino D10
+    gpio_add_channel(11, new GPIO_GPIOPIN(GPIOPIN7,  &GPIOPIN7IN,  &GPIOPIN7OUT));  // PA7  aka Arduino D11
+    gpio_add_channel(12, new GPIO_GPIOPIN(GPIOPIN6,  &GPIOPIN6IN,  &GPIOPIN6OUT));  // PA6  aka Arduino D12
+    gpio_add_channel(13, new GPIO_GPIOPIN(GPIOPIN5,  &GPIOPIN5IN,  &GPIOPIN5OUT));  // PA5  aka Arduino D13 aka LED
+    gpio_add_channel(14, new GPIO_GPIOPIN(GPIOPIN25, &GPIOPIN25IN, &GPIOPIN25OUT)); // PB9  aka Arduino D14
+    gpio_add_channel(15, new GPIO_GPIOPIN(GPIOPIN24, &GPIOPIN24IN, &GPIOPIN24OUT)); // PB8  aka Arduino D15
+#endif
+  }
+
+  catch (...)
+  {
+    printf("ERROR: A peripheral channel constructor failed\n");
+    exit(1);
+  }
 
   // Process commands
 

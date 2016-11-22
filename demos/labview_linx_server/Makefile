@@ -24,6 +24,8 @@ ARMSRC		?= ../../..
 MCUFAMILY	?= stm32f4
 BOARDNAME	?= NUCLEO_F411RE
 
+CFLAGS		+= -D _GLIBCXX_USE_C99=1 -std=c++1y
+
 SOURCES		= main.cpp
 SOURCES		+= analog.cpp
 SOURCES		+= command.cpp
@@ -32,6 +34,7 @@ SOURCES		+= executive.cpp
 SOURCES		+= gpio.cpp
 SOURCES		+= pwm.cpp
 SOURCES		+= servo.cpp
+SOURCES		+= gpio-gpiopins.cpp
 
 default: linx_server.bin
 
