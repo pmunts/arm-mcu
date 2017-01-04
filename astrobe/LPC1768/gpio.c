@@ -1,6 +1,6 @@
 // Generate bitband addresses for LPC1768 GPIO pins
 
-// Copyright (C)2015-2016, Philip Munts, President, Munts AM Corp.
+// Copyright (C)2015-2017, Philip Munts, President, Munts AM Corp.
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
@@ -41,7 +41,7 @@ int main(void)
 
   printf("MODULE GPIO;\n\n");
   printf("(* Bitband GPIO pin definitions for the LPC1768 Cortex-M3 microcontroller *)\n\n");
-  printf("(* Copyright (C)2015-2016, Philip Munts, President, Munts AM Corp.             *)\n");
+  printf("(* Copyright (C)2015-2017, Philip Munts, President, Munts AM Corp.             *)\n");
   printf("(*                                                                             *)\n");
   printf("(* Redistribution and use in source and binary forms, with or without          *)\n");
   printf("(* modification, are permitted provided that the following conditions are met: *)\n");

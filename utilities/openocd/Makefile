@@ -3,7 +3,7 @@
 # Get prebuilt Windows binaries from:
 # http://www.freddiechopin.info/index.php/en/download/category/4-openocd
 
-# Copyright (C)2013-2016, Philip Munts, President, Munts AM Corp.
+# Copyright (C)2013-2017, Philip Munts, President, Munts AM Corp.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:

@@ -10,7 +10,7 @@ using Android.App;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Munts Technologies")]
 [assembly: AssemblyProduct("Internet Thermometer")]
-[assembly: AssemblyCopyright("Copyright (C)2016, Philip Munts, President, Munts AM Corp.")]
+[assembly: AssemblyCopyright("Copyright (C)2016-2017, Philip Munts, President, Munts AM Corp.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

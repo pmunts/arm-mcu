@@ -1,6 +1,6 @@
 # STM32F4 family board specific make definitions
 
-# Copyright (C)2015-2016, Philip Munts, President, Munts AM Corp.
+# Copyright (C)2015-2017, Philip Munts, President, Munts AM Corp.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
