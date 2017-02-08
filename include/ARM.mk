@@ -159,12 +159,11 @@ ARM_mk_lib:
 # Clean out working files
 
 ARM_mk_clean:
-	$(FIND) * -name '*.o' -exec rm {} ";"
 	rm -f *.a *.asm *.bin *.dmp *.elf *.hex *.log *.map *.stackdump *.tmp Default.ini
-	cd $(MCUDIR) && $(MAKE) clean_$(MCU) $(RMAKEFLAGS)
-	cd $(MCUDIR) && $(FIND) * -name '*.o' -exec rm {} ";"
+	$(FIND) * -name '*.o' -exec rm {} ";"
 	cd $(MCUDIR) && rm -f *.a *.asm *.bin *.dmp *.elf *.hex *.log *.map *.stackdump *.tmp Default.ini
-	$(MAKE) $(CLEANTARGETS) $(RMAKEFLAGS)
+	cd $(MCUDIR) && $(FIND) * -name '*.o' -exec rm {} ";"
+	cd $(MCUDIR) && $(MAKE) clean_$(MCU) $(CLEANTARGETS) $(RMAKEFLAGS)
 
 # Include programming and debugging makefiles
 
