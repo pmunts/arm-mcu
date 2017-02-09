@@ -29,6 +29,9 @@
 #define ADC_DONE		0x80000000
 #define ADC_ADINT		0x00010000
 
+static bool configured[MAX_ADC_CHANNELS] =
+  { false, false, false, false, false, false, false, false };
+
 // Initialize an A/D input pin
 //   Returns 0 on success or nonzero on failure and sets errno
 
@@ -95,6 +98,9 @@ int adc_init(void *subsystem, unsigned int channel)
       break;
   }
 
+// Mark the analog input pin as configured
+
+  configured[channel] = true;
   return 0;
 }
 
@@ -116,6 +122,14 @@ uint16_t adc_read(void *subsystem, unsigned int channel)
 #endif
   {
     errno_r = ENODEV;
+    return 0;
+  }
+
+// Make sure the analog input has been configured
+
+  if (!configured[channel])
+  {
+    errno_r = EIO;
     return 0;
   }
 
