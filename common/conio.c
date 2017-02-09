@@ -89,10 +89,10 @@ void abort(void)
 /* heap is being used.  Either of these mean an unexpected amount of RAM will */
 /* be consumed, and may cause the system to run out of memory.                */
 
-static const char impure_ptr_warning[] __attribute__((section(".gnu.warning._impure_ptr"))) =
+const char ___impure_ptr_warning[] __attribute__((section(".gnu.warning._impure_ptr"))) =
   "\n\nDANGER: newlib reentrancy structure linked: >1K RAM consumed\n";
 
-static const char sbrk_warning[] __attribute__((section(".gnu.warning._sbrk"))) =
+const char ___sbrk_warning[] __attribute__((section(".gnu.warning._sbrk"))) =
   "\n\nDANGER: newlib is using the heap\n";
 
 /********** END OF PHILIP MUNTS' COPYRIGHTED CODE IN THIS FILE **********/
