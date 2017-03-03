@@ -56,7 +56,7 @@ unset IOFLAGS
 ##########################################################################
 
 export MCUFAMILY=lpc11xx
-export BOARDNAME=PROTOBOARD_LPC1114FN28
+export BOARDNAME=LPC1114FN28
 
 cd ${ARMSRC}/${MCUFAMILY}
 make test_gpio.bin clean
