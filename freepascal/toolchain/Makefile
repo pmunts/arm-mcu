@@ -1,3 +1,5 @@
+# Makefile for building a Free Pascal cross compiler for ARM microcontrollers
+
 # Copyright (C)2017, Philip Munts, President, Munts AM Corp.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -26,14 +28,16 @@ FPC_URL		= $(FPC_SERVER)/$(FPC_TARBALL)
 FPC_DIST	= $(TEMP)/$(FPC_TARBALL)
 
 ARMTOOLS	= /usr/local/arm-mcu-tools
+CONFIGURENAME	= arm-none-eabi
 
-BUILDOPTS	= CROSSINSTALL=1 OS_TARGET=embedded
-BUILDOPTS	+= CPU_TARGET=arm SUBARCH=armv7m
-BUILDOPTS	+= BINUTILSPREFIX=arm-none-eabi-
+BUILDOPTS	= CROSSINSTALL=1
+BUILDOPTS	+= CPU_TARGET=arm
+BUILDOPTS	+= OS_TARGET=embedded
 BUILDOPTS	+= CROSSBINDIR=$(ARMTOOLS)/bin
+BUILDOPTS	+= BINUTILSPREFIX=$(CONFIGURENAME)-
 
 OSNAME		?= unknown
-PKGNAME		:= fpc-$(CONFIGURE_NAME)-linaro-$(BOARDBASE)
+PKGNAME		:= fpc-$(CONFIGURENAME)
 PKGVER		:= $(shell date +%Y.%j)
 PKGARCH		:= $(shell dpkg --print-architecture)
 PKGSUFFIX	:= $(PKGVER)-$(OSNAME)-$(PKGARCH)
@@ -64,7 +68,44 @@ src.done: $(FPC_DIST)
 # Build the cross compiler
 
 build.done: src.done
-	$(MAKE) -C $(FPC_SRCDIR) buildbase $(BUILDOPTS)
+	$(MAKE) -C $(FPC_SRCDIR) buildbase $(BUILDOPTS) SUBARCH=armv4t
+	$(MAKE) -C $(FPC_SRCDIR) buildbase $(BUILDOPTS) SUBARCH=armv6m
+	$(MAKE) -C $(FPC_SRCDIR) buildbase $(BUILDOPTS) SUBARCH=armv7m
+	$(MAKE) -C $(FPC_SRCDIR) buildbase $(BUILDOPTS) SUBARCH=armv7em
+	touch $@
+
+################################################################################
+
+# Install the cross compiler
+
+install.done: build.done
+	$(MAKE) -C $(FPC_SRCDIR) installbase $(BUILDOPTS) INSTALL_PREFIX=$(INSTALLDIR) SUBARCH=armv4t
+	$(MAKE) -C $(FPC_SRCDIR) installbase $(BUILDOPTS) INSTALL_PREFIX=$(INSTALLDIR) SUBARCH=armv6m
+	$(MAKE) -C $(FPC_SRCDIR) installbase $(BUILDOPTS) INSTALL_PREFIX=$(INSTALLDIR) SUBARCH=armv7m
+	$(MAKE) -C $(FPC_SRCDIR) installbase $(BUILDOPTS) INSTALL_PREFIX=$(INSTALLDIR) SUBARCH=armv7em
+	ln -s ../lib/fpc/$(FPC_VERSION)/ppcrossarm	$(INSTALLDIR)/bin/ppcrossarm
+	mkdir -p					$(INSTALLDIR)/etc
+	install -cm 0644 fpc.cfg			$(INSTALLDIR)/etc
+	sed -i 's#@@ARMTOOLS@@#$(ARMTOOLS)#g'		$(INSTALLDIR)/etc/fpc.cfg
+	sed -i 's#@@CONFIGURENAME@@#$(CONFIGURENAME)#g'	$(INSTALLDIR)/etc/fpc.cfg
+	sed -i 's#@@VERSION@@#$(FPC_VERSION)#g'		$(INSTALLDIR)/etc/fpc.cfg
+	ln -s ../../etc					$(INSTALLDIR)/lib/fpc/etc
+	touch $@
+
+################################################################################
+
+# Create Debian package
+
+package.deb: install.done
+	mkdir -p					$(PKGDIR)/DEBIAN
+	install -cm 0644 control			$(PKGDIR)/DEBIAN
+	sed -i s/@@NAME@@/$(PKGNAME)/g			$(PKGDIR)/DEBIAN/control
+	sed -i s/@@ARCH@@/$(PKGARCH)/g			$(PKGDIR)/DEBIAN/control
+	sed -i s/@@VERSION@@/$(PKGVER)/g		$(PKGDIR)/DEBIAN/control
+	sed -i s/@@BOARDNAME@@/$(BOARDBASE)/g		$(PKGDIR)/DEBIAN/control
+	chmod -R ugo-w					$(PKGDIR)/usr/local/*
+	fakeroot dpkg-deb --build			$(PKGDIR)
+	chmod -R ugo+w					$(PKGDIR)
 
 ################################################################################
 
