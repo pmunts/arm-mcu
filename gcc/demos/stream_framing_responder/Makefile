@@ -20,7 +20,7 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-ARMSRC		?= ../..
+ARMSRC		?= $(HOME)/arm-mcu
 MCUFAMILY	?= stm32f4
 BOARDNAME	?= NUCLEO_F411RE
 WITH_FREERTOS	= yes
@@ -30,9 +30,9 @@ default: responder.bin
 install: responder.flashstlink
 
 client: client.c
-	gcc -Wall -I/usr/local/include -L/usr/local/lib -o$@ $< -lsimpleio
+	gcc -Wall -I/usr/local/gcc/include -L/usr/local/lib -o$@ $< -lsimpleio
 
-include $(ARMSRC)/include/ARM.mk
+include $(ARMSRC)/gcc/include/ARM.mk
 
 clean:
 	rm -f *.bin *.elf *.exe *.hex *.map *.o client

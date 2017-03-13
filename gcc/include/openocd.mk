@@ -1,4 +1,4 @@
-# Make processor dependent startup and libraries
+# Make definitions for OpenOCD
 
 # Copyright (C)2013-2017, Philip Munts, President, Munts AM Corp.
 #
@@ -20,23 +20,35 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-ARMSRC		?= ..
-MCUFAMILY	= stm32f4
-#BOARDNAME	?= FEZ_CERB40
-#BOARDNAME	?= NETDUINOPLUS2
-BOARDNAME	?= NUCLEO_F411RE
-#BOARDNAME	?= STM32F4_DISCOVERY
-#BOARDNAME	?= STM32_M4_MINI
-#BOARDNAME	?= STM32_M4_CLICKER
+OPENOCD		?= openocd
+OPENOCDCFG	?= $(MCUDIR)/$(MCU).openocd
+OPENOCDDEBUG	?= $(ARMSRC)/gcc/common/main.gdb
+OPENOCDFLASH	?= $(MCUDIR)/$(MCU).flashocd
+OPENOCDIF	?= ftdi/jtagkey2p
 
-default: lib
+.PHONY: startocd stopocd
+.SUFFIXES: .bin .debugocd .elf .flashocd
 
-include $(ARMSRC)/include/ARM.mk
+# Start OpenOCD
 
-lib: ARM_mk_lib
+startocd:
+	$(OPENOCD) -f interface/$(OPENOCDIF).cfg $(OPENOCDIFSETUP) -f $(OPENOCDCFG) >debug.log 2>&1 &
 
-clean: ARM_mk_clean
+# Stop OpenOCD
 
-reallyclean: clean
+stopocd:
+	-pkill -9 `basename $(OPENOCD) .exe`
 
-distclean: reallyclean
+# Debug with OpenOCD
+
+.elf.debugocd:
+	$(MAKE) startocd
+	$(GDBGUI) $(GDB) $(GDBFLAGS) -x $(OPENOCDDEBUG) $<
+	$(MAKE) stopocd
+
+# Program flash with OpenOCD
+
+.bin.flashocd:
+	$(MAKE) startocd
+	$(OPENOCDFLASH) $< $(FLASHWRITEADDR) $(TEXTBASE)
+	$(MAKE) stopocd

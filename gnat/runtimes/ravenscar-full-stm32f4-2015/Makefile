@@ -23,7 +23,7 @@
 
 # Override the following macros to build out of tree
 
-ARMSRC		?= $(HOME)/src/ARM
+ARMSRC		?= $(HOME)/arm-mcu
 ADA_SRC		?= $(ARMSRC)/gnat
 
 # Build the Run Time Library

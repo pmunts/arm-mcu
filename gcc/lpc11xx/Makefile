@@ -1,6 +1,6 @@
-# Makefile for STM32F411 IoT Responder
+# Make processor dependent startup and libraries
 
-# Copyright (C)2016-2017, Philip Munts, President, Munts AM Corp.
+# Copyright (C)2013-2017, Philip Munts, President, Munts AM Corp.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -20,35 +20,20 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-ARMSRC		?= ../../..
-MCUFAMILY	?= stm32f4
-BOARDNAME	?= NUCLEO_F411RE
+ARMSRC		?= $(HOME)/arm-mcu
+MCUFAMILY	= lpc11xx
 
-CFLAGS		+= -D _GLIBCXX_USE_C99=1 -std=c++1y
+BOARDNAME	?= LPC1114FN28
+#BOARDNAME	?= RASPBERRYPI_LPC1114
 
-SOURCES		= main.cpp
-SOURCES		+= analog.cpp
-SOURCES		+= command.cpp
-SOURCES		+= common.cpp
-SOURCES		+= executive.cpp
-SOURCES		+= gpio.cpp
-SOURCES		+= pwm.cpp
-SOURCES		+= servo.cpp
-SOURCES		+= gpio-gpiopins.cpp
+default: lib
 
-default: linx_server.bin
+include $(ARMSRC)/gcc/include/ARM.mk
 
-include $(ARMSRC)/include/ARM.mk
+lib: ARM_mk_lib
 
-linx_server.elf: $(SOURCES)
-	$(MAKE) ARM_mk_lib
-	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)	
+clean: ARM_mk_clean
 
-install: linx_server.flashstlink
-
-clean:
-	rm -f *.bin *.elf *.exe *.hex *.map *.o client
-
-reallyclean: clean ARM_mk_clean
+reallyclean: clean
 
 distclean: reallyclean

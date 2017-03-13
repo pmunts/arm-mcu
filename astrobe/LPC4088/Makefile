@@ -22,8 +22,8 @@
 
 # Override the following macros to build out of tree
 
-ARMSRC		?= $(HOME)/src/ARM
-ASTROBESRC	?= $(HOME)/src/ARM/astrobe
+ARMSRC		?= $(HOME)/arm-mcu
+ASTROBESRC	?= $(HOME)/arm-mcu/astrobe
 
 MCU		= LPC4088
 BOARDNAME	= LPC4088_QUICKSTART
@@ -43,4 +43,4 @@ clean: astrobe_mk_clean
 # Include subordinate makefiles
 
 include		$(ASTROBESRC)/astrobe-m4.mk
-include		$(ARMSRC)/include/mbed.mk
+include		$(ARMSRC)/gcc/include/mbed.mk

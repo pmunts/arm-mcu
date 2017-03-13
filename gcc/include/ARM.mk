@@ -39,7 +39,7 @@ FIND		?= find
 # Framework general definitions
 
 MCUFAMILYNAME	:= $(shell echo $(MCUFAMILY) | tr '[a-z]' '[A-Z]')
-MCUDIR		?= $(ARMSRC)/$(MCUFAMILY)
+MCUDIR		?= $(ARMSRC)/gcc/$(MCUFAMILY)
 MCULIBRARY	= $(MCUDIR)/lib$(MCU).a
 MCULINKSCRIPT	= $(MCUDIR)/$(MCU).ld
 
@@ -59,7 +59,7 @@ DEBUGFLAGS	?= -g
 OPTFLAGS	?= -O0
 CFLAGS		+= $(EARLYFLAGS)
 CFLAGS		+= -Wall -ffunction-sections
-CFLAGS		+= -I$(ARMSRC)/include -I$(MCUDIR)
+CFLAGS		+= -I$(ARMSRC)/gcc/include -I$(MCUDIR)
 CFLAGS		+= $(OPTFLAGS) $(CPUFLAGS) $(BOARDFLAGS) $(CONSOLEFLAGS) $(IOFLAGS) $(CONFIGFLAGS) $(DEBUGFLAGS) $(EXTRAFLAGS)
 CXXFLAGS	+= -fno-use-cxa-atexit
 LDFLAGS		+= -nostartfiles -T$(MCULINKSCRIPT) -L$(MCUDIR) -l$(MCU) -lm -lstdc++
@@ -121,7 +121,7 @@ ARM_mk_default:
 
 # Support for common library functions
 
-COMMON_DIR	= $(ARMSRC)/common
+COMMON_DIR	= $(ARMSRC)/gcc/common
 include $(COMMON_DIR)/common.mk
 
 # Support for lightweight console I/O library
@@ -147,7 +147,7 @@ endif
 # Support for FreeRTOS
 
 ifeq ($(WITH_FREERTOS), yes)
-FREERTOS_DIR	= $(ARMSRC)/FreeRTOS
+FREERTOS_DIR	= $(ARMSRC)/gcc/FreeRTOS
 include $(FREERTOS_DIR)/FreeRTOS.mk
 endif
 
@@ -167,12 +167,12 @@ ARM_mk_clean:
 
 # Include programming and debugging makefiles
 
-include $(ARMSRC)/include/dfu.mk
-include $(ARMSRC)/include/jlink.mk
-include $(ARMSRC)/include/lpc21isp.mk
-include $(ARMSRC)/include/mbed.mk
-include $(ARMSRC)/include/openocd.mk
-include $(ARMSRC)/include/stlink.mk
+include $(ARMSRC)/gcc/include/dfu.mk
+include $(ARMSRC)/gcc/include/jlink.mk
+include $(ARMSRC)/gcc/include/lpc21isp.mk
+include $(ARMSRC)/gcc/include/mbed.mk
+include $(ARMSRC)/gcc/include/openocd.mk
+include $(ARMSRC)/gcc/include/stlink.mk
 
 # Include MCU dependent makefile
 

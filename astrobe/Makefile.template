@@ -22,8 +22,8 @@
 
 # Override the following macros to build out of tree
 
-ARMSRC		?= $(HOME)/src/ARM
-ASTROBESRC	?= $(HOME)/src/ARM/astrobe
+ARMSRC		?= $(HOME)/arm-mcu
+ASTROBESRC	?= $(HOME)/arm-mcu/astrobe
 
 MCU		= UNKNOWN
 BOARDNAME	= UNKNOWN
@@ -37,9 +37,9 @@ clean: astrobe_mk_clean
 # Include subordinate makefiles
 
 include		$(ASTROBESRC)/astrobe-mx.mk
-include		$(ARMSRC)/include/dfu.mk
-include		$(ARMSRC)/include/jlink.mk
-include		$(ARMSRC)/include/lpc21isp.mk
-include		$(ARMSRC)/include/mbed.mk
-include		$(ARMSRC)/include/openocd.mk
-include		$(ARMSRC)/include/stlink.mk
+include		$(ARMSRC)/gcc/include/dfu.mk
+include		$(ARMSRC)/gcc/include/jlink.mk
+include		$(ARMSRC)/gcc/include/lpc21isp.mk
+include		$(ARMSRC)/gcc/include/mbed.mk
+include		$(ARMSRC)/gcc/include/openocd.mk
+include		$(ARMSRC)/gcc/include/stlink.mk

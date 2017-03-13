@@ -1,6 +1,6 @@
-# Makefile for EFM32 libraries imported from Engery Micro and other sources
+# Makefile for STM32F411 IoT Responder
 
-# Copyright (C)2015-2017, Philip Munts, President, Munts AM Corp.
+# Copyright (C)2016-2017, Philip Munts, President, Munts AM Corp.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -20,25 +20,35 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-SDKDIR		= $(ARMSRC)/efm32/SDK
+ARMSRC		?= $(HOME)/arm-mcu
+MCUFAMILY	?= stm32f4
+BOARDNAME	?= NUCLEO_F411RE
 
-# Definitions for the EFM32 CMSIS library
+CFLAGS		+= -D _GLIBCXX_USE_C99=1 -std=c++1y
 
-CMSISDIR	= $(SDKDIR)/CMSIS
-DEVICEDIR	= $(SDKDIR)/Device/SiliconLabs/$(MCUSUBFAMILY)
-EMLIBDIR	= $(SDKDIR)/emlib
+SOURCES		= main.cpp
+SOURCES		+= analog.cpp
+SOURCES		+= command.cpp
+SOURCES		+= common.cpp
+SOURCES		+= executive.cpp
+SOURCES		+= gpio.cpp
+SOURCES		+= pwm.cpp
+SOURCES		+= servo.cpp
+SOURCES		+= gpio-gpiopins.cpp
 
-CFLAGS		+= -I$(CMSISDIR)/Include
-CFLAGS		+= -I$(DEVICEDIR)/Include
-CFLAGS		+= -I$(EMLIBDIR)/inc
+default: linx_server.bin
 
-# Compile source files and add objects to the library
+include $(ARMSRC)/gcc/include/ARM.mk
 
-sdklibs:
-	for F in $(DEVICEDIR)/Source/*.c ; do $(MAKE) $${F%.c}.o ; done
-	for F in $(EMLIBDIR)/src/*.c ; do $(MAKE) $${F%.c}.o ; done
-	$(FIND) $(SDKDIR) -type f -name '*.o' -exec $(AR) crs lib$(MCU).a {} ";"
+linx_server.elf: $(SOURCES)
+	$(MAKE) ARM_mk_lib
+	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)	
 
-# Add to target lists
+install: linx_server.flashstlink
 
-LIBTARGETS	+= sdklibs
+clean:
+	rm -f *.bin *.elf *.exe *.hex *.map *.o client
+
+reallyclean: clean ARM_mk_clean
+
+distclean: reallyclean

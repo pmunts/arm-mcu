@@ -1,4 +1,4 @@
-# Makefile for processor independent demo programs
+# Make definitions for ST-Link
 
 # Copyright (C)2013-2017, Philip Munts, President, Munts AM Corp.
 #
@@ -20,17 +20,42 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-ARMSRC		?= ..
-MCUFAMILY	?= stm32f4
-BOARDNAME	?= NUCLEO_F411RE
+# texane/stlink
 
-include $(ARMSRC)/include/ARM.mk
+STLINKFLASH		?= stlink-flash
+STLINKFLASHOPTS1	?= --reset write $(STLINKIF)
+STLINKFLASHOPTS2	?= $(FLASHWRITEADDR)
 
-.PHONY: clean reallyclean distclean
+STLINKDEBUG		?= $(ARMSRC)/gcc/common/main.gdb
+STLINKGDB		?= stlink-gdbserver
+STLINKGDBOPTS		?= -p $(GDBSERVERPORT)
 
-clean:
-	rm -f *.bin *.elf *.hex *.map *.o
+# ST Microelectronics ST-LINK_CLI.exe for Windows
 
-reallyclean: clean ARM_mk_clean
+#STLINKFLASH		?= ST-LINK_CLI.exe
+#STLINKFLASHOPTS1	?= -c SWD -ME -P
+#STLINKFLASHOPTS2	?= $(FLASHWRITEADDR) -Rst
 
-distclean: reallyclean
+.SUFFIXES: .bin .debugstlink .elf .flashstlink .hex
+
+# Start ST-Link GDB server
+
+startstlink:
+	$(STLINKGDB) $(STLINKGDBIF) $(STLINKGDBOPTS) >debug.log 2>&1 &
+
+# Stop ST-Link GDB server
+
+stopstlink:
+	-skill `basename $(STLINKGDB) .exe`
+
+# Debug with ST-Link GDB server
+
+.elf.debugstlink:
+	$(MAKE) startstlink
+	$(GDBGUI) $(GDB) $(GDBFLAGS) -x $(STLINKDEBUG) $<
+	$(MAKE) stopstlink
+
+# Program flash with ST-Link
+
+.bin.flashstlink:
+	$(STLINKFLASH) $(STLINKFLASHOPTS1) $< $(STLINKFLASHOPTS2)

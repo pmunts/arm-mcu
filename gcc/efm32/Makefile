@@ -1,6 +1,6 @@
 # Make processor dependent startup and libraries
 
-# Copyright (C)2013-2017, Philip Munts, President, Munts AM Corp.
+# Copyright (C)2012-2017, Philip Munts, President, Munts AM Corp.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -20,15 +20,14 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-ARMSRC		?= ..
-MCUFAMILY	= lpc11xx
-
-BOARDNAME	?= LPC1114FN28
-#BOARDNAME	?= RASPBERRYPI_LPC1114
+ARMSRC		?= $(HOME)/arm-mcu
+MCUFAMILY	= efm32
+BOARDNAME	?= EFM32_G8XX_STK
+#BOARDNAME	?= EFM32G230F128_PROTOTYPE
 
 default: lib
 
-include $(ARMSRC)/include/ARM.mk
+include $(ARMSRC)/gcc/include/ARM.mk
 
 lib: ARM_mk_lib
 

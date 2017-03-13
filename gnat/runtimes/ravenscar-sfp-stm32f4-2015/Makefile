@@ -23,7 +23,7 @@
 
 # Override the following macros to build out of tree
 
-ARMSRC		?= $(HOME)/src/ARM
+ARMSRC		?= $(HOME)/arm-mcu
 ADA_SRC		?= $(ARMSRC)/gnat
 
 # Build the Run Time Library
@@ -42,4 +42,4 @@ clean:
 	rm -f gnarl-arch/s-bbpara.ads arch/setup_pll.adb
 
 include $(ADA_SRC)/ada.mk
-sinclude $(HOME)/src/include/subversion.mk
+sinclude$(HOME)/src/include/subversion.mk

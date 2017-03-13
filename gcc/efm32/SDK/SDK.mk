@@ -1,6 +1,6 @@
-# Make processor dependent startup and libraries
+# Makefile for EFM32 libraries imported from Engery Micro and other sources
 
-# Copyright (C)2013-2017, Philip Munts, President, Munts AM Corp.
+# Copyright (C)2015-2017, Philip Munts, President, Munts AM Corp.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -20,19 +20,25 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-ARMSRC		?= ..
-MCUFAMILY	= lpc17xx
-BOARDNAME	?= LPC1768_MINI_DK2
-#BOARDNAME	?= MBED_LPC1768
+SDKDIR		= $(ARMSRC)/gcc/efm32/SDK
 
-default: lib
+# Definitions for the EFM32 CMSIS library
 
-include $(ARMSRC)/include/ARM.mk
+CMSISDIR	= $(SDKDIR)/CMSIS
+DEVICEDIR	= $(SDKDIR)/Device/SiliconLabs/$(MCUSUBFAMILY)
+EMLIBDIR	= $(SDKDIR)/emlib
 
-lib: ARM_mk_lib
+CFLAGS		+= -I$(CMSISDIR)/Include
+CFLAGS		+= -I$(DEVICEDIR)/Include
+CFLAGS		+= -I$(EMLIBDIR)/inc
 
-clean: ARM_mk_clean
+# Compile source files and add objects to the library
 
-reallyclean: clean
+sdklibs:
+	for F in $(DEVICEDIR)/Source/*.c ; do $(MAKE) $${F%.c}.o ; done
+	for F in $(EMLIBDIR)/src/*.c ; do $(MAKE) $${F%.c}.o ; done
+	$(FIND) $(SDKDIR) -type f -name '*.o' -exec $(AR) crs lib$(MCU).a {} ";"
 
-distclean: reallyclean
+# Add to target lists
+
+LIBTARGETS	+= sdklibs

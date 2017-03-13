@@ -22,8 +22,8 @@
 
 # Override the following macros to build out of tree
 
-ARMSRC		?= $(HOME)/src/ARM
-MIKROPASCALSRC	?= $(HOME)/src/ARM/mikropascal
+ARMSRC		?= $(HOME)/arm-mcu
+MIKROPASCALSRC	?= $(HOME)/arm-mcu/mikropascal
 
 MCUFAMILY	= stm32f4
 BOARDNAME	= STM32F4_DISCOVERY
@@ -42,6 +42,6 @@ clean: mikropascal_mk_clean
 
 # Include subordinate makefiles
 
-include $(ARMSRC)/include/ARM.mk
+include $(ARMSRC)/gcc/include/ARM.mk
 include $(MIKROPASCALSRC)/mikropascal.mk
-sinclude $(HOME)/src/include/subversion.mk
+sinclude$(HOME)/src/include/subversion.mk

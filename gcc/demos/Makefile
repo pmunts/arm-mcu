@@ -1,4 +1,4 @@
-# Make processor dependent startup and libraries
+# Makefile for processor independent demo programs
 
 # Copyright (C)2013-2017, Philip Munts, President, Munts AM Corp.
 #
@@ -20,20 +20,17 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-ARMSRC		?= ..
-MCUFAMILY	= stm32f1
-BOARDNAME	?= NUCLEO_F103RB
-#BOARDNAME	?= OLIMEX_STM32_P103
-#BOARDNAME	?= OLIMEX_STM32_P107
+ARMSRC		?= $(HOME)/arm-mcu
+MCUFAMILY	?= stm32f4
+BOARDNAME	?= NUCLEO_F411RE
 
-default: lib
+include $(ARMSRC)/gcc/include/ARM.mk
 
-include $(ARMSRC)/include/ARM.mk
+.PHONY: clean reallyclean distclean
 
-lib: ARM_mk_lib
+clean:
+	rm -f *.bin *.elf *.hex *.map *.o
 
-clean: ARM_mk_clean
-
-reallyclean: clean
+reallyclean: clean ARM_mk_clean
 
 distclean: reallyclean

@@ -1,4 +1,4 @@
-# Make definitions for OpenOCD
+# Make processor dependent startup and libraries
 
 # Copyright (C)2013-2017, Philip Munts, President, Munts AM Corp.
 #
@@ -20,35 +20,19 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-OPENOCD		?= openocd
-OPENOCDCFG	?= $(MCUDIR)/$(MCU).openocd
-OPENOCDDEBUG	?= $(ARMSRC)/common/main.gdb
-OPENOCDFLASH	?= $(MCUDIR)/$(MCU).flashocd
-OPENOCDIF	?= ftdi/jtagkey2p
+ARMSRC		?= $(HOME)/arm-mcu
+MCUFAMILY	= lpc17xx
+BOARDNAME	?= LPC1768_MINI_DK2
+#BOARDNAME	?= MBED_LPC1768
 
-.PHONY: startocd stopocd
-.SUFFIXES: .bin .debugocd .elf .flashocd
+default: lib
 
-# Start OpenOCD
+include $(ARMSRC)/gcc/include/ARM.mk
 
-startocd:
-	$(OPENOCD) -f interface/$(OPENOCDIF).cfg $(OPENOCDIFSETUP) -f $(OPENOCDCFG) >debug.log 2>&1 &
+lib: ARM_mk_lib
 
-# Stop OpenOCD
+clean: ARM_mk_clean
 
-stopocd:
-	-pkill -9 `basename $(OPENOCD) .exe`
+reallyclean: clean
 
-# Debug with OpenOCD
-
-.elf.debugocd:
-	$(MAKE) startocd
-	$(GDBGUI) $(GDB) $(GDBFLAGS) -x $(OPENOCDDEBUG) $<
-	$(MAKE) stopocd
-
-# Program flash with OpenOCD
-
-.bin.flashocd:
-	$(MAKE) startocd
-	$(OPENOCDFLASH) $< $(FLASHWRITEADDR) $(TEXTBASE)
-	$(MAKE) stopocd
+distclean: reallyclean

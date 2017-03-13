@@ -22,7 +22,7 @@
 
 # Override the following macros to build out of tree
 
-ARMSRC		?= $(HOME)/src/ARM
+ARMSRC		?= $(HOME)/arm-mcu
 ADA_SRC		?= $(ARMSRC)/gnat
 
 # Select the target board
@@ -53,5 +53,5 @@ distclean: ada_mk_distclean
 
 include $(ADA_SRC)/boards/$(BOARDNAME)/bsp.mk
 include $(ADA_SRC)/ada.mk
-include $(ARMSRC)/include/ARM.mk
+include $(ARMSRC)/gcc/include/ARM.mk
 sinclude $(HOME)/src/include/subversion.mk
