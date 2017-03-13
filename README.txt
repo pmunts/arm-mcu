@@ -1,10 +1,7 @@
                ARM Microcontroller Firmware Development Framework
 
-   Here is a framework for developing firmware for a number of [1]ARM
+   Here are some frameworks for developing firmware for a number of [1]ARM
    (Advanced RISC Machine) architecture single chip microcontrollers.
-
-   Each MCU directory includes startup code, linker script, [2]newlib
-   syscall bindings, and [3]OpenOCD scripts for debugging and flashing.
 
 News
 
@@ -22,19 +19,21 @@ News
      * 25 July 2016 -- Added byte stream framing library and demo program.
      * 2 November 2016 -- Modified device_read_raw() to return EAGAIN in
        errno if there is no data available on a stream with O_NONBLOCK
-       set. Imported liblinx and libstream from [4]libsimpleio.
+       set. Imported liblinx and libstream from [2]libsimpleio.
      * 8 November 2016 -- Upgraded binutils to 2.27. Upgraded gcc to
        5.4.0. Upgraded newlib to 2.4.0.20160923. Upgraded gdb to 7.12.
-       Imported the [5]ut hash hash table library. Added [6]LabView LINX
+       Imported the [3]ut hash hash table library. Added [4]LabView LINX
        Remote I/O demo server, written in C++. It may need to be compiled
        with -O3 or -Os optimzation to fit in devices with 128K flash.
      * 18 November 2016 -- Downgraded gcc to 4.9.4 because of some issues
        with GCC 5.
      * 21 November 2016 -- Upgraded gcc to 6.2.0.
+     * 13 March 2017 -- Moved the original GCC framework into the gcc/
+       subdirectory.
 
 Git Repository
 
-   The source code is available at: [7]http://git.munts.com
+   The source code is available at: [5]http://git.munts.com
 
    Use the following command to clone it:
 
@@ -68,7 +67,7 @@ POSSIBILITY OF SUCH DAMAGE.
    respective authors.
    ___________________________________________________________________
 
-   Questions or comments to Philip Munts [8]phil@munts.net
+   Questions or comments to Philip Munts [6]phil@munts.net
 
    I am available for custom system development (hardware and software) of
    products using these ARM microcontrollers.
@@ -76,10 +75,8 @@ POSSIBILITY OF SUCH DAMAGE.
 References
 
    1. http://www.arm.com/
-   2. http://sourceware.org/newlib
-   3. http://openocd.sourceforge.net/
-   4. http://git.munts.com/libsimpleio
-   5. http://troydhanson.github.io/uthash/index.html
-   6. https://www.labviewmakerhub.com/doku.php?id=learn:libraries:linx:spec:start
-   7. http://git.munts.com/
-   8. mailto:phil@munts.net
+   2. http://git.munts.com/libsimpleio
+   3. http://troydhanson.github.io/uthash/index.html
+   4. https://www.labviewmakerhub.com/doku.php?id=learn:libraries:linx:spec:start
+   5. http://git.munts.com/
+   6. mailto:phil@munts.net
