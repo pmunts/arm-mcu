@@ -27,15 +27,23 @@ FPC_SERVER	= https://downloads.sourceforge.net/project/freepascal/Source/$(FPC_V
 FPC_URL		= $(FPC_SERVER)/$(FPC_TARBALL)
 FPC_DIST	= $(TEMP)/$(FPC_TARBALL)
 
-ARMTOOLS	= /usr/local/arm-mcu-tools
-CONFIGURENAME	= arm-none-eabi
+ARMTOOLS	?= /usr/local/arm-mcu-tools
+CONFIGURENAME	?= arm-none-eabi
+SUBARCHS	:= armv4t armv6m armv7m armv7em
+INSTALLDIR	:= $(shell pwd)/fpc-$(CONFIGURENAME)
+RTLDIR		:= $(INSTALLDIR)/lib/fpc/$(FPC_VERSION)/units/arm-embedded/rtl
+TARBALL		:= fpc-$(CONFIGURENAME).tgz
 
-BUILDOPTS	= CROSSINSTALL=1
+BUILDOPTS	+= CROSSINSTALL=1
 BUILDOPTS	+= CPU_TARGET=arm
 BUILDOPTS	+= OS_TARGET=embedded
 BUILDOPTS	+= CROSSBINDIR=$(ARMTOOLS)/bin
 BUILDOPTS	+= BINUTILSPREFIX=$(CONFIGURENAME)-
+BUILDOPTS	+= INSTALL_PREFIX=$(INSTALLDIR)
 
+default: tarball.done
+
+ifeq ($(shell uname), Linux)
 OSNAME		?= unknown
 PKGNAME		:= fpc-$(CONFIGURENAME)
 PKGVER		:= $(shell date +%Y.%j)
@@ -43,10 +51,7 @@ PKGARCH		:= $(shell dpkg --print-architecture)
 PKGSUFFIX	:= $(PKGVER)-$(OSNAME)-$(PKGARCH)
 PKGDIR		:= $(PKGNAME)-$(PKGSUFFIX)
 PKGFILE		:= $(PKGNAME)-$(PKGSUFFIX).deb
-
-INSTALLDIR	:= $(shell pwd)/$(PKGDIR)/usr/local/$(PKGNAME)
-
-default: package.deb
+endif
 
 ################################################################################
 
@@ -65,44 +70,55 @@ src.done: $(FPC_DIST)
 
 ################################################################################
 
-# Build the cross compiler
+# Build and install cross compiler (for a single subarchitecture)
+
+build_subarch:
+	$(MAKE) -C $(FPC_SRCDIR) $(BUILDOPTS) clean installbase SUBARCH=$(SUBARCH)
+	mkdir -p $(RTLDIR)/$(SUBARCH)
+	mv $(RTLDIR)/*.* $(RTLDIR)/$(SUBARCH)
+	
+################################################################################
+
+# Build and install the cross compiler (for all subarchitectures)
 
 build.done: src.done
-	$(MAKE) -C $(FPC_SRCDIR) buildbase $(BUILDOPTS) SUBARCH=armv4t
-	$(MAKE) -C $(FPC_SRCDIR) buildbase $(BUILDOPTS) SUBARCH=armv6m
-	$(MAKE) -C $(FPC_SRCDIR) buildbase $(BUILDOPTS) SUBARCH=armv7m
-	$(MAKE) -C $(FPC_SRCDIR) buildbase $(BUILDOPTS) SUBARCH=armv7em
+	for S in $(SUBARCHS) ; do $(MAKE) build_subarch SUBARCH=$$S ; done
+ifeq ($(findstring CYGWIN, $(shell uname)), CYGWIN)
+	cp $(INSTALLDIR)/lib/fpc/$(FPC_VERSION)/ppcrossarm $(INSTALLDIR)/bin
+else
+	ln -s ../lib/fpc/$(FPC_VERSION)/ppcrossarm	$(INSTALLDIR)/bin/ppcrossarm
+endif
+	mkdir -p					$(INSTALLDIR)/lib/fpc/etc
+	install -cm 0644 fpc.cfg			$(INSTALLDIR)/lib/fpc/etc
+	sed -i 's#@@ARMTOOLS@@#$(ARMTOOLS)#g'		$(INSTALLDIR)/lib/fpc/etc/fpc.cfg
+	sed -i 's#@@CONFIGURENAME@@#$(CONFIGURENAME)#g'	$(INSTALLDIR)/lib/fpc/etc/fpc.cfg
 	touch $@
 
 ################################################################################
 
-# Install the cross compiler
+# Create tarball
 
-install.done: build.done
-	$(MAKE) -C $(FPC_SRCDIR) installbase $(BUILDOPTS) INSTALL_PREFIX=$(INSTALLDIR) SUBARCH=armv4t
-	$(MAKE) -C $(FPC_SRCDIR) installbase $(BUILDOPTS) INSTALL_PREFIX=$(INSTALLDIR) SUBARCH=armv6m
-	$(MAKE) -C $(FPC_SRCDIR) installbase $(BUILDOPTS) INSTALL_PREFIX=$(INSTALLDIR) SUBARCH=armv7m
-	$(MAKE) -C $(FPC_SRCDIR) installbase $(BUILDOPTS) INSTALL_PREFIX=$(INSTALLDIR) SUBARCH=armv7em
-	ln -s ../lib/fpc/$(FPC_VERSION)/ppcrossarm	$(INSTALLDIR)/bin/ppcrossarm
-	mkdir -p					$(INSTALLDIR)/etc
-	install -cm 0644 fpc.cfg			$(INSTALLDIR)/etc
-	sed -i 's#@@ARMTOOLS@@#$(ARMTOOLS)#g'		$(INSTALLDIR)/etc/fpc.cfg
-	sed -i 's#@@CONFIGURENAME@@#$(CONFIGURENAME)#g'	$(INSTALLDIR)/etc/fpc.cfg
-	sed -i 's#@@VERSION@@#$(FPC_VERSION)#g'		$(INSTALLDIR)/etc/fpc.cfg
-	ln -s ../../etc					$(INSTALLDIR)/lib/fpc/etc
+tarball.done: build.done
+ifeq ($(findstring CYGWIN, $(shell uname)), CYGWIN)
+	tar czf $(TARBALL) $(INSTALLDIR) --mode=ugo-w
+else
+	tar czf $(TARBALL) $(INSTALLDIR) --mode=ugo-w --owner=root --group=root
+endif
 	touch $@
 
 ################################################################################
 
 # Create Debian package
 
-package.deb: install.done
+package.deb: build.done
 	mkdir -p					$(PKGDIR)/DEBIAN
 	install -cm 0644 control			$(PKGDIR)/DEBIAN
 	sed -i s/@@NAME@@/$(PKGNAME)/g			$(PKGDIR)/DEBIAN/control
 	sed -i s/@@ARCH@@/$(PKGARCH)/g			$(PKGDIR)/DEBIAN/control
 	sed -i s/@@VERSION@@/$(PKGVER)/g		$(PKGDIR)/DEBIAN/control
 	sed -i s/@@BOARDNAME@@/$(BOARDBASE)/g		$(PKGDIR)/DEBIAN/control
+	mkdir -p					$(PKGDIR)/usr/local
+	cp -R -P -p $(INSTALLDIR)			$(PKGDIR)/usr/local
 	chmod -R ugo-w					$(PKGDIR)/usr/local/*
 	fakeroot dpkg-deb --build			$(PKGDIR)
 	chmod -R ugo+w					$(PKGDIR)
@@ -112,7 +128,7 @@ package.deb: install.done
 # Remove working files
 
 clean:
-	rm -rf *.done $(FPC_SRCDIR) $(PKGDIR) $(PKGFILE)
+	rm -rf *.done $(FPC_SRCDIR) $(INSTALLDIR) $(TARBALL) $(PKGDIR) $(PKGFILE)
 
 reallyclean: clean
 
