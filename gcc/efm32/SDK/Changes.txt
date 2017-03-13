@@ -1,5 +1,0 @@
-Changes to the EFM32 SDK
-------------------------
-
-1. 17 September 2015 -- Imported the minimum necessary set of files from the
-   EFM32 SDK v4.0, which was extracted from Simplicity Studio 3.1.
