@@ -23,8 +23,9 @@
 
 ###############################################################################
 
-FPC		?= /usr/local/fpc-arm-none-eabi/bin/ppcrossarm
-FPC_FLAGS	+= -Mobjfpc -Sh -FE. $(FPC_SRCDIRS) $(FPC_EXTRAFLAGS)
+FPCDIR		?= /usr/local/fpc-arm-none-eabi
+FPC		?= $(FPCDIR)/bin/ppcrossarm
+FPC_FLAGS	+= -Mobjfpc -Sh -FE. $(FPC_EXTRAFLAGS)
 
 ###############################################################################
 
