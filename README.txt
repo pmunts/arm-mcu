@@ -29,11 +29,13 @@ News
        with GCC 5.
      * 21 November 2016 -- Upgraded gcc to 6.2.0.
      * 13 March 2017 -- Moved the original GCC framework into the gcc/
-       subdirectory.
+       subdirectory. Removed some obsolete cruft (EFM32, mbed Classic,
+       etc.). Started adding support for developing with [5]Free Pascal
+       Embedded for ARM microcontrollers.
 
 Git Repository
 
-   The source code is available at: [5]http://git.munts.com
+   The source code is available at: [6]http://git.munts.com
 
    Use the following command to clone it:
 
@@ -67,7 +69,7 @@ POSSIBILITY OF SUCH DAMAGE.
    respective authors.
    ___________________________________________________________________
 
-   Questions or comments to Philip Munts [6]phil@munts.net
+   Questions or comments to Philip Munts [7]phil@munts.net
 
    I am available for custom system development (hardware and software) of
    products using these ARM microcontrollers.
@@ -78,5 +80,6 @@ References
    2. http://git.munts.com/libsimpleio
    3. http://troydhanson.github.io/uthash/index.html
    4. https://www.labviewmakerhub.com/doku.php?id=learn:libraries:linx:spec:start
-   5. http://git.munts.com/
-   6. mailto:phil@munts.net
+   5. http://wiki.freepascal.org/TARGET_Embedded
+   6. http://git.munts.com/
+   7. mailto:phil@munts.net
