@@ -22,7 +22,7 @@
 
 # mbed firmware directory
 
-MBEDDIR		?= /media/MBED
+MBEDDIR		?= /media/$(USER)/MBED
 
 .SUFFIXES: .bin .flashmbed
 
