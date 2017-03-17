@@ -80,7 +80,7 @@ static const struct
 
 /* Configure a single GPIO pin */
 
-int gpio_configure(unsigned pin, GPIO_MODE_t mode)
+int gpio_configure(unsigned pin, unsigned mode)
 {
   errno_r = 0;
 
@@ -131,7 +131,7 @@ int gpio_configure(unsigned pin, GPIO_MODE_t mode)
 
 /* Configure the interrupt mode for a single GPIO pin */
 
-int gpio_configure_interrupt(unsigned pin, GPIO_INTERRUPT_CONFIG_t config)
+int gpio_configure_interrupt(unsigned pin, unsigned config)
 {
   errno_r = 0;
 

@@ -86,6 +86,11 @@ typedef enum
   MAX_GPIO_MODES
 } GPIO_MODE_t;
 
+// Define some compatibility macros
+
+#define GPIO_DIR_INPUT		GPIO_MODE_INPUT
+#define GPIO_DIR_OUTPUT		GPIO_MODE_OUTPUT
+
 // GPIO input pins can be configured for one of the following interrupt modes:
 
 typedef enum
@@ -101,8 +106,8 @@ typedef enum
 
 // GPIO service functions
 
-int gpio_configure(unsigned pin, GPIO_MODE_t mode);
-int gpio_configure_interrupt(unsigned pin, GPIO_INTERRUPT_CONFIG_t config);
+int gpio_configure(unsigned pin, unsigned mode);
+int gpio_configure_interrupt(unsigned pin, unsigned config);
 int gpio_configure_function(unsigned pin, unsigned function);
 int gpio_read(unsigned pin);
 int gpio_write(unsigned pin, bool state);
