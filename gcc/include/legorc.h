@@ -24,11 +24,11 @@
 
 // The following macros must be defined BEFORE including this file:
 //
-// TURN_LED_ON		Code fragment or function call
-// TURN_LED_OFF		Code fragment or function call
+// DELAY38KHZ		Integer constant
 // TURN_IRED_ON		Code fragment or function call
 // TURN_IRED_OFF	Code fragment or function call
-// DELAY38KHZ		Integer constant
+// TURN_LED_ON		Code fragment or function call (optional)
+// TURN_LED_OFF		Code fragment or function call (optional)
 
 #ifndef _LEGORC_H
 #define _LEGORC_H
@@ -101,7 +101,7 @@ void msleep(uint8_t milliseconds)
 
 // Send 1 bit
 
-void SendBit(lego_bit_t bit)
+void SendBit(lego_bit_t bit, void *userdata)
 {
   uint8_t i;
 
@@ -126,7 +126,7 @@ void SendBit(lego_bit_t bit)
 
 // Send 16-bit frame
 
-void SendFrame(uint8_t channel, uint16_t frame)
+void SendFrame(uint8_t channel, uint16_t frame, void *userdata)
 {
   uint8_t i;
   uint8_t j;
@@ -137,15 +137,15 @@ void SendFrame(uint8_t channel, uint16_t frame)
   {
     msleep(LEGO_RC_SPACING[channel][i]);
 
-    SendBit(BIT_START);
+    SendBit(BIT_START, userdata);
 
     for (j = 0; j < 16; j++)
     {
-      SendBit((frame >> 15) & 0x01);
+      SendBit((frame >> 15) & 0x01, userdata);
       frame <<= 1;
     }
 
-    SendBit(BIT_STOP);
+    SendBit(BIT_STOP, userdata);
   }
 }
 
@@ -153,7 +153,7 @@ void SendFrame(uint8_t channel, uint16_t frame)
 
 // Set an individual motor speed
 
-void SendCommand(uint8_t channel, uint8_t motor, uint8_t speed)
+void SendCommand(uint8_t channel, uint8_t motor, uint8_t speed, void *userdata)
 {
   uint16_t frame;
   uint8_t LRC;
@@ -202,11 +202,15 @@ void SendCommand(uint8_t channel, uint8_t motor, uint8_t speed)
 
 // Transmit the command frame
 
+#ifdef TURN_LED_ON
   TURN_LED_ON;
+#endif
 
-  SendFrame(channel, frame);
+  SendFrame(channel, frame, userdata);
 
+#ifdef TURN_LED_OFF
   TURN_LED_OFF;
+#endif
 }
 
 #endif
