@@ -20,8 +20,8 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef _GPIOPINS_H
-#define _GPIOPINS_H
+#ifndef _GPIO_H
+#define _GPIO_H
 
 // These services provide a simple and efficient mechanism for software to
 // control individual GPIO pins in an asynchronous fashion, where each GPIO pin
@@ -42,11 +42,18 @@ _BEGIN_STD_C
 
 typedef enum
 {
-  GPIOPIN_INPUT,
-  GPIOPIN_OUTPUT,
-} gpiopin_direction_t;
+  GPIO_DIR_INPUT,
+  GPIO_DIR_OUTPUT,
+} gpio_direction_t;
 
-int gpiopin_configure(unsigned int pin, gpiopin_direction_t direction);
+int gpio_configure(unsigned pin, unsigned direction);
+
+// Compatibility functions
+
+int gpio_read(unsigned pin);
+int gpio_write(unsigned pin, bool state);
+
+// Bit-banded GPIO pin definitions follow
 
 // PA0 is GPIOPIN0
 #define GPIOPIN0	0

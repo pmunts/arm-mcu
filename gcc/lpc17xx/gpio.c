@@ -34,16 +34,16 @@ static LPC_GPIO_TypeDef * const PORTS[] =
   LPC_GPIO4
 };
 
-int gpiopin_configure(unsigned int pin, gpiopin_direction_t direction)
+int gpio_configure(unsigned pin, unsigned direction)
 {
   unsigned int port;
 
-// Split into port and pin components
+  // Split into port and pin components
 
   port = pin / PINS_PER_GPIO_PORT;
   pin  = pin % PINS_PER_GPIO_PORT;
 
-// Validate parameters
+  // Validate parameters
 
   if (port >= MAX_GPIO_PORTS)
   {
@@ -51,15 +51,64 @@ int gpiopin_configure(unsigned int pin, gpiopin_direction_t direction)
     return -1;
   }
 
-  if (direction > GPIOPIN_OUTPUT)
+  if (direction > GPIO_DIR_OUTPUT)
   {
     errno_r = EINVAL;
     return -1;
   }
 
-// Configure the pin
+  // Configure the pin
 
   PORTS[port]->FIOMASK &= ~(1 << pin);
   PORTS[port]->FIODIR  |= (direction << pin);
+  return 0;
+}
+
+int gpio_read(unsigned pin)
+{
+  unsigned int port;
+
+  // Split into port and pin components
+
+  port = pin / PINS_PER_GPIO_PORT;
+  pin  = pin % PINS_PER_GPIO_PORT;
+
+  // Validate parameters
+
+  if (port >= MAX_GPIO_PORTS)
+  {
+    errno_r = EINVAL;
+    return -1;
+  }
+
+  // Read the pin state
+
+  return (PORTS[port]->FIOPIN >> pin) & 0x01;
+}
+
+int gpio_write(unsigned pin, bool state)
+{
+  unsigned int port;
+
+  // Split into port and pin components
+
+  port = pin / PINS_PER_GPIO_PORT;
+  pin  = pin % PINS_PER_GPIO_PORT;
+
+  // Validate parameters
+
+  if (port >= MAX_GPIO_PORTS)
+  {
+    errno_r = EINVAL;
+    return -1;
+  }
+
+  // Write the pin state
+
+  if (state)
+    PORTS[port]->FIOSET = 1 << pin;
+  else
+    PORTS[port]->FIOCLR = 1 << pin;
+
   return 0;
 }

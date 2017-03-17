@@ -27,75 +27,35 @@
 void buttons_initialize(void)
 {
 #ifdef BUTTON1_PIN
-#ifdef _GPIOPINS_H
-  gpiopin_configure(BUTTON1_PIN, GPIOPIN_INPUT);
-#endif
-#ifdef _GPIO_H
-  gpio_configure(BUTTON1_PIN, GPIO_MODE_INPUT);
-#endif
+  gpio_configure(BUTTON1_PIN, GPIO_DIR_INPUT);
 #endif
 
 #ifdef BUTTON2_PIN
-#ifdef _GPIOPINS_H
-  gpiopin_configure(BUTTON2_PIN, GPIOPIN_INPUT);
-#endif
-#ifdef _GPIO_H
-  gpio_configure(BUTTON2_PIN, GPIO_MODE_INPUT);
-#endif
+  gpio_configure(BUTTON2_PIN, GPIO_DIR_INPUT);
 #endif
 
 #ifdef BUTTON3_PIN
-#ifdef _GPIOPINS_H
-  gpiopin_configure(BUTTON3_PIN, GPIOPIN_INPUT);
-#endif
-#ifdef _GPIO_H
-  gpio_configure(BUTTON3_PIN, GPIO_MODE_INPUT);
-#endif
+  gpio_configure(BUTTON3_PIN, GPIO_DIR_INPUT);
 #endif
 
 #ifdef BUTTON4_PIN
-#ifdef _GPIOPINS_H
-  gpiopin_configure(BUTTON4_PIN, GPIOPIN_INPUT);
-#endif
-#ifdef _GPIO_H
-  gpio_configure(BUTTON4_PIN, GPIO_MODE_INPUT);
-#endif
+  gpio_configure(BUTTON4_PIN, GPIO_DIR_INPUT);
 #endif
 
 #ifdef BUTTON5_PIN
-#ifdef _GPIOPINS_H
-  gpiopin_configure(BUTTON5_PIN, GPIOPIN_INPUT);
-#endif
-#ifdef _GPIO_H
-  gpio_configure(BUTTON5_PIN, GPIO_MODE_INPUT);
-#endif
+  gpio_configure(BUTTON5_PIN, GPIO_DIR_INPUT);
 #endif
 
 #ifdef BUTTON6_PIN
-#ifdef _GPIOPINS_H
-  gpiopin_configure(BUTTON6_PIN, GPIOPIN_INPUT);
-#endif
-#ifdef _GPIO_H
-  gpio_configure(BUTTON6_PIN, GPIO_MODE_INPUT);
-#endif
+  gpio_configure(BUTTON6_PIN, GPIO_DIR_INPUT);
 #endif
 
 #ifdef BUTTON7_PIN
-#ifdef _GPIOPINS_H
-  gpiopin_configure(BUTTON7_PIN, GPIOPIN_INPUT);
-#endif
-#ifdef _GPIO_H
-  gpio_configure(BUTTON7_PIN, GPIO_MODE_INPUT);
-#endif
+  gpio_configure(BUTTON7_PIN, GPIO_DIR_INPUT);
 #endif
 
 #ifdef BUTTON8_PIN
-#ifdef _GPIOPINS_H
-  gpiopin_configure(BUTTON8_PIN, GPIOPIN_INPUT);
-#endif
-#ifdef _GPIO_H
-  gpio_configure(BUTTON8_PIN, GPIO_MODE_INPUT);
-#endif
+  gpio_configure(BUTTON8_PIN, GPIO_DIR_INPUT);
 #endif
 }
 
@@ -108,145 +68,65 @@ unsigned long int buttons_get(void)
 
 #ifdef BUTTON1_PIN
 #ifdef BUTTON1_ACTIVELOW
-#ifdef _GPIOPINS_H
-  result += !BUTTON1_INPUT;
-#endif
-#ifdef _GPIO_H
   result += !gpio_read(BUTTON1_PIN);
-#endif
 #else
-#ifdef _GPIOPINS_H
-  result += BUTTON1_INPUT;
-#endif
-#ifdef _GPIO_H
   result += gpio_read(BUTTON1_PIN);
-#endif
 #endif
 #endif
 
 #ifdef BUTTON2_PIN
 #ifdef BUTTON2_ACTIVELOW
-#ifdef _GPIOPINS_H
-  result += !BUTTON2_INPUT << 1;
-#endif
-#ifdef _GPIO_H
   result += !gpio_read(BUTTON2_PIN) << 1;
-#endif
 #else
-#ifdef _GPIOPINS_H
-  result += BUTTON2_INPUT << 1;
-#endif
-#ifdef _GPIO_H
   result += gpio_read(BUTTON2_PIN) << 1;
-#endif
 #endif
 #endif
 
 #ifdef BUTTON3_PIN
 #ifdef BUTTON3_ACTIVELOW
-#ifdef _GPIOPINS_H
-  result += !BUTTON3_INPUT << 2;
-#endif
-#ifdef _GPIO_H
   result += !gpio_read(BUTTON3_PIN) << 2;
-#endif
 #else
-#ifdef _GPIOPINS_H
-  result += BUTTON3_INPUT << 2;
-#endif
-#ifdef _GPIO_H
   result += gpio_read(BUTTON3_PIN) << 2;
-#endif
 #endif
 #endif
 
 #ifdef BUTTON4_PIN
 #ifdef BUTTON4_ACTIVELOW
-#ifdef _GPIOPINS_H
-  result += !BUTTON4_INPUT << 3;
-#endif
-#ifdef _GPIO_H
   result += !gpio_read(BUTTON4_PIN) << 3;
-#endif
 #else
-#ifdef _GPIOPINS_H
-  result += BUTTON4_INPUT << 3;
-#endif
-#ifdef _GPIO_H
   result += gpio_read(BUTTON4_PIN) << 3;
-#endif
 #endif
 #endif
 
 #ifdef BUTTON5_PIN
 #ifdef BUTTON5_ACTIVELOW
-#ifdef _GPIOPINS_H
-  result += !BUTTON5_INPUT << 4;
-#endif
-#ifdef _GPIO_H
   result += !gpio_read(BUTTON5_PIN) << 4;
-#endif
 #else
-#ifdef _GPIOPINS_H
-  result += BUTTON5_INPUT << 4;
-#endif
-#ifdef _GPIO_H
   result += gpio_read(BUTTON5_PIN) << 4;
-#endif
 #endif
 #endif
 
 #ifdef BUTTON6_PIN
 #ifdef BUTTON6_ACTIVELOW
-#ifdef _GPIOPINS_H
-  result += !BUTTON6_INPUT << 5;
-#endif
-#ifdef _GPIO_H
   result += !gpio_read(BUTTON6_PIN) << 5;
-#endif
 #else
-#ifdef _GPIOPINS_H
-  result += BUTTON6_INPUT << 5;
-#endif
-#ifdef _GPIO_H
   result += gpio_read(BUTTON6_PIN) << 5;
-#endif
 #endif
 #endif
 
 #ifdef BUTTON7_PIN
 #ifdef BUTTON7_ACTIVELOW
-#ifdef _GPIOPINS_H
-  result += !BUTTON7_INPUT << 6;
-#endif
-#ifdef _GPIO_H
   result += !gpio_read(BUTTON7_PIN) << 6;
-#endif
 #else
-#ifdef _GPIOPINS_H
-  result += BUTTON7_INPUT << 6;
-#endif
-#ifdef _GPIO_H
   result += gpio_read(BUTTON7_PIN) << 6;
-#endif
 #endif
 #endif
 
 #ifdef BUTTON8_PIN
 #ifdef BUTTON8_ACTIVELOW
-#ifdef _GPIOPINS_H
-  result += !BUTTON8_INPUT << 7;
-#endif
-#ifdef _GPIO_H
   result += !gpio_read(BUTTON8_PIN) << 7;
-#endif
 #else
-#ifdef _GPIOPINS_H
-  result += BUTTON8_INPUT << 7;
-#endif
-#ifdef _GPIO_H
   result += gpio_read(BUTTON8_PIN) << 7;
-#endif
 #endif
 #endif
 

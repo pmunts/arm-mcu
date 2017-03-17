@@ -35,7 +35,7 @@
 #else
 #define MAX_GPIO_PORTS		4
 #endif
-
+  
 #define PINS_PER_GPIO_PORT	16
 
 static GPIO_TypeDef * const PORTS[] =
@@ -61,16 +61,16 @@ static GPIO_TypeDef * const PORTS[] =
 #endif
 };
 
-int gpiopin_configure(unsigned int pin, gpiopin_direction_t direction)
+int gpio_configure(unsigned pin, unsigned direction)
 {
   unsigned int port;
 
-// Split into port and pin components
+  // Split into port and pin components
 
   port = pin / PINS_PER_GPIO_PORT;
   pin  = pin % PINS_PER_GPIO_PORT;
 
-// Validate parameters
+  // Validate parameters
 
   if (port >= MAX_GPIO_PORTS)
   {
@@ -78,20 +78,20 @@ int gpiopin_configure(unsigned int pin, gpiopin_direction_t direction)
     return -1;
   }
 
-  if (direction > GPIOPIN_OUTPUT)
+  if (direction > GPIO_DIR_OUTPUT)
   {
     errno_r = EINVAL;
     return -1;
   }
 
-// Configure peripheral clock
+  // Configure peripheral clock
 
   RCC->AHB1ENR |= (1 << port);
 
-// Configure the pin
+  // Configure the pin
 
   PORTS[port]->MODER &= ~(3 << pin*2);
-  if (direction == GPIOPIN_OUTPUT)
+  if (direction == GPIO_DIR_OUTPUT)
     PORTS[port]->MODER |= 1 << pin*2;
 
   PORTS[port]->OTYPER &= ~(1 << pin);
@@ -101,6 +101,55 @@ int gpiopin_configure(unsigned int pin, gpiopin_direction_t direction)
 
   PORTS[port]->PUPDR &= ~(3 << pin*2);
   PORTS[port]->PUPDR |= 0 << pin*2;
+
+  return 0;
+}
+
+int gpio_read(unsigned pin)
+{
+  unsigned int port;
+
+  // Split into port and pin components
+
+  port = pin / PINS_PER_GPIO_PORT;
+  pin  = pin % PINS_PER_GPIO_PORT;
+
+  // Validate parameters
+
+  if (port >= MAX_GPIO_PORTS)
+  {
+    errno_r = EINVAL;
+    return -1;
+  }
+
+  // Read from the GPIO pin
+
+  return (PORTS[port]->IDR >> pin) & 0x01;
+}
+
+int gpio_write(unsigned pin, bool state)
+{
+  unsigned int port;
+
+  // Split into port and pin components
+
+  port = pin / PINS_PER_GPIO_PORT;
+  pin  = pin % PINS_PER_GPIO_PORT;
+
+  // Validate parameters
+
+  if (port >= MAX_GPIO_PORTS)
+  {
+    errno_r = EINVAL;
+    return -1;
+  }
+
+  // Write to the GPIO pin
+
+  if (state)
+    PORTS[port]->BSRR = (1 << pin);		// Set bit
+  else
+    PORTS[port]->BSRR = (1 << (pin + 16));	// Clear bit
 
   return 0;
 }

@@ -41,7 +41,7 @@ include $(MCUDIR)/CMSIS/cmsis.mk
 
 # Build processor dependent support library
 
-LIBOBJS		= $(MCU).o adc.o cpu.o gpiopins.o serial.o $(EXTRALIBOBJS)
+LIBOBJS		= $(MCU).o adc.o cpu.o gpio.o serial.o $(EXTRALIBOBJS)
 
 lib$(MCU).a: $(LIBOBJS)
 	$(AR) crs lib$(MCU).a $(LIBOBJS)

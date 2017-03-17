@@ -159,13 +159,13 @@ int spi_master_init(uint32_t port, uint32_t wordsize, uint32_t clockmode,
 
       // Configure GPIO pins
 
-      if (gpiopin_device_configure(GPIOPIN_SPI1_SCK))
+      if (gpio_device_configure(GPIOPIN_SPI1_SCK))
         return -1;
 
-      if (gpiopin_device_configure(GPIOPIN_SPI1_MISO))
+      if (gpio_device_configure(GPIOPIN_SPI1_MISO))
         return -1;
 
-      if (gpiopin_device_configure(GPIOPIN_SPI1_MOSI))
+      if (gpio_device_configure(GPIOPIN_SPI1_MOSI))
         return -1;
 
       // Configure the SPI controller
@@ -187,13 +187,13 @@ int spi_master_init(uint32_t port, uint32_t wordsize, uint32_t clockmode,
 
       // Configure GPIO pins
 
-      if (gpiopin_device_configure(GPIOPIN_SPI2_SCK))
+      if (gpio_device_configure(GPIOPIN_SPI2_SCK))
         return -1;
 
-      if (gpiopin_device_configure(GPIOPIN_SPI2_MISO))
+      if (gpio_device_configure(GPIOPIN_SPI2_MISO))
         return -1;
 
-      if (gpiopin_device_configure(GPIOPIN_SPI2_MOSI))
+      if (gpio_device_configure(GPIOPIN_SPI2_MOSI))
         return -1;
 
       // Configure the SPI controller
@@ -215,13 +215,13 @@ int spi_master_init(uint32_t port, uint32_t wordsize, uint32_t clockmode,
 
       // Configure GPIO pins
 
-      if (gpiopin_device_configure(GPIOPIN_SPI3_SCK))
+      if (gpio_device_configure(GPIOPIN_SPI3_SCK))
         return -1;
 
-      if (gpiopin_device_configure(GPIOPIN_SPI3_MISO))
+      if (gpio_device_configure(GPIOPIN_SPI3_MISO))
         return -1;
 
-      if (gpiopin_device_configure(GPIOPIN_SPI3_MOSI))
+      if (gpio_device_configure(GPIOPIN_SPI3_MOSI))
         return -1;
 
       // Configure the SPI controller

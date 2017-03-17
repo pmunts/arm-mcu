@@ -55,16 +55,16 @@ static GPIO_TypeDef * const PORTS[] =
 #endif
 };
 
-int gpiopin_configure(unsigned int pin, gpiopin_direction_t direction)
+int gpio_configure(unsigned pin, unsigned direction)
 {
-  unsigned int port;
+  unsigned port;
 
-// Split into port and pin components
+  // Split into port and pin components
 
   port = pin / PINS_PER_GPIO_PORT;
   pin  = pin % PINS_PER_GPIO_PORT;
 
-// Validate parameters
+  // Validate parameters
 
   if (port >= MAX_GPIO_PORTS)
   {
@@ -72,28 +72,77 @@ int gpiopin_configure(unsigned int pin, gpiopin_direction_t direction)
     return -1;
   }
 
-  if (direction > GPIOPIN_OUTPUT)
+  if (direction > GPIO_DIR_OUTPUT)
   {
     errno_r = EINVAL;
     return -1;
   }
 
-// Enable the peripheral clock
+  // Enable the peripheral clock
 
   RCC->APB2ENR |= RCC_APB2ENR_AFIOEN|(1 << (port + 2));
 
-// Configure the pin
+  // Configure the pin
 
   if (pin < 8)
   {
     PORTS[port]->CRL &= ~(0xF << (pin*4));
-    PORTS[port]->CRL |= ((direction == GPIOPIN_INPUT) ? GPIO_CONFIG_INPUT : GPIO_CONFIG_OUTPUT) << (pin*4);
+    PORTS[port]->CRL |= ((direction == GPIO_DIR_INPUT) ? GPIO_CONFIG_INPUT : GPIO_CONFIG_OUTPUT) << (pin*4);
   }
   else
   {
     PORTS[port]->CRH &= ~(0xF << ((pin-8)*4));
-    PORTS[port]->CRH |= ((direction == GPIOPIN_INPUT) ? GPIO_CONFIG_INPUT : GPIO_CONFIG_OUTPUT) << ((pin-8)*4);
+    PORTS[port]->CRH |= ((direction == GPIO_DIR_INPUT) ? GPIO_CONFIG_INPUT : GPIO_CONFIG_OUTPUT) << ((pin-8)*4);
   }
+
+  return 0;
+}
+
+int gpio_read(unsigned pin)
+{
+  unsigned port;
+
+  // Split into port and pin components
+
+  port = pin / PINS_PER_GPIO_PORT;
+  pin  = pin % PINS_PER_GPIO_PORT;
+
+  // Validate parameters
+
+  if (port >= MAX_GPIO_PORTS)
+  {
+    errno_r = EINVAL;
+    return -1;
+  }
+
+  // Read from the GPIO pin
+
+  return (PORTS[port]->IDR >> pin) & 0x01;
+}
+
+int gpio_write(unsigned pin, bool state)
+{
+  unsigned port;
+
+  // Split into port and pin components
+
+  port = pin / PINS_PER_GPIO_PORT;
+  pin  = pin % PINS_PER_GPIO_PORT;
+
+  // Validate parameters
+
+  if (port >= MAX_GPIO_PORTS)
+  {
+    errno_r = EINVAL;
+    return -1;
+  }
+
+  // Write to the GPIO pin
+
+  if (state)
+    PORTS[port]->BSRR = (1 << pin);		// Set bit
+  else
+    PORTS[port]->BSRR = (1 << (pin + 16));	// Clear bit
 
   return 0;
 }
@@ -174,7 +223,7 @@ static const PINMAPPING_t AllowedMappings[] =
 
 static unsigned ActualMappings[(int)GPIOPIN_DEVICEPINS_SENTINEL];
 
-void gpiopin_device_defaults(void)
+void gpio_device_defaults(void)
 {
   int i;
 
@@ -193,7 +242,7 @@ void gpiopin_device_defaults(void)
   }
 }
 
-int gpiopin_device_map(unsigned int devpin, unsigned int gpiopin)
+int gpio_device_map(unsigned devpin, unsigned gpiopin)
 {
   int i;
 
@@ -225,7 +274,7 @@ int gpiopin_device_map(unsigned int devpin, unsigned int gpiopin)
   return -1;
 }
 
-int gpiopin_device_configure(unsigned int devpin)
+int gpio_device_configure(unsigned devpin)
 {
   PINMAPPING_t const *mapping;
   unsigned port;
