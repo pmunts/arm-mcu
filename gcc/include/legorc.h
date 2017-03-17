@@ -33,8 +33,6 @@
 #ifndef _LEGORC_H
 #define _LEGORC_H
 
-#include <stdint.h>
-
 // LEGO Power Functions RC system constants
 
 #define LEGO_RC_CHANNELS	4
