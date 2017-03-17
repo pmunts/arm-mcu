@@ -32,10 +32,13 @@ News
        subdirectory. Removed some obsolete cruft (EFM32, mbed Classic,
        etc.). Started adding support for developing with [5]Free Pascal
        Embedded for ARM microcontrollers.
+     * 17 March 2017 -- Updated binutils to 2.28, gcc to 6.3.0, newlib to
+       2.5.0, and gdb to 7.12.1. Imported [6]LEGO Power Functions Infrared
+       Remote Control Protocol. implementation.
 
 Git Repository
 
-   The source code is available at: [6]http://git.munts.com
+   The source code is available at: [7]http://git.munts.com
 
    Use the following command to clone it:
 
@@ -69,7 +72,7 @@ POSSIBILITY OF SUCH DAMAGE.
    respective authors.
    ___________________________________________________________________
 
-   Questions or comments to Philip Munts [7]phil@munts.net
+   Questions or comments to Philip Munts [8]phil@munts.net
 
    I am available for custom system development (hardware and software) of
    products using these ARM microcontrollers.
@@ -81,5 +84,6 @@ References
    3. http://troydhanson.github.io/uthash/index.html
    4. https://www.labviewmakerhub.com/doku.php?id=learn:libraries:linx:spec:start
    5. http://wiki.freepascal.org/TARGET_Embedded
-   6. http://git.munts.com/
-   7. mailto:phil@munts.net
+   6. https://www.lego.com/en-us/powerfunctions/articles/8884-control-5fcb2efbb4e74f0c926948df71445765
+   7. http://git.munts.com/
+   8. mailto:phil@munts.net
