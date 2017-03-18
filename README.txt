@@ -34,7 +34,7 @@ News
        Embedded for ARM microcontrollers.
      * 17 March 2017 -- Updated binutils to 2.28, gcc to 6.3.0, newlib to
        2.5.0, and gdb to 7.12.1. Imported [6]LEGO Power Functions Infrared
-       Remote Control Protocol. implementation.
+       Remote Control Protocol implementation.
 
 Git Repository
 
