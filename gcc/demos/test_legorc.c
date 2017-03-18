@@ -35,8 +35,8 @@
 // LPC1114FN28 DIP28
 
 #ifdef LPC1114FN28
-#define DELAY38KHZ	25
-#define IRED_PIN	7
+#define DELAY38KHZ	21
+#define IRED_PIN	17	// aka PIO1_5
 #define TURN_IRED_ON	gpio_write(IRED_PIN, 1)
 #define TURN_IRED_OFF	gpio_write(IRED_PIN, 0)
 #endif
@@ -111,7 +111,10 @@ int main(void)
   gpio_configure(IRED_PIN, GPIO_DIR_OUTPUT);
 
   TURN_IRED_OFF;
+
+#ifdef TURN_LED_OFF
   TURN_LED_OFF;
+#endif
 
   // Main message handling loop
 
