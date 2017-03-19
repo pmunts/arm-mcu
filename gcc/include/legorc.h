@@ -156,6 +156,8 @@ void SendCommand(uint8_t channel, uint8_t motor, uint8_t speed, void *userdata)
   uint16_t frame;
   uint8_t LRC;
 
+  errno_r = EOK;
+
 // Build the command frame
 
   frame = (channel-1)*256;
@@ -184,6 +186,7 @@ void SendCommand(uint8_t channel, uint8_t motor, uint8_t speed, void *userdata)
       break;
 
     default :		// Invalid motor ID
+      errno_r = EINVAL;
       return;
   }
 
@@ -207,7 +210,9 @@ void SendCommand(uint8_t channel, uint8_t motor, uint8_t speed, void *userdata)
   SendFrame(channel, frame, userdata);
 
 #ifdef TURN_LED_OFF
+  int save_errno = errno_r;
   TURN_LED_OFF;
+  errno_r = save_errno;
 #endif
 }
 
