@@ -254,7 +254,7 @@ int gpio_read(unsigned pin)
 
 /* Write to a single GPIO pin */
 
-int gpio_write(unsigned pin, bool value)
+int gpio_write(unsigned pin, bool state)
 {
   errno_r = 0;
 
@@ -268,7 +268,7 @@ int gpio_write(unsigned pin, bool value)
 
   // Write the pin
 
-  if (value)
+  if (state)
     *gpio_pin_table[pin].data = 0xFFF;
   else
     *gpio_pin_table[pin].data = 0x000;
