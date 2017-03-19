@@ -142,65 +142,65 @@ void LEDS_set(unsigned long int mask)
 {
 #ifdef LED1_PIN
 #ifdef LED1_ACTIVELOW
-  gpio_write(LED1_PIN, ~mask);
+  gpio_write(LED1_PIN, ~mask & 0x01);
 #else
-  gpio_write(LED1_PIN, mask);
+  gpio_write(LED1_PIN, mask & 0x01);
 #endif
 #endif
 
 #ifdef LED2_PIN
 #ifdef LED2_ACTIVELOW
-  gpio_write(LED2_PIN, ~mask >> 1);
+  gpio_write(LED2_PIN, ~mask & 0x02);
 #else
-  gpio_write(LED2_PIN, mask >> 1);
+  gpio_write(LED2_PIN, mask & 0x02);
 #endif
 #endif
 
 #ifdef LED3_PIN
 #ifdef LED3_ACTIVELOW
-  gpio_write(LED3_PIN, ~mask >> 2);
+  gpio_write(LED3_PIN, ~mask & 0x04);
 #else
-  gpio_write(LED3_PIN, mask >> 2);
+  gpio_write(LED3_PIN, mask & 0x04);
 #endif
 #endif
 
 #ifdef LED4_PIN
 #ifdef LED4_ACTIVELOW
-  gpio_write(LED4_PIN, ~mask >> 3);
+  gpio_write(LED4_PIN, ~mask & 0x08);
 #else
-  gpio_write(LED4_PIN, mask >> 3);
+  gpio_write(LED4_PIN, mask & 0x08);
 #endif
 #endif
 
 #ifdef LED5_PIN
 #ifdef LED5_ACTIVELOW
-  gpio_write(LED5_PIN, ~mask >> 4);
+  gpio_write(LED5_PIN, ~mask & 0x10);
 #else
-  gpio_write(LED5_PIN, mask >> 4);
+  gpio_write(LED5_PIN, mask & 0x10);
 #endif
 #endif
 
 #ifdef LED6_PIN
 #ifdef LED6_ACTIVELOW
-  gpio_write(LED6_PIN, ~mask >> 5);
+  gpio_write(LED6_PIN, ~mask & 0x20);
 #else
-  gpio_write(LED6_PIN, mask >> 5);
+  gpio_write(LED6_PIN, mask & 0x20);
 #endif
 #endif
 
 #ifdef LED7_PIN
 #ifdef LED7_ACTIVELOW
-  gpio_write(LED7_PIN, ~mask >> 6);
+  gpio_write(LED7_PIN, ~mask & 0x40);
 #else
-  gpio_write(LED7_PIN, mask >> 6);
+  gpio_write(LED7_PIN, mask & 0x40);
 #endif
 #endif
 
 #ifdef LED8_PIN
 #ifdef LED8_ACTIVELOW
-  gpio_write(LED8_PIN, ~mask >> 7);
+  gpio_write(LED8_PIN, ~mask & 0x80);
 #else
-  gpio_write(LED8_PIN, mask >> 7;
+  gpio_write(LED8_PIN, mask & 0x80);
 #endif
 #endif
 }
