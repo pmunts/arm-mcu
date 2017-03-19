@@ -70,6 +70,13 @@ const uint8_t LEGO_RC_SPACING[LEGO_RC_CHANNELS][LEGO_RC_REPETITIONS] =
   { 0*16, 5*16, 5*16, (6+2*4)*16, (6+2*4)*16 }
 };
 
+// With newlib, errno isn't just an integer. We use errno_r instead
+// to return an error.  So without newlib, we need to define errnor_r.
+
+#ifndef errno_r
+#define errno_r errno
+#endif
+
 /**************************************************************************/
 
 // This delay function determines all of the LEGO RC protocol timing
@@ -103,7 +110,7 @@ void SendBit(lego_bit_t bit, void *userdata)
 {
   uint8_t i;
 
-// Send mark burst, 6 cycles of 38 kHz square wave
+  // Send mark burst, 6 cycles of 38 kHz square wave
 
   for (i = 1; i <= 6; i++)
   {
@@ -114,7 +121,7 @@ void SendBit(lego_bit_t bit, void *userdata)
     Delay38kHz();
   }
 
-// Pause n half-cycles
+  // Pause n half-cycles
 
   for (i = 1; i <= LEGO_RC_PAUSE[bit]; i++)
     Delay38kHz();
@@ -122,28 +129,37 @@ void SendBit(lego_bit_t bit, void *userdata)
 
 /**************************************************************************/
 
-// Send 16-bit frame
+// Send a single 16-bit frame
 
-void SendFrame(uint8_t channel, uint16_t frame, void *userdata)
+void SendFrame(uint16_t frame, void *userdata)
 {
   uint8_t i;
-  uint8_t j;
 
-// Send the complete frame
+  SendBit(BIT_START, userdata);
+
+  for (i = 0; i < 16; i++)
+  {
+    SendBit((frame >> 15) & 0x01, userdata);
+    frame <<= 1;
+  }
+
+  SendBit(BIT_STOP, userdata);
+}
+
+/**************************************************************************/
+
+// Send a single 16-bit frame, repeated according to the protocol to
+// mitigate interference between multiple transmitters on different
+// channels
+
+void SendFrameRepeated(uint8_t channel, uint16_t frame, void *userdata)
+{
+  uint8_t i;
 
   for (i = 0; i < LEGO_RC_REPETITIONS; i++)
   {
     msleep(LEGO_RC_SPACING[channel][i]);
-
-    SendBit(BIT_START, userdata);
-
-    for (j = 0; j < 16; j++)
-    {
-      SendBit((frame >> 15) & 0x01, userdata);
-      frame <<= 1;
-    }
-
-    SendBit(BIT_STOP, userdata);
+    SendFrame(frame, userdata);
   }
 }
 
@@ -151,14 +167,13 @@ void SendFrame(uint8_t channel, uint16_t frame, void *userdata)
 
 // Set an individual motor speed
 
-void SendCommand(uint8_t channel, uint8_t motor, uint8_t speed, void *userdata)
+void SendCommand(uint8_t channel, uint8_t motor, uint8_t speed,
+  bool repeated, void *userdata)
 {
   uint16_t frame;
   uint8_t LRC;
 
-  errno_r = 0;
-
-// Build the command frame
+  // Build the command frame
 
   frame = (channel-1)*256;
 
@@ -190,30 +205,33 @@ void SendCommand(uint8_t channel, uint8_t motor, uint8_t speed, void *userdata)
       return;
   }
 
-// Calculate LRC (Longitudinal Redundancy Check)
+  // Calculate LRC (Longitudinal Redundancy Check)
 
   LRC = (0xF ^ ((frame >> 8) & 0x0F) ^ ((frame >> 4) & 0x0F) ^
     (frame & 0x0F)) & 0x0F;
 
-// Append LRC
+  // Append LRC
 
   frame <<= 4;
   frame &= 0xFFF0;
   frame |= LRC;
 
-// Transmit the command frame
+  // Transmit the command frame
 
 #ifdef TURN_LED_ON
   TURN_LED_ON;
 #endif
 
-  SendFrame(channel, frame, userdata);
+  if (repeated)
+    SendFrameRepeated(channel, frame, userdata);
+  else
+    SendFrame(frame, userdata);
 
 #ifdef TURN_LED_OFF
-  int save_errno = errno_r;
   TURN_LED_OFF;
-  errno_r = save_errno;
 #endif
+
+  errno_r = 0;
 }
 
 #endif

@@ -172,6 +172,6 @@ int main(void)
 
     // Dispatch the command
 
-    SendCommand(channel, motor, speed, NULL);
+    SendCommand(channel, motor, speed, true, NULL);
   }
 }
