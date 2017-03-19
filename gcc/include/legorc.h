@@ -156,7 +156,7 @@ void SendCommand(uint8_t channel, uint8_t motor, uint8_t speed, void *userdata)
   uint16_t frame;
   uint8_t LRC;
 
-  errno_r = EOK;
+  errno_r = 0;
 
 // Build the command frame
 
