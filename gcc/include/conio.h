@@ -53,11 +53,6 @@ _BEGIN_STD_C
 #undef gets
 #undef puts
 
-// Undefine macros from string.h
-
-#undef strncasecmp
-#undef strerror
-
 // Lightweight replacement function prototypes
 
 int cprintf(const char *format, ...);
