@@ -5,40 +5,21 @@
 
 News
 
-     * 21 January 2016 -- Upgraded binutils to 2.25.1, gcc to 5.3.0,
-       newlib to 2.3.0, and gdb to 0.7.1.
-     * 6 April 2016 -- New toolchain release 2016.097: Upgraded binutils
-       to 2.26, newlib to 2.4.0 and gdb to 7.11.
-     * 22 June 2016 -- Added I2C master and SPI master support for STM32F1
-       devices. Added STM32F1 peripheral pin remapping services, allowing
-       all board dependent code to be removed from driver modules i2c.,
-       serial.c, and spi.c.
-     * 23 June 2016 -- Added support for non-blocking I/O (O_NONBLOCK).
-       Changed device_read_raw() to block by default, waiting for at least
-       one byte of data.
-     * 25 July 2016 -- Added byte stream framing library and demo program.
-     * 2 November 2016 -- Modified device_read_raw() to return EAGAIN in
-       errno if there is no data available on a stream with O_NONBLOCK
-       set. Imported liblinx and libstream from [2]libsimpleio.
-     * 8 November 2016 -- Upgraded binutils to 2.27. Upgraded gcc to
-       5.4.0. Upgraded newlib to 2.4.0.20160923. Upgraded gdb to 7.12.
-       Imported the [3]ut hash hash table library. Added [4]LabView LINX
-       Remote I/O demo server, written in C++. It may need to be compiled
-       with -O3 or -Os optimzation to fit in devices with 128K flash.
-     * 18 November 2016 -- Downgraded gcc to 4.9.4 because of some issues
-       with GCC 5.
-     * 21 November 2016 -- Upgraded gcc to 6.2.0.
      * 13 March 2017 -- Moved the original GCC framework into the gcc/
        subdirectory. Removed some obsolete cruft (EFM32, mbed Classic,
-       etc.). Started adding support for developing with [5]Free Pascal
+       etc.). Started adding support for developing with [2]Free Pascal
        Embedded for ARM microcontrollers.
      * 17 March 2017 -- Updated binutils to 2.28, gcc to 6.3.0, newlib to
-       2.5.0, and gdb to 7.12.1. Imported [6]LEGO Power Functions Infrared
+       2.5.0, and gdb to 7.12.1. Imported [3]LEGO Power Functions Infrared
        Remote Control Protocol implementation.
+     * 20 March 2017 -- Cleaned up and reordered ARM.mk. Modified ARM.mk
+       to append CFLAGS, CXXFLAGS, and LDFLAGS to RMAKEFLAGS so ensure
+       that they are propagated to subordinate make jobs. Added
+       lightweight_strncasecmp() to conio.c.
 
 Git Repository
 
-   The source code is available at: [7]http://git.munts.com
+   The source code is available at: [4]http://git.munts.com
 
    Use the following command to clone it:
 
@@ -72,7 +53,7 @@ POSSIBILITY OF SUCH DAMAGE.
    respective authors.
    ___________________________________________________________________
 
-   Questions or comments to Philip Munts [8]phil@munts.net
+   Questions or comments to Philip Munts [5]phil@munts.net
 
    I am available for custom system development (hardware and software) of
    products using these ARM microcontrollers.
@@ -80,10 +61,7 @@ POSSIBILITY OF SUCH DAMAGE.
 References
 
    1. http://www.arm.com/
-   2. http://git.munts.com/libsimpleio
-   3. http://troydhanson.github.io/uthash/index.html
-   4. https://www.labviewmakerhub.com/doku.php?id=learn:libraries:linx:spec:start
-   5. http://wiki.freepascal.org/TARGET_Embedded
-   6. https://www.lego.com/en-us/powerfunctions/articles/8884-control-5fcb2efbb4e74f0c926948df71445765
-   7. http://git.munts.com/
-   8. mailto:phil@munts.net
+   2. http://wiki.freepascal.org/TARGET_Embedded
+   3. https://www.lego.com/en-us/powerfunctions/articles/8884-control-5fcb2efbb4e74f0c926948df71445765
+   4. http://git.munts.com/
+   5. mailto:phil@munts.net

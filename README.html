@@ -4,33 +4,6 @@
 architecture single chip microcontrollers.</p>
 <h2>News</h2>
 <ul>
-<li>21 January 2016 -- Upgraded binutils to 2.25.1, gcc to 5.3.0, newlib to
-2.3.0, and gdb to 0.7.1.</li>
-<li>6 April 2016 -- New toolchain release 2016.097: Upgraded binutils to 2.26,
-newlib to 2.4.0 and gdb to 7.11.</li>
-<li>22 June 2016 -- Added I2C master and SPI master support for STM32F1
-devices. Added STM32F1 peripheral pin remapping services, allowing all board
-dependent code to be removed from driver modules <tt>i2c.</tt>,
-<tt>serial.c</tt>, and <tt>spi.c</tt>.</li>
-<li>23 June 2016 -- Added support for non-blocking I/O (<tt>O_NONBLOCK</tt>).
-Changed <tt>device_read_raw()</tt> to block by default, waiting for at least
-one byte of data.</li>
-<li>25 July 2016 -- Added byte stream framing library and demo program.</li>
-<li>2 November 2016 -- Modified <tt>device_read_raw()</tt> to return
-<tt>EAGAIN</tt> in <tt>errno</tt> if there is no data available on a stream
-with <tt>O_NONBLOCK</tt> set. Imported <tt>liblinx</tt> and <tt>libstream</tt>
-from <a href="http://git.munts.com/libsimpleio">libsimpleio</a>.</li>
-<li>8 November 2016 -- Upgraded binutils to 2.27. Upgraded gcc to 5.4.0.
-Upgraded newlib to 2.4.0.20160923. Upgraded gdb to 7.12. Imported the <a href=
-"http://troydhanson.github.io/uthash/index.html">ut hash</a> hash table
-library. Added <a href=
-"https://www.labviewmakerhub.com/doku.php?id=learn:libraries:linx:spec:start">LabView
-LINX Remote I/O</a> demo server, written in C++. It may need to be compiled
-with <tt>-O3</tt> or <tt>-Os</tt> optimzation to fit in devices with 128K
-flash.</li>
-<li>18 November 2016 -- Downgraded gcc to 4.9.4 because of some issues with GCC
-5.</li>
-<li>21 November 2016 -- Upgraded gcc to 6.2.0.</li>
 <li>13 March 2017 -- Moved the original GCC framework into the <tt>gcc/</tt>
 subdirectory. Removed some obsolete cruft (EFM32, mbed Classic, etc.). Started
 adding support for developing with <a href=
@@ -40,6 +13,11 @@ microcontrollers.</li>
 and gdb to 7.12.1. Imported <a href=
 "https://www.lego.com/en-us/powerfunctions/articles/8884-control-5fcb2efbb4e74f0c926948df71445765">
 LEGO Power Functions Infrared Remote Control Protocol</a> implementation.</li>
+<li>20 March 2017 -- Cleaned up and reordered <tt>ARM.mk</tt>. Modified
+<tt>ARM.mk</tt> to append <tt>CFLAGS</tt>, <tt>CXXFLAGS</tt>, and
+<tt>LDFLAGS</tt> to <tt>RMAKEFLAGS</tt> so ensure that they are propagated to
+subordinate make jobs. Added <tt>lightweight_strncasecmp()</tt> to
+<tt>conio.c</tt>.</li>
 </ul>
 <h2>Git Repository</h2>
 <p>The source code is available at: <a href=
