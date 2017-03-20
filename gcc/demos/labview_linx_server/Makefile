@@ -24,16 +24,16 @@ ARMSRC		?= $(HOME)/arm-mcu
 MCUFAMILY	?= stm32f4
 BOARDNAME	?= NUCLEO_F411RE
 
-CFLAGS		+= -D _GLIBCXX_USE_C99=1 -std=c++1y
+CFLAGS		+= -D_GLIBCXX_USE_C99=1 -std=c++1y -I.
 
 SOURCES		= main.cpp
-SOURCES		+= analog.cpp
-SOURCES		+= command.cpp
-SOURCES		+= common.cpp
-SOURCES		+= executive.cpp
-SOURCES		+= gpio.cpp
-SOURCES		+= pwm.cpp
-SOURCES		+= servo.cpp
+SOURCES		+= linx/analog.cpp
+SOURCES		+= linx/command.cpp
+SOURCES		+= linx/common.cpp
+SOURCES		+= linx/executive.cpp
+SOURCES		+= linx/gpio.cpp
+SOURCES		+= linx/pwm.cpp
+SOURCES		+= linx/servo.cpp
 SOURCES		+= gpio-gpiopins.cpp
 
 default: linx_server.bin

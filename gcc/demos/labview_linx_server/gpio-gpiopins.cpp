@@ -21,7 +21,7 @@
 // POSSIBILITY OF SUCH DAMAGE.
 
 #include <errno.h>
-#include <gpiopins.h>
+#include <gpio.h>
 #include <string.h>
 
 #include "gpio-gpiopins.h"
@@ -41,7 +41,7 @@ GPIO_GPIOPIN::GPIO_GPIOPIN(int32_t pin, uint32_t *input, uint32_t *output)
 
 void GPIO_GPIOPIN::configure(int32_t direction, int32_t *error)
 {
-  if (gpiopin_configure(this->pin, direction ? GPIOPIN_OUTPUT : GPIOPIN_INPUT) < 0)
+  if (gpio_configure(this->pin, direction ? GPIO_DIR_OUTPUT : GPIO_DIR_INPUT) < 0)
   {
     *error = errno;
     return;
@@ -60,7 +60,7 @@ void GPIO_GPIOPIN::read(int32_t *state, int32_t *error)
 {
   if (!this->IsConfigured)
   {
-    if (gpiopin_configure(this->pin, GPIOPIN_INPUT) < 0)
+    if (gpio_configure(this->pin, GPIO_DIR_INPUT) < 0)
     {
       *error = errno;
       return;
@@ -80,7 +80,7 @@ void GPIO_GPIOPIN::write(int32_t state, int32_t *error)
 {
   if (!this->IsConfigured)
   {
-    if (gpiopin_configure(this->pin, GPIOPIN_OUTPUT) < 0)
+    if (gpio_configure(this->pin, GPIO_DIR_OUTPUT) < 0)
     {
       *error = errno;
       return;
