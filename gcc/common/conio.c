@@ -89,10 +89,8 @@ int lightweight_strncasecmp(const char *s1, const char *s2, size_t n)
     c1 = _tolower(*s1++);
     c2 = _tolower(*s2++);
 
-    if (c1 > c2)
-      return 1;
-    else if (c1 < c2)
-      return -1;
+    if (c1 > c2) return 1;
+    if (c1 < c2) return -1;
   }
 
   return 0;
