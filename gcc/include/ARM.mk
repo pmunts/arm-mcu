@@ -20,6 +20,16 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
+###############################################################################
+
+# Define a default target placeholder
+
+ARM_mk_default:
+	@echo ERROR: You must explicitly specify a make target!
+	@exit 1
+
+###############################################################################
+
 # Toolchain definitions
 
 ARMTOOLS	?= /usr/local/arm-mcu-tools
@@ -36,34 +46,91 @@ GDB		= $(CROSS_COMPILE)gdb
 
 FIND		?= find
 
+###############################################################################
+
 # Framework general definitions
 
-MCUFAMILYNAME	:= $(shell echo $(MCUFAMILY) | tr '[a-z]' '[A-Z]')
 MCUDIR		?= $(ARMSRC)/gcc/$(MCUFAMILY)
+MCUFAMILYNAME	:= $(shell echo $(MCUFAMILY) | tr '[a-z]' '[A-Z]')
 MCULIBRARY	= $(MCUDIR)/lib$(MCU).a
 MCULINKSCRIPT	= $(MCUDIR)/$(MCU).ld
+
+###############################################################################
+
+# Include MCU dependent makefile
+
+include $(MCUDIR)/$(MCUFAMILY).mk
+
+###############################################################################
+
+# Support for common library functions
+
+COMMON_DIR	= $(ARMSRC)/gcc/common
+include $(COMMON_DIR)/common.mk
+
+###############################################################################
+
+# Support for the lightweight console I/O library
+
+ifeq ($(WITH_CONIO), yes)
+IOFLAGS += -DCONIO_STDIO
+endif
+
+###############################################################################
+
+# Support for floating point I/O
+
+ifeq ($(WITH_FLOATINPUT), yes)
+IOFLAGS	+= -DFLOATIO -u _scanf_float
+endif
+
+ifeq ($(WITH_FLOATOUTPUT), yes)
+IOFLAGS	+= -DFLOATIO -u _printf_float
+endif
+
+ifeq ($(WITH_FLOATIO), yes)
+IOFLAGS	+= -DFLOATIO -u _printf_float -u _scanf_float
+endif
+
+###############################################################################
+
+# Support for FreeRTOS
+
+ifeq ($(WITH_FREERTOS), yes)
+FREERTOS_DIR	= $(ARMSRC)/gcc/FreeRTOS
+include $(FREERTOS_DIR)/FreeRTOS.mk
+endif
+
+###############################################################################
+
+# Compiler and linker flags
+
+CPUFLAGS	+= -D$(MCU) -D$(BOARDNAME) -DBOARDNAME='"$(BOARDNAME)"'
+CPUFLAGS	+= -DMCUFAMILYNAME='"$(MCUFAMILYNAME)"'
+DEBUGFLAGS	?= -g
+OPTFLAGS	?= -O0
+CFLAGS		+= $(EARLYFLAGS)
+CFLAGS		+= -Wall -ffunction-sections
+CFLAGS		+= -I$(ARMSRC)/gcc/include -I$(MCUDIR)
+CFLAGS		+= $(CPUFLAGS) $(BOARDFLAGS) $(CONSOLEFLAGS) $(IOFLAGS)
+CFLAGS		+= $(CONFIGFLAGS) $(OPTFLAGS) $(DEBUGFLAGS) $(EXTRAFLAGS)
+CXXFLAGS	+= -fno-use-cxa-atexit
+LDFLAGS		+= -nostartfiles -T$(MCULINKSCRIPT) -L$(MCUDIR) -l$(MCU) -lm -lstdc++
+LDFLAGS		+= -Wl,-Map=$*.map,--cref,--gc-sections $(EXTRAOBJS)
+
+###############################################################################
 
 # Recursive make flags, to be passed to subordinate makes
 
 RMAKEFLAGS	+= ARMSRC=$(ARMSRC)
 RMAKEFLAGS	+= ARMTOOLS=$(ARMTOOLS)
 RMAKEFLAGS	+= BOARDNAME=$(BOARDNAME)
+RMAKEFLAGS	+= CFLAGS='$(CFLAGS)' CXXFLAGS='$(CXXFLAGS)' LDFLAGS='$(LDFLAGS)'
 ifeq ($(WITH_FREERTOS), yes)
 RMAKEFLAGS	+= FREERTOS_ARCH=$(FREERTOS_ARCH)
 endif
 
-# Compiler and linker flags
-
-CPUFLAGS	+= -D$(MCU) -D$(BOARDNAME) -DBOARDNAME='"$(BOARDNAME)"' -DMCUFAMILYNAME='"$(MCUFAMILYNAME)"'
-DEBUGFLAGS	?= -g
-OPTFLAGS	?= -O0
-CFLAGS		+= $(EARLYFLAGS)
-CFLAGS		+= -Wall -ffunction-sections
-CFLAGS		+= -I$(ARMSRC)/gcc/include -I$(MCUDIR)
-CFLAGS		+= $(OPTFLAGS) $(CPUFLAGS) $(BOARDFLAGS) $(CONSOLEFLAGS) $(IOFLAGS) $(CONFIGFLAGS) $(DEBUGFLAGS) $(EXTRAFLAGS)
-CXXFLAGS	+= -fno-use-cxa-atexit
-LDFLAGS		+= -nostartfiles -T$(MCULINKSCRIPT) -L$(MCUDIR) -l$(MCU) -lm -lstdc++
-LDFLAGS		+= -Wl,-Map=$*.map,--cref,--gc-sections $(EXTRAOBJS)
+###############################################################################
 
 # GDB definitions
 
@@ -71,19 +138,21 @@ GDBSERVERPORT	= 3333
 #GDBGUI		?= ddd --gdb --debugger
 #GDBFLAGS	?= -tui
 
+###############################################################################
+
 # These targets are not files
 
-.PHONY: ARM_mk_default ARM_mk_clean
-
-# These are the target suffixes
-
-.SUFFIXES: .asm .c .cpp .bin .dmp .elf .hex .o .s .S
+.PHONY: ARM_mk_default ARM_mk_lib ARM_mk_clean
 
 # Don't delete intermediate files
 
 .SECONDARY:
 
-# Now define some suffix rules
+###############################################################################
+
+# Define some suffix rules
+
+.SUFFIXES: .asm .c .cpp .bin .dmp .elf .hex .o .s .S
 
 .c.o:
 	$(CC) $(CFLAGS) -c -o $@ $<
@@ -113,48 +182,14 @@ GDBSERVERPORT	= 3333
 .S.o:
 	$(CC) $(CFLAGS) -c -o $@ -c $<
 
-# Define default target placeholder
-
-ARM_mk_default:
-	@echo ERROR: You must explicitly specify a make target!
-	@exit 1
-
-# Support for common library functions
-
-COMMON_DIR	= $(ARMSRC)/gcc/common
-include $(COMMON_DIR)/common.mk
-
-# Support for lightweight console I/O library
-
-ifeq ($(WITH_CONIO), yes)
-IOFLAGS += -DCONIO_STDIO
-endif
-
-# Support for floating point I/O
-
-ifeq ($(WITH_FLOATINPUT), yes)
-IOFLAGS	+= -DFLOATIO -u _scanf_float
-endif
-
-ifeq ($(WITH_FLOATOUTPUT), yes)
-IOFLAGS	+= -DFLOATIO -u _printf_float
-endif
-
-ifeq ($(WITH_FLOATIO), yes)
-IOFLAGS	+= -DFLOATIO -u _printf_float -u _scanf_float
-endif
-
-# Support for FreeRTOS
-
-ifeq ($(WITH_FREERTOS), yes)
-FREERTOS_DIR	= $(ARMSRC)/gcc/FreeRTOS
-include $(FREERTOS_DIR)/FreeRTOS.mk
-endif
+###############################################################################
 
 # Build the MCU dependent support library
 
 ARM_mk_lib:
 	$(MAKE) -C $(MCUDIR) lib$(MCU).a $(RMAKEFLAGS)
+
+###############################################################################
 
 # Clean out working files
 
@@ -163,7 +198,9 @@ ARM_mk_clean:
 	$(FIND) * -name '*.o' -exec rm {} ";"
 	cd $(MCUDIR) && rm -f *.a *.asm *.bin *.dmp *.elf *.hex *.log *.map *.stackdump *.tmp Default.ini
 	cd $(MCUDIR) && $(FIND) * -name '*.o' -exec rm {} ";"
-	cd $(MCUDIR) && $(MAKE) clean_$(MCU) $(CLEANTARGETS) $(RMAKEFLAGS)
+	cd $(MCUDIR) && $(MAKE) clean_$(MCU) $(CLEANTARGETS)
+
+###############################################################################
 
 # Include programming and debugging makefiles
 
@@ -173,7 +210,3 @@ include $(ARMSRC)/gcc/include/lpc21isp.mk
 include $(ARMSRC)/gcc/include/mbed.mk
 include $(ARMSRC)/gcc/include/openocd.mk
 include $(ARMSRC)/gcc/include/stlink.mk
-
-# Include MCU dependent makefile
-
-include $(MCUDIR)/$(MCUFAMILY).mk
