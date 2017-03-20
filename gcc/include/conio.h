@@ -53,6 +53,13 @@ _BEGIN_STD_C
 #undef gets
 #undef puts
 
+// Undefine macros from string.h
+
+#undef strncasecmp
+#undef strerror
+
+// Lightweight replacement function prototypes
+
 int cprintf(const char *format, ...);
 
 int csprintf(char *out, const char *format, ...);
@@ -65,9 +72,11 @@ void lightweight_exit(int status);
 
 char *lightweight_strerror(int e);
 
+int lightweight_strncasecmp(const char *s1, const char *s2, size_t n);
+
 extern int lightweight_errno;
 
-// Emulate C standard I/O
+// Emulate C standard I/O and friends
 
 #define fflush(x)
 #define getchar()	getch()
@@ -79,6 +88,7 @@ extern int lightweight_errno;
 #define sscanf(...)	csscanf(__VA_ARGS__)
 #define atoi(x)		lightweight_atoi(x)
 #define strerror(x)	lightweight_strerror(x)
+#define strncasecmp(x,y,z) lightweight_strncasecmp(x,y,z)
 #define errno		lightweight_errno
 #define errno_r		lightweight_errno
 #define exit(x)		lightweight_exit(x)

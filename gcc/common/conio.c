@@ -18,6 +18,8 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
+#include <ctype.h>
+#include <stdint.h>
 #include <string.h>
 
 #include <cpu.h>
@@ -75,6 +77,27 @@ char *lightweight_strerror(int e)
   return lightweight_strerrno_buf;
 }
 
+/* Lightweight alternative to newlib strncasecmp() */
+
+int lightweight_strncasecmp(const char *s1, const char *s2, size_t n)
+{
+  int i;
+  uint8_t c1, c2;
+
+  for (i = 0; i < n; i++)
+  {
+    c1 = _tolower(*s1++);
+    c2 = _tolower(*s2++);
+
+    if (c1 > c2)
+      return 1;
+    else if (c1 < c2)
+      return -1;
+  }
+
+  return 0;
+}
+
 /* Certain functions in libgcc call abort(), the newlib version of which */
 /* uses the heap and global reentrancy structure.  So we replace it with */
 /* our own trivial abort() implementation here.                          */
@@ -90,7 +113,7 @@ void abort(void)
 /* be consumed, and may cause the system to run out of memory.                */
 
 const char ___impure_ptr_warning[] __attribute__((section(".gnu.warning._impure_ptr"))) =
-  "\n\nDANGER: newlib reentrancy structure linked: >1K RAM consumed\n";
+  "\n\nDANGER: newlib reentrancy structure linked\n";
 
 const char ___sbrk_warning[] __attribute__((section(".gnu.warning._sbrk"))) =
   "\n\nDANGER: newlib is using the heap\n";
