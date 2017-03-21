@@ -1,4 +1,4 @@
-# Makefile definitions for building Free Pascal application programs
+# Makefile building Free Pascal application programs
 # for ARM microcontrollers
 
 # Copyright (C)2017, Philip Munts, President, Munts AM Corp.
@@ -26,11 +26,22 @@
 ARMSRC		?= $(HOME)/arm-mcu
 FREEPASCALSRC	?= $(ARMSRC)/freepascal
 
-include $(FREEPASCALSRC)/freepascal.mk
+# Include subordinate makefiles
+
+include $(FREEPASCALSRC)/include/freepascal.mk
+include $(ARMSRC)/gcc/include/stlink.mk
 
 FPC_FLAGS	+= -CpARMV7M -WpSTM32F103XB
 
-default: tst.bin
+# Build the firmware
+
+default: test_leds.bin
+
+# Install the firmware
+
+install: test_leds.flashstlink
+
+# Remove working files
 
 clean: freepascal_mk_clean
 
