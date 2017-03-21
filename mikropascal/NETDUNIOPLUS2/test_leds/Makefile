@@ -23,7 +23,7 @@
 # Override the following macros to build out of tree
 
 ARMSRC		?= $(HOME)/arm-mcu
-MIKROPASCALSRC	?= $(HOME)/arm-mcu/mikropascal
+MIKROPASCALSRC	?= $(ARMSRC)/mikropascal
 
 MCUFAMILY	= stm32f4
 BOARDNAME	= NETDUNIOPLUS2
@@ -43,5 +43,5 @@ clean: mikropascal_mk_clean
 # Include subordinate makefiles
 
 include $(ARMSRC)/gcc/include/ARM.mk
-include $(MIKROPASCALSRC)/mikropascal.mk
-sinclude$(HOME)/src/include/subversion.mk
+include $(MIKROPASCALSRC)/include/mikropascal.mk
+sinclude $(HOME)/src/include/subversion.mk

@@ -41,9 +41,6 @@ Count=0
 Count=0
 [Useses]
 Count=0
-[EXPANDED NODES]
-Node1=Sources
-Count=1
 [PROGRAMMER_OPTIONS]
 Value=SWD
 [PROGRAMMER_TYPE]

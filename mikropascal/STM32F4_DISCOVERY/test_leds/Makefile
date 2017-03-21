@@ -23,14 +23,14 @@
 # Override the following macros to build out of tree
 
 ARMSRC		?= $(HOME)/arm-mcu
-MIKROPASCALSRC	?= $(HOME)/arm-mcu/mikropascal
+MIKROPASCALSRC	?= $(ARMSRC)/mikropascal
 
 MCUFAMILY	= stm32f4
 BOARDNAME	= STM32F4_DISCOVERY
 
 # Compile the program
 
-build: test_leds.hex
+build: test_leds.bin
 
 # Write the program to code flash
 
@@ -43,5 +43,5 @@ clean: mikropascal_mk_clean
 # Include subordinate makefiles
 
 include $(ARMSRC)/gcc/include/ARM.mk
-include $(MIKROPASCALSRC)/mikropascal.mk
-sinclude$(HOME)/src/include/subversion.mk
+include $(MIKROPASCALSRC)/include/mikropascal.mk
+sinclude $(HOME)/src/include/subversion.mk

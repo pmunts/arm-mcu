@@ -18,7 +18,7 @@ Value=
 [FILES]
 Count=2
 File0=test_usbhid.mpas
-File1=USBdsc.mpas
+File1=..\..\USB-HID\common\USBdsc.mpas
 [BINARIES]
 Count=0
 [IMAGES]
@@ -45,9 +45,6 @@ Count=0
 Count=2
 File0=USB
 File1=String
-[EXPANDED NODES]
-Node1=Sources
-Count=1
 [PROGRAMMER_OPTIONS]
 Value=SWD
 [PROGRAMMER_TYPE]
