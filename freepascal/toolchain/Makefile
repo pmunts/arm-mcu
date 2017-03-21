@@ -41,9 +41,10 @@ BUILDOPTS	+= CROSSBINDIR=$(ARMTOOLS)/bin
 BUILDOPTS	+= BINUTILSPREFIX=$(CONFIGURENAME)-
 BUILDOPTS	+= INSTALL_PREFIX=$(INSTALLDIR)
 
-default: tarball.done
-
 ifeq ($(shell uname), Linux)
+DEFAULT		:= package.deb
+SED		:= sed
+TAR		:= tar
 OSNAME		?= unknown
 PKGNAME		:= fpc-$(CONFIGURENAME)
 PKGVER		:= $(shell date +%Y.%j)
@@ -52,6 +53,32 @@ PKGSUFFIX	:= $(PKGVER)-$(OSNAME)-$(PKGARCH)
 PKGDIR		:= $(PKGNAME)-$(PKGSUFFIX)
 PKGFILE		:= $(PKGNAME)-$(PKGSUFFIX).deb
 endif
+
+ifeq ($(shell uname), Darwin)
+DEFAULT		:= tarball.done
+SED		:= gsed
+TAR		:= gnutar
+PKGNAME		:= fpc-$(CONFIGURENAME)
+PKGSUFFIX	:= $(shell uname -s)-$(shell uname -r)-$(shell uname -m)
+PKGVER		:= $(shell date +%Y.%j)
+TARBALL		:= $(PKGNAME)-$(PKGVER)-$(PKGSUFFIX).tgz
+TAROWNER	:= --owner root
+TARGROUP	:= --group wheel
+endif
+
+ifeq ($(findstring CYGWIN, $(shell uname)), CYGWIN)
+DEFAULT		:= tarball.done
+SED		:= sed
+TAR		:= tar
+PKGNAME		:= fpc-$(CONFIGURENAME)
+PKGSUFFIX	:= $(shell uname -o)-$(shell uname -m)
+PKGVER		:= $(shell date +%Y.%j)
+TARBALL		:= $(PKGNAME)-$(PKGVER)-$(PKGSUFFIX).tgz
+TAROWNER	:=
+TARGROUP	:=
+endif
+
+default: $(DEFAULT)
 
 ################################################################################
 
@@ -65,7 +92,7 @@ $(FPC_DIST):
 # Unpack the source distribution
 
 src.done: $(FPC_DIST)
-	tar xzf $^
+	$(TAR) xzf $^
 	touch $@
 
 ################################################################################
@@ -79,44 +106,43 @@ build_subarch:
 	
 ################################################################################
 
-# Build and install the cross compiler (for all subarchitectures)
+# Build the cross compiler (for all subarchitectures)
 
 build.done: src.done
 	for S in $(SUBARCHS) ; do $(MAKE) build_subarch SUBARCH=$$S ; done
-ifeq ($(findstring CYGWIN, $(shell uname)), CYGWIN)
-	cp $(INSTALLDIR)/lib/fpc/$(FPC_VERSION)/ppcrossarm $(INSTALLDIR)/bin
-else
-	ln -s ../lib/fpc/$(FPC_VERSION)/ppcrossarm	$(INSTALLDIR)/bin/ppcrossarm
-endif
-	mkdir -p					$(INSTALLDIR)/lib/fpc/etc
-	install -cm 0644 fpc.cfg			$(INSTALLDIR)/lib/fpc/etc
-	sed -i 's#@@ARMTOOLS@@#$(ARMTOOLS)#g'		$(INSTALLDIR)/lib/fpc/etc/fpc.cfg
-	sed -i 's#@@CONFIGURENAME@@#$(CONFIGURENAME)#g'	$(INSTALLDIR)/lib/fpc/etc/fpc.cfg
+	touch $@
+
+################################################################################
+
+# Do final installation
+
+install.done: build.done
+	ln -s ../lib/fpc/$(FPC_VERSION)/ppcrossarm		$(INSTALLDIR)/bin/ppcrossarm
+	mkdir -p						$(INSTALLDIR)/lib/fpc/etc
+	install -cm 0644 fpc.cfg				$(INSTALLDIR)/lib/fpc/etc
+	$(SED) -i 's#@@ARMTOOLS@@#$(ARMTOOLS)#g'		$(INSTALLDIR)/lib/fpc/etc/fpc.cfg
+	$(SED) -i 's#@@CONFIGURENAME@@#$(CONFIGURENAME)#g'	$(INSTALLDIR)/lib/fpc/etc/fpc.cfg
 	touch $@
 
 ################################################################################
 
 # Create tarball
 
-tarball.done: build.done
-ifeq ($(findstring CYGWIN, $(shell uname)), CYGWIN)
-	tar czf $(TARBALL) $(INSTALLDIR) --mode=ugo-w
-else
-	tar czf $(TARBALL) $(INSTALLDIR) --mode=ugo-w --owner=root --group=root
-endif
+tarball.done: install.done
+	$(TAR) czf $(TARBALL) fpc-$(CONFIGURENAME) --mode=ugo-w $(TAROWNER) $(TARGROUP)
 	touch $@
 
 ################################################################################
 
 # Create Debian package
 
-package.deb: build.done
+package.deb: install.done
 	mkdir -p					$(PKGDIR)/DEBIAN
 	install -cm 0644 control			$(PKGDIR)/DEBIAN
-	sed -i s/@@NAME@@/$(PKGNAME)/g			$(PKGDIR)/DEBIAN/control
-	sed -i s/@@ARCH@@/$(PKGARCH)/g			$(PKGDIR)/DEBIAN/control
-	sed -i s/@@VERSION@@/$(PKGVER)/g		$(PKGDIR)/DEBIAN/control
-	sed -i s/@@BOARDNAME@@/$(BOARDBASE)/g		$(PKGDIR)/DEBIAN/control
+	$(SED) -i s/@@NAME@@/$(PKGNAME)/g			$(PKGDIR)/DEBIAN/control
+	$(SED) -i s/@@ARCH@@/$(PKGARCH)/g			$(PKGDIR)/DEBIAN/control
+	$(SED) -i s/@@VERSION@@/$(PKGVER)/g		$(PKGDIR)/DEBIAN/control
+	$(SED) -i s/@@BOARDNAME@@/$(BOARDBASE)/g		$(PKGDIR)/DEBIAN/control
 	mkdir -p					$(PKGDIR)/usr/local
 	cp -R -P -p $(INSTALLDIR)			$(PKGDIR)/usr/local
 	chmod -R ugo-w					$(PKGDIR)/usr/local/*
