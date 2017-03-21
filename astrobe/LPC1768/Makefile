@@ -1,4 +1,4 @@
-# Makefile definitions for compiling Oberon for Cortex-M3 programs
+# Makefile for compiling Oberon for Cortex-M3 programs
 
 # Copyright (C)2014-2017, Philip Munts, President, Munts AM Corp.
 #
@@ -23,14 +23,19 @@
 # Override the following macros to build out of tree
 
 ARMSRC		?= $(HOME)/arm-mcu
-ASTROBESRC	?= $(HOME)/arm-mcu/astrobe
+ASTROBESRC	?= $(ARMSRC)/astrobe
 
 MCU		= LPC1768
 BOARDNAME	= MBED_LPC1768
 
+# Include subordinate makefiles
+
+include		$(ASTROBESRC)/include/astrobe-m3.mk
+include		$(ARMSRC)/gcc/include/mbed.mk
+
 # Build the firmware
 
-build: test_leds.bin
+default: test_leds.bin
 
 # Write the firmware to code flash
 
@@ -39,8 +44,3 @@ install: test_leds.flashmbed
 # Remove working files
 
 clean: astrobe_mk_clean
-
-# Include subordinate makefiles
-
-include		$(ASTROBESRC)/astrobe-m3.mk
-include		$(ARMSRC)/gcc/include/mbed.mk

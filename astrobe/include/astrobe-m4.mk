@@ -1,4 +1,4 @@
-# Makefile definitions for compiling Oberon for Cortex-M3 programs
+# Makefile definitions for compiling Oberon for Cortex-M4 programs
 
 # Copyright (C)2014-2017, Philip Munts, President, Munts AM Corp.
 #
@@ -24,18 +24,16 @@
 
 .SECONDARY:
 
-ASTROBEBINDIR	?= C:/PROGRA~2/AstrobeM3/
+ASTROBEBINDIR	?= "$(PROGRAMFILES)/AstrobeM4 Professional Edition"/
 
 ASTROBECOMPILE	= $(ASTROBEBINDIR)AstrobeCompile
 ASTROBEBUILD	= $(ASTROBEBINDIR)AstrobeBuild
 ASTROBELINK	= $(ASTROBEBINDIR)AstrobeLink
-ASTROBECONFIG	= $(ASTROBESRC)/$(MCU)/astrobe.ini
+ASTROBECONFIG	= astrobe.ini
 
 # Default make target
 
-astrobe_mk_default:
-	@echo ERROR: You must explicitly specify a make target!
-	@exit 1
+astrobe_mk_default: default
 
 # Define a pattern rule to compile an Oberon source program
 

@@ -1,4 +1,4 @@
-# Makefile definitions for compiling Oberon for Cortex-Mx programs
+# Makefile definitions for compiling Oberon for Cortex-M3 programs
 
 # Copyright (C)2014-2017, Philip Munts, President, Munts AM Corp.
 #
@@ -20,26 +20,39 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-# Override the following macros to build out of tree
+# Keep intermediate files
 
-ARMSRC		?= $(HOME)/arm-mcu
-ASTROBESRC	?= $(HOME)/arm-mcu/astrobe
+.SECONDARY:
 
-MCU		= UNKNOWN
-BOARDNAME	= UNKNOWN
+ASTROBEBINDIR	?= "$(PROGRAMFILES)/AstrobeM3 Professional Edition"/
 
-default: astrobe_mk_default
+ASTROBECOMPILE	= $(ASTROBEBINDIR)AstrobeCompile
+ASTROBEBUILD	= $(ASTROBEBINDIR)AstrobeBuild
+ASTROBELINK	= $(ASTROBEBINDIR)AstrobeLink
+ASTROBECONFIG	= astrobe.ini
+
+# Default make target
+
+astrobe_mk_default: default
+
+# Define a pattern rule to compile an Oberon source program
+
+%.arm: %.mod
+	$(ASTROBECOMPILE) $(ASTROBECONFIG) $<
+
+# Define a pattern rule to compile an Oberon main module source program to binary flash image
+
+%.bin: %.mod
+	$(ASTROBEBUILD) $(ASTROBECONFIG) ./$<
+	$(ASTROBELINK) $(ASTROBECONFIG) $<
+
+# Define a pattern rule to compile an Oberon main module source program to Intel hex flash image
+
+%.hex: %.mod
+	$(ASTROBEBUILD) $(ASTROBECONFIG) ./$<
+	$(ASTROBELINK) $(ASTROBECONFIG) $<
 
 # Remove working files
 
-clean: astrobe_mk_clean
-
-# Include subordinate makefiles
-
-include		$(ASTROBESRC)/astrobe-mx.mk
-include		$(ARMSRC)/gcc/include/dfu.mk
-include		$(ARMSRC)/gcc/include/jlink.mk
-include		$(ARMSRC)/gcc/include/lpc21isp.mk
-include		$(ARMSRC)/gcc/include/mbed.mk
-include		$(ARMSRC)/gcc/include/openocd.mk
-include		$(ARMSRC)/gcc/include/stlink.mk
+astrobe_mk_clean:
+	rm -f *.arm *.bin *.hex *.lst *.map *.ref *.smb
