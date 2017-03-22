@@ -885,7 +885,7 @@ void USART1_IRQHandler(void)
     if (bufptr->count == 0)
     {
       // Transmit buffer is empty; disable interrupt
-      USART1_TXEIE = 0;	
+      USART1_TXEIE = 0;
     }
     else
     {
@@ -932,7 +932,7 @@ void USART2_IRQHandler(void)
     if (bufptr->count == 0)
     {
       // Transmit buffer is empty; disable interrupt
-      USART2_TXEIE = 0;	
+      USART2_TXEIE = 0;
     }
     else
     {
@@ -979,7 +979,7 @@ void USART3_IRQHandler(void)
     if (bufptr->count == 0)
     {
       // Transmit buffer is empty; disable interrupt
-      USART3_TXEIE = 0;	
+      USART3_TXEIE = 0;
     }
     else
     {
@@ -1026,7 +1026,7 @@ void UART4_IRQHandler(void)
     if (bufptr->count == 0)
     {
       // Transmit buffer is empty; disable interrupt
-      UART4_TXEIE = 0;	
+      UART4_TXEIE = 0;
     }
     else
     {
@@ -1073,7 +1073,7 @@ void UART5_IRQHandler(void)
     if (bufptr->count == 0)
     {
       // Transmit buffer is empty; disable interrupt
-      UART5_TXEIE = 0;	
+      UART5_TXEIE = 0;
     }
     else
     {
@@ -1120,7 +1120,7 @@ void USART6_IRQHandler(void)
     if (bufptr->count == 0)
     {
       // Transmit buffer is empty; disable interrupt
-      USART6_TXEIE = 0;	
+      USART6_TXEIE = 0;
     }
     else
     {

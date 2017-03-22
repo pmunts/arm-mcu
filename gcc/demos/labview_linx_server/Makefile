@@ -42,7 +42,7 @@ include $(ARMSRC)/gcc/include/ARM.mk
 
 linx_server.elf: $(SOURCES)
 	$(MAKE) ARM_mk_lib
-	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)	
+	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
 install: linx_server.flashstlink
 

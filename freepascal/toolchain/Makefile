@@ -103,7 +103,7 @@ build_subarch:
 	$(MAKE) -C $(FPC_SRCDIR) $(BUILDOPTS) clean installbase SUBARCH=$(SUBARCH)
 	mkdir -p $(RTLDIR)/$(SUBARCH)
 	mv $(RTLDIR)/*.* $(RTLDIR)/$(SUBARCH)
-	
+
 ################################################################################
 
 # Build the cross compiler (for all subarchitectures)

@@ -135,7 +135,7 @@ typedef struct
        uint32_t RESERVED1[1];
   __IO uint32_t SYSRESSTAT;             /*!< Offset: 0x030 System reset status Register (R/ ) */
        uint32_t RESERVED2[3];
-  __IO uint32_t SYSPLLCLKSEL;           /*!< Offset: 0x040 System PLL clock source select (R/W) */	
+  __IO uint32_t SYSPLLCLKSEL;           /*!< Offset: 0x040 System PLL clock source select (R/W) */
   __IO uint32_t SYSPLLCLKUEN;           /*!< Offset: 0x044 System PLL clock source update enable (R/W) */
        uint32_t RESERVED3[10];
 
@@ -523,7 +523,7 @@ typedef struct
 #define LPC_CAN_BASE          (LPC_APB0_BASE + 0x50000)
 #define LPC_SSP1_BASE         (LPC_APB0_BASE + 0x58000)
 
-/* AHB peripherals                                                            */	
+/* AHB peripherals                                                            */
 #define LPC_GPIO_BASE         (LPC_AHB_BASE  + 0x00000)
 #define LPC_GPIO0_BASE        (LPC_AHB_BASE  + 0x00000)
 #define LPC_GPIO1_BASE        (LPC_AHB_BASE  + 0x10000)
