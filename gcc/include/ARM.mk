@@ -198,7 +198,7 @@ ARM_mk_clean:
 	$(FIND) * -name '*.o' -exec rm {} ";"
 	cd $(MCUDIR) && rm -f *.a *.asm *.bin *.dmp *.elf *.hex *.log *.map *.stackdump *.tmp Default.ini
 	cd $(MCUDIR) && $(FIND) * -name '*.o' -exec rm {} ";"
-	cd $(MCUDIR) && $(MAKE) clean_$(MCU) $(CLEANTARGETS)
+	cd $(MCUDIR) && $(MAKE) clean_$(MCU) $(CLEANTARGETS) $(RMAKEFLAGS)
 
 ###############################################################################
 
