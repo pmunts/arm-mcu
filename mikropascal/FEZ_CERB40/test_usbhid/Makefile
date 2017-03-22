@@ -25,8 +25,8 @@
 ARMSRC		?= $(HOME)/arm-mcu
 MIKROPASCALSRC	?= $(ARMSRC)/mikropascal
 
-MCUFAMILY	= stm32f4
-BOARDNAME	= FEZ_CERB40
+FLASHWRITEADDR	?= 0x08000000
+TEXTBASE	?= 0x00000000
 
 # Compile the program
 
@@ -34,7 +34,7 @@ build: test_usbhid.bin
 
 # Write the program to code flash
 
-install: test_usbhid.flashdfu
+install: test_usbhid.flashstlink
 
 # Remove working files
 
@@ -42,6 +42,6 @@ clean: mikropascal_mk_clean
 
 # Include subordinate makefiles
 
-include $(ARMSRC)/gcc/include/ARM.mk
 include $(MIKROPASCALSRC)/include/mikropascal.mk
+include $(ARMSRC)/gcc/include/stlink.mk
 sinclude $(HOME)/src/include/subversion.mk
