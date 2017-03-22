@@ -151,7 +151,7 @@ int adc_init(void *subsystem, unsigned int channel)
         GPIOA->MODER |= 3 << 4;
         GPIOA->PUPDR &= ~(3 << 4);
         break;
-  
+
       case 3 :	// PA3
         RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN;
         GPIOA->MODER |= 3 << 6;

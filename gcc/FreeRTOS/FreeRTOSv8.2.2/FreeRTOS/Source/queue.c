@@ -1219,8 +1219,8 @@ Queue_t * const pxQueue = ( Queue_t * ) xQueue;
 	if the item size is not 0. */
 	configASSERT( pxQueue->uxItemSize == 0 );
 
-	/* Normally a mutex would not be given from an interrupt, especially if 
-	there is a mutex holder, as priority inheritance makes no sense for an 
+	/* Normally a mutex would not be given from an interrupt, especially if
+	there is a mutex holder, as priority inheritance makes no sense for an
 	interrupts, only tasks. */
 	configASSERT( !( ( pxQueue->uxQueueType == queueQUEUE_IS_MUTEX ) && ( pxQueue->pxMutexHolder != NULL ) ) );
 

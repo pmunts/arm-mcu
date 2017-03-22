@@ -38,7 +38,7 @@ int main(void)
   // Added items to the hash table
 
   for (i = 0; i < 100; i++)
-  { 
+  {
     AddElement(i, (uint8_t *) (0x10000000 + i));
   }
 

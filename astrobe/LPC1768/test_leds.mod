@@ -30,7 +30,7 @@ CONST
   LED2_mask = GPIO.Mask52;
   LED3_mask = GPIO.Mask53;
   LED4_mask = GPIO.Mask55;
-  
+
   LED1_dir  = GPIO.Dir50;
   LED2_dir  = GPIO.Dir52;
   LED3_dir  = GPIO.Dir53;
@@ -40,13 +40,13 @@ CONST
   LED2      = GPIO.Pin52;
   LED3      = GPIO.Pin53;
   LED4      = GPIO.Pin55;
-  
+
 VAR
   d1 : BOOLEAN;
   d2 : BOOLEAN;
   d3 : BOOLEAN;
   d4 : BOOLEAN;
-  
+
 BEGIN
 
   (* Configure GPIO pins for LED's *)
@@ -55,12 +55,12 @@ BEGIN
   SYSTEM.PUT(LED2_mask, GPIO.UNMASKED);
   SYSTEM.PUT(LED3_mask, GPIO.UNMASKED);
   SYSTEM.PUT(LED4_mask, GPIO.UNMASKED);
-  
+
   SYSTEM.PUT(LED1_dir, GPIO.OUTPUT);
   SYSTEM.PUT(LED2_dir, GPIO.OUTPUT);
   SYSTEM.PUT(LED3_dir, GPIO.OUTPUT);
   SYSTEM.PUT(LED4_dir, GPIO.OUTPUT);
-  
+
   SYSTEM.PUT(LED1, GPIO.HIGH);
   SYSTEM.PUT(LED2, GPIO.LOW);
   SYSTEM.PUT(LED3, GPIO.LOW);
@@ -73,12 +73,12 @@ BEGIN
     SYSTEM.GET(LED2, d2);
     SYSTEM.GET(LED3, d3);
     SYSTEM.GET(LED4, d4);
-    
+
     SYSTEM.PUT(LED1, d4);
     SYSTEM.PUT(LED2, d1);
     SYSTEM.PUT(LED3, d2);
     SYSTEM.PUT(LED4, d3);
-    
+
     Timer.MSecDelay(300);
   END
 END test_leds.

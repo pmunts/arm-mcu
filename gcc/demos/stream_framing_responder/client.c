@@ -26,9 +26,9 @@ void SendCommand(int fd, uint32_t sequence, uint32_t command, uint32_t payload)
 
   printf("Command:  sequence=%d command=%d payload=%d\n",
     ntohl(cmd.sequence), ntohl(cmd.command), ntohl(cmd.payload));
- 
+
   STREAM_encode_frame(&cmd, sizeof(cmd), cmdbuf, sizeof(cmdbuf), &cmdlen, &error);
- 
+
   if (error)
   {
     fprintf(stderr, "ERROR: STREAM_encode_frame() failed, %s\n", strerror(error));

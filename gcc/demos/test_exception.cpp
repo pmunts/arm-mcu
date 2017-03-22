@@ -49,7 +49,7 @@ int main(void)
 
 // Display startup banner
 
-  cout << CLEARSCREEN; 
+  cout << CLEARSCREEN;
   cout << MCUFAMILYNAME;
   cout << " C++ Exception Test ";
   cout << "(" << __DATE__ << " " <<  __TIME__ << ")";

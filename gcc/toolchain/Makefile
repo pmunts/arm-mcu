@@ -165,7 +165,7 @@ $(LIBICONVDIST):
 
 $(GCCDIST):
 	wget -nv -P $(TEMP) $(GCCURL)
- 
+
 # Compile gcc
 
 gcc.done: binutils.done

@@ -16,8 +16,8 @@
  * or FITNESS FOR A PARTICULAR PURPOSE.                                     *
  *                                                                          *
  *                                                                          *
- *                                                                          * 
- *                                                                          * 
+ *                                                                          *
+ *                                                                          *
  *                                                                          *
  * You should have received a copy of the GNU General Public License and    *
  * a copy of the GCC Runtime Library Exception along with this program;     *

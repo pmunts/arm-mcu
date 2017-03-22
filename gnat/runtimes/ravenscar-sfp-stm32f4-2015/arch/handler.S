@@ -154,14 +154,14 @@ __gnat_irq_trap:
 0:	b	0b
 
 	.size __gnat_irq_trap, . - __gnat_irq_trap
-  
+
 	.thumb_func
 .weak ____gnat_sv_call_trap
 .type __gnat_sv_call_trap, %function
 __gnat_sv_call_trap:
 0:	b	0b
 	.size	__gnat_sv_call_trap, . - __gnat_sv_call_trap
-  
+
 	.thumb_func
 .weak __gnat_pend_sv_trap
 .type __gnat_pend_sv_trap, %function

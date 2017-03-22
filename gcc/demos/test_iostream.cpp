@@ -39,7 +39,7 @@ int main(void)
   cpu_init(DEFAULT_CPU_FREQ);
   serial_stdio((char *) CONSOLE_PORT);
 
-  cout << CLEARSCREEN; 
+  cout << CLEARSCREEN;
   cout << MCUFAMILYNAME;
   cout << " C++ iostream Test ";
   cout << "(" << __DATE__ << " " <<  __TIME__ << ")";
@@ -79,7 +79,7 @@ int main(void)
 
     cout << "You entered:           " << x << " and " << y << endl;
 
-    if ((x == 0) && (y == 0)) break;    
+    if ((x == 0) && (y == 0)) break;
   }
 
   assert(false);

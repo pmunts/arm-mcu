@@ -35,7 +35,7 @@
 #else
 #define MAX_GPIO_PORTS		4
 #endif
-  
+
 #define PINS_PER_GPIO_PORT	16
 
 static GPIO_TypeDef * const PORTS[] =

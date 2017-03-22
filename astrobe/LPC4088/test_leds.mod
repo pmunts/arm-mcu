@@ -37,33 +37,33 @@ CONST
   LED3_dir  = GPIO.Dir45;
   LED4_dir  = GPIO.Dir83;
   SW2_dir   = GPIO.Dir74;
-  
+
   LED1      = GPIO.Pin50;
   LED2      = GPIO.Pin13;
   LED3      = GPIO.Pin45;
   LED4      = GPIO.Pin83;
   SW2       = GPIO.Pin74;
-  
+
 VAR
   d1 : BOOLEAN;
   d2 : BOOLEAN;
   d3 : BOOLEAN;
   d4 : BOOLEAN;
   s2 : BOOLEAN;
-  
+
 BEGIN
   SYSTEM.PUT(LED1_mask, GPIO.UNMASKED);
   SYSTEM.PUT(LED2_mask, GPIO.UNMASKED);
   SYSTEM.PUT(LED3_mask, GPIO.UNMASKED);
   SYSTEM.PUT(LED4_mask, GPIO.UNMASKED);
   SYSTEM.PUT(SW2_mask, GPIO.UNMASKED);
-  
+
   SYSTEM.PUT(LED1_dir, GPIO.OUTPUT);
   SYSTEM.PUT(LED2_dir, GPIO.OUTPUT);
   SYSTEM.PUT(LED3_dir, GPIO.OUTPUT);
   SYSTEM.PUT(LED4_dir, GPIO.OUTPUT);
   SYSTEM.PUT(SW2_dir, GPIO.INPUT);
-  
+
   SYSTEM.PUT(LED1, GPIO.LOW);  (* Active low *)
   SYSTEM.PUT(LED2, GPIO.HIGH); (* Active low *)
   SYSTEM.PUT(LED3, GPIO.LOW);  (* Active high *)
@@ -75,16 +75,16 @@ BEGIN
     SYSTEM.GET(LED3, d3);
     SYSTEM.GET(LED4, d4);
     SYSTEM.GET(SW2, s2);
-    
+
     SYSTEM.PUT(LED1, ~d3);
     SYSTEM.PUT(LED2, d1);
     SYSTEM.PUT(LED4, ~d2);
     SYSTEM.PUT(LED3, d4);
-    
+
     IF s2 THEN
       Timer.MSecDelay(100)
     ELSE
       Timer.MSecDelay(50);
-    END  
+    END
   END
 END test_leds.
