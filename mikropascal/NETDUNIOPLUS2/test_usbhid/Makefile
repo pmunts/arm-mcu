@@ -34,7 +34,7 @@ build: test_usbhid.bin
 
 # Write the program to code flash
 
-install: test_usbhid.flashdfu
+install: test_usbhid.flashstlink
 
 # Remove working files
 
@@ -43,5 +43,5 @@ clean: mikropascal_mk_clean
 # Include subordinate makefiles
 
 include $(MIKROPASCALSRC)/include/mikropascal.mk
-include $(ARMSRC)/gcc/include/dfu.mk
+include $(ARMSRC)/gcc/include/stlink.mk
 sinclude $(HOME)/src/include/subversion.mk
