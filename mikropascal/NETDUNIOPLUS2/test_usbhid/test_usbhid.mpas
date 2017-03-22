@@ -28,11 +28,21 @@ VAR
   readbuf  : string[65];
   writebuf : string[65];
 
+  PROCEDURE USBInterrupt(); IV IVT_INT_OTG_FS;
+
+  BEGIN
+    USB_Interrupt_Proc();
+  END;
+
 BEGIN
 
   { Initialize USB HID library }
 
   HID_Enable(@readbuf, @writebuf);
+
+  { Enable USB interrupt }
+
+  NVIC_IntEnable(IVT_INT_OTG_FS);
 
   { Configure LED outputs }
 

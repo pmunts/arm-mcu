@@ -9,7 +9,7 @@ const HID_OUTPUT_REPORT_BYTES : char = 64;
 const EP_IN_INTERVAL : char = 1;
 const EP_OUT_INTERVAL : char = 1;
 
-const USB_INTERRUPT : char = 0;
+const USB_INTERRUPT : char = 1;
 const USB_TRANSFER_TYPE : char = 0x03;         //0x03 Interrupt
 const USB_HID_EP : char = 1;
 const USB_HID_RPT_SIZE : char = 33;
@@ -38,7 +38,7 @@ const device_dsc : device_descriptor = (
   0x00,                   // bDeviceClass
   0x00,                   // bDeviceSubClass
   0x00,                   // bDeviceProtocol
-  64,                     // bMaxPacketSize0
+  8,                      // bMaxPacketSize0
   USB_VENDOR_ID,          // idVendor
   USB_PRODUCT_ID,         // idProduct
   0x0001,                 // bcdDevice
@@ -98,7 +98,7 @@ const configDescriptor1 : array[41] of byte = (
 );
 
 type hid_report_descriptor = record
-  report : array[USB_HID_RPT_SIZE] of char;
+  report : array[USB_HID_RPT_SIZE] of byte;
 end;
 
 const hid_rpt_desc : hid_report_descriptor = (
@@ -154,24 +154,23 @@ type str3 = record
   bDscType : char;
   str : array[14] of word;
 end;
-
 const strd3 : str3 = (
   30,           //sizeof this descriptor string
   0x03,
   ('U','S','B',' ','H','I','D',' ','D','e','v','i','c','e')
 );
 
-var USB_config_dsc_ptr : array[1] of ^const char;
+var USB_config_dsc_ptr : array[1] of ^const byte;
 
-var USB_string_dsc_ptr : array[3] of ^const char;
+var USB_string_dsc_ptr : array[3] of ^const byte;
 
 procedure USB_Init_desc();
 implementation
   procedure USB_Init_desc();
   begin
     USB_config_dsc_ptr[0] := @configDescriptor1;
-    USB_string_dsc_ptr[0] := ^const char(@strd1);
-    USB_string_dsc_ptr[1] := ^const char(@strd2);
-    USB_string_dsc_ptr[2] := ^const char(@strd3);
+    USB_string_dsc_ptr[0] := ^const byte(@strd1);
+    USB_string_dsc_ptr[1] := ^const byte(@strd2);
+    USB_string_dsc_ptr[2] := ^const byte(@strd3);
   end;
 end.
