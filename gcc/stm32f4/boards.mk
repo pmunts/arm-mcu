@@ -62,7 +62,7 @@ BOARDFLAGS	+= -DLED3_PIN=GPIOPIN62 -DLED3_OUTPUT=GPIOPIN62OUT
 BOARDFLAGS	+= -DLED4_PIN=GPIOPIN63 -DLED4_OUTPUT=GPIOPIN63OUT
 # Auxiliary serial port is USART3 (Discovery Shield Mikrobus sockets 1 or 2)
 BOARDFLAGS	+= -DAUX_PORT='"com3:115200,n,8,1"'
-# Auxiliary serial port is USART3 (Discovery Shield Mikrobus sockets 3 or 4)
+# Auxiliary serial port is USART6 (Discovery Shield Mikrobus sockets 3 or 4)
 #BOARDFLAGS	+= -DAUX_PORT='"com6:115200,n,8,1"'
 CONSOLEPORT	?= com2:115200,n,8,1
 CONSOLEFLAGS	?= -DCONSOLE_SERIAL -DCONSOLE_PORT='"$(CONSOLEPORT)"'
