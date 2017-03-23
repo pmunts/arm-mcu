@@ -53,7 +53,7 @@ BEGIN
   LED := false;
 
   { Event loop }
- 
+
   WHILE True DO
     BEGIN
 

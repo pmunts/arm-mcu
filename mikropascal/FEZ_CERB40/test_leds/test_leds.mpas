@@ -24,7 +24,7 @@ PROGRAM test_leds;
 
 VAR
   LED        : sbit AT GPIOB_ODR.B5;
-  
+
 BEGIN
 
   { Configure LED outputs }

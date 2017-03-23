@@ -62,7 +62,7 @@ BEGIN
   LED4 := false;
 
   { Event loop }
- 
+
   WHILE True DO
     BEGIN
 

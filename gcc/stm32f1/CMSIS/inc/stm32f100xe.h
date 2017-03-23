@@ -4,15 +4,15 @@
   * @author  MCD Application Team
   * @version V4.0.0
   * @date    16-December-2014
-  * @brief   CMSIS Cortex-M3 Device Peripheral Access Layer Header File. 
-  *          This file contains all the peripheral register's definitions, bits 
-  *          definitions and memory mapping for STM32F1xx devices.            
-  *            
+  * @brief   CMSIS Cortex-M3 Device Peripheral Access Layer Header File.
+  *          This file contains all the peripheral register's definitions, bits
+  *          definitions and memory mapping for STM32F1xx devices.
+  *
   *          This file contains:
   *           - Data structures and the address mapping for all peripherals
   *           - Peripheral's registers declarations and bits definition
   *           - Macros to access peripheral’s registers hardware
-  *  
+  *
   ******************************************************************************
   * @attention
   *
@@ -51,19 +51,19 @@
 /** @addtogroup stm32f100xe
   * @{
   */
-    
+
 #ifndef __STM32F100xE_H
 #define __STM32F100xE_H
 
 #ifdef __cplusplus
  extern "C" {
-#endif 
+#endif
 
 /** @addtogroup Configuration_section_for_CMSIS
   * @{
   */
 /**
-  * @brief Configuration of the Cortex-M3 Processor and Core Peripherals 
+  * @brief Configuration of the Cortex-M3 Processor and Core Peripherals
  */
  #define __MPU_PRESENT             0      /*!< Other STM32 devices does not provide an MPU  */
 #define __CM3_REV                 0x0200  /*!< Core Revision r2p0                           */
@@ -79,8 +79,8 @@
   */
 
 /**
- * @brief STM32F10x Interrupt Number Definition, according to the selected device 
- *        in @ref Library_configuration_section 
+ * @brief STM32F10x Interrupt Number Definition, according to the selected device
+ *        in @ref Library_configuration_section
  */
 
  /*!< Interrupt Number Definition */
@@ -150,8 +150,8 @@ typedef enum
   DMA2_Channel3_IRQn          = 58,     /*!< DMA2 Channel 3 global Interrupt                      */
   DMA2_Channel4_5_IRQn        = 59,     /*!< DMA2 Channel 4 and Channel 5 global Interrupt        */
   DMA2_Channel4_IRQn          = 59,     /*!< DMA2 Channel 4 global Interrupt                      */
-  DMA2_Channel5_IRQn          = 60      /*!< DMA2 Channel 5 global Interrupt (DMA2 Channel 5 is 
-                                             mapped at position 60 only if the MISC_REMAP bit in 
+  DMA2_Channel5_IRQn          = 60      /*!< DMA2 Channel 5 global Interrupt (DMA2 Channel 5 is
+                                             mapped at position 60 only if the MISC_REMAP bit in
                                              the AFIO_MAPR2 register is set)                      */
 } IRQn_Type;
 
@@ -166,10 +166,10 @@ typedef enum
 
 /** @addtogroup Peripheral_registers_structures
   * @{
-  */   
+  */
 
-/** 
-  * @brief Analog to Digital Converter  
+/**
+  * @brief Analog to Digital Converter
   */
 
 typedef struct
@@ -196,8 +196,8 @@ typedef struct
   __IO uint32_t DR;
 } ADC_TypeDef;
 
-/** 
-  * @brief Backup Registers  
+/**
+  * @brief Backup Registers
   */
 
 typedef struct
@@ -250,9 +250,9 @@ typedef struct
   __IO uint32_t DR41;
   __IO uint32_t DR42;
 } BKP_TypeDef;
-  
 
-/** 
+
+/**
   * @brief Consumer Electronics Control (CEC)
   */
 typedef struct
@@ -263,21 +263,21 @@ typedef struct
   __IO uint32_t ESR;
   __IO uint32_t CSR;
   __IO uint32_t TXD;
-  __IO uint32_t RXD;  
+  __IO uint32_t RXD;
 } CEC_TypeDef;
 
-/** 
-  * @brief CRC calculation unit 
+/**
+  * @brief CRC calculation unit
   */
 
 typedef struct
 {
   __IO uint32_t DR;           /*!< CRC Data register,                           Address offset: 0x00 */
   __IO uint32_t IDR;          /*!< CRC Independent data register,               Address offset: 0x04 */
-  __IO uint32_t CR;           /*!< CRC Control register,                        Address offset: 0x08 */ 
+  __IO uint32_t CR;           /*!< CRC Control register,                        Address offset: 0x08 */
 } CRC_TypeDef;
 
-/** 
+/**
   * @brief Digital to Analog Converter
   */
 
@@ -299,7 +299,7 @@ typedef struct
   __IO uint32_t SR;
 } DAC_TypeDef;
 
-/** 
+/**
   * @brief Debug MCU
   */
 
@@ -309,7 +309,7 @@ typedef struct
   __IO uint32_t CR;
 }DBGMCU_TypeDef;
 
-/** 
+/**
   * @brief DMA Controller
   */
 
@@ -329,7 +329,7 @@ typedef struct
 
 
 
-/** 
+/**
   * @brief External Interrupt/Event Controller
   */
 
@@ -343,7 +343,7 @@ typedef struct
   __IO uint32_t PR;
 } EXTI_TypeDef;
 
-/** 
+/**
   * @brief FLASH Registers
   */
 
@@ -360,10 +360,10 @@ typedef struct
   __IO uint32_t WRPR;
 } FLASH_TypeDef;
 
-/** 
+/**
   * @brief Option Bytes Registers
   */
-  
+
 typedef struct
 {
   __IO uint16_t RDP;
@@ -376,25 +376,25 @@ typedef struct
   __IO uint16_t WRP3;
 } OB_TypeDef;
 
-/** 
+/**
   * @brief Flexible Static Memory Controller
   */
 
 typedef struct
 {
-  __IO uint32_t BTCR[8];   
-} FSMC_Bank1_TypeDef; 
+  __IO uint32_t BTCR[8];
+} FSMC_Bank1_TypeDef;
 
-/** 
+/**
   * @brief Flexible Static Memory Controller Bank1E
   */
-  
+
 typedef struct
 {
   __IO uint32_t BWTR[7];
 } FSMC_Bank1E_TypeDef;
 
-/** 
+/**
   * @brief General Purpose I/O
   */
 
@@ -409,7 +409,7 @@ typedef struct
   __IO uint32_t LCKR;
 } GPIO_TypeDef;
 
-/** 
+/**
   * @brief Alternate Function I/O
   */
 
@@ -419,9 +419,9 @@ typedef struct
   __IO uint32_t MAPR;
   __IO uint32_t EXTICR[4];
   uint32_t RESERVED0;
-  __IO uint32_t MAPR2;  
+  __IO uint32_t MAPR2;
 } AFIO_TypeDef;
-/** 
+/**
   * @brief Inter Integrated Circuit Interface
   */
 
@@ -438,7 +438,7 @@ typedef struct
   __IO uint32_t TRISE;
 } I2C_TypeDef;
 
-/** 
+/**
   * @brief Independent WATCHDOG
   */
 
@@ -450,7 +450,7 @@ typedef struct
   __IO uint32_t SR;           /*!< Status register,                             Address offset: 0x0C */
 } IWDG_TypeDef;
 
-/** 
+/**
   * @brief Power Control
   */
 
@@ -460,7 +460,7 @@ typedef struct
   __IO uint32_t CSR;
 } PWR_TypeDef;
 
-/** 
+/**
   * @brief Reset and Clock Control
   */
 
@@ -482,7 +482,7 @@ typedef struct
   __IO uint32_t CFGR2;
 } RCC_TypeDef;
 
-/** 
+/**
   * @brief Real-Time Clock
   */
 
@@ -500,7 +500,7 @@ typedef struct
   __IO uint32_t ALRL;
 } RTC_TypeDef;
 
-/** 
+/**
   * @brief SD host Interface
   */
 
@@ -528,7 +528,7 @@ typedef struct
   __IO uint32_t FIFO;
 } SDIO_TypeDef;
 
-/** 
+/**
   * @brief Serial Peripheral Interface
   */
 
@@ -572,10 +572,10 @@ typedef struct
 }TIM_TypeDef;
 
 
-/** 
+/**
   * @brief Universal Synchronous Asynchronous Receiver Transmitter
   */
- 
+
 typedef struct
 {
   __IO uint32_t SR;         /*!< USART Status register,                   Address offset: 0x00 */
@@ -589,7 +589,7 @@ typedef struct
 
 
 
-/** 
+/**
   * @brief Window WATCHDOG
   */
 
@@ -603,7 +603,7 @@ typedef struct
 /**
   * @}
   */
-  
+
 /** @addtogroup Peripheral_memory_map
   * @{
   */
@@ -706,10 +706,10 @@ typedef struct
 /**
   * @}
   */
-  
+
 /** @addtogroup Peripheral_declaration
   * @{
-  */  
+  */
 
 #define TIM2                ((TIM_TypeDef *) TIM2_BASE)
 #define TIM3                ((TIM_TypeDef *) TIM3_BASE)
@@ -782,11 +782,11 @@ typedef struct
 /** @addtogroup Exported_constants
   * @{
   */
-  
+
   /** @addtogroup Peripheral_Registers_Bits_Definition
   * @{
   */
-    
+
 /******************************************************************************/
 /*                         Peripheral Registers_Bits_Definition               */
 /******************************************************************************/
@@ -1189,15 +1189,15 @@ typedef struct
 
 #define  RCC_APB1RSTR_TIM6RST                ((uint32_t)0x00000010)        /*!< Timer 6 reset */
 #define  RCC_APB1RSTR_TIM7RST                ((uint32_t)0x00000020)        /*!< Timer 7 reset */
-#define  RCC_APB1RSTR_CECRST                 ((uint32_t)0x40000000)        /*!< CEC interface reset */ 
+#define  RCC_APB1RSTR_CECRST                 ((uint32_t)0x40000000)        /*!< CEC interface reset */
 
 #define  RCC_APB1RSTR_TIM5RST                ((uint32_t)0x00000008)        /*!< Timer 5 reset */
 #define  RCC_APB1RSTR_TIM12RST               ((uint32_t)0x00000040)        /*!< TIM12 Timer reset */
 #define  RCC_APB1RSTR_TIM13RST               ((uint32_t)0x00000080)        /*!< TIM13 Timer reset */
 #define  RCC_APB1RSTR_TIM14RST               ((uint32_t)0x00000100)        /*!< TIM14 Timer reset */
-#define  RCC_APB1RSTR_SPI3RST                ((uint32_t)0x00008000)        /*!< SPI 3 reset */ 
+#define  RCC_APB1RSTR_SPI3RST                ((uint32_t)0x00008000)        /*!< SPI 3 reset */
 #define  RCC_APB1RSTR_UART4RST               ((uint32_t)0x00080000)        /*!< UART 4 reset */
-#define  RCC_APB1RSTR_UART5RST               ((uint32_t)0x00100000)        /*!< UART 5 reset */ 
+#define  RCC_APB1RSTR_UART5RST               ((uint32_t)0x00100000)        /*!< UART 5 reset */
 
 
 #define  RCC_APB1RSTR_DACRST                 ((uint32_t)0x20000000)        /*!< DAC interface reset */
@@ -1257,7 +1257,7 @@ typedef struct
 
 #define  RCC_APB1ENR_TIM6EN                 ((uint32_t)0x00000010)        /*!< Timer 6 clock enable */
 #define  RCC_APB1ENR_TIM7EN                 ((uint32_t)0x00000020)        /*!< Timer 7 clock enable */
-#define  RCC_APB1ENR_CECEN                  ((uint32_t)0x40000000)        /*!< CEC interface clock enable */ 
+#define  RCC_APB1ENR_CECEN                  ((uint32_t)0x40000000)        /*!< CEC interface clock enable */
 
 #define  RCC_APB1ENR_TIM5EN                 ((uint32_t)0x00000008)        /*!< Timer 5 clock enable */
 #define  RCC_APB1ENR_TIM12EN                ((uint32_t)0x00000040)         /*!< TIM12 Timer clock enable  */
@@ -1265,7 +1265,7 @@ typedef struct
 #define  RCC_APB1ENR_TIM14EN                ((uint32_t)0x00000100)         /*!< TIM14 Timer clock enable */
 #define  RCC_APB1ENR_SPI3EN                 ((uint32_t)0x00008000)        /*!< SPI 3 clock enable */
 #define  RCC_APB1ENR_UART4EN                ((uint32_t)0x00080000)        /*!< UART 4 clock enable */
-#define  RCC_APB1ENR_UART5EN                ((uint32_t)0x00100000)        /*!< UART 5 clock enable */ 
+#define  RCC_APB1ENR_UART5EN                ((uint32_t)0x00100000)        /*!< UART 5 clock enable */
 
 
 #define  RCC_APB1ENR_DACEN                  ((uint32_t)0x20000000)        /*!< DAC interface clock enable */
@@ -1288,7 +1288,7 @@ typedef struct
 #define  RCC_BDCR_RTCEN                      ((uint32_t)0x00008000)        /*!< RTC clock enable */
 #define  RCC_BDCR_BDRST                      ((uint32_t)0x00010000)        /*!< Backup domain software reset  */
 
-/*******************  Bit definition for RCC_CSR register  ********************/  
+/*******************  Bit definition for RCC_CSR register  ********************/
 #define  RCC_CSR_LSION                       ((uint32_t)0x00000001)        /*!< Internal Low Speed oscillator enable */
 #define  RCC_CSR_LSIRDY                      ((uint32_t)0x00000002)        /*!< Internal Low Speed oscillator Ready */
 #define  RCC_CSR_RMVF                        ((uint32_t)0x01000000)        /*!< Remove reset flag */
@@ -1324,7 +1324,7 @@ typedef struct
  #define  RCC_CFGR2_PREDIV1_DIV14            ((uint32_t)0x0000000D)        /*!< PREDIV1 input clock divided by 14 */
  #define  RCC_CFGR2_PREDIV1_DIV15            ((uint32_t)0x0000000E)        /*!< PREDIV1 input clock divided by 15 */
  #define  RCC_CFGR2_PREDIV1_DIV16            ((uint32_t)0x0000000F)        /*!< PREDIV1 input clock divided by 16 */
- 
+
 /******************************************************************************/
 /*                                                                            */
 /*                General Purpose and Alternate Function I/O                  */
@@ -1703,7 +1703,7 @@ typedef struct
 #define AFIO_EXTICR1_EXTI1_PF                ((uint32_t)0x00000050)            /*!< PF[1] pin */
 #define AFIO_EXTICR1_EXTI1_PG                ((uint32_t)0x00000060)            /*!< PG[1] pin */
 
-/*!< EXTI2 configuration */  
+/*!< EXTI2 configuration */
 #define AFIO_EXTICR1_EXTI2_PA                ((uint32_t)0x00000000)            /*!< PA[2] pin */
 #define AFIO_EXTICR1_EXTI2_PB                ((uint32_t)0x00000100)            /*!< PB[2] pin */
 #define AFIO_EXTICR1_EXTI2_PC                ((uint32_t)0x00000200)            /*!< PC[2] pin */
@@ -1745,7 +1745,7 @@ typedef struct
 #define AFIO_EXTICR2_EXTI5_PF                ((uint32_t)0x00000050)            /*!< PF[5] pin */
 #define AFIO_EXTICR2_EXTI5_PG                ((uint32_t)0x00000060)            /*!< PG[5] pin */
 
-/*!< EXTI6 configuration */  
+/*!< EXTI6 configuration */
 #define AFIO_EXTICR2_EXTI6_PA                ((uint32_t)0x00000000)            /*!< PA[6] pin */
 #define AFIO_EXTICR2_EXTI6_PB                ((uint32_t)0x00000100)            /*!< PB[6] pin */
 #define AFIO_EXTICR2_EXTI6_PC                ((uint32_t)0x00000200)            /*!< PC[6] pin */
@@ -1787,7 +1787,7 @@ typedef struct
 #define AFIO_EXTICR3_EXTI9_PF                ((uint32_t)0x00000050)            /*!< PF[9] pin */
 #define AFIO_EXTICR3_EXTI9_PG                ((uint32_t)0x00000060)            /*!< PG[9] pin */
 
-/*!< EXTI10 configuration */  
+/*!< EXTI10 configuration */
 #define AFIO_EXTICR3_EXTI10_PA               ((uint32_t)0x00000000)            /*!< PA[10] pin */
 #define AFIO_EXTICR3_EXTI10_PB               ((uint32_t)0x00000100)            /*!< PB[10] pin */
 #define AFIO_EXTICR3_EXTI10_PC               ((uint32_t)0x00000200)            /*!< PC[10] pin */
@@ -1829,7 +1829,7 @@ typedef struct
 #define AFIO_EXTICR4_EXTI13_PF               ((uint32_t)0x00000050)            /*!< PF[13] pin */
 #define AFIO_EXTICR4_EXTI13_PG               ((uint32_t)0x00000060)            /*!< PG[13] pin */
 
-/*!< EXTI14 configuration */  
+/*!< EXTI14 configuration */
 #define AFIO_EXTICR4_EXTI14_PA               ((uint32_t)0x00000000)            /*!< PA[14] pin */
 #define AFIO_EXTICR4_EXTI14_PB               ((uint32_t)0x00000100)            /*!< PB[14] pin */
 #define AFIO_EXTICR4_EXTI14_PC               ((uint32_t)0x00000200)            /*!< PC[14] pin */
@@ -2513,7 +2513,7 @@ typedef struct
 #define  ADC_CR1_JAWDEN                      ((uint32_t)0x00400000)        /*!< Analog watchdog enable on injected channels */
 #define  ADC_CR1_AWDEN                       ((uint32_t)0x00800000)        /*!< Analog watchdog enable on regular channels */
 
-  
+
 /*******************  Bit definition for ADC_CR2 register  ********************/
 #define  ADC_CR2_ADON                        ((uint32_t)0x00000001)        /*!< A/D Converter ON / OFF */
 #define  ADC_CR2_CONT                        ((uint32_t)0x00000002)        /*!< Continuous Conversion */
@@ -2771,7 +2771,7 @@ typedef struct
 #define  ADC_SQR3_SQ6_4                      ((uint32_t)0x20000000)        /*!< Bit 4 */
 
 /*******************  Bit definition for ADC_JSQR register  *******************/
-#define  ADC_JSQR_JSQ1                       ((uint32_t)0x0000001F)        /*!< JSQ1[4:0] bits (1st conversion in injected sequence) */  
+#define  ADC_JSQR_JSQ1                       ((uint32_t)0x0000001F)        /*!< JSQ1[4:0] bits (1st conversion in injected sequence) */
 #define  ADC_JSQR_JSQ1_0                     ((uint32_t)0x00000001)        /*!< Bit 0 */
 #define  ADC_JSQR_JSQ1_1                     ((uint32_t)0x00000002)        /*!< Bit 1 */
 #define  ADC_JSQR_JSQ1_2                     ((uint32_t)0x00000004)        /*!< Bit 2 */
@@ -4014,7 +4014,7 @@ typedef struct
 
 /**
   * @}
-*/ 
+*/
 
 /** @addtogroup Exported_macro
   * @{
@@ -4047,7 +4047,7 @@ typedef struct
                                        ((INSTANCE) == DMA2_Channel3) || \
                                        ((INSTANCE) == DMA2_Channel4) || \
                                        ((INSTANCE) == DMA2_Channel5))
-  
+
 /******************************* GPIO Instances *******************************/
 #define IS_GPIO_ALL_INSTANCE(INSTANCE) (((INSTANCE) == GPIOA) || \
                                         ((INSTANCE) == GPIOB) || \
@@ -4320,7 +4320,7 @@ typedef struct
    ((INSTANCE) == TIM15)   || \
    ((INSTANCE) == TIM16)   || \
    ((INSTANCE) == TIM17))
-    
+
 #define IS_TIM_DMA_CC_INSTANCE(INSTANCE)\
   (((INSTANCE) == TIM1)    || \
    ((INSTANCE) == TIM2)    || \
@@ -4330,7 +4330,7 @@ typedef struct
    ((INSTANCE) == TIM15)   || \
    ((INSTANCE) == TIM16)   || \
    ((INSTANCE) == TIM17))
-    
+
 #define IS_TIM_COMMUTATION_EVENT_INSTANCE(INSTANCE)\
   (((INSTANCE) == TIM1)    || \
    ((INSTANCE) == TIM15)   || \
@@ -4340,7 +4340,7 @@ typedef struct
 /****************************** END TIM Instances *****************************/
 
 
-/******************** USART Instances : Synchronous mode **********************/                                           
+/******************** USART Instances : Synchronous mode **********************/
 #define IS_USART_INSTANCE(INSTANCE) (((INSTANCE) == USART1) || \
                                      ((INSTANCE) == USART2) || \
                                      ((INSTANCE) == USART3))
@@ -4366,7 +4366,7 @@ typedef struct
                                         ((INSTANCE) == UART4)  || \
                                         ((INSTANCE) == UART5))
 
-/****************** UART Instances : Hardware Flow control ********************/                                    
+/****************** UART Instances : Hardware Flow control ********************/
 #define IS_UART_HWFLOW_INSTANCE(INSTANCE) (((INSTANCE) == USART1) || \
                                            ((INSTANCE) == USART2) || \
                                            ((INSTANCE) == USART3))
@@ -4409,12 +4409,12 @@ typedef struct
 
 /**
   * @}
-*/ 
+*/
 /******************************************************************************/
 /*  For a painless codes migration between the STM32F1xx device product       */
 /*  lines, the aliases defined below are put in place to overcome the         */
 /*  differences in the interrupt handlers and IRQn definitions.               */
-/*  No need to update developed interrupt code when moving across             */ 
+/*  No need to update developed interrupt code when moving across             */
 /*  product lines within the same STM32F1 Family                              */
 /******************************************************************************/
 
@@ -4504,9 +4504,9 @@ typedef struct
 #ifdef __cplusplus
   }
 #endif /* __cplusplus */
-  
+
 #endif /* __STM32F100xE_H */
-  
-  
-  
+
+
+
   /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
