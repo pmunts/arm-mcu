@@ -37,7 +37,7 @@ BEGIN
 
   { Toggle LED outputs }
 
-  WHILE true DO
+  WHILE True DO
     BEGIN
       LED := NOT LED;
 

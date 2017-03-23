@@ -40,14 +40,14 @@ BEGIN
 
   { Initialize LED outputs }
 
-  LD3_ORANGE := true;
+  LD3_ORANGE := True;
   LD4_GREEN  := false;
   LD5_RED    := false;
   LD6_BLUE   := false;
 
   { Toggle LED outputs }
 
-  WHILE true DO
+  WHILE True DO
     BEGIN
       orange := LD3_ORANGE;
       LD3_ORANGE := LD4_GREEN;

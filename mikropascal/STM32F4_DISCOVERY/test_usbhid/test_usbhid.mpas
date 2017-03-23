@@ -63,9 +63,8 @@ BEGIN
 
   { Event loop }
  
-  WHILE TRUE DO
+  WHILE True DO
     BEGIN
-      USB_Polling_Proc();
 
       { Check for message from host }
 
@@ -73,10 +72,10 @@ BEGIN
         BEGIN
           IF strncmp(readbuf, 'LEDON', 5) = 0 THEN
             BEGIN
-              LED1 := true;
-              LED2 := true;
-              LED3 := true;
-              LED4 := true;
+              LED1 := True;
+              LED2 := True;
+              LED3 := True;
+              LED4 := True;
             END;
 
           IF strncmp(readbuf, 'LEDOFF', 6) = 0 THEN

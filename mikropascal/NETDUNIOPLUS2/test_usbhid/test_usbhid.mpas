@@ -54,16 +54,15 @@ BEGIN
 
   { Event loop }
  
-  WHILE TRUE DO
+  WHILE True DO
     BEGIN
-      USB_Polling_Proc();
 
       { Check for message from host }
 
       IF (HID_Read() <> 0) THEN
         BEGIN
           IF strncmp(readbuf, 'LEDON', 5) = 0 THEN
-            LED := true;
+            LED := True;
 
           IF strncmp(readbuf, 'LEDOFF', 6) = 0 THEN
             LED := false;
