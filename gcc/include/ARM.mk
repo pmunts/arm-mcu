@@ -114,7 +114,7 @@ CFLAGS		+= -Wall -ffunction-sections
 CFLAGS		+= -I$(ARMSRC)/gcc/include -I$(MCUDIR)
 CFLAGS		+= $(CPUFLAGS) $(BOARDFLAGS) $(CONSOLEFLAGS) $(IOFLAGS)
 CFLAGS		+= $(CONFIGFLAGS) $(OPTFLAGS) $(DEBUGFLAGS) $(EXTRAFLAGS)
-CXXFLAGS	+= -fno-use-cxa-atexit
+CXXFLAGS	+= -fno-use-cxa-atexit -D_GLIBCXX_USE_C99=1 -std=c++1y
 LDFLAGS		+= -nostartfiles -T$(MCULINKSCRIPT) -L$(MCUDIR) -l$(MCU) -lm -lstdc++
 LDFLAGS		+= -Wl,-Map=$*.map,--cref,--gc-sections $(EXTRAOBJS)
 
