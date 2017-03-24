@@ -24,6 +24,7 @@
 #include <gpio.h>
 #include <string.h>
 
+#include "common.h"
 #include "gpio-gpiopins.h"
 
 // GPIO pin constructor for an input pin

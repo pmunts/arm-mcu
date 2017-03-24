@@ -28,9 +28,8 @@
 
 #include <cpu.h>
 
-#include "linx/common.h"
-#include "gpio-gpiopins.h"
-#include <gpio.h>
+#include <linx-server/common.h>
+#include <linx-server/gpio-gpiopins.h>
 
 // Device identification constants
 

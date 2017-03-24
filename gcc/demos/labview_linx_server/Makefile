@@ -24,17 +24,17 @@ ARMSRC		?= $(HOME)/arm-mcu
 MCUFAMILY	?= stm32f4
 BOARDNAME	?= NUCLEO_F411RE
 
-CFLAGS		+= -D_GLIBCXX_USE_C99=1 -std=c++1y -I.
+LINXSERVERDIR	= $(ARMSRC)/gcc/include/linx-server
 
 SOURCES		= main.cpp
-SOURCES		+= linx/analog.cpp
-SOURCES		+= linx/command.cpp
-SOURCES		+= linx/common.cpp
-SOURCES		+= linx/executive.cpp
-SOURCES		+= linx/gpio.cpp
-SOURCES		+= linx/pwm.cpp
-SOURCES		+= linx/servo.cpp
-SOURCES		+= gpio-gpiopins.cpp
+SOURCES		+= $(LINXSERVERDIR)/analog.cpp
+SOURCES		+= $(LINXSERVERDIR)/command.cpp
+SOURCES		+= $(LINXSERVERDIR)/common.cpp
+SOURCES		+= $(LINXSERVERDIR)/executive.cpp
+SOURCES		+= $(LINXSERVERDIR)/gpio.cpp
+SOURCES		+= $(LINXSERVERDIR)/pwm.cpp
+SOURCES		+= $(LINXSERVERDIR)/servo.cpp
+SOURCES		+= $(LINXSERVERDIR)/gpio-gpiopins.cpp
 
 default: linx_server.bin
 
@@ -42,7 +42,7 @@ include $(ARMSRC)/gcc/include/ARM.mk
 
 linx_server.elf: $(SOURCES)
 	$(MAKE) ARM_mk_lib
-	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
+	$(CXX) $(CXXFLAGS) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
 install: linx_server.flashstlink
 

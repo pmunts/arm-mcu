@@ -23,9 +23,6 @@
 #ifndef _GPIO_GPIOPINS_H
 #define _GPIO_GPIOPINS_H
 
-#include <gpio.h>
-#include <linx/gpio.h>
-
 class GPIO_GPIOPIN: public GPIO_Interface
 {
   public:
