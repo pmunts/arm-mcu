@@ -18,7 +18,7 @@ Value=
 [FILES]
 Count=2
 File0=test_usbhid.mpas
-File1=..\..\USB-HID\common\USB-HID-Device.mpas
+File1=..\..\common\USB-HID-Device.mpas
 [BINARIES]
 Count=0
 [IMAGES]
