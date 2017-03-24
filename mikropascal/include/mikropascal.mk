@@ -28,7 +28,9 @@
 
 MIKROPASCAL	?= "C:/Users/Public/Documents/Mikroelektronika/mikroPascal PRO for ARM/mPARM.exe"
 
-# Define a pattern rule to build a Mikropascal project
+COMMONDIR	?= $(MIKROPASCALSRC)/common
+
+# Define a pattern rule to build a Mikropascal ARM project
 
 %.hex: %.mppar
 	$(MIKROPASCAL) -DL -RA -SSA -PF $<
@@ -36,13 +38,8 @@ MIKROPASCAL	?= "C:/Users/Public/Documents/Mikroelektronika/mikroPascal PRO for A
 %.bin: %.mppar
 	$(MIKROPASCAL) -DL -RA -SSA -PF $< -BIN
 
-# Default target
-
-mikropascal_mk_default:
-	@echo ERROR: You must explicitly specify a make target!
-	@exit 1
-
 # Remove working files
 
 mikropascal_mk_clean:
-	-rm -f *.asm *.bin *.bmk *.brk *.dbg *.dct *.dlt *.emcl *.hex *.log *.lst *callertable.txt *.mpas.ini *.user.dic
+	-rm -f *.asm *.bin *.bmk *.brk *.dbg *.dct *.dlt *.*mcl *.hex *.log *.lst *callertable.txt *.mpas.ini *.user.dic
+	-rm -f $(COMMONDIR)/*.asm $(COMMONDIR)/*.mpas.ini $(COMMONDIR)/*.*mcl
