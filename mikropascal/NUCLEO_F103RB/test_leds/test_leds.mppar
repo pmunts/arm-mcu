@@ -6,7 +6,6 @@ Value=0
 [BUILD_TYPE]
 Value=0
 [ACTIVE_TAB]
-Value=test_leds.mpas
 [USE_EEPROM]
 Value=0
 [USE_HEAP]
@@ -22,10 +21,8 @@ File0=test_leds.mpas
 Count=0
 [IMAGES]
 Count=0
-ActiveImageIndex=-1
 [OPENED_FILES]
-Count=1
-File0=test_leds.mpas
+Count=0
 [EEPROM]
 Count=0
 [ACTIVE_COMMENTS_FILES]
@@ -33,10 +30,7 @@ Count=0
 [OTHER_FILES]
 Count=0
 [SEARCH_PATH]
-Count=3
-Path0=C:\Users\Public\Documents\Mikroelektronika\mikroPascal PRO for ARM\Defs\
-Path1=C:\Users\Public\Documents\Mikroelektronika\mikroPascal PRO for ARM\Uses\ST M3\
-Path2=C:\Users\pmunts\Documents\home\src\ARM\mikropascal\NUCLEO_F103RB\test_leds\
+Count=0
 [HEADER_PATH]
 Count=0
 [HEADERS]
