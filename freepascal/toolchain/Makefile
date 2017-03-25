@@ -122,6 +122,7 @@ install.done: build.done
 	install -cm 0644 fpc.cfg				$(INSTALLDIR)/lib/fpc/etc
 	$(SED) -i 's#@@ARMTOOLS@@#$(ARMTOOLS)#g'		$(INSTALLDIR)/lib/fpc/etc/fpc.cfg
 	$(SED) -i 's#@@CONFIGURENAME@@#$(CONFIGURENAME)#g'	$(INSTALLDIR)/lib/fpc/etc/fpc.cfg
+	ln -s lib/fpc/etc					$(INSTALLDIR)/etc
 	touch $@
 
 ################################################################################
@@ -139,10 +140,10 @@ tarball.done: install.done
 package.deb: install.done
 	mkdir -p					$(PKGDIR)/DEBIAN
 	install -cm 0644 control			$(PKGDIR)/DEBIAN
-	$(SED) -i s/@@NAME@@/$(PKGNAME)/g			$(PKGDIR)/DEBIAN/control
-	$(SED) -i s/@@ARCH@@/$(PKGARCH)/g			$(PKGDIR)/DEBIAN/control
+	$(SED) -i s/@@NAME@@/$(PKGNAME)/g		$(PKGDIR)/DEBIAN/control
+	$(SED) -i s/@@ARCH@@/$(PKGARCH)/g		$(PKGDIR)/DEBIAN/control
 	$(SED) -i s/@@VERSION@@/$(PKGVER)/g		$(PKGDIR)/DEBIAN/control
-	$(SED) -i s/@@BOARDNAME@@/$(BOARDBASE)/g		$(PKGDIR)/DEBIAN/control
+	$(SED) -i s/@@BOARDNAME@@/$(BOARDBASE)/g	$(PKGDIR)/DEBIAN/control
 	mkdir -p					$(PKGDIR)/usr/local
 	cp -R -P -p $(INSTALLDIR)			$(PKGDIR)/usr/local
 	chmod -R ugo-w					$(PKGDIR)/usr/local/*
