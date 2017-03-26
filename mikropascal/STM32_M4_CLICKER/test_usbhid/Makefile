@@ -22,11 +22,10 @@
 
 # Override the following macros to build out of tree
 
-ARMSRC		?= $(HOME)/src/ARM
-MIKROPASCALSRC	?= $(HOME)/src/ARM/mikropascal
+ARMSRC		?= $(HOME)/arm-mcu
+MIKROPASCALSRC	?= $(ARMSRC)/mikropascal
 
 FLASHWRITEADDR	?= 0x08000000
-TEXTBASE	?= 0x00000000
 
 # Compile the program
 
