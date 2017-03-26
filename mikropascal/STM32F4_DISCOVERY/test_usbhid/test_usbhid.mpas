@@ -55,10 +55,10 @@ BEGIN
 
   { Initialize LED outputs }
 
-  LED1 := false;
-  LED2 := false;
-  LED3 := false;
-  LED4 := false;
+  LED1 := False;
+  LED2 := False;
+  LED3 := False;
+  LED4 := False;
 
   { Event loop }
 
@@ -79,10 +79,10 @@ BEGIN
 
           IF strncmp(readbuf, 'LEDOFF', 6) = 0 THEN
             BEGIN
-              LED1 := false;
-              LED2 := false;
-              LED3 := false;
-              LED4 := false;
+              LED1 := False;
+              LED2 := False;
+              LED3 := False;
+              LED4 := False;
             END;
         END
     END

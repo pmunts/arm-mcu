@@ -49,7 +49,7 @@ BEGIN
 
   { Initialize LED outputs }
 
-  LED := false;
+  LED := False;
 
   { Event loop }
 
@@ -64,7 +64,7 @@ BEGIN
             LED := True;
 
           IF strncmp(readbuf, 'LEDOFF', 6) = 0 THEN
-            LED := false;
+            LED := False;
         END
     END
 END.

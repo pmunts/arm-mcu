@@ -41,9 +41,9 @@ BEGIN
   { Initialize LED outputs }
 
   LD3_ORANGE := True;
-  LD4_GREEN  := false;
-  LD5_RED    := false;
-  LD6_BLUE   := false;
+  LD4_GREEN  := False;
+  LD5_RED    := False;
+  LD6_BLUE   := False;
 
   { Toggle LED outputs }
 

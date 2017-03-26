@@ -35,12 +35,12 @@ BEGIN
 
   { Initialize LED outputs }
 
-  LD1 := true;
-  LD2 := false;
+  LD1 := True;
+  LD2 := False;
 
   { Toggle LED outputs }
 
-  WHILE true DO
+  WHILE True DO
     BEGIN
       LD1 := NOT LD1;
       LD2 := NOT LD2;

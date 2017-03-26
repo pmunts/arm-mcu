@@ -33,7 +33,7 @@ BEGIN
 
   { Initialize LED outputs }
 
-  LED := false;
+  LED := False;
 
   { Toggle LED outputs }
 
