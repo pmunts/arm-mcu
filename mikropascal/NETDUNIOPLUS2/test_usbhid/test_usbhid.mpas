@@ -24,9 +24,8 @@ PROGRAM test_usbhid;
 
 VAR
   LED      : sbit AT GPIOA_ODR.B10;
-  cnt      : byte;
-  readbuf  : string[65];
-  writebuf : string[65];
+  readbuf  : string[HID_OUTPUT_REPORT_BYTES];
+  writebuf : string[HID_INPUT_REPORT_BYTES];
 
   PROCEDURE USBInterrupt(); IV IVT_INT_OTG_FS;
 

@@ -27,9 +27,8 @@ VAR
   LED2     : sbit AT GPIOD_ODR.B13;
   LED3     : sbit AT GPIOD_ODR.B14;
   LED4     : sbit AT GPIOD_ODR.B15;
-  cnt      : byte;
-  readbuf  : string[65];
-  writebuf : string[65];
+  readbuf  : string[HID_OUTPUT_REPORT_BYTES];
+  writebuf : string[HID_INPUT_REPORT_BYTES];
 
   PROCEDURE USBInterrupt(); IV IVT_INT_OTG_FS;
 
