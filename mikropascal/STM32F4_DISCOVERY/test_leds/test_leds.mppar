@@ -6,7 +6,7 @@ Value=0
 [BUILD_TYPE]
 Value=0
 [ACTIVE_TAB]
-Value=test_leds.mpas
+Value=0
 [USE_EEPROM]
 Value=0
 [USE_HEAP]
@@ -41,7 +41,15 @@ Count=0
 Count=0
 [Useses]
 Count=0
+[EXPANDED_NODES]
+Count=0
 [PROGRAMMER_OPTIONS]
 Value=SWD
 [PROGRAMMER_TYPE]
 Value=mE
+[DEBUGGER_TYPE]
+Value=default
+[AT_DEBUG_STARTUP]
+LOAD_BIN_TO_RAM=0
+START_EXEC_FROM_ADDR=0
+START_ADDR=-1

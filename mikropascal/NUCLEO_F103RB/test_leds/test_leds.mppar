@@ -6,6 +6,7 @@ Value=0
 [BUILD_TYPE]
 Value=0
 [ACTIVE_TAB]
+Value=0
 [USE_EEPROM]
 Value=0
 [USE_HEAP]
@@ -21,6 +22,7 @@ File0=test_leds.mpas
 Count=0
 [IMAGES]
 Count=0
+ActiveImageIndex=-1
 [OPENED_FILES]
 Count=0
 [EEPROM]
