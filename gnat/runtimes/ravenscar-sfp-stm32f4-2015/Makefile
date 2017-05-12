@@ -42,4 +42,3 @@ clean:
 	rm -f gnarl-arch/s-bbpara.ads arch/setup_pll.adb
 
 include $(ADA_SRC)/ada.mk
-sinclude$(HOME)/src/include/subversion.mk

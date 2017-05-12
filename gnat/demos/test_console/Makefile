@@ -54,4 +54,3 @@ distclean: ada_mk_distclean
 include $(ADA_SRC)/boards/$(BOARDNAME)/bsp.mk
 include $(ADA_SRC)/ada.mk
 include $(ARMSRC)/gcc/include/ARM.mk
-sinclude $(HOME)/src/include/subversion.mk

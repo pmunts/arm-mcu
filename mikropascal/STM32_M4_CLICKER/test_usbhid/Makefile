@@ -43,4 +43,3 @@ clean: mikropascal_mk_clean
 
 include $(MIKROPASCALSRC)/include/mikropascal.mk
 include $(ARMSRC)/gcc/include/stlinkwin.mk
-sinclude $(HOME)/src/include/subversion.mk
