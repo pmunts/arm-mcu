@@ -22,7 +22,7 @@
 
 # mbed firmware directory
 
-MBEDDIR		?= /media/$(USER)/MBED
+MBEDDIR	?= /media/$(USER)/MBED
 
 .SUFFIXES: .bin .flashmbed
 
@@ -32,4 +32,6 @@ MBEDDIR		?= /media/$(USER)/MBED
 	test -d $(MBEDDIR) -a -w $(MBEDDIR)
 	cp $< $(MBEDDIR)/firmware.bin
 	sync
-	@echo -e "\nPress RESET on the target board to start $<\n"
+	@echo
+	@echo Press RESET on the target board to start $<
+	@echo
