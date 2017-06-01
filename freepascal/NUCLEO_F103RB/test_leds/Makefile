@@ -1,5 +1,5 @@
-# Makefile building Free Pascal application programs
-# for ARM microcontrollers
+# Makefile for building Free Pascal application programs to run on an
+# STM32F103RB ARM microcontroller
 
 # Copyright (C)2017, Philip Munts, President, Munts AM Corp.
 #
