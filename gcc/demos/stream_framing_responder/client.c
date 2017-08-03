@@ -9,7 +9,7 @@
 
 #include "messages.h"
 #include "libstream.h"
-#include "libtcp4.h"
+#include "libipv4.h"
 
 void SendCommand(int fd, uint32_t sequence, uint32_t command, uint32_t payload)
 {
@@ -91,7 +91,7 @@ void ReceiveResponse(int fd)
 
 int main(int argc, char *argv[])
 {
-  IPV4_ADDR server;
+  int32_t server;
   int32_t fd;
   int32_t error;
 
@@ -101,11 +101,11 @@ int main(int argc, char *argv[])
     exit(1);
   }
 
-  TCP4_resolve(argv[1], &server, &error);
+  IPV4_resolve(argv[1], &server, &error);
 
   if (error != 0)
   {
-    fprintf(stderr, "ERROR: TCP4_resolve() failed, %s\n", strerror(error));
+    fprintf(stderr, "ERROR: IPV4_resolve() failed, %s\n", strerror(error));
     exit(1);
   }
 
