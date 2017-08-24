@@ -29,7 +29,7 @@ BOARDNAME	= UNKNOWN
 PROJECTNAME	= UNKNOWN
 TOOLCHAINNAME	= UNKNOWN
 
-MBEDFLAGS	= -t $(TOOLCHAINNAME) -m $(BOARDNAME) -N $(PROJECTNAME)
+MBEDFLAGS	= -m $(BOARDNAME) -N $(PROJECTNAME) -t $(TOOLCHAINNAME)
 
 include $(MBEDSRC)/include/mbed.mk
 
@@ -39,8 +39,4 @@ default: mbed_mk_build
 
 # Remove working files
 
-clean: mbed_mk_clean
-
-reallyclean: clean mbed_mk_reallyclean
-
-distclean: reallyclean mbed_mk_distclean
+clean: mbed_mk_reallyclean
