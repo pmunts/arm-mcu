@@ -41,7 +41,7 @@ default: mbed_mk_build
 
 # Install the application
 
-install: mbed_mk_build ./BUILD/$(BOARDNAME)/$(TOOLCHAINNAME)/HelloWorld.flashstlink
+install: mbed_mk_build ./BUILD/$(BOARDNAME)/$(TOOLCHAINNAME)/$(PROJECTNAME).flashstlink
 
 # Remove working files
 
