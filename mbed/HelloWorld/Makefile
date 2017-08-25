@@ -31,6 +31,7 @@ TOOLCHAINNAME	= GCC_ARM
 FLASHWRITEADDR	= 0x08000000
 
 MBEDFLAGS	= -m $(BOARDNAME) -N $(PROJECTNAME) -t $(TOOLCHAINNAME)
+MBEDFLAGS	+= --source . --source $(MBEDSRC)/BufferedSerial
 
 include $(MBEDSRC)/include/mbed.mk
 include $(ARMSRC)/gcc/include/stlink.mk
