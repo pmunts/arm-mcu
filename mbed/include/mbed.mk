@@ -29,6 +29,8 @@
 MBEDCLIPATH	?= /usr/local/lib/mbed-cli
 OUTPUTPATH	?= ./BUILD/$(BOARDNAME)/$(TOOLCHAINNAME)
 
+MBEDFLAGS	+= -DMBEDOS
+
 # Default target placeholder
 
 mbed_mk_default: default
