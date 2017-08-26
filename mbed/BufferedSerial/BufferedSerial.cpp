@@ -28,7 +28,7 @@ BufferedSerial::BufferedSerial(PinName tx, PinName rx, uint32_t buf_size, uint32
 {
     RawSerial::attach(this, &BufferedSerial::rxIrq, Serial::RxIrq);
     this->_buf_size = buf_size;
-    this->_tx_multiple = tx_multiple;   
+    this->_tx_multiple = tx_multiple;
     return;
 }
 
@@ -67,13 +67,13 @@ int BufferedSerial::puts(const char *s)
 {
     if (s != NULL) {
         const char* ptr = s;
-    
+
         while(*(ptr) != 0) {
             _txbuf = *(ptr++);
         }
         _txbuf = '\n';  // done per puts definition
         BufferedSerial::prime();
-    
+
         return (ptr - s) + 1;
     }
     return 0;
@@ -105,12 +105,12 @@ ssize_t BufferedSerial::write(const void *s, size_t length)
     if (s != NULL && length > 0) {
         const char* ptr = (const char*)s;
         const char* end = ptr + length;
-    
+
         while (ptr != end) {
             _txbuf = *(ptr++);
         }
         BufferedSerial::prime();
-    
+
         return ptr - (const char*)s;
     }
     return 0;
