@@ -57,6 +57,7 @@ mbed_mk_clean:
 	-rm -rf BUILD compile.done
 
 mbed_mk_reallyclean: mbed_mk_clean
+	-rm -f .mbed
 	-rm -f mbed-os
 	-rm -f mbed-os.lib
 	-rm -f mbed_settings.py
