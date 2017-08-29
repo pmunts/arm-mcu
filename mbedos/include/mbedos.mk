@@ -1,4 +1,4 @@
-# Makefile for building an mbed OS application
+# Common make definitions for building mbed OS applications
 
 # Copyright (C)2017, Philip Munts, President, Munts AM Corp.
 #
@@ -20,31 +20,48 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-# Override the following macros to build out of tree
+# To install the common mbed OS libraries, either install Debian package
+# munts-mbed-cli, or run the following commands:
+#
+# sudo pip install mbed-cli
+# sudo mbed new /usr/local/lib/mbed-cli
 
-ARMSRC		?= $(HOME)/arm-mcu
-MBEDSRC		?= $(ARMSRC)/mbed
+MBEDCLIPATH	?= /usr/local/lib/mbed-cli
+OUTPUTPATH	?= ./BUILD/$(BOARDNAME)/$(TOOLCHAINNAME)
 
-BOARDNAME	= NUCLEO_F411RE
-PROJECTNAME	= HelloWorld
-TOOLCHAINNAME	= GCC_ARM
-FLASHWRITEADDR	= 0x08000000
+MBEDCLIFLAGS	+= -D__mbedos__
 
-MBEDFLAGS	= -m $(BOARDNAME) -N $(PROJECTNAME) -t $(TOOLCHAINNAME)
-MBEDFLAGS	+= --source .
-MBEDFLAGS	+= --source $(MBEDSRC)/BufferedSerial
+# Default target placeholder
 
-include $(MBEDSRC)/include/mbed.mk
-include $(ARMSRC)/gcc/include/stlink.mk
+mbedos_mk_default: default
 
-# Build the application
+# Prepare for mbed compile
 
-default: mbed_mk_build
+prepare.done:
+	ln -s $(MBEDCLIPATH)/mbed-os
+	ln -s $(MBEDCLIPATH)/mbed-os.lib
+	ln -s $(MBEDCLIPATH)/mbed_settings.py
+	touch $@
 
-# Install the application
+# Perform mbed compile
 
-install: mbed_mk_build ./BUILD/$(BOARDNAME)/$(TOOLCHAINNAME)/$(PROJECTNAME).flashstlink
+compile.done: prepare.done
+	mbed compile $(MBEDCLIFLAGS)
+	touch $@
+
+mbedos_mk_build: compile.done
 
 # Remove working files
 
-clean: mbed_mk_reallyclean
+mbedos_mk_clean:
+	-rm -rf BUILD compile.done
+
+mbedos_mk_reallyclean: mbedos_mk_clean
+	-rm -f .mbed
+	-rm -f mbed-os
+	-rm -f mbed-os.lib
+	-rm -f mbed_settings.py
+	-rm -f mbed_settings.pyc
+	-rm -f prepare.done
+
+mbedos_mk_distclean: mbedos_mk_reallyclean

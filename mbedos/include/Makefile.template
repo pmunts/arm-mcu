@@ -1,4 +1,4 @@
-# Common make definitions for building mbed OS applications
+# Makefile for building an mbed OS application
 
 # Copyright (C)2017, Philip Munts, President, Munts AM Corp.
 #
@@ -20,48 +20,23 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-# To install the common mbed OS libraries, either install Debian package
-# munts-mbed-cli, or run the following commands:
-#
-# sudo pip install mbed-cli
-# sudo mbed new /usr/local/lib/mbed-cli
+# Override the following macros to build out of tree
 
-MBEDCLIPATH	?= /usr/local/lib/mbed-cli
-OUTPUTPATH	?= ./BUILD/$(BOARDNAME)/$(TOOLCHAINNAME)
+ARMSRC		?= $(HOME)/arm-mcu
+MBEDOSSRC	?= $(ARMSRC)/mbedos
 
-MBEDFLAGS	+= -D__mbedos__
+BOARDNAME	= UNKNOWN
+PROJECTNAME	= UNKNOWN
+TOOLCHAINNAME	= UNKNOWN
 
-# Default target placeholder
+MBEDCLIFLAGS	= -m $(BOARDNAME) -N $(PROJECTNAME) -t $(TOOLCHAINNAME)
 
-mbed_mk_default: default
+include $(MBEDOSSRC)/include/mbedos.mk
 
-# Prepare for mbed compile
+# Build the application
 
-prepare.done:
-	ln -s $(MBEDCLIPATH)/mbed-os
-	ln -s $(MBEDCLIPATH)/mbed-os.lib
-	ln -s $(MBEDCLIPATH)/mbed_settings.py
-	touch $@
-
-# Perform mbed compile
-
-compile.done: prepare.done
-	mbed compile $(MBEDFLAGS)
-	touch $@
-
-mbed_mk_build: compile.done
+default: mbedos_mk_build
 
 # Remove working files
 
-mbed_mk_clean:
-	-rm -rf BUILD compile.done
-
-mbed_mk_reallyclean: mbed_mk_clean
-	-rm -f .mbed
-	-rm -f mbed-os
-	-rm -f mbed-os.lib
-	-rm -f mbed_settings.py
-	-rm -f mbed_settings.pyc
-	-rm -f prepare.done
-
-mbed_mk_distclean: mbed_mk_reallyclean
+clean: mbedos_mk_reallyclean

@@ -23,20 +23,28 @@
 # Override the following macros to build out of tree
 
 ARMSRC		?= $(HOME)/arm-mcu
-MBEDSRC		?= $(ARMSRC)/mbed
+MBEDOSSRC	?= $(ARMSRC)/mbedos
 
-BOARDNAME	= UNKNOWN
-PROJECTNAME	= UNKNOWN
-TOOLCHAINNAME	= UNKNOWN
+BOARDNAME	= NUCLEO_F411RE
+PROJECTNAME	= HelloWorld
+TOOLCHAINNAME	= GCC_ARM
+FLASHWRITEADDR	= 0x08000000
 
-MBEDFLAGS	= -m $(BOARDNAME) -N $(PROJECTNAME) -t $(TOOLCHAINNAME)
+MBEDCLIFLAGS	= -m $(BOARDNAME) -N $(PROJECTNAME) -t $(TOOLCHAINNAME)
+MBEDCLIFLAGS	+= --source .
+MBEDCLIFLAGS	+= --source $(MBEDOSSRC)/BufferedSerial
 
-include $(MBEDSRC)/include/mbed.mk
+include $(MBEDOSSRC)/include/mbedos.mk
+include $(ARMSRC)/gcc/include/stlink.mk
 
 # Build the application
 
-default: mbed_mk_build
+default: mbedos_mk_build
+
+# Install the application
+
+install: mbedos_mk_build ./BUILD/$(BOARDNAME)/$(TOOLCHAINNAME)/$(PROJECTNAME).flashstlink
 
 # Remove working files
 
-clean: mbed_mk_reallyclean
+clean: mbedos_mk_reallyclean
