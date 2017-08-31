@@ -22,7 +22,7 @@
 
 #include <mbed.h>
 
-#include "BufferedSerial.h"
+#include <BufferedSerial.h>
 
 BufferedSerial console(SERIAL_TX, SERIAL_RX);
 
