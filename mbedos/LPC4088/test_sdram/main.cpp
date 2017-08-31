@@ -1,4 +1,4 @@
-// Console I/O Test
+// LPC4088 Quick Start SDRAM Test
 
 // Copyright (C)2017, Philip Munts, President, Munts AM Corp.
 //
