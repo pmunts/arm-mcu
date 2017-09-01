@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# Install Python stuff
+
+pip install mbed-cli -q -U
+pip install -q -r /usr/local/lib/mbed-cli/mbed-os/requirements.txt
