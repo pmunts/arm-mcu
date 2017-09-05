@@ -1,4 +1,4 @@
-# Common make definitions for building mbed OS applications
+# Common make definitions for building Mbed OS applications
 
 # Copyright (C)2017, Philip Munts, President, Munts AM Corp.
 #
@@ -20,7 +20,7 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-# To install the common mbed OS libraries, either install Debian package
+# To install the common Mbed OS libraries, either install Debian package
 # munts-mbed-cli, or run the following commands:
 #
 # sudo pip install mbed-cli

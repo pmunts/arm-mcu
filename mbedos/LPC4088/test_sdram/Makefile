@@ -1,4 +1,4 @@
-# Makefile for building an mbed OS application
+# Makefile for building an Mbed OS application
 
 # Copyright (C)2017, Philip Munts, President, Munts AM Corp.
 #
