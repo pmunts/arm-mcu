@@ -1,4 +1,4 @@
-# Makefile for building the mbed CLI package for Debian Linux
+# Makefile for building the Mbed OS CLI package for Debian Linux
 
 # Copyright (C)2017, Philip Munts, President, Munts AM Corp.
 #
@@ -20,7 +20,7 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-# Makefile for mbed CLI package
+# Makefile for Mbed OS CLI package
 
 OSNAME		?= unknown
 PKGNAME		= munts-mbed-cli

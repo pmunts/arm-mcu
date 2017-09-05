@@ -1,15 +1,15 @@
-                        mbed OS 5 Application Framework
+                        Mbed OS 5 Application Framework
 
-   This is a command line [1]make framework for building [2]mbed OS 5
-   applications using the [3]mbed CLI (Command Line Interface).
+   This is a command line [1]make framework for building [2]Mbed OS 5
+   applications using the [3]Mbed OS CLI (Command Line Interface).
 
-   Normally when you create mbed OS CLI projects, you have to checkout the
-   full mbed OS CLI distribution (603 MB!) into each project directory.
+   Normally when you create Mbed OS CLI projects, you have to checkout the
+   full Mbed OS CLI distribution (603 MB!) into each project directory.
    This seems insane to me, particularly if you are using our own source
-   control system. So this framework relies on a single, shared mbed OS
+   control system. So this framework relies on a single, shared Mbed OS
    CLI distribution installed at /usr/local/lib/mbed-cli.
 
-   Debian packages (munts-mbed-cli) that install a copy of the mbed OS CLI
+   Debian packages (munts-mbed-cli) that install a copy of the Mbed OS CLI
    to /usr/local/lib are available at:
 
    [4]http://repo.munts.com
@@ -75,7 +75,7 @@ References
 
    1. https://www.gnu.org/software/make
    2. https://developer.mbed.org/
-   3. https://docs.mbed.com/docs/mbed-os-handbook/en/latest/getting_started/blinky_cli/
+   3. https://docs.mbed.com/docs/mbed-os-handbook/en/latest/dev_tools/cli/
    4. http://repo.munts.com/
    5. https://developer.arm.com/open-source/gnu-toolchain/gnu-rm
    6. https://developer.arm.com/open-source/gnu-toolchain/gnu-rm/downloads
