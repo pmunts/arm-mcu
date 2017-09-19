@@ -27,21 +27,21 @@ SED		= sed
 TAR		= tar
 TEMP		?= /tmp
 
-BINUTILVER	= 2.28
+BINUTILVER	= 2.29
 BINUTILSERVER	= http://ftp.gnu.org/pub/gnu/binutils
 BINUTILDIST	= $(TEMP)/binutils-$(BINUTILVER).tar.bz2
 BINUTILURL	= $(BINUTILSERVER)/`basename $(BINUTILDIST)`
 BINUTILSRC	= binutils-$(BINUTILVER)
 BINUTILBLD	= build/binutils-$(BINUTILVER)
 
-GCCVER		= 6.3.0
+GCCVER		= 7.2.0
 GCCSERVER	= http://ftp.gnu.org/pub/gnu/gcc/gcc-$(GCCVER)
-GCCDIST		= $(TEMP)/gcc-$(GCCVER).tar.bz2
+GCCDIST		= $(TEMP)/gcc-$(GCCVER).tar.gz
 GCCURL		= $(GCCSERVER)/`basename $(GCCDIST)`
 GCCSRC		= gcc-$(GCCVER)
 GCCBLD		= build/gcc-$(GCCVER)
 
-LIBICONVVER	= 1.14
+LIBICONVVER	= 1.15
 LIBICONVSERVER	= http://ftp.gnu.org/pub/gnu/libiconv
 LIBICONVDIST	= $(TEMP)/libiconv-$(LIBICONVVER).tar.gz
 LIBICONVURL	= $(LIBICONVSERVER)/`basename $(LIBICONVDIST)`
@@ -57,7 +57,7 @@ LIBMPDFURL	= $(NEWLIBSERVER)/libm.pdf
 LIBCPDF		= $(TEMP)/libc.pdf
 LIBMPDF		= $(TEMP)/libm.pdf
 
-GDBVER		= 7.12.1
+GDBVER		= 8.0.1
 GDBSERVER	= http://ftp.gnu.org/gnu/gdb
 GDBDIST		= $(TEMP)/gdb-$(GDBVER).tar.gz
 GDBURL		= $(GDBSERVER)/`basename $(GDBDIST)`
@@ -123,11 +123,11 @@ download: $(DISTFILES)
 
 source.done: $(DISTFILES)
 	$(TAR) xjf $(BINUTILDIST)
-	$(TAR) xjf $(GCCDIST)
+	$(TAR) xzf $(GCCDIST)
 	if [ -f multilibs.patch ]; then cd $(GCCSRC) ; patch -b -p0 <../multilibs.patch ; fi
 	cd $(GCCSRC) ; ./contrib/download_prerequisites
 	$(TAR) xzf $(LIBICONVDIST)
-	if [ -f libiconv.patch ]; then cd $(LIBICONVSRC) ; patch -b -p0 <../libiconv.patch ; fi
+	#if [ -f libiconv.patch ]; then cd $(LIBICONVSRC) ; patch -b -p0 <../libiconv.patch ; fi
 	ln -s "../$(LIBICONVSRC)" $(GCCSRC)/libiconv
 	$(TAR) xzf $(NEWLIBDIST)
 	ln -s "../$(NEWLIBSRC)/newlib" $(GCCSRC)/newlib
