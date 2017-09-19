@@ -16,13 +16,14 @@ News
        to append CFLAGS, CXXFLAGS, and LDFLAGS to RMAKEFLAGS so ensure
        that they are propagated to subordinate make jobs. Added
        lightweight_strncasecmp() to conio.c.
+     * 19 September 2017 -- Upgraded binutils to 2.29, gcc to 7.2.0, and
+       gdb to 8.0.1.
 
 Git Repository
 
    The source code is available at: [4]http://git.munts.com
 
    Use the following command to clone it:
-
    git clone http://git.munts.com/arm-mcu.git
 
 Copyright:

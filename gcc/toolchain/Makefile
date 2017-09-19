@@ -127,7 +127,6 @@ source.done: $(DISTFILES)
 	if [ -f multilibs.patch ]; then cd $(GCCSRC) ; patch -b -p0 <../multilibs.patch ; fi
 	cd $(GCCSRC) ; ./contrib/download_prerequisites
 	$(TAR) xzf $(LIBICONVDIST)
-	#if [ -f libiconv.patch ]; then cd $(LIBICONVSRC) ; patch -b -p0 <../libiconv.patch ; fi
 	ln -s "../$(LIBICONVSRC)" $(GCCSRC)/libiconv
 	$(TAR) xzf $(NEWLIBDIST)
 	ln -s "../$(NEWLIBSRC)/newlib" $(GCCSRC)/newlib
