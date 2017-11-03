@@ -9,7 +9,7 @@ CLI</a> (Command Line Interface).</p>
 Mbed OS CLI distribution (603 MB!) into each project directory. This seems
 insane to me, particularly if you are using our own source control system. So
 this framework relies on a single, shared Mbed OS CLI distribution installed at
-<tt>/usr/local/lib/mbed-cli</tt>.</p>
+<tt>/usr/local/lib/mbed5</tt>.</p>
 <p>Debian packages (<tt>munts-mbed-cli</tt>) that install a copy of the Mbed OS
 CLI to <tt>/usr/local/lib</tt> are available at:</p>
 <p><a href="http://repo.munts.com">http://repo.munts.com</a></p>
@@ -20,8 +20,8 @@ Embedded</a> C/C++ toolchain, which is available at:</p>
 "https://developer.arm.com/open-source/gnu-toolchain/gnu-rm/downloads">https://developer.arm.com/open-source/gnu-toolchain/gnu-rm/downloads</a></p>
 <p>The GNU ARM Embedded toolchain tarball must be unpacked to
 <tt>/usr/local/gcc-arm-none-eabi/</tt></p>
-<p>Each project <tt>Makefile</tt> must include <tt>include/mbedos.mk</tt>. The
-<tt>prepare.done</tt> target in <tt>mbedos.mk</tt> creates symbolic links to
+<p>Each project <tt>Makefile</tt> must include <tt>include/mbed5.mk</tt>. The
+<tt>prepare.done</tt> target in <tt>mbed5.mk</tt> creates symbolic links to
 the necessary items under <tt>mbed-cli/</tt>. After that the
 <tt>compile.done</tt> target issues the <tt>mbed compile</tt> command to build
 the project. Finally, the <tt>mbedos_mk_reallyclean</tt> target removes all

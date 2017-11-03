@@ -24,9 +24,9 @@
 # munts-mbed-cli, or run the following commands:
 #
 # sudo pip install mbed-cli
-# sudo mbed new /usr/local/lib/mbed-cli
+# sudo mbed new /usr/local/lib/mbed5
 
-MBEDCLIPATH	?= /usr/local/lib/mbed-cli
+MBEDCLIPATH	?= /usr/local/lib/mbed5
 OUTPUTPATH	?= ./BUILD/$(BOARDNAME)/$(TOOLCHAINNAME)
 
 MBEDCLIFLAGS	+= -D__mbedos__

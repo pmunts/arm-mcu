@@ -3,11 +3,11 @@
 # Install Python stuff
 
 pip install mbed-cli -q -U
-pip install -q -r /usr/local/lib/mbed-cli/mbed-os/requirements.txt
+pip install -q -r /usr/local/lib/mbed5/mbed-os/requirements.txt
 
 # Configure the toolchain programs directory to
 # /usr/local/gcc-arm-none-eabi/bin/ if applicable.
 
 if [ -x /usr/local/gcc-arm-none-eabi/bin/arm-none-eabi-gcc -a ! -x /usr/bin/arm-none-eabi-gcc ]; then
-  sed -i 's@GCC_ARM_PATH = ""@GCC_ARM_PATH = "/usr/local/gcc-arm-none-eabi/bin"@g' /usr/local/lib/mbed-cli/mbed_settings.py
+  sed -i 's@GCC_ARM_PATH = ""@GCC_ARM_PATH = "/usr/local/gcc-arm-none-eabi/bin"@g' /usr/local/lib/mbed5/mbed_settings.py
 fi
