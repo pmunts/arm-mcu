@@ -23,7 +23,7 @@
 # Override the following macros to build out of tree
 
 ARMSRC		?= $(HOME)/arm-mcu
-MBEDOSSRC	?= $(ARMSRC)/mbedos
+MBEDOSSRC	?= $(ARMSRC)/mbed5
 
 BOARDNAME	= LPC4088
 PROJECTNAME	= test_sdram
@@ -37,12 +37,12 @@ include $(ARMSRC)/gcc/include/mbed.mk
 
 # Build the application
 
-default: mbedos_mk_build
+default: mbed5_mk_build
 
 # Install the application
 
-install: mbedos_mk_build ./BUILD/$(BOARDNAME)/$(TOOLCHAINNAME)/$(PROJECTNAME).flashmbed
+install: mbed5_mk_build ./BUILD/$(BOARDNAME)/$(TOOLCHAINNAME)/$(PROJECTNAME).flashmbed
 
 # Remove working files
 
-clean: mbedos_mk_reallyclean
+clean: mbed5_mk_reallyclean

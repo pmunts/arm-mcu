@@ -21,10 +21,10 @@ Embedded</a> C/C++ toolchain, which is available at:</p>
 <p>The GNU ARM Embedded toolchain tarball must be unpacked to
 <tt>/usr/local/gcc-arm-none-eabi/</tt></p>
 <p>Each project <tt>Makefile</tt> must include <tt>include/mbed5.mk</tt>. The
-<tt>prepare.done</tt> target in <tt>mbed5.mk</tt> creates symbolic links to
-the necessary items under <tt>mbed-cli/</tt>. After that the
+<tt>prepare.done</tt> target in <tt>mbed5.mk</tt> creates symbolic links to the
+necessary items under <tt>/usr/local/lib/mbed5/</tt>. After that the
 <tt>compile.done</tt> target issues the <tt>mbed compile</tt> command to build
-the project. Finally, the <tt>mbedos_mk_reallyclean</tt> target removes all
+the project. Finally, the <tt>mbed5_mk_reallyclean</tt> target removes all
 working files and the symbolic links.</p>
 <h2>Git Repository</h2>
 <p>The source code is available at:</p>

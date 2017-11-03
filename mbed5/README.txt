@@ -24,9 +24,10 @@
 
    Each project Makefile must include include/mbed5.mk. The prepare.done
    target in mbed5.mk creates symbolic links to the necessary items under
-   mbed-cli/. After that the compile.done target issues the mbed compile
-   command to build the project. Finally, the mbedos_mk_reallyclean target
-   removes all working files and the symbolic links.
+   /usr/local/lib/mbed5/. After that the compile.done target issues the
+   mbed compile command to build the project. Finally, the
+   mbed5_mk_reallyclean target removes all working files and the symbolic
+   links.
 
 Git Repository
 

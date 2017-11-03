@@ -33,7 +33,7 @@ MBEDCLIFLAGS	+= -D__mbedos__
 
 # Default target placeholder
 
-mbedos_mk_default: default
+mbed5_mk_default: default
 
 # Prepare for mbed compile
 
@@ -49,14 +49,14 @@ compile.done: prepare.done
 	mbed compile $(MBEDCLIFLAGS)
 	touch $@
 
-mbedos_mk_build: compile.done
+mbed5_mk_build: compile.done
 
 # Remove working files
 
-mbedos_mk_clean:
+mbed5_mk_clean:
 	-rm -rf BUILD compile.done
 
-mbedos_mk_reallyclean: mbedos_mk_clean
+mbed5_mk_reallyclean: mbed5_mk_clean
 	-rm -f .mbed
 	-rm -f mbed-os
 	-rm -f mbed-os.lib
@@ -64,4 +64,4 @@ mbedos_mk_reallyclean: mbedos_mk_clean
 	-rm -f mbed_settings.pyc
 	-rm -f prepare.done
 
-mbedos_mk_distclean: mbedos_mk_reallyclean
+mbed5_mk_distclean: mbed5_mk_reallyclean
