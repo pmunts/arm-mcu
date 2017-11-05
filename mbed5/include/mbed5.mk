@@ -26,8 +26,8 @@
 # sudo pip install mbed-cli
 # sudo mbed new /usr/local/lib/mbed5
 
-MBEDCLIPATH	?= /usr/local/lib/mbed5
-OUTPUTPATH	?= ./BUILD/$(BOARDNAME)/$(TOOLCHAINNAME)
+MBEDLIBDIR	?= /usr/local/lib/mbed5
+OUTPUTDIR	?= ./BUILD/$(BOARDNAME)/$(TOOLCHAINNAME)
 
 MBEDCLIFLAGS	+= -D__mbedos__
 
@@ -38,9 +38,9 @@ mbed5_mk_default: default
 # Prepare for mbed compile
 
 prepare.done:
-	ln -s $(MBEDCLIPATH)/mbed-os
-	ln -s $(MBEDCLIPATH)/mbed-os.lib
-	ln -s $(MBEDCLIPATH)/mbed_settings.py
+	ln -s $(MBEDLIBDIR)/mbed-os
+	ln -s $(MBEDLIBDIR)/mbed-os.lib
+	ln -s $(MBEDLIBDIR)/mbed_settings.py
 	touch $@
 
 # Perform mbed compile
