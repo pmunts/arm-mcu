@@ -20,6 +20,7 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
+#include <assert.h>
 #include <errno.h>
 #include <unistd.h>
 
@@ -31,7 +32,7 @@
 
 // Error check macro
 
-#define FAILIF(c) if (c) { *dstlen = 0; *error = EINVAL; return; }
+#define FAILIF(c) if (c) { if (dstlen != NULL) *dstlen = 0; *error = EINVAL; return; }
 
 // The following CRC16-CCITT subroutine came from:
 // http://stackoverflow.com/questions/10564491/function-to-calculate-a-crc16-checksum
@@ -55,13 +56,19 @@ static uint16_t crc16(const uint8_t* data_p, uint8_t length){
 
 void STREAM_encode_frame(void *src, int32_t srclen, void *dst, int32_t dstsize, int32_t *dstlen, int32_t *error)
 {
+  assert(error != NULL);
+
+  // Validate parameters
+
+  FAILIF(src == NULL);
+  FAILIF(srclen < 0);
+  FAILIF(dst == NULL);
+  FAILIF(dstsize < 6);
+  FAILIF(dstlen == NULL);
+
   uint8_t *p = src;
   uint8_t *q = dst;
   uint16_t crc = 0;
-
-  // Verify parameters
-
-  FAILIF(dstsize < 6);
 
   // Calculate frame check sequence (CRC16-CCITT of payload bytes)
 
@@ -136,16 +143,22 @@ void STREAM_encode_frame(void *src, int32_t srclen, void *dst, int32_t dstsize, 
 
 void STREAM_decode_frame(void *src, int32_t srclen, void *dst, int32_t dstsize, int32_t *dstlen, int32_t *error)
 {
+  assert(error != NULL);
+
+  // Validate parameters
+
+  FAILIF(src == NULL);
+  FAILIF(srclen < 6);
+  FAILIF(dst == NULL);
+  FAILIF(dstsize < 0);
+  FAILIF(dstlen == NULL);
+
   uint8_t *p = src;
   uint8_t *q = dst;
   uint16_t crccalc;
   uint16_t crcsent;
 
   *dstlen = 0;
-
-  // Verify minimum frame length
-
-  FAILIF(srclen < 6);
 
   // Verify frame delimiters
 
@@ -216,20 +229,25 @@ void STREAM_decode_frame(void *src, int32_t srclen, void *dst, int32_t dstsize, 
 }
 
 #undef FAILIF
-#define FAILIF(c, e) if (c) { *framesize = 0; *error = e; return; }
+#define FAILIF(c, e) if (c) { if (framesize != NULL) *framesize = 0; *error = e; return; }
 
 // Receive a frame, one byte at a time
 
 void STREAM_receive_frame(int32_t fd, void *buf, int32_t bufsize, int32_t *framesize, int32_t *error)
 {
-  int status;
-  uint8_t b;
-  uint8_t *bp = buf;
+  assert(error != NULL);
 
   // Validate parameters
 
+  FAILIF((fd < 0), EINVAL);
+  FAILIF((buf == NULL), EINVAL);
   FAILIF((bufsize < 6), EINVAL);
+  FAILIF((framesize == NULL), EINVAL);
   FAILIF((*framesize >= bufsize), EINVAL);
+
+  int status;
+  uint8_t b;
+  uint8_t *bp = buf;
 
   // Read a byte from the stream
 
@@ -306,6 +324,9 @@ void STREAM_receive_frame(int32_t fd, void *buf, int32_t bufsize, int32_t *frame
   *error = EAGAIN;
 }
 
+#ifndef __unix__
+// This is not necessary with libsimpleio
+
 void STREAM_send_frame(int32_t fd, void *buf, int32_t bufsize, int32_t *count, int32_t *error)
 {
   int32_t len = write(fd, buf, bufsize);
@@ -319,3 +340,4 @@ void STREAM_send_frame(int32_t fd, void *buf, int32_t bufsize, int32_t *count, i
   *count = len;
   *error = 0;
 }
+#endif
