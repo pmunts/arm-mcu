@@ -20,6 +20,7 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
+#include <assert.h>
 #include <errno.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -29,10 +30,26 @@
 
 void LINX_transmit_command(int32_t fd, LINX_command_t *cmd, int32_t *error)
 {
+  assert(error != NULL);
+
   uint8_t *p = (uint8_t *) cmd;
   uint8_t checksum = 0;
   int i;
   int status;
+
+  // Validate parameters
+
+  if (fd < 0)
+  {
+    *error = EINVAL;
+    return;
+  }
+
+  if (cmd == NULL)
+  {
+    *error = EINVAL;
+    return;
+  }
 
   // Validate frame structure
 
@@ -74,11 +91,33 @@ void LINX_transmit_command(int32_t fd, LINX_command_t *cmd, int32_t *error)
 
 void LINX_receive_command(int32_t fd, LINX_command_t *cmd, int32_t *count, int32_t *error)
 {
+  assert(error != NULL);
+
   int status;
   uint8_t b;
   uint8_t checksum;
   uint8_t *p;
   int i;
+
+  // Validate parameters
+
+  if (fd < 0)
+  {
+    *error = EINVAL;
+    return;
+  }
+
+  if (cmd == NULL)
+  {
+    *error = EINVAL;
+    return;
+  }
+
+  if (count == NULL)
+  {
+    *error = EINVAL;
+    return;
+  }
 
   // Check for buffer overrun
 
@@ -194,10 +233,26 @@ void LINX_receive_command(int32_t fd, LINX_command_t *cmd, int32_t *count, int32
 
 void LINX_transmit_response(int32_t fd, LINX_response_t *resp, int32_t *error)
 {
+  assert(error != NULL);
+
   uint8_t *p = (uint8_t *) resp;
   uint8_t checksum = 0;
   int i;
   int status;
+
+  // Validate parameters
+
+  if (fd < 0)
+  {
+    *error = EINVAL;
+    return;
+  }
+
+  if (resp == NULL)
+  {
+    *error = EINVAL;
+    return;
+  }
 
   // Validate frame structure
 
@@ -238,11 +293,33 @@ void LINX_transmit_response(int32_t fd, LINX_response_t *resp, int32_t *error)
 
 void LINX_receive_response(int32_t fd, LINX_response_t *resp, int32_t *count, int32_t *error)
 {
+  assert(error != NULL);
+
   int status;
   uint8_t b;
   uint8_t checksum;
   uint8_t *p;
   int i;
+
+  // Validate parameters
+
+  if (fd < 0)
+  {
+    *error = EINVAL;
+    return;
+  }
+
+  if (resp == NULL)
+  {
+    *error = EINVAL;
+    return;
+  }
+
+  if (count == NULL)
+  {
+    *error = EINVAL;
+    return;
+  }
 
   // Check for buffer overrun
 
