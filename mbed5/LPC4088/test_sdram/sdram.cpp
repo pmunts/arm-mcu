@@ -167,7 +167,7 @@ static void pinConfig(void)
 
 static uint32_t sdram_test( void )
 {
-  volatile uint32_t *wr_ptr; 
+  volatile uint32_t *wr_ptr;
   volatile uint16_t *short_wr_ptr;
   uint32_t data;
   uint32_t i, j;
@@ -196,7 +196,7 @@ static uint32_t sdram_test( void )
   {
     for (j = 0; j < 0x100; j++)
     {
-      data = *wr_ptr;          
+      data = *wr_ptr;
       if (data != (((((i + j) + 1) & 0xFFFF) << 16) | ((i + j) & 0xFFFF)))
       {
         return 0x0;
@@ -332,13 +332,13 @@ static uint32_t calibration( void )
   {
     dwtemp = LPC_SC->EMCCAL & ~0x4000;
     LPC_SC->EMCCAL = dwtemp | 0x4000;
-    
+
     dwtemp = LPC_SC->EMCCAL;
     while ((dwtemp & 0x8000) == 0x0000)
     {
       dwtemp = LPC_SC->EMCCAL;
     }
-    cnt += (dwtemp & 0xFF); 
+    cnt += (dwtemp & 0xFF);
   }
   return (cnt / 10);
 }
@@ -372,7 +372,7 @@ uint32_t sdram_init (void)
   uint32_t i;
   uint32_t dwtemp = 0;
   //uint16_t wtemp = 0;
-  
+
   if (initialized) {
     return 0;
   }
@@ -382,11 +382,11 @@ uint32_t sdram_init (void)
   LPC_EMC->Control   = 0x00000001;
   LPC_EMC->Config    = 0x00000000;
 
-  pinConfig(); //Full 32-bit Data bus, 24-bit Address 
+  pinConfig(); //Full 32-bit Data bus, 24-bit Address
 
   /* Configure memory layout, but MUST DISABLE BUFFERs during configuration */
   /* 256MB, 8Mx32, 4 banks, row=12, column=9 */
-  LPC_EMC->DynamicConfig0    = 0x00004480; 
+  LPC_EMC->DynamicConfig0    = 0x00004480;
 
   /*Configure timing for ISSI IS4x32800D SDRAM*/
 
@@ -420,7 +420,7 @@ uint32_t sdram_init (void)
   LPC_EMC->DynamicXSR        = 0x00000003; /* ( n + 1 ) -> 4 clock cycles */
   LPC_EMC->DynamicRRD        = 0x00000000; /* ( n + 1 ) -> 1 clock cycles */
   LPC_EMC->DynamicMRD        = 0x00000000; /* ( n + 1 ) -> 1 clock cycles */
-#elif (SDRAM_SPEED==SDRAM_SPEED_60) 
+#elif (SDRAM_SPEED==SDRAM_SPEED_60)
   //Timing for 60 MHz Bus (same as 72MHz)
   LPC_EMC->DynamicRasCas0    = 0x00000202; /* 2 RAS, 2 CAS latency */
   LPC_EMC->DynamicReadConfig = 0x00000001; /* Command delayed strategy, using EMCCLKDELAY */
@@ -451,7 +451,7 @@ uint32_t sdram_init (void)
   LPC_EMC->DynamicRRD        = 0x00000001; /* ( n + 1 ) -> 2 clock cycles */
   LPC_EMC->DynamicMRD        = 0x00000001; /* ( n + 1 ) -> 2 clock cycles */
 #elif (SDRAM_SPEED==SDRAM_SPEED_80)
-  //Timing for 80 MHz Bus (same as 72MHz) 
+  //Timing for 80 MHz Bus (same as 72MHz)
   LPC_EMC->DynamicRasCas0    = 0x00000202; /* 2 RAS, 2 CAS latency */
   LPC_EMC->DynamicReadConfig = 0x00000001; /* Command delayed strategy, using EMCCLKDELAY */
   LPC_EMC->DynamicRP         = 0x00000001; /* ( n + 1 ) -> 2 clock cycles */
@@ -519,7 +519,7 @@ uint32_t sdram_init (void)
   }
 
   adjust_timing();
-  
+
   initialized = true;
 
   return 0;//TRUE;
