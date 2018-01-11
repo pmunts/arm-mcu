@@ -1,7 +1,7 @@
 # Makefile definitions for building Free Pascal application programs
 # for ARM microcontrollers
 
-# Copyright (C)2017, Philip Munts, President, Munts AM Corp.
+# Copyright (C)2017-2018, Philip Munts, President, Munts AM Corp.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
