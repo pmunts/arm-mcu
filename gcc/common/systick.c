@@ -1,6 +1,6 @@
 /* Abstract services for controlling and using the system tick timer */
 
-// Copyright (C)2015-2017, Philip Munts, President, Munts AM Corp.
+// Copyright (C)2015-2018, Philip Munts, President, Munts AM Corp.
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
