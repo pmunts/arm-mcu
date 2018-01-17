@@ -34,8 +34,8 @@ BufferedSerial::BufferedSerial(PinName tx, PinName rx, uint32_t buf_size, uint32
 
 BufferedSerial::~BufferedSerial(void)
 {
-    RawSerial::attach(NULL, RawSerial::RxIrq);
-    RawSerial::attach(NULL, RawSerial::TxIrq);
+    RawSerial::attach(nullptr, RawSerial::RxIrq);
+    RawSerial::attach(nullptr, RawSerial::TxIrq);
 
     return;
 }
@@ -65,7 +65,7 @@ int BufferedSerial::putc(int c)
 
 int BufferedSerial::puts(const char *s)
 {
-    if (s != NULL) {
+    if (s != nullptr) {
         const char* ptr = s;
 
         while(*(ptr) != 0) {
@@ -102,7 +102,7 @@ int BufferedSerial::printf(const char* format, ...)
 
 ssize_t BufferedSerial::write(const void *s, size_t length)
 {
-    if (s != NULL && length > 0) {
+    if (s != nullptr && length > 0) {
         const char* ptr = (const char*)s;
         const char* end = ptr + length;
 
@@ -135,7 +135,7 @@ void BufferedSerial::txIrq(void)
             serial_putc(&_serial, (int)_txbuf.get());
         } else {
             // disable the TX interrupt when there is nothing left to send
-            RawSerial::attach(NULL, RawSerial::TxIrq);
+            RawSerial::attach(nullptr, RawSerial::TxIrq);
             break;
         }
     }
@@ -147,7 +147,7 @@ void BufferedSerial::prime(void)
 {
     // if already busy then the irq will pick this up
     if(serial_writable(&_serial)) {
-        RawSerial::attach(NULL, RawSerial::TxIrq);    // make sure not to cause contention in the irq
+        RawSerial::attach(nullptr, RawSerial::TxIrq);    // make sure not to cause contention in the irq
         BufferedSerial::txIrq();                // only write to hardware in one place
         RawSerial::attach(this, &BufferedSerial::txIrq, RawSerial::TxIrq);
     }

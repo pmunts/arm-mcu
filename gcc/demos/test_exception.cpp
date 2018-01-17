@@ -44,7 +44,7 @@ int main(void)
   int counter;
 
   cpu_init(DEFAULT_CPU_FREQ);
-  systick_init(100, NULL);
+  systick_init(100, nullptr);
   serial_stdio((char *) CONSOLE_PORT);
 
 // Display startup banner
