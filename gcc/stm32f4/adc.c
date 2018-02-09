@@ -53,6 +53,11 @@ bool adc_channel_forbidden(void *subsystem, unsigned int channel)
     if (channel == 5) return true;			// LED on PA5
 #endif
 
+#if defined(NUCLEO_F446RE)
+    if ((channel >= 2) && (channel <= 3)) return true;	// USART2 on PA2 and PA3
+    if (channel == 5) return true;			// LED on PA5
+#endif
+
 #if defined(STM32F4_DISCOVERY)
     if (channel == 0) return true;			// USER button on PA0
     if ((channel >= 4) && (channel <= 7)) return true;	// Various devices on PA4-7
