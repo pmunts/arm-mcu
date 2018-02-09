@@ -49,7 +49,8 @@ BOARDFLAGS	+= -DLED1_PIN=GPIOPIN5 -DLED1_OUTPUT=GPIOPIN5OUT
 CONSOLEPORT	?= com2:115200,n,8,1
 CONSOLEFLAGS	?= -DCONSOLE_SERIAL -DCONSOLE_PORT='"$(CONSOLEPORT)"'
 # Auxiliary serial port is USART6 on Ardunio D0 and D1 -- Must wire wrap
-# CN10 pin 14 to CN10 pin 35 and CN10 pin 12 to CN10 pin 37
+# CN10 pin 14 (PA11, TxD) to CN10 pin 35 (D1) and
+# CN10 pin 12 (PA12, RxD) to CN10 pin 37 (D0)
 AUXPORT		?= com6:115200,n,8,1
 BOARDFLAGS	+= -DAUX_PORT='"$(AUXPORT)"'
 OPENOCDIF	= stlink-v2-1
@@ -63,7 +64,8 @@ BOARDFLAGS	+= -DLED1_PIN=GPIOPIN5 -DLED1_OUTPUT=GPIOPIN5OUT
 CONSOLEPORT	?= com2:115200,n,8,1
 CONSOLEFLAGS	?= -DCONSOLE_SERIAL -DCONSOLE_PORT='"$(CONSOLEPORT)"'
 # Auxiliary serial port is USART5 on Ardunio D0 and D1 -- Must wire wrap
-# CN7 pin 3 to CN10 pin 35 and CN7 pin 4 to CN10 pin 37
+# CN7 pin 3 (PC12, TxD) to CN10 pin 35 (D1) and
+# CN7 pin 4 (PD2, RxD)  to CN10 pin 37 (D0)
 AUXPORT		?= com5:115200,n,8,1
 BOARDFLAGS	+= -DAUX_PORT='"$(AUXPORT)"'
 OPENOCDIF	= stlink-v2-1
