@@ -30,7 +30,11 @@ MIKROPASCAL	?= "C:/Users/Public/Documents/Mikroelektronika/mikroPascal PRO for A
 
 COMMONDIR	?= $(MIKROPASCALSRC)/common
 
-# Define a pattern rule to build a Mikropascal ARM project
+WORKINGFILES	+= *.asm *.bin *.bmk *.brk *.dbg *.dct *.dlt *.hex *.*mcl
+WORKINGFILES	+= *.log *.lst *callertable.txt *.ini *.user.dic
+WORKINGFILES	+= $(COMMONDIR)/*.asm $(COMMONDIR)/*.ini $(COMMONDIR)/*.*mcl
+
+# Define pattern rules for building a Mikropascal ARM project
 
 %.hex: %.mppar
 	$(MIKROPASCAL) -DL -RA -SSA -PF $<
@@ -41,5 +45,8 @@ COMMONDIR	?= $(MIKROPASCALSRC)/common
 # Remove working files
 
 mikropascal_mk_clean:
-	-rm -f *.asm *.bin *.bmk *.brk *.dbg *.dct *.dlt *.*mcl *.hex *.log *.lst *callertable.txt *.mpas.ini *.user.dic
-	-rm -f $(COMMONDIR)/*.asm $(COMMONDIR)/*.mpas.ini $(COMMONDIR)/*.*mcl
+	-rm -f $(WORKINGFILES)
+
+mikropascal_mk_reallyclean: mikropascal_mk_clean
+
+mikropascal_mk_distclean: mikropascal_mk_reallyclean
