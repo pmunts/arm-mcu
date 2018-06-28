@@ -30,10 +30,8 @@ PROJECTNAME	= test_sdram
 TOOLCHAINNAME	= GCC_ARM
 
 MBEDCLIFLAGS	= -m $(BOARDNAME) -N $(PROJECTNAME) -t $(TOOLCHAINNAME)
-MBEDCLIFLAGS	+= --source .
 
 include $(MBEDOSSRC)/include/mbed5.mk
-include $(ARMSRC)/gcc/include/mbed.mk
 
 # Build the application
 
@@ -41,8 +39,12 @@ default: mbed5_mk_build
 
 # Install the application
 
-install: mbed5_mk_build ./BUILD/$(BOARDNAME)/$(TOOLCHAINNAME)/$(PROJECTNAME).flashmbed
+install: mbed5_mk_install
 
 # Remove working files
 
 clean: mbed5_mk_reallyclean
+
+reallyclean: mbed5_mk_reallyclean
+
+distclean: mbed5_mk_distclean

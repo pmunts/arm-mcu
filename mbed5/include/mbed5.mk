@@ -29,7 +29,8 @@
 MBEDLIBDIR	?= /usr/local/lib/mbed5
 OUTPUTDIR	?= ./BUILD/$(BOARDNAME)/$(TOOLCHAINNAME)
 
-MBEDCLIFLAGS	+= -D__mbedos__
+MBEDCLIFLAGS	+= -D__mbedos__ --source .
+FLASHSUFFIX	?= flashmbed
 
 # Default target placeholder
 
@@ -51,6 +52,10 @@ compile.done: prepare.done
 
 mbed5_mk_build: compile.done
 
+# Flash the compiled firmware to the target board
+
+mbed5_mk_install: mbed5_mk_build ./BUILD/$(BOARDNAME)/$(TOOLCHAINNAME)/$(PROJECTNAME).flashmbed
+
 # Remove working files
 
 mbed5_mk_clean:
@@ -65,3 +70,8 @@ mbed5_mk_reallyclean: mbed5_mk_clean
 	-rm -f prepare.done
 
 mbed5_mk_distclean: mbed5_mk_reallyclean
+
+# Include some subordinate makefiles
+
+sinclude $(ARMSRC)/gcc/include/mbed.mk
+sinclude $(ARMSRC)/gcc/include/stlink.mk

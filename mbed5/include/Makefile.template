@@ -37,6 +37,14 @@ include $(MBEDOSSRC)/include/mbed5.mk
 
 default: mbed5_mk_build
 
+# Install the application
+
+install: mbed5_mk_install
+
 # Remove working files
 
 clean: mbed5_mk_reallyclean
+
+reallyclean: mbed5_mk_reallyclean
+
+distclean: mbed5_mk_distclean

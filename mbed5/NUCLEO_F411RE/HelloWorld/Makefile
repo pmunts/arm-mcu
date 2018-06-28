@@ -28,14 +28,11 @@ MBEDOSSRC	?= $(ARMSRC)/mbed5
 BOARDNAME	= NUCLEO_F411RE
 PROJECTNAME	= HelloWorld
 TOOLCHAINNAME	= GCC_ARM
-FLASHWRITEADDR	= 0x08000000
 
 MBEDCLIFLAGS	= -m $(BOARDNAME) -N $(PROJECTNAME) -t $(TOOLCHAINNAME)
-MBEDCLIFLAGS	+= --source .
 MBEDCLIFLAGS	+= --source $(MBEDOSSRC)/BufferedSerial
 
 include $(MBEDOSSRC)/include/mbed5.mk
-include $(ARMSRC)/gcc/include/stlink.mk
 
 # Build the application
 
@@ -43,8 +40,12 @@ default: mbed5_mk_build
 
 # Install the application
 
-install: mbed5_mk_build ./BUILD/$(BOARDNAME)/$(TOOLCHAINNAME)/$(PROJECTNAME).flashstlink
+install: mbed5_mk_install
 
 # Remove working files
 
 clean: mbed5_mk_reallyclean
+
+reallyclean: mbed5_mk_reallyclean
+
+distclean: mbed5_mk_distclean
