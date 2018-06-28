@@ -23,7 +23,6 @@
 #ifndef _LIBSTREAM_H
 #define _LIBSTREAM_H
 
-#include <unistd.h>
 #ifndef _BEGIN_STD_C
 #include <cplusplus.h>
 #endif
