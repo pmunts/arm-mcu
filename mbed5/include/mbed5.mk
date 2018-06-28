@@ -48,18 +48,19 @@ prepare.done:
 
 compile.done: prepare.done
 	mbed compile $(MBEDCLIFLAGS)
+	cp ./BUILD/$(BOARDNAME)/$(TOOLCHAINNAME)/$(PROJECTNAME).bin .
 	touch $@
 
 mbed5_mk_build: compile.done
 
 # Flash the compiled firmware to the target board
 
-mbed5_mk_install: mbed5_mk_build ./BUILD/$(BOARDNAME)/$(TOOLCHAINNAME)/$(PROJECTNAME).flashmbed
+mbed5_mk_install: mbed5_mk_build $(PROJECTNAME).flashmbed
 
 # Remove working files
 
 mbed5_mk_clean:
-	-rm -rf BUILD compile.done
+	-rm -rf BUILD compile.done $(PROJECTNAME).bin
 
 mbed5_mk_reallyclean: mbed5_mk_clean
 	-rm -f .mbed
