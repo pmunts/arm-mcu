@@ -3,7 +3,7 @@
 # Install Python stuff
 
 pip install mbed-cli -q -U
-pip install -q -r /usr/local/lib/mbed5/mbed-os/requirements.txt
+pip install -q -U -r /usr/local/lib/mbed5/mbed-os/requirements.txt
 
 # Configure the toolchain programs directory to
 # /usr/local/gcc-arm-none-eabi/bin/ if applicable.

@@ -5,3 +5,5 @@ Maintainer: Philip Munts <phil@munts.net>
 Architecture: @@ARCH@@
 Version: @@VERSION@@
 Description: Mbed OS CLI
+Conflicts: munts-mbed-cli
+Replaces: munts-mbed-cli

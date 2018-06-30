@@ -23,7 +23,7 @@
 # Makefile for Mbed OS CLI package
 
 OSNAME		?= unknown
-PKGNAME		= munts-mbed-cli
+PKGNAME		= mbed5
 PKGARCH		:= all
 PKGVERSION	:= $(shell date +%Y.%j)
 PKGDIR		:= $(PKGNAME)-$(PKGVERSION)-$(OSNAME)-$(PKGARCH)
