@@ -22,14 +22,11 @@
 
 #include <mbed.h>
 
-#include <BufferedSerial.h>
-
-BufferedSerial console(SERIAL_TX, SERIAL_RX);
+Serial console(SERIAL_TX, SERIAL_RX);
 
 int main(void)
 {
   console.baud(115200);
-
   console.printf("\033[H\033[2JConsole I/O Test (" __DATE__ " " __TIME__ ")\r\n\n");
 
   for (;;)
