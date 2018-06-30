@@ -30,7 +30,6 @@ PROJECTNAME	= HelloWorld
 TOOLCHAINNAME	= GCC_ARM
 
 MBEDCLIFLAGS	= -m $(BOARDNAME) -N $(PROJECTNAME) -t $(TOOLCHAINNAME)
-MBEDCLIFLAGS	+= --source $(MBEDOSSRC)/BufferedSerial
 
 include $(MBEDOSSRC)/include/mbed5.mk
 
