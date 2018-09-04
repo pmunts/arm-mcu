@@ -1,0 +1,139 @@
+{ I2C transaction wrappers                                                    }
+
+{ Copyright (C)2017-2018, Philip Munts, President, Munts AM Corp.             }
+{                                                                             }
+{ Redistribution and use in source and binary forms, with or without          }
+{ modification, are permitted provided that the following conditions are met: }
+{                                                                             }
+{ * Redistributions of source code must retain the above copyright notice,    }
+{   this list of conditions and the following disclaimer.                     }
+{                                                                             }
+{ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" }
+{ AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE   }
+{ IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE  }
+{ ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE   }
+{ LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR         }
+{ CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF        }
+{ SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS    }
+{ INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN     }
+{ CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)     }
+{ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE  }
+{ POSSIBILITY OF SUCH DAMAGE.                                                 }
+
+UNIT I2C_Compat;
+
+  USES
+    errno;
+
+  CONST
+    StandardMode = 100000;
+    FastMode     = 400000;
+    FastModePlus = 1000000;
+
+  PROCEDURE I2C_Transaction(devaddr : Byte; cmd : ^Byte; cmdlen : Integer;
+    resp : ^Byte; resplen : Integer; VAR error : Integer);
+
+IMPLEMENTATION
+
+{ Figure out what platform we are compiling for }
+
+{$IFDEF P16}
+{$DEFINE PICI2C}
+{$ENDIF}
+
+{$IFDEF P18}
+{$DEFINE PICI2C}
+{$ENDIF}
+
+{$IFDEF P32}
+{$DEFINE PICI2C}
+{$ENDIF}
+
+  PROCEDURE I2C_Transaction(devaddr : Byte; cmd : ^Byte; cmdlen : Integer;
+    resp : ^Byte; resplen : Integer; VAR error : Integer);
+
+    VAR
+      i : Integer;
+
+  BEGIN
+
+    { Validate parameters }
+
+    IF (cmdlen = 0) AND (resplen = 0) THEN
+      BEGIN
+        error := EINVAL;
+        EXIT;
+      END;
+
+    IF (cmd = NIL) AND (cmdlen <> 0) THEN
+      BEGIN
+        error := EINVAL;
+        EXIT;
+      END;
+
+    IF (resp = NIL) and (resplen <> 0) THEN
+      BEGIN
+        error := EINVAL;
+        EXIT;
+      END;
+
+{$IFDEF PICI2C}
+    I2C_Start();
+
+    { Send some data to the I2C slave device }
+
+    IF cmdlen > 0 THEN
+      BEGIN
+        I2C_Write(devaddr SHL 1);
+
+        FOR i := 1 TO cmdlen DO
+          BEGIN
+            I2C_Write(cmd^);
+            Inc(cmd);
+          END;
+      END;
+
+    { Receive some data from the I2C slave device }
+
+    IF resplen > 0 THEN
+      BEGIN
+        IF cmdlen > 0 THEN
+          I2C_Restart();
+
+        I2C_Write((devaddr SHL 1) + 1);
+
+        FOR i := 1 TO resplen DO
+          BEGIN
+            IF i < resplen THEN
+              resp^ := I2C_Read(_I2C_ACK)
+            ELSE
+              resp^ := I2C_Read(_I2C_NACK);
+
+            Inc(resp);
+          END;
+      END;
+
+      I2C_Stop();
+{$ENDIF}
+
+{$IFDEF STM32}
+    I2C_Start();
+
+    { Send some data to the I2C slave device }
+
+    IF cmdlen > 0 THEN
+      IF resplen > 0 THEN
+        I2C_Write(devaddr, cmd, cmdlen, END_MODE_RESTART)
+      ELSE
+        I2C_Write(devaddr, cmd, cmdlen, END_MODE_STOP);
+
+    { Receive some data from the I2C slave device }
+
+    IF resplen > 0 THEN
+      I2C_Read(devaddr, resp, resplen, END_MODE_STOP);
+{$ENDIF}
+
+    error := EOK;
+  END;
+
+END.

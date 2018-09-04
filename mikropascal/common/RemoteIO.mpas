@@ -1,0 +1,134 @@
+{ Remote I/O Protocol Definitions }
+
+{ Copyright (C)2017-2018, Philip Munts, President, Munts AM Corp.             }
+{                                                                             }
+{ Redistribution and use in source and binary forms, with or without          }
+{ modification, are permitted provided that the following conditions are met: }
+{                                                                             }
+{ * Redistributions of source code must retain the above copyright notice,    }
+{   this list of conditions and the following disclaimer.                     }
+{                                                                             }
+{ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" }
+{ AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE   }
+{ IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE  }
+{ ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE   }
+{ LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR         }
+{ CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF        }
+{ SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS    }
+{ INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN     }
+{ CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)     }
+{ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE  }
+{ POSSIBILITY OF SUCH DAMAGE.                                                 }
+
+UNIT RemoteIO;
+
+  USES
+    errno;
+
+  CONST
+    MessageSize              = 64;
+
+    LOOPBACK_REQUEST         = 0;
+    LOOPBACK_RESPONSE        = 1;
+    VERSION_REQUEST          = 2;
+    VERSION_RESPONSE         = 3;
+    CAPABILITY_REQUEST       = 4;
+    CAPABILITY_RESPONSE      = 5;
+    GPIO_PRESENT_REQUEST     = 6;
+    GPIO_PRESENT_RESPONSE    = 7;
+    GPIO_CONFIGURE_REQUEST   = 8;
+    GPIO_CONFIGURE_RESPONSE  = 9;
+    GPIO_READ_REQUEST        = 10;
+    GPIO_READ_RESPONSE       = 11;
+    GPIO_WRITE_REQUEST       = 12;
+    GPIO_WRITE_RESPONSE      = 13;
+    I2C_PRESENT_REQUEST      = 14;
+    I2C_PRESENT_RESPONSE     = 15;
+    I2C_CONFIGURE_REQUEST    = 16;
+    I2C_CONFIGURE_RESPONSE   = 17;
+    I2C_TRANSACTION_REQUEST  = 18;
+    I2C_TRANSACTION_RESPONSE = 19;
+    SPI_PRESENT_REQUEST      = 20;
+    SPI_PRESENT_RESPONSE     = 21;
+    SPI_CONFIGURE_REQUEST    = 22;
+    SPI_CONFIGURE_RESPONSE   = 23;
+    SPI_TRANSACTION_REQUEST  = 24;
+    SPI_TRANSACTION_RESPONSE = 25;
+    ADC_PRESENT_REQUEST      = 26;
+    ADC_PRESENT_RESPONSE     = 27;
+    ADC_CONFIGURE_REQUEST    = 28;
+    ADC_CONFIGURE_RESPONSE   = 29;
+    ADC_READ_REQUEST         = 30;
+    ADC_READ_RESPONSE        = 31;
+
+  TYPE
+    Command  = ARRAY [MessageSize] OF Byte;
+    Response = ARRAY [MessageSize] OF Byte;
+
+  { Common Command RemoteIO_rs that all remote I/O devices should implement }
+
+  PROCEDURE RemoteIO_Unknown(VAR cmd : Command; VAR resp : Response);
+
+  PROCEDURE RemoteIO_Loopback(VAR cmd : Command; VAR resp : Response);
+
+  PROCEDURE RemoteIO_Version(VAR cmd : Command; VAR resp : Response;
+    VAR version : String);
+
+  PROCEDURE RemoteIO_Capability(VAR cmd : Command; VAR resp : Response;
+    VAR capabilities : String);
+
+IMPLEMENTATION
+
+  PROCEDURE RemoteIO_Unknown(VAR cmd : Command; VAR resp : Response);
+
+  BEGIN
+    memset(@resp, 0, sizeof(Resp));
+
+    resp[0] := cmd[0] + 1;
+    resp[1] := cmd[1];
+    resp[2] := EINVAL;
+  END;
+
+  PROCEDURE RemoteIO_Loopback(VAR cmd : Command; VAR resp : Response);
+
+    VAR
+      i : Integer;
+
+  BEGIN
+    memset(@resp, 0, sizeof(resp));
+
+    resp[0] := LOOPBACK_RESPONSE;
+    resp[1] := cmd[1];
+    resp[2] := EOK;
+
+    FOR i := 0 TO 60 DO
+      resp[3+i] := cmd[2+i];
+  END;
+
+  PROCEDURE RemoteIO_Version(VAR cmd : Command; VAR resp : Response;
+    VAR version : String);
+
+  BEGIN
+    memset(@resp, 0, sizeof(resp));
+
+    resp[0] := VERSION_RESPONSE;
+    resp[1] := cmd[1];
+    resp[2] := EOK;
+
+    memcpy(@resp + 3, @version, Length(version));
+  END;
+
+  PROCEDURE RemoteIO_Capability(VAR cmd : Command; VAR resp : Response;
+    VAR capabilities : String);
+
+  BEGIN
+    memset(@resp, 0, sizeof(resp));
+
+    resp[0] := CAPABILITY_RESPONSE;
+    resp[1] := cmd[1];
+    resp[2] := EOK;
+
+    memcpy(@resp + 3, @capabilities, Length(capabilities));
+  END;
+
+END.
