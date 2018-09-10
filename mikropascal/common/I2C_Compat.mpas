@@ -25,13 +25,8 @@ UNIT I2C_Compat;
   USES
     errno;
 
-  CONST
-    StandardMode = 100000;
-    FastMode     = 400000;
-    FastModePlus = 1000000;
-
-  PROCEDURE I2C_Transaction(devaddr : Byte; cmd : ^Byte; cmdlen : Integer;
-    resp : ^Byte; resplen : Integer; VAR error : Integer);
+  PROCEDURE I2C_Transaction(devaddr : Byte; cmd : ^Byte; cmdlen : Byte;
+    resp : ^Byte; resplen : Byte; delay : Word; VAR error : Byte);
 
 IMPLEMENTATION
 
@@ -49,33 +44,13 @@ IMPLEMENTATION
 {$DEFINE PICI2C}
 {$ENDIF}
 
-  PROCEDURE I2C_Transaction(devaddr : Byte; cmd : ^Byte; cmdlen : Integer;
-    resp : ^Byte; resplen : Integer; VAR error : Integer);
+  PROCEDURE I2C_Transaction(devaddr : Byte; cmd : ^Byte; cmdlen : Byte;
+    resp : ^Byte; resplen : Byte; delay : Word; VAR error : Byte);
 
     VAR
-      i : Integer;
+      i : Byte;
 
   BEGIN
-
-    { Validate parameters }
-
-    IF (cmdlen = 0) AND (resplen = 0) THEN
-      BEGIN
-        error := EINVAL;
-        EXIT;
-      END;
-
-    IF (cmd = NIL) AND (cmdlen <> 0) THEN
-      BEGIN
-        error := EINVAL;
-        EXIT;
-      END;
-
-    IF (resp = NIL) and (resplen <> 0) THEN
-      BEGIN
-        error := EINVAL;
-        EXIT;
-      END;
 
 {$IFDEF PICI2C}
     I2C_Start();
@@ -90,30 +65,40 @@ IMPLEMENTATION
           BEGIN
             I2C_Write(cmd^);
             Inc(cmd);
+          END
+      END;
+
+    { Pause between the write and read operations, if necessary }
+
+    IF (cmdlen > 0) AND (resplen > 0) THEN
+      BEGIN
+        delay := delay SHR 4;
+
+        WHILE delay > 0 DO
+          BEGIN
+            Delay_us(16);
+            Dec(delay);
           END;
+
+        I2C_Restart();
       END;
 
     { Receive some data from the I2C slave device }
 
     IF resplen > 0 THEN
       BEGIN
-        IF cmdlen > 0 THEN
-          I2C_Restart();
-
         I2C_Write((devaddr SHL 1) + 1);
 
-        FOR i := 1 TO resplen DO
+        FOR i := 1 TO resplen - 1 DO
           BEGIN
-            IF i < resplen THEN
-              resp^ := I2C_Read(_I2C_ACK)
-            ELSE
-              resp^ := I2C_Read(_I2C_NACK);
-
+            resp^ := I2C_Read(_I2C_ACK);
             Inc(resp);
           END;
+
+        resp^ := I2C_Read(_I2C_NACK);
       END;
 
-      I2C_Stop();
+    I2C_Stop();
 {$ENDIF}
 
 {$IFDEF STM32}
@@ -126,6 +111,15 @@ IMPLEMENTATION
         I2C_Write(devaddr, cmd, cmdlen, END_MODE_RESTART)
       ELSE
         I2C_Write(devaddr, cmd, cmdlen, END_MODE_STOP);
+
+    { Pause between the write and read operations, if necessary }
+
+    IF (cmdlen > 0) AND (resplen > 0) AND (delay > 0) THEN
+      WHILE delayus > 0 DO
+        BEGIN
+          Delay_us(10);
+          delay := delay - 10;
+        END;
 
     { Receive some data from the I2C slave device }
 
