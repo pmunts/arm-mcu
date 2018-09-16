@@ -115,7 +115,7 @@ IMPLEMENTATION
     { Pause between the write and read operations, if necessary }
 
     IF (cmdlen > 0) AND (resplen > 0) AND (delay > 0) THEN
-      WHILE delayus > 0 DO
+      WHILE delay > 0 DO
         BEGIN
           Delay_us(10);
           delay := delay - 10;
