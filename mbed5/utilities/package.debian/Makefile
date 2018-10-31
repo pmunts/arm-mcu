@@ -46,7 +46,7 @@ $(PKGDIR):
 	sed -i s/@@VERSION@@/$(PKGVERSION)/g	$(PKGDIR)/DEBIAN/control
 	mkdir -p				$(PKGDIR)/usr/local/lib
 	cd $(PKGDIR)/usr/local/lib ; mbed new mbed5
-	cd $(PKGDIR) ; patch -p0 <../mbed5.patch
+	cd $(PKGDIR) ; patch -b -p0 <../mbed5.patch
 
 populate: $(PKGDIR)
 
