@@ -1,5 +1,5 @@
---- usr/local/lib/mbed5/mbed_settings.py.orig	2017-08-24 12:46:42.106542771 +0200
-+++ usr/local/lib/mbed5/mbed_settings.py	2017-08-24 12:47:55.921194951 +0200
+--- usr/local/lib/mbed5/mbed_settings.py.orig	2018-10-31 10:17:28.836463911 +0100
++++ usr/local/lib/mbed5/mbed_settings.py	2018-10-31 10:18:11.508787112 +0100
 @@ -28,7 +28,7 @@
  #ARM_PATH = "C:/Program Files/ARM"
  
@@ -7,8 +7,8 @@
 -#GCC_ARM_PATH = ""
 +GCC_ARM_PATH = ""
  
- # GCC CodeRed
- #GCC_CR_PATH = "C:/code_red/RedSuite_4.2.0_349/redsuite/Tools/bin"
+ # IAR
+ #IAR_PATH = "C:/Program Files (x86)/IAR Systems/Embedded Workbench 7.0/arm"
 --- usr/local/lib/mbed5/mbed-os/tools/profiles/debug.json.orig	2018-09-03 15:42:50.744409995 +0200
 +++ usr/local/lib/mbed5/mbed-os/tools/profiles/debug.json	2018-09-03 15:42:51.784405850 +0200
 @@ -9,7 +9,7 @@
@@ -42,14 +42,3 @@
          "ld": ["-Wl,--gc-sections", "-Wl,--wrap,main", "-Wl,--wrap,_malloc_r",
                 "-Wl,--wrap,_free_r", "-Wl,--wrap,_realloc_r", "-Wl,--wrap,_memalign_r",
                 "-Wl,--wrap,_calloc_r", "-Wl,--wrap,exit", "-Wl,--wrap,atexit",
---- usr/local/lib/mbed5/mbed_settings.py.orig	2018-10-31 10:17:28.836463911 +0100
-+++ usr/local/lib/mbed5/mbed_settings.py	2018-10-31 10:18:11.508787112 +0100
-@@ -28,7 +28,7 @@
- #ARM_PATH = "C:/Program Files/ARM"
- 
- # GCC ARM
--#GCC_ARM_PATH = ""
-+GCC_ARM_PATH = ""
- 
- # IAR
- #IAR_PATH = "C:/Program Files (x86)/IAR Systems/Embedded Workbench 7.0/arm"
