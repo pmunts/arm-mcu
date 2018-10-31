@@ -42,3 +42,14 @@
          "ld": ["-Wl,--gc-sections", "-Wl,--wrap,main", "-Wl,--wrap,_malloc_r",
                 "-Wl,--wrap,_free_r", "-Wl,--wrap,_realloc_r", "-Wl,--wrap,_memalign_r",
                 "-Wl,--wrap,_calloc_r", "-Wl,--wrap,exit", "-Wl,--wrap,atexit",
+--- usr/local/lib/mbed5/mbed_settings.py.orig	2018-10-31 10:17:28.836463911 +0100
++++ usr/local/lib/mbed5/mbed_settings.py	2018-10-31 10:18:11.508787112 +0100
+@@ -28,7 +28,7 @@
+ #ARM_PATH = "C:/Program Files/ARM"
+ 
+ # GCC ARM
+-#GCC_ARM_PATH = ""
++GCC_ARM_PATH = ""
+ 
+ # IAR
+ #IAR_PATH = "C:/Program Files (x86)/IAR Systems/Embedded Workbench 7.0/arm"
