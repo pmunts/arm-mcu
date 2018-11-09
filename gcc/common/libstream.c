@@ -91,13 +91,13 @@ void STREAM_encode_frame(void *src, int32_t srclen, void *dst, int32_t dstsize, 
   FAILIF(dstsize < 6);
   FAILIF(dstlen == NULL);
 
-  uint8_t *p = src;
-  uint8_t *q = dst;
+  uint8_t *p = (uint8_t *) src;
+  uint8_t *q = (uint8_t *) dst;
   uint16_t crc = 0;
 
   // Calculate frame check sequence (CRC16-CCITT of payload bytes)
 
-  crc = crc16(src, srclen);
+  crc = crc16((uint8_t *) src, srclen);
 
   // Prefix start of frame delimiter
 
@@ -178,8 +178,8 @@ void STREAM_decode_frame(void *src, int32_t srclen, void *dst, int32_t dstsize, 
   FAILIF(dstsize < 0);
   FAILIF(dstlen == NULL);
 
-  uint8_t *p = src;
-  uint8_t *q = dst;
+  uint8_t *p = (uint8_t *) src;
+  uint8_t *q = (uint8_t *) dst;
   uint16_t crccalc;
   uint16_t crcsent;
 
@@ -232,7 +232,7 @@ void STREAM_decode_frame(void *src, int32_t srclen, void *dst, int32_t dstsize, 
 
   // Calculate expected frame check sequence
 
-  crccalc = crc16(dst, *dstlen);
+  crccalc = crc16((uint8_t *) dst, *dstlen);
 
   // Calculate received frame check sequences
 
@@ -272,7 +272,7 @@ void STREAM_receive_frame(int32_t fd, void *buf, int32_t bufsize, int32_t *frame
 
   int status;
   uint8_t b;
-  uint8_t *bp = buf;
+  uint8_t *bp = (uint8_t *) buf;
 
   // Read a byte from the stream
 
@@ -349,17 +349,22 @@ void STREAM_receive_frame(int32_t fd, void *buf, int32_t bufsize, int32_t *frame
   *error = EAGAIN;
 }
 
-// This is not necessary with libsimpleio
+#undef FAILIF
+#define FAILIF(c, e) if (c) { if (count != NULL) *count = 0; *error = e; return; }
+
+// Send a frame
 
 void STREAM_send_frame(int32_t fd, void *buf, int32_t bufsize, int32_t *count, int32_t *error)
 {
+  // Validate parameters
+
+  FAILIF((fd < 0), EINVAL);
+  FAILIF((buf == NULL), EINVAL);
+  FAILIF((bufsize < 6), EINVAL);
+  FAILIF((count == NULL), EINVAL);
+
   int32_t len = writefn(fd, buf, bufsize);
-  if (len < 0)
-  {
-    *count = 0;
-    *error = errno;
-    return;
-  }
+  FAILIF((len < 0), errno);
 
   *count = len;
   *error = 0;
