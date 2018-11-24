@@ -34,7 +34,7 @@ bool adc_channel_forbidden(void *subsystem, unsigned int channel)
   {
     if (channel >= MAX_ADC_CHANNELS) return true;
 
-#if defined(FEZ_CERB40) && defined(CONSOLE_SERIAL)
+#if defined(CERB40) && defined(CONSOLE_SERIAL)
     if ((channel >= 2) && (channel <= 3)) return true;	// USART2 on PA2 and PA3
 #endif
 

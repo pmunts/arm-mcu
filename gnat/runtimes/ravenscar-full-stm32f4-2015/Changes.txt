@@ -17,5 +17,5 @@ Changes to the Adacore Libre GNAT GPL Ravenscar profile RTS for STM32F4
 
 6. Removed previous memory map linker scripts for other boards.
 
-7. Added support for the FEZ_CERB40, NETDUINOPLUS2, STM32F4_DISCOVERY
+7. Added support for the CERB40, NETDUINOPLUS2, STM32F4_DISCOVERY
    and STM32_M4_NINI boards.

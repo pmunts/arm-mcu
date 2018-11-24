@@ -8,7 +8,7 @@
 
    Loader : Loaders := external ("LOADER", "ROM");
 
-   type Boards is ("FEZ_CERB40", "NETDUINOPLUS2", "NUCLEO_F411RE",
+   type Boards is ("CERB40", "NETDUINOPLUS2", "NUCLEO_F411RE",
      "STM32F4_DISCOVERY", "STM32_M4_MINI");
 
    Board : Boards := external ("BOARDNAME", "NUCLEO_F411RE");
