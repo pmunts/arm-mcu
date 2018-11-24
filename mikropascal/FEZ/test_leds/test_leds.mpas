@@ -23,23 +23,27 @@
 PROGRAM test_leds;
 
 VAR
-  LED : sbit AT GPIOB_ODR.B9;
+  LED1 : sbit AT GPIOB_ODR.B9;
+  LED2 : sbit AT GPIOC_ODR.B10;
 
 BEGIN
 
   { Configure LED outputs }
 
   GPIO_Digital_Output(@GPIOB_BASE, _GPIO_PINMASK_9);
+  GPIO_Digital_Output(@GPIOC_BASE, _GPIO_PINMASK_10);
 
   { Initialize LED outputs }
 
-  LED := False;
+  LED1 := True;
+  LED2 := False;
 
   { Toggle LED outputs }
 
   WHILE True DO
     BEGIN
-      LED := NOT LED;
+      LED1 := NOT LED1;
+      LED2 := NOT LED2;
 
       Delay_ms(500);
     END
