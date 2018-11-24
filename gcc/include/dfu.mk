@@ -22,7 +22,9 @@
 
 DFUUTIL		?= dfu-util
 
+DFUFLAGS	+= -a 0 -s $(FLASHWRITEADDR):leave
+
 # Write code flash with dfu-util
 
 %.flashdfu: %.bin
-	$(DFUUTIL) -a 0 -s $(FLASHWRITEADDR):leave -D $<
+	$(DFUUTIL) $(DFUFLAGS) -D $<
