@@ -30,7 +30,7 @@ News
 
 Git Repository
 
-   The source code is available at: [9]http://git.munts.com
+   The source code is available at: [9]http://git.munts.com/arm-mcu
 
    Use the following command to clone it:
 
@@ -52,5 +52,5 @@ References
    6. https://www.mikroe.com/mikropascal-arm
    7. http://wiki.freepascal.org/TARGET_Embedded
    8. https://www.lego.com/en-us/powerfunctions/articles/8884-control-5fcb2efbb4e74f0c926948df71445765
-   9. http://git.munts.com/
+   9. http://git.munts.com/arm-mcu
   10. mailto:phil@munts.net
