@@ -38,7 +38,7 @@ static LPC_UART_TypeDef * const UARTS[MAX_SERIAL_PORTS] =
 
 /* Map serial port device name to port number */
 
-int serial_name_to_port(char *name)
+int serial_name_to_port(const char *name)
 {
   errno_r = 0;
 
@@ -53,7 +53,7 @@ int serial_name_to_port(char *name)
 
 /* Initialize serial port */
 
-int serial_open(char *name, unsigned int *subdevice)
+int serial_open(const char *name, unsigned int *subdevice)
 {
   unsigned int port;
   unsigned int baudrate;
@@ -108,7 +108,7 @@ int serial_open(char *name, unsigned int *subdevice)
 
 /* Register serial port for standard I/O */
 
-int serial_stdio(char *name)
+int serial_stdio(const char *name)
 {
   unsigned int subdevice;
 
@@ -132,7 +132,7 @@ int serial_stdio(char *name)
 
 /* Register a serial port device */
 
-int serial_register(char *name)
+int serial_register(const char *name)
 {
   unsigned int port;
 

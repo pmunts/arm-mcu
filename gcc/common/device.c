@@ -79,7 +79,7 @@ static device_t device_table[MAX_DEVICES];
 
 /* Register a character device driver to the next available file descriptor */
 
-int device_register_char(char *name,
+int device_register_char(const char *name,
                          unsigned int subdevice,
                          device_open_fn_t openfn,
                          device_close_fn_t closefn,
@@ -196,7 +196,7 @@ int device_register_char_fd(int fd,
 
 /* Register a block device driver to the next available file descriptor */
 
-int device_register_block(char *name,
+int device_register_block(const char *name,
                           device_open_fn_t openfn,
                           device_close_fn_t closefn,
                           device_write_fn_t writefn,
@@ -285,7 +285,7 @@ int device_unregister(int fd)
 
 /* Lookup a device */
 
-int device_lookup(char *name)
+int device_lookup(const char *name)
 {
   int namelen;
   int fd;
@@ -324,7 +324,7 @@ int device_lookup(char *name)
 
 /* Open a device */
 
-int device_open(char *name, int flags, int mode)
+int device_open(const char *name, int flags, mode_t mode)
 {
   int fd;
 

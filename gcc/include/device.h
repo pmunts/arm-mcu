@@ -44,7 +44,7 @@
 
 _BEGIN_STD_C
 
-typedef int (*device_open_fn_t)		(char *name, unsigned int *subdevice);
+typedef int (*device_open_fn_t)		(const char *name, unsigned int *subdevice);
 
 typedef int (*device_close_fn_t)	(unsigned int subdevice);
 
@@ -66,7 +66,7 @@ typedef int (*device_fcntl_fn_t)	(unsigned int subdevice,
 
 // Device registration functions
 
-int device_register_char(char *name,
+int device_register_char(const char *name,
                          unsigned int subdevice,
                          device_open_fn_t openfn,
                          device_close_fn_t closefn,
@@ -84,7 +84,7 @@ int device_register_char_fd(int fd,
                             device_read_ready_fn_t read_readyfn,
                             device_fcntl_fn_t fcntlfn);
 
-int device_register_block(char *name,
+int device_register_block(const char *name,
                           device_open_fn_t openfn,
                           device_close_fn_t closefn,
                           device_write_fn_t writefn,
@@ -94,11 +94,11 @@ int device_register_block(char *name,
 
 int device_unregister(int fd);
 
-int device_lookup(char *name);
+int device_lookup(const char *name);
 
 // I/O method functions
 
-int device_open(char *name, int flags, int mode);
+int device_open(const char *name, int flags, mode_t mode);
 int device_close(int fd);
 int device_ready_read(int fd);
 int device_ready_write(int fd);

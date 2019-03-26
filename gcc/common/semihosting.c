@@ -40,14 +40,14 @@ void *__semihosting(uint32_t op, void *arg)
 #endif
 }
 
-int semihosting_register(char *name)
+int semihosting_register(const char *name)
 {
   return device_register_char(name, 0, semihosting_open, semihosting_close,
     semihosting_write, semihosting_read,
     semihosting_write_ready, semihosting_read_ready, NULL);
 }
 
-int semihosting_stdio(char *name)
+int semihosting_stdio(const char *name)
 {
   unsigned int subdevice;
 
@@ -74,7 +74,7 @@ int semihosting_stdio(char *name)
   return 0;
 }
 
-int semihosting_open(char *name, unsigned int *subdevice)
+int semihosting_open(const char *name, unsigned int *subdevice)
 {
   int devicenamelen;
   uint32_t open_parms[3];

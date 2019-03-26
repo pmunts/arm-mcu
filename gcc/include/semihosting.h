@@ -55,9 +55,9 @@
 
 void *__semihosting(uint32_t op, void *arg) __attribute__((naked));
 
-int semihosting_register(char *name);
-int semihosting_stdio(char *name);
-int semihosting_open(char *name, unsigned int *subdevice);
+int semihosting_register(const char *name);
+int semihosting_stdio(const char *name);
+int semihosting_open(const char *name, unsigned int *subdevice);
 int semihosting_close(unsigned int fd);
 int semihosting_read(unsigned int fd, char *buf, unsigned int count);
 int semihosting_write(unsigned int fd, char *buf, unsigned int count);
