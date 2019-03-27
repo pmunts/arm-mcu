@@ -21,11 +21,12 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 # To install the common Mbed OS libraries, either install Debian package
-# munts-mbed-cli, or run the following commands:
+# mbed5 from http://repo.munts.com, or run the following commands:
 #
 # sudo pip install mbed-cli
 # sudo mbed new /usr/local/lib/mbed5
 
+MBED		?= mbed
 MBEDLIBDIR	?= /usr/local/lib/mbed5
 OUTPUTDIR	?= ./BUILD/$(BOARDNAME)/$(TOOLCHAINNAME)
 
@@ -47,7 +48,7 @@ prepare.done:
 # Perform mbed compile
 
 $(PROJECTNAME).bin: prepare.done
-	mbed compile $(MBEDCLIFLAGS)
+	$(MBED) compile $(MBEDCLIFLAGS)
 	cp ./BUILD/$(BOARDNAME)/$(TOOLCHAINNAME)/$(PROJECTNAME).bin .
 	touch $@
 
