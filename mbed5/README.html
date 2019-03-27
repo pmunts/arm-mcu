@@ -1,17 +1,16 @@
-<h1>Mbed OS 5 Application Framework</h1>
+<h1>Arm Mbed OS 5 Application Framework</h1>
 <p>This is a command line <a href=
 "https://www.gnu.org/software/make"><tt>make</tt></a> framework for building
-<a href="https://developer.mbed.org">Mbed OS 5</a> applications using the
-<a href=
-"https://docs.mbed.com/docs/mbed-os-handbook/en/latest/dev_tools/cli/">Mbed OS
-CLI</a> (Command Line Interface).</p>
-<p>Normally when you create Mbed OS CLI projects, you have to checkout the full
-Mbed OS CLI distribution (603 MB!) into each project directory. This seems
-insane to me, particularly if you are using our own source control system. So
-this framework relies on a single, shared Mbed OS CLI distribution installed at
-<tt>/usr/local/lib/mbed5</tt>.</p>
-<p>Debian packages (<tt>munts-mbed-cli</tt>) that install a copy of the Mbed OS
-CLI to <tt>/usr/local/lib</tt> are available at:</p>
+<a href="https://os.mbed.com">Arm Mbed OS 5</a> applications using the <a href=
+"https://os.mbed.com/docs/mbed-os/v5.8/tutorials/quick-start-offline.html">Arm
+Mbed OS 5 Offline CLI</a> libraries.</p>
+<p>Normally when you create Arm Mbed OS 5 CLI projects, you have to checkout
+the full Arm Mbed OS 5 CLI distribution (603 MB!) into each project directory.
+This seems insane to me, particularly if you are using your own source control
+system. So this framework relies on a single, shared Arm Mbed OS 5 CLI
+distribution installed at <tt>/usr/local/lib/mbed5</tt>.</p>
+<p>A Debian package (<tt>mbed5</tt>) that installs a copy of the Arm Mbed OS 5
+CLI checkout to <tt>/usr/local/lib</tt> is available at:</p>
 <p><a href="http://repo.munts.com">http://repo.munts.com</a></p>
 <p>This framework relies on the <a href=
 "https://developer.arm.com/open-source/gnu-toolchain/gnu-rm">GNU ARM
@@ -26,39 +25,6 @@ necessary items under <tt>/usr/local/lib/mbed5/</tt>. After that the
 <tt>compile.done</tt> target issues the <tt>mbed compile</tt> command to build
 the project. Finally, the <tt>mbed5_mk_reallyclean</tt> target removes all
 working files and the symbolic links.</p>
-<h2>Git Repository</h2>
-<p>The source code is available at:</p>
-<p><a href="http://git.munts.com">http://git.munts.com</a></p>
-<p>Use the following command to clone it:</p>
-<pre>
-git clone http://git.munts.com/arm-mcu.git
-</pre>
-<h2>Copyright:</h2>
-<p>Original works herein are copyrighted as follows:</p>
-<pre>
-
-Copyright (C)2017-2018, Philip Munts, President, Munts AM Corp.
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:
-
-* Redistributions of source code must retain the above copyright notice,
-  this list of conditions and the following disclaimer.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-POSSIBILITY OF SUCH DAMAGE.
-</pre>
-<p>Redistributed works herein are copyrighted and/or licensed by their
-respective authors.</p>
 <hr>
 Questions or comments to Philip Munts <a href=
 "mailto:phil@munts.net">phil@munts.net</a>
