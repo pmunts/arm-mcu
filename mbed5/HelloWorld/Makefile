@@ -31,6 +31,8 @@ TOOLCHAINNAME	= GCC_ARM
 
 MBEDCLIFLAGS	= -m $(BOARDNAME) -N $(PROJECTNAME) -t $(TOOLCHAINNAME)
 
+MBEDDIR		?= /media/$(USER)/NODE_L432KC
+
 include $(MBEDOSSRC)/include/mbed5.mk
 
 # Build the application
