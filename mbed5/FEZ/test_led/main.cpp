@@ -28,13 +28,13 @@ DigitalOut led2(LED2);
 
 int main(void)
 {
+  led1 = 1;
+  led2 = 0;
+
   for (;;)
   {
-    led1 = 1;
-    led2 = 0;
-    wait(0.5);
-    led1 = 0;
-    led2 = 1;
+    led1 = !led1;
+    led2 = !led2;
     wait(0.5);
   }
 }
