@@ -23,13 +23,10 @@
 #include <mbed.h>
 #include <FEZ.h>
 
-DigitalOut led1(LED1);
-DigitalOut led2(LED2);
-
 int main(void)
 {
-  led1 = 1;
-  led2 = 0;
+  DigitalOut led1(LED1, true);
+  DigitalOut led2(LED2, false);
 
   for (;;)
   {
