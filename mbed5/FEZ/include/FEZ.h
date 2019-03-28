@@ -1,13 +1,13 @@
 // GPIO Pin Definitions for the GHI FEZ board
 
-// Copyright (C)2018, Philip Munts, President, Munts AM Corp.
+// Copyright (C)2018-2019, Philip Munts, President, Munts AM Corp.
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
 //
 // * Redistributions of source code must retain the above copyright notice,
 //   this list of conditions and the following disclaimer.
-//
+//=
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 // AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 // IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -23,7 +23,7 @@
 #ifndef _GHI_FEZ_H_
 #define _GHI_FEZ_H_
 
-// Override the GPIO pin definitions for the Nucleo-F401RE board
+// Arduino expansion headers
 
 #define A0		PA_4
 #define A1		PA_5
@@ -51,15 +51,11 @@
 
 #define LED1		PB_9
 #define LED2		PC_10
-#define LED3		-1
-#define LED4		-1
-#define LED_RED		PB_9
 
 // Buttons
 
 #define BUTTON1		PA_15
 #define BUTTON2		PC_13
-#define USER_BUTTON	PA_15
 
 // Serial console
 
@@ -73,17 +69,22 @@
 
 // SPI bus
 
-#define SPI_MOSI	PB_5
-#define SPI_MISO	PB_4
-#define SPI_SCK		PB_3
-#define SPI_CS		PC_8
-#define SPI_SS0		PC_8
-#define SPI_SS1		PC_9
+#define SPI_MOSI	D11
+#define SPI_MISO	D12
+#define SPI_SCK		D13
+#define SPI_CS		D10
+#define SPI_SS0		D10
+#define SPI_SS1		D9
 
 // PWM outputs
 
-#define PWM1		PC_6
-#define PWM2		PB_8
-#define PWM_OUT		PC_6
+#define PWM0		D0
+#define PWM1		D1
+#define PWM2		D3
+#define PWM3		D5
+#define PWM4		D6
+#define PWM5		D9
+#define PWM6		D10
+#define PWM7		D11
 
 #endif
