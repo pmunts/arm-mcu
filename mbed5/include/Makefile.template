@@ -43,7 +43,7 @@ install: mbed5_mk_install
 
 # Remove working files
 
-clean: mbed5_mk_reallyclean
+clean: mbed5_mk_clean
 
 reallyclean: mbed5_mk_reallyclean
 

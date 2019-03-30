@@ -61,7 +61,7 @@ mbed5_mk_install: $(PROJECTNAME).$(FLASHSUFFIX)
 # Remove working files
 
 mbed5_mk_clean:
-	-rm -rf BUILD $(PROJECTNAME).bin
+	-rm -rf $(OUTPUTDIR)/$(PROJECTNAME)* $(OUTPUTDIR)/main.* $(PROJECTNAME).bin
 
 mbed5_mk_reallyclean: mbed5_mk_clean
 	-rm -f .mbed
@@ -70,6 +70,7 @@ mbed5_mk_reallyclean: mbed5_mk_clean
 	-rm -f mbed_settings.py
 	-rm -f mbed_settings.pyc
 	-rm -f prepare.done
+	-rm -rf BUILD
 
 mbed5_mk_distclean: mbed5_mk_reallyclean
 
