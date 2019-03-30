@@ -25,6 +25,8 @@
 ARMSRC		?= $(HOME)/arm-mcu
 MBEDOSSRC	?= $(ARMSRC)/mbed5
 
+# Project settings
+
 BOARDNAME	= LPC4088
 PROJECTNAME	= test_sdram
 TOOLCHAINNAME	= GCC_ARM

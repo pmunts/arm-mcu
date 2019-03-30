@@ -25,13 +25,14 @@
 ARMSRC		?= $(HOME)/arm-mcu
 MBEDOSSRC	?= $(ARMSRC)/mbed5
 
+# Project settings
+
 BOARDNAME	?= NUCLEO_L432KC
 PROJECTNAME	= StreamSerialLoopback
 TOOLCHAINNAME	= GCC_ARM
 
 MBEDCLIFLAGS	= -m $(BOARDNAME) -N $(PROJECTNAME) -t $(TOOLCHAINNAME)
 MBEDCLIFLAGS	+= --source $(MBEDOSSRC)/common
-
 MBEDDIR		?= /media/$(USER)/NODE_L432KC
 
 include $(MBEDOSSRC)/include/mbed5.mk

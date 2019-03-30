@@ -27,13 +27,15 @@ MBEDOSSRC	?= $(ARMSRC)/mbed5
 
 # Project settings
 
-PROJECTNAME	:= test_usbhid
 BOARDNAME	:= NUCLEO_F401RE
+PROJECTNAME	:= test_usbhid
 TOOLCHAINNAME	:= GCC_ARM
 
 MBEDCLIFLAGS	= -m $(BOARDNAME) -N $(PROJECTNAME) -t $(TOOLCHAINNAME)
 MBEDCLIFLAGS	+= --source $(MBEDOSSRC)/FEZ/include
 MBEDCLIFLAGS	+= --source mbed-os/features/unsupported/USBDevice
+
+include $(MBEDOSSRC)/include/mbed5.mk
 
 # Flash programmer settings
 
@@ -41,7 +43,6 @@ FLASHSUFFIX	:= flashdfu
 FLASHWRITEADDR	:= 0x08000000
 
 include $(ARMSRC)/gcc/include/dfu.mk
-include $(MBEDOSSRC)/include/mbed5.mk
 
 # Build the application
 

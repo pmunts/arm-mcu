@@ -27,12 +27,14 @@ MBEDOSSRC	?= $(ARMSRC)/mbed5
 
 # Project settings
 
-PROJECTNAME	:= test_led
 BOARDNAME	:= NUCLEO_F401RE
+PROJECTNAME	:= test_led
 TOOLCHAINNAME	:= GCC_ARM
 
 MBEDCLIFLAGS	= -m $(BOARDNAME) -N $(PROJECTNAME) -t $(TOOLCHAINNAME)
 MBEDCLIFLAGS	+= --source $(MBEDOSSRC)/FEZ/include
+
+include $(MBEDOSSRC)/include/mbed5.mk
 
 # Flash programmer settings
 
@@ -40,7 +42,6 @@ FLASHSUFFIX	:= flashdfu
 FLASHWRITEADDR	:= 0x08000000
 
 include $(ARMSRC)/gcc/include/dfu.mk
-include $(MBEDOSSRC)/include/mbed5.mk
 
 # Build the application
 
