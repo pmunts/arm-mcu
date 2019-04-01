@@ -76,5 +76,9 @@ mbed5_mk_distclean: mbed5_mk_reallyclean
 
 # Include some subordinate makefiles
 
+sinclude $(ARMSRC)/gcc/include/dfu.mk
+sinclude $(ARMSRC)/gcc/include/jlink.mk
+sinclude $(ARMSRC)/gcc/include/lpc21isp.mk
 sinclude $(ARMSRC)/gcc/include/mbed.mk
+sinclude $(ARMSRC)/gcc/include/openocd.mk
 sinclude $(ARMSRC)/gcc/include/stlink.mk
