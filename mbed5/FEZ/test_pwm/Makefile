@@ -1,6 +1,6 @@
 # Makefile for building an Mbed OS application
 
-# Copyright (C)2019, Philip Munts, President, Munts AM Corp.
+# Copyright (C)2017-2019, Philip Munts, President, Munts AM Corp.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -28,7 +28,7 @@ MBEDOSSRC	?= $(ARMSRC)/mbed5
 # Project settings
 
 BOARDNAME	:= NUCLEO_F401RE
-PROJECTNAME	:= test_pwm
+PROJECTNAME	:= $(shell basename $(shell pwd))
 TOOLCHAINNAME	:= GCC_ARM
 
 MBEDCLIFLAGS	= -m $(BOARDNAME) -N $(PROJECTNAME) -t $(TOOLCHAINNAME)

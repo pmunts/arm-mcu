@@ -1,6 +1,6 @@
 # Makefile for building an Mbed OS application
 
-# Copyright (C)2017-2018, Philip Munts, President, Munts AM Corp.
+# Copyright (C)2017-2019, Philip Munts, President, Munts AM Corp.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -28,8 +28,8 @@ MBEDOSSRC	?= $(ARMSRC)/mbed5
 # Project settings
 
 BOARDNAME	?= NUCLEO_L432KC
-PROJECTNAME	= StreamSerialLoopback
-TOOLCHAINNAME	= GCC_ARM
+PROJECTNAME	:= $(shell basename $(shell pwd))
+TOOLCHAINNAME	:= GCC_ARM
 
 MBEDCLIFLAGS	= -m $(BOARDNAME) -N $(PROJECTNAME) -t $(TOOLCHAINNAME)
 MBEDCLIFLAGS	+= --source $(MBEDOSSRC)/common
