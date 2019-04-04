@@ -4,7 +4,7 @@
    applications using the [3]ARM Mbed OS Offline CLI libraries.
 
    Normally when you create ARM Mbed OS CLI projects, you have to checkout
-   the full ARM Mbed OS CLI distribution (603 MB!) into each project
+   the full ARM Mbed OS CLI distribution (590 MB!) into each project
    directory. This seems insane to me, particularly if you are using your
    own source control system. So this framework relies on a single, shared
    ARM Mbed OS CLI distribution installed at /usr/local/lib/mbedos/.
