@@ -49,9 +49,8 @@ endif
 	cd $(PKGDIR) ; patch -b -p0 <../mbedos.patch
 	rm $(PKGDIR)/usr/local/lib/mbedos/mbed_app.json
 	rm $(PKGDIR)/usr/local/lib/mbedos/mbed-os.lib
-	rm -rf $(PKGDIR)/usr/local/lib/mbedos/.git
-	rm -rf $(PKGDIR)/usr/local/lib/mbedos/mbed-os/.git
-	find $(PKGDIR) -name '*.orig' -exec rm {} ";"
+	-find $(PKGDIR) -name '.git*' -exec rm -rf {} ";"
+	-find $(PKGDIR) -name '*.orig' -exec rm {} ";"
 
 populate: $(PKGDIR)
 
