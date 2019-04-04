@@ -66,8 +66,7 @@ tarball: $(TARBALL)
 # Remove working files
 
 clean:
-	-rm $(PKGFILE)
-	-rm -rf $(PKGDIR)
+	-rm -rf $(PKGDIR) $(PKGFILE) $(TARBALL)
 
 reallyclean: clean
 
