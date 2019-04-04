@@ -1,5 +1,0 @@
-#!/bin/sh
-
-# Uninstall Python stuff
-
-pip uninstall mbed-cli -q -y
