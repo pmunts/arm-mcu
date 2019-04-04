@@ -5,7 +5,7 @@
  
  # GCC ARM
 -#GCC_ARM_PATH = ""
-+GCC_ARM_PATH = "/usr/local/gcc-arm-none-eabi"
++GCC_ARM_PATH = "/usr/local/gcc-arm-none-eabi/bin"
  
  # IAR
  #IAR_PATH = "C:/Program Files (x86)/IAR Systems/Embedded Workbench 7.0/arm"
