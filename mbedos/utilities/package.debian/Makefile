@@ -44,6 +44,9 @@ $(PKGDIR):
 	sed -i s/@@VERSION@@/$(PKGVERSION)/g	$(PKGDIR)/DEBIAN/control
 	mkdir -p				$(PKGDIR)/usr/local/lib
 	cd $(PKGDIR)/usr/local/lib ; mbed new mbedos
+ifneq ($(BRANCH),)
+	cd $(PKGDIR)/usr/local/lib/mbedos/mbed-os ; git reset --hard origin/$(BRANCH) ; git checkout $(BRANCH)
+endif
 	cd $(PKGDIR) ; patch -p0 <../mbedos.patch
 
 populate: $(PKGDIR)
