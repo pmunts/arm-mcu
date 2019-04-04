@@ -47,7 +47,12 @@ $(PKGDIR):
 ifneq ($(BRANCH),)
 	cd $(PKGDIR)/usr/local/lib/mbedos/mbed-os ; git reset --hard origin/$(BRANCH) ; git checkout $(BRANCH)
 endif
-	cd $(PKGDIR) ; patch -p0 <../mbedos.patch
+	cd $(PKGDIR) ; patch -b -p0 <../mbedos.patch
+	rm $(PKGDIR)/usr/local/lib/mbedos/mbed_app.json
+	rm $(PKGDIR)/usr/local/lib/mbedos/mbed-os.lib
+	rm -rf $(PKGDIR)/usr/local/lib/mbedos/.git
+	rm -rf $(PKGDIR)/usr/local/lib/mbedos/mbed-os/.git
+	find $(PKGDIR) -name '*.orig' -exec rm {} ";"
 
 populate: $(PKGDIR)
 
