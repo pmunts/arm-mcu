@@ -41,7 +41,6 @@ mbedos_mk_default: default
 
 prepare.done:
 	ln -s $(MBEDLIBDIR)/mbed-os
-	ln -s $(MBEDLIBDIR)/mbed-os.lib
 	ln -s $(MBEDLIBDIR)/mbed_settings.py
 	touch $@
 
