@@ -21,13 +21,13 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 # To install the common Mbed OS libraries, either install Debian package
-# mbed5 from http://repo.munts.com, or run the following commands:
+# mbedos from http://repo.munts.com, or run the following commands:
 #
 # sudo pip install mbed-cli
-# sudo mbed new /usr/local/lib/mbed5
+# sudo mbed new /usr/local/lib/mbedos
 
 MBED		?= mbed
-MBEDLIBDIR	?= /usr/local/lib/mbed5
+MBEDLIBDIR	?= /usr/local/lib/mbedos
 OUTPUTDIR	?= ./BUILD/$(BOARDNAME)/$(TOOLCHAINNAME)
 
 MBEDCLIFLAGS	+= -D__mbedos__ --source .
@@ -35,7 +35,7 @@ FLASHSUFFIX	?= flashmbed
 
 # Default target placeholder
 
-mbed5_mk_default: default
+mbedos_mk_default: default
 
 # Prepare for mbed compile
 
@@ -52,18 +52,18 @@ $(PROJECTNAME).bin: prepare.done
 	cp ./BUILD/$(BOARDNAME)/$(TOOLCHAINNAME)/$(PROJECTNAME).bin .
 	touch $@
 
-mbed5_mk_build: $(PROJECTNAME).bin
+mbedos_mk_build: $(PROJECTNAME).bin
 
 # Flash the compiled firmware to the target board
 
-mbed5_mk_install: $(PROJECTNAME).$(FLASHSUFFIX)
+mbedos_mk_install: $(PROJECTNAME).$(FLASHSUFFIX)
 
 # Remove working files
 
-mbed5_mk_clean:
+mbedos_mk_clean:
 	-rm -rf $(OUTPUTDIR)/$(PROJECTNAME)* $(OUTPUTDIR)/main.* $(PROJECTNAME).bin
 
-mbed5_mk_reallyclean: mbed5_mk_clean
+mbedos_mk_reallyclean: mbedos_mk_clean
 	-rm -f .mbed
 	-rm -f mbed-os
 	-rm -f mbed-os.lib
@@ -72,7 +72,7 @@ mbed5_mk_reallyclean: mbed5_mk_clean
 	-rm -f prepare.done
 	-rm -rf BUILD
 
-mbed5_mk_distclean: mbed5_mk_reallyclean
+mbedos_mk_distclean: mbedos_mk_reallyclean
 
 # Include some subordinate makefiles
 

@@ -1,5 +1,5 @@
---- usr/local/lib/mbed5/mbed_settings.py.orig	2018-10-31 10:17:28.836463911 +0100
-+++ usr/local/lib/mbed5/mbed_settings.py	2018-10-31 10:18:11.508787112 +0100
+--- usr/local/lib/mbedos/mbed_settings.py.orig	2018-10-31 10:17:28.836463911 +0100
++++ usr/local/lib/mbedos/mbed_settings.py	2018-10-31 10:18:11.508787112 +0100
 @@ -28,7 +28,7 @@
  #ARM_PATH = "C:/Program Files/ARM"
  
@@ -9,8 +9,8 @@
  
  # IAR
  #IAR_PATH = "C:/Program Files (x86)/IAR Systems/Embedded Workbench 7.0/arm"
---- usr/local/lib/mbed5/mbed-os/tools/profiles/debug.json.orig	2018-09-03 15:42:50.744409995 +0200
-+++ usr/local/lib/mbed5/mbed-os/tools/profiles/debug.json	2018-09-03 15:42:51.784405850 +0200
+--- usr/local/lib/mbedos/mbed-os/tools/profiles/debug.json.orig	2018-09-03 15:42:50.744409995 +0200
++++ usr/local/lib/mbedos/mbed-os/tools/profiles/debug.json	2018-09-03 15:42:51.784405850 +0200
 @@ -9,7 +9,7 @@
                     "-DMBED_TRAP_ERRORS_ENABLED=1"],
          "asm": ["-x", "assembler-with-cpp"],
@@ -20,10 +20,10 @@
          "ld": ["-Wl,--gc-sections", "-Wl,--wrap,main", "-Wl,--wrap,_malloc_r",
                 "-Wl,--wrap,_free_r", "-Wl,--wrap,_realloc_r", "-Wl,--wrap,_memalign_r",
                 "-Wl,--wrap,_calloc_r", "-Wl,--wrap,exit", "-Wl,--wrap,atexit",
---- usr/local/lib/mbed5/mbed-os/tools/profiles/develop.json.orig	2018-09-03 15:42:50.744409995 +0200
-+++ usr/local/lib/mbed5/mbed-os/tools/profiles/develop.json	2018-09-03 15:42:51.784405850 +0200
+--- usr/local/lib/mbedos/mbed-os/tools/profiles/develop.json.orig	2019-04-04 08:24:01.021921141 +0200
++++ usr/local/lib/mbedos/mbed-os/tools/profiles/develop.json	2019-04-04 08:24:02.361932475 +0200
 @@ -8,7 +8,7 @@
-                    "-fomit-frame-pointer", "-Os", "-g1"],
+                    "-fomit-frame-pointer", "-Os", "-g1", "-DMBED_TRAP_ERRORS_ENABLED=1"],
          "asm": ["-x", "assembler-with-cpp"],
          "c": ["-std=gnu99"],
 -        "cxx": ["-std=gnu++98", "-fno-rtti", "-Wvla"],
@@ -31,8 +31,8 @@
          "ld": ["-Wl,--gc-sections", "-Wl,--wrap,main", "-Wl,--wrap,_malloc_r",
                 "-Wl,--wrap,_free_r", "-Wl,--wrap,_realloc_r", "-Wl,--wrap,_memalign_r",
                 "-Wl,--wrap,_calloc_r", "-Wl,--wrap,exit", "-Wl,--wrap,atexit",
---- usr/local/lib/mbed5/mbed-os/tools/profiles/release.json.orig	2018-09-03 15:42:50.744409995 +0200
-+++ usr/local/lib/mbed5/mbed-os/tools/profiles/release.json	2018-09-03 15:42:51.788405835 +0200
+--- usr/local/lib/mbedos/mbed-os/tools/profiles/release.json.orig	2018-09-03 15:42:50.744409995 +0200
++++ usr/local/lib/mbedos/mbed-os/tools/profiles/release.json	2018-09-03 15:42:51.788405835 +0200
 @@ -8,7 +8,7 @@
                     "-fomit-frame-pointer", "-Os", "-DNDEBUG", "-g1"],
          "asm": ["-x", "assembler-with-cpp"],

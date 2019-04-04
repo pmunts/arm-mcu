@@ -1,4 +1,4 @@
-# Makefile for building an Mbed OS application
+# Makefile for building the ARM Mbed OS CLI package for Debian Linux
 
 # Copyright (C)2017-2019, Philip Munts, President, Munts AM Corp.
 #
@@ -20,37 +20,38 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-# Override the following macros to build out of tree
+OSNAME		?= unknown
+PKGNAME		= mbedos
+PKGARCH		:= all
+PKGVERSION	:= $(shell date +%Y.%j)
+PKGDIR		:= $(PKGNAME)-$(PKGVERSION)-$(OSNAME)-$(PKGARCH)
+PKGFILE		:= $(PKGDIR).deb
 
-ARMSRC		?= $(HOME)/arm-mcu
-MBEDOSSRC	?= $(ARMSRC)/mbed5
+default: $(PKGFILE)
 
-# Project settings
+$(PKGFILE): $(PKGDIR)
+	chmod -R ugo-w $(PKGDIR)/usr
+	fakeroot dpkg-deb --build $(PKGDIR)
+	chmod -R u+w $(PKGDIR)/usr
 
-BOARDNAME	:= NUCLEO_F401RE
-PROJECTNAME	:= $(shell basename $(shell pwd))
-TOOLCHAINNAME	:= GCC_ARM
+$(PKGDIR):
+	mkdir -p $(PKGDIR)/DEBIAN
+	install -cm 0444 control		$(PKGDIR)/DEBIAN
+	install -cm 0755 postinst		$(PKGDIR)/DEBIAN
+	install -cm 0755 prerm			$(PKGDIR)/DEBIAN
+	sed -i s/@@ARCH@@/$(PKGARCH)/g		$(PKGDIR)/DEBIAN/control
+	sed -i s/@@NAME@@/$(PKGNAME)/g		$(PKGDIR)/DEBIAN/control
+	sed -i s/@@VERSION@@/$(PKGVERSION)/g	$(PKGDIR)/DEBIAN/control
+	mkdir -p				$(PKGDIR)/usr/local/lib
+	cd $(PKGDIR)/usr/local/lib ; mbed new mbedos
+	cd $(PKGDIR) ; patch -p0 <../mbedos.patch
 
-MBEDCLIFLAGS	= -m $(BOARDNAME) -N $(PROJECTNAME) -t $(TOOLCHAINNAME)
-MBEDCLIFLAGS	+= --source $(MBEDOSSRC)/FEZ/include
+populate: $(PKGDIR)
 
-FLASHSUFFIX	:= flashdfu
-FLASHWRITEADDR	:= 0x08000000
+clean:
+	-rm $(PKGFILE)
+	-rm -rf $(PKGDIR)
 
-include $(MBEDOSSRC)/include/mbed5.mk
+reallyclean: clean
 
-# Build the application
-
-default: mbed5_mk_build
-
-# Install the application
-
-install: mbed5_mk_install
-
-# Remove working files
-
-clean: mbed5_mk_clean
-
-reallyclean: mbed5_mk_reallyclean
-
-distclean: mbed5_mk_distclean
+distclean: reallyclean

@@ -1,6 +1,6 @@
-# Makefile for building the Mbed OS CLI package for Debian Linux
+# Makefile for building an Mbed OS application
 
-# Copyright (C)2017-2018, Philip Munts, President, Munts AM Corp.
+# Copyright (C)2017-2019, Philip Munts, President, Munts AM Corp.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -20,40 +20,35 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-# Makefile for Mbed OS CLI package
+# Override the following macros to build out of tree
 
-OSNAME		?= unknown
-PKGNAME		= mbed5
-PKGARCH		:= all
-PKGVERSION	:= $(shell date +%Y.%j)
-PKGDIR		:= $(PKGNAME)-$(PKGVERSION)-$(OSNAME)-$(PKGARCH)
-PKGFILE		:= $(PKGDIR).deb
+ARMSRC		?= $(HOME)/arm-mcu
+MBEDOSSRC	?= $(ARMSRC)/mbedos
 
-default: $(PKGFILE)
+# Project settings
 
-$(PKGFILE): $(PKGDIR)
-	chmod -R ugo-w $(PKGDIR)/usr
-	fakeroot dpkg-deb --build $(PKGDIR)
-	chmod -R u+w $(PKGDIR)/usr
+BOARDNAME	?= NUCLEO_L432KC
+PROJECTNAME	:= $(shell basename $(shell pwd))
+TOOLCHAINNAME	:= GCC_ARM
 
-$(PKGDIR):
-	mkdir -p $(PKGDIR)/DEBIAN
-	install -cm 0444 control		$(PKGDIR)/DEBIAN
-	install -cm 0755 postinst		$(PKGDIR)/DEBIAN
-	install -cm 0755 prerm			$(PKGDIR)/DEBIAN
-	sed -i s/@@ARCH@@/$(PKGARCH)/g		$(PKGDIR)/DEBIAN/control
-	sed -i s/@@NAME@@/$(PKGNAME)/g		$(PKGDIR)/DEBIAN/control
-	sed -i s/@@VERSION@@/$(PKGVERSION)/g	$(PKGDIR)/DEBIAN/control
-	mkdir -p				$(PKGDIR)/usr/local/lib
-	cd $(PKGDIR)/usr/local/lib ; mbed new mbed5
-	cd $(PKGDIR) ; patch -p0 <../mbed5.patch
+MBEDCLIFLAGS	= -m $(BOARDNAME) -N $(PROJECTNAME) -t $(TOOLCHAINNAME)
+MBEDCLIFLAGS	+= --source $(MBEDOSSRC)/common
+MBEDDIR		?= /media/$(USER)/NODE_L432KC
 
-populate: $(PKGDIR)
+include $(MBEDOSSRC)/include/mbedos.mk
 
-clean:
-	-rm $(PKGFILE)
-	-rm -rf $(PKGDIR)
+# Build the application
 
-reallyclean: clean
+default: mbedos_mk_build
 
-distclean: reallyclean
+# Install the application
+
+install: mbedos_mk_install
+
+# Remove working files
+
+clean: mbedos_mk_clean
+
+reallyclean: mbedos_mk_reallyclean
+
+distclean: mbedos_mk_distclean

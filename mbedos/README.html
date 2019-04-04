@@ -1,0 +1,32 @@
+<h1>ARM Mbed OS Application Framework</h1>
+<p>This is a command line <a href=
+"https://www.gnu.org/software/make"><tt>make</tt></a> framework for building
+<a href="https://os.mbed.com">ARM Mbed OS</a> applications using the <a href=
+"https://os.mbed.com/docs/mbed-os/v5.8/tutorials/quick-start-offline.html">ARM
+Mbed OS Offline CLI</a> libraries.</p>
+<p>Normally when you create ARM Mbed OS CLI projects, you have to checkout the
+full ARM Mbed OS CLI distribution (603 MB!) into each project directory. This
+seems insane to me, particularly if you are using your own source control
+system. So this framework relies on a single, shared ARM Mbed OS CLI
+distribution installed at <tt>/usr/local/lib/mbedos/</tt>.</p>
+<p>A Debian package (<tt>mbedos</tt>) that installs a copy of the ARM Mbed OS
+CLI checkout to <tt>/usr/local/lib/mbedos/</tt> is available at:</p>
+<p><a href="http://repo.munts.com">http://repo.munts.com</a></p>
+<p>This framework relies on the <a href=
+"https://developer.arm.com/open-source/gnu-toolchain/gnu-rm">GNU ARM
+Embedded</a> C/C++ toolchain, which is available at:</p>
+<p><a href=
+"https://developer.arm.com/open-source/gnu-toolchain/gnu-rm/downloads">https://developer.arm.com/open-source/gnu-toolchain/gnu-rm/downloads</a></p>
+<p>The GNU ARM Embedded toolchain tarball must be unpacked to
+<tt>/usr/local/gcc-arm-none-eabi/</tt></p>
+<p>Each project <tt>Makefile</tt> must include <tt>include/mbedos.mk</tt>. The
+<tt>prepare.done</tt> target in <tt>mbedos.mk</tt> creates symbolic links to
+the necessary items under <tt>/usr/local/lib/mbedos/</tt>. After that the
+<tt>compile.done</tt> target issues the <tt>mbed compile</tt> command to build
+the project. Finally, the <tt>mbedos_mk_reallyclean</tt> target removes all
+working files and the symbolic links.</p>
+<hr>
+Questions or comments to Philip Munts <a href=
+"mailto:phil@munts.net">phil@munts.net</a>
+<p>I am available for custom system development (hardware and software) of
+products using ARM or other microcontrollers.</p>

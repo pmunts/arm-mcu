@@ -23,30 +23,34 @@
 # Override the following macros to build out of tree
 
 ARMSRC		?= $(HOME)/arm-mcu
-MBEDOSSRC	?= $(ARMSRC)/mbed5
+MBEDOSSRC	?= $(ARMSRC)/mbedos
 
 # Project settings
 
-BOARDNAME	:= UNKNOWN
+BOARDNAME	:= NUCLEO_F401RE
 PROJECTNAME	:= $(shell basename $(shell pwd))
 TOOLCHAINNAME	:= GCC_ARM
 
 MBEDCLIFLAGS	= -m $(BOARDNAME) -N $(PROJECTNAME) -t $(TOOLCHAINNAME)
+MBEDCLIFLAGS	+= --source $(MBEDOSSRC)/FEZ/include
 
-include $(MBEDOSSRC)/include/mbed5.mk
+FLASHSUFFIX	:= flashdfu
+FLASHWRITEADDR	:= 0x08000000
+
+include $(MBEDOSSRC)/include/mbedos.mk
 
 # Build the application
 
-default: mbed5_mk_build
+default: mbedos_mk_build
 
 # Install the application
 
-install: mbed5_mk_install
+install: mbedos_mk_install
 
 # Remove working files
 
-clean: mbed5_mk_clean
+clean: mbedos_mk_clean
 
-reallyclean: mbed5_mk_reallyclean
+reallyclean: mbedos_mk_reallyclean
 
-distclean: mbed5_mk_distclean
+distclean: mbedos_mk_distclean
