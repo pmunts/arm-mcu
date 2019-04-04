@@ -26,6 +26,8 @@ PKGARCH		:= all
 PKGVERSION	:= $(shell date +%Y.%j)
 PKGDIR		:= $(PKGNAME)-$(PKGVERSION)-$(OSNAME)-$(PKGARCH)
 PKGFILE		:= $(PKGDIR).deb
+TARBALL		:= $(PKGNAME)-$(PKGVERSION).tgz
+TARFLAGS	?= --owner=root --group=root --mode=ugo-w
 
 default: $(PKGFILE)
 
@@ -53,6 +55,15 @@ endif
 	-find $(PKGDIR) -name '*.orig' -exec rm {} ";"
 
 populate: $(PKGDIR)
+
+# Create tarball for e.g. MacOS
+
+$(TARBALL): populate
+	cd $(PKGDIR)/usr/local/lib && tar czf ../../../../$(TARBALL) mbedos $(TARFLAGS)
+
+tarball: $(TARBALL)
+
+# Remove working files
 
 clean:
 	-rm $(PKGFILE)
