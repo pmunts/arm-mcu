@@ -22,6 +22,8 @@
 
 # texane/stlink
 
+FLASHWRITEADDR		?= 0x08000000
+
 STLINKFLASH		?= stlink-flash
 STLINKFLASHOPTS1	?= --reset write $(STLINKIF)
 STLINKFLASHOPTS2	?= $(FLASHWRITEADDR)
