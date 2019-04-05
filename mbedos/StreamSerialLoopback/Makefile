@@ -28,10 +28,6 @@ MBEDOSSRC	?= $(ARMSRC)/mbedos
 # Project settings
 
 BOARDNAME	?= NUCLEO_L432KC
-PROJECTNAME	:= $(shell basename $(shell pwd))
-TOOLCHAINNAME	:= GCC_ARM
-
-MBEDCLIFLAGS	= -m $(BOARDNAME) -N $(PROJECTNAME) -t $(TOOLCHAINNAME)
 MBEDCLIFLAGS	+= --source $(MBEDOSSRC)/common
 MBEDDIR		?= /media/$(USER)/NODE_L432KC
 

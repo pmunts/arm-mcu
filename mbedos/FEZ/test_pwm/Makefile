@@ -28,14 +28,9 @@ MBEDOSSRC	?= $(ARMSRC)/mbedos
 # Project settings
 
 BOARDNAME	:= NUCLEO_F401RE
-PROJECTNAME	:= $(shell basename $(shell pwd))
-TOOLCHAINNAME	:= GCC_ARM
-
-MBEDCLIFLAGS	= -m $(BOARDNAME) -N $(PROJECTNAME) -t $(TOOLCHAINNAME)
-MBEDCLIFLAGS	+= --source $(MBEDOSSRC)/FEZ/include
-
 FLASHSUFFIX	:= flashdfu
 FLASHWRITEADDR	:= 0x08000000
+MBEDCLIFLAGS	+= --source $(MBEDOSSRC)/FEZ/include
 
 include $(MBEDOSSRC)/include/mbedos.mk
 

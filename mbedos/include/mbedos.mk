@@ -1,6 +1,6 @@
 # Common make definitions for building Mbed OS applications
 
-# Copyright (C)2017-2018, Philip Munts, President, Munts AM Corp.
+# Copyright (C)2017-2019, Philip Munts, President, Munts AM Corp.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -27,29 +27,43 @@
 # sudo mbed new /usr/local/lib/mbedos
 
 MBED		?= mbed
-MBEDLIBDIR	?= /usr/local/lib/mbedos
-OUTPUTDIR	?= ./BUILD/$(BOARDNAME)/$(TOOLCHAINNAME)
+MBEDOSDIR	?= /usr/local/lib/mbedos
 
-MBEDCLIFLAGS	+= -D__mbedos__ --source .
+BLDDIRBASE	?= build
+LIBDIRBASE	?= $(HOME)/.mbedos
+
+BLDDIR		?= $(BLDDIRBASE)/$(BOARDNAME)
+LIBDIR		?= $(LIBDIRBASE)/$(BOARDNAME)
+SRCDIR		?= src
+
+PROJECTNAME	?= $(shell basename $(shell pwd))
+TOOLCHAINNAME	?= GCC_ARM
+
+MBEDCLIFLAGS	+= -m $(BOARDNAME) -N $(PROJECTNAME) -t $(TOOLCHAINNAME) -D__mbedos__
+MBEDCLIFLAGS	+= --source=$(SRCDIR) --source=$(LIBDIR) --build=$(BLDDIR)
+
 FLASHSUFFIX	?= flashmbed
 
 # Default target placeholder
 
 mbedos_mk_default: default
 
-# Prepare for mbed compile
+# Build the Mbed OS library
 
-prepare.done:
-	ln -s $(MBEDLIBDIR)/mbed-os
-	ln -s $(MBEDLIBDIR)/mbed_settings.py
-	touch $@
+$(LIBDIR)/libmbed-os.a:
+	ln -s -f $(MBEDOSDIR)/mbed-os
+	ln -s -f $(MBEDOSDIR)/mbed_settings.py
+	$(MBED) compile -t $(TOOLCHAINNAME) -m $(BOARDNAME) --library --source=mbed-os --build=$(LIBDIR)
 
-# Perform mbed compile
+library: $(LIBDIR)/libmbed-os.a
 
-$(PROJECTNAME).bin: prepare.done
+# Build the Mbed OS application
+
+$(PROJECTNAME).bin: library
+	ln -s -f $(MBEDOSDIR)/mbed-os
+	ln -s -f $(MBEDOSDIR)/mbed_settings.py
 	$(MBED) compile $(MBEDCLIFLAGS)
-	cp ./BUILD/$(BOARDNAME)/$(TOOLCHAINNAME)/$(PROJECTNAME).bin .
-	touch $@
+	cp $(BLDDIR)/$(PROJECTNAME).bin .
 
 mbedos_mk_build: $(PROJECTNAME).bin
 
@@ -60,18 +74,13 @@ mbedos_mk_install: $(PROJECTNAME).$(FLASHSUFFIX)
 # Remove working files
 
 mbedos_mk_clean:
-	-rm -rf $(OUTPUTDIR)/$(PROJECTNAME)* $(OUTPUTDIR)/main.* $(PROJECTNAME).bin
+	-rm -rf $(PROJECTNAME).bin $(BLDDIR)
 
 mbedos_mk_reallyclean: mbedos_mk_clean
-	-rm -f .mbed
-	-rm -f mbed-os
-	-rm -f mbed-os.lib
-	-rm -f mbed_settings.py
-	-rm -f mbed_settings.pyc
-	-rm -f prepare.done
-	-rm -rf BUILD
+	-rm -rf .mbed mbed* $(BLDDIRBASE)
 
 mbedos_mk_distclean: mbedos_mk_reallyclean
+	-rm -rf $(LIBDIRBASE)
 
 # Include some subordinate makefiles
 

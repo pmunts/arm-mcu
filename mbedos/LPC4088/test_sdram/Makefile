@@ -28,10 +28,6 @@ MBEDOSSRC	?= $(ARMSRC)/mbedos
 # Project settings
 
 BOARDNAME	:= LPC4088
-PROJECTNAME	:= $(shell basename $(shell pwd))
-TOOLCHAINNAME	:= GCC_ARM
-
-MBEDCLIFLAGS	= -m $(BOARDNAME) -N $(PROJECTNAME) -t $(TOOLCHAINNAME)
 
 include $(MBEDOSSRC)/include/mbedos.mk
 
