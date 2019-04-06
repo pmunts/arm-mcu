@@ -42,11 +42,13 @@ TOOLCHAINNAME	?= GCC_ARM
 MBEDCLIFLAGS	+= -m $(BOARDNAME) -N $(PROJECTNAME) -t $(TOOLCHAINNAME) -D__mbedos__
 MBEDCLIFLAGS	+= --source=$(SRCDIR) --source=$(LIBDIR) --build=$(BLDDIR)
 
-FLASHSUFFIX	?= flashmbed
-
 # Default target placeholder
 
 mbedos_mk_default: default
+
+# Import board specific definitions
+
+include $(ARMSRC)/mbedos/include/boards.mk
 
 # Build the Mbed OS library
 
@@ -83,7 +85,7 @@ mbedos_mk_reallyclean: mbedos_mk_clean
 mbedos_mk_distclean: mbedos_mk_reallyclean
 	-rm -rf $(LIBDIRBASE)
 
-# Include some subordinate makefiles
+# Include some more subordinate makefiles
 
 sinclude $(ARMSRC)/gcc/include/dfu.mk
 sinclude $(ARMSRC)/gcc/include/jlink.mk

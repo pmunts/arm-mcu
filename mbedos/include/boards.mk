@@ -1,6 +1,4 @@
-# Makefile for building an Mbed OS application
-
-# Copyright (C)2017-2019, Philip Munts, President, Munts AM Corp.
+# Copyright (C)2019, Philip Munts, President, Munts AM Corp.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -20,28 +18,44 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-# Override the following macro to build out of tree
+# Optional definitions for certain development hosts
 
-ARMSRC		?= $(HOME)/arm-mcu
+ifeq ($(shell uname), Darwin)
+MBEDPREFIX	?= /Volumes
+endif
 
-# Project settings
+ifeq ($(shell uname), Linux)
+MBEDPREFIX	?= /media/$(USER)
+endif
 
-BOARDNAME	?= NUCLEO_F411RE
+# Optional definitions for certain ARM Mbed OS target boards
 
-include $(ARMSRC)/mbedos/include/mbedos.mk
+ifeq ($(BOARDNAME), NUCLEO_F072RB)
+FLASHSUFFIX	?= flashmbed
+FLASHWRITEADDR	?= 0x08000000
+MBEDDIR		?= $(MBEDPREFIX)/NUCLEO
+endif
 
-# Build the application
+ifeq ($(BOARDNAME), NUCLEO_F103RB)
+FLASHSUFFIX	?= flashmbed
+FLASHWRITEADDR	?= 0x08000000
+MBEDDIR		?= $(MBEDPREFIX)/NUCLEO
+endif
 
-default: mbedos_mk_build
+ifeq ($(BOARDNAME), NUCLEO_F411RE)
+FLASHSUFFIX	?= flashmbed
+FLASHWRITEADDR	?= 0x08000000
+MBEDDIR		?= $(MBEDPREFIX)/NODE_F411RE
+endif
 
-# Install the application
+ifeq ($(BOARDNAME), NUCLEO_F446RE)
+FLASHSUFFIX	?= flashmbed
+FLASHWRITEADDR	?= 0x08000000
+MBEDDIR		?= $(MBEDPREFIX)/NODE_F446RE
+endif
 
-install: mbedos_mk_install
-
-# Remove working files
-
-clean: mbedos_mk_clean
-
-reallyclean: mbedos_mk_reallyclean
-
-distclean: mbedos_mk_distclean
+ifeq ($(BOARDNAME), NUCLEO_L432KC)
+FLASHSUFFIX	?= flashmbed
+FLASHWRITEADDR	?= 0x08000000
+MBEDDIR		?= $(MBEDPREFIX)/NODE_L432KC
+endif

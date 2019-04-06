@@ -20,18 +20,16 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-# Override the following macros to build out of tree
+# Override the following macro to build out of tree
 
 ARMSRC		?= $(HOME)/arm-mcu
-MBEDOSSRC	?= $(ARMSRC)/mbedos
 
 # Project settings
 
-BOARDNAME	?= NUCLEO_L432KC
-MBEDCLIFLAGS	+= --source $(MBEDOSSRC)/common
-MBEDDIR		?= /media/$(USER)/NODE_L432KC
+BOARDNAME	?= NUCLEO_F411RE
+MBEDCLIFLAGS	+= --source $(ARMSRC)/mbedos/common
 
-include $(MBEDOSSRC)/include/mbedos.mk
+include $(ARMSRC)/mbedos/include/mbedos.mk
 
 # Build the application
 
