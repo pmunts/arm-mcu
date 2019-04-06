@@ -40,4 +40,10 @@ BOARDFLAGS	+= -DLED4_PIN=GPIOPIN55 -DLED4_OUTPUT=GPIOPIN55OUT
 CONSOLEPORT	?= com1:115200,n,8,1
 CONSOLEFLAGS	?= -DCONSOLE_SERIAL -DCONSOLE_PORT='"$(CONSOLEPORT)"'
 JLINKMCU	= lpc1768
+ifeq ($(shell uname), Darwin)
+MBEDDIR		?= /Volumes/MBED
+endif
+ifeq ($(shell uname), Linux)
+MBEDDIR		?= /media/$(USER)/MBED
+endif
 endif

@@ -53,7 +53,12 @@ CONSOLEFLAGS	?= -DCONSOLE_SERIAL -DCONSOLE_PORT='"$(CONSOLEPORT)"'
 # CN10 pin 12 (PA12, RxD) to CN10 pin 37 (D0)
 AUXPORT		?= com6:115200,n,8,1
 BOARDFLAGS	+= -DAUX_PORT='"$(AUXPORT)"'
+ifeq ($(shell uname), Darwin)
+MBEDDIR		?= /Volumes/NODE_F411RE
+endif
+ifeq ($(shell uname), Linux)
 MBEDDIR		?= /media/$(USER)/NODE_F411RE
+endif
 OPENOCDIF	= stlink-v2-1
 endif
 
@@ -69,7 +74,12 @@ CONSOLEFLAGS	?= -DCONSOLE_SERIAL -DCONSOLE_PORT='"$(CONSOLEPORT)"'
 # CN7 pin 4 (PD2, RxD)  to CN10 pin 37 (D0)
 AUXPORT		?= com5:115200,n,8,1
 BOARDFLAGS	+= -DAUX_PORT='"$(AUXPORT)"'
+ifeq ($(shell uname), Darwin)
+MBEDDIR		?= /Volumes/NODE_F446RE
+endif
+ifeq ($(shell uname), Linux)
 MBEDDIR		?= /media/$(USER)/NODE_F446RE
+endif
 OPENOCDIF	= stlink-v2-1
 endif
 

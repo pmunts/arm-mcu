@@ -33,6 +33,12 @@ CONSOLEFLAGS	?= -DCONSOLE_SERIAL -DCONSOLE_PORT='"$(CONSOLEPORT)"'
 # CN7 pin 1 to CN10 pin 35 and CN7 pin 2 to CN10 pin 37
 AUXPORT		?= com3:115200,n,8,1
 BOARDFLAGS	+= -DAUX_PORT='"$(AUXPORT)"'
+ifeq ($(shell uname), Darwin)
+MBEDDIR		?= /Volumes/NUCLEO
+endif
+ifeq ($(shell uname), Linux)
+MBEDDIR		?= /media/$(USER)/NUCLEO
+endif
 OPENOCDIF	= stlink-v2-1
 endif
 
