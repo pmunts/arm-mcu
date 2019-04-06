@@ -23,17 +23,16 @@
 # Override the following macros to build out of tree
 
 ARMSRC		?= $(HOME)/arm-mcu
-MBEDOSSRC	?= $(ARMSRC)/mbedos
 
 # Project settings
 
 BOARDNAME	:= NUCLEO_F401RE
 FLASHSUFFIX	:= flashdfu
 FLASHWRITEADDR	:= 0x08000000
-MBEDCLIFLAGS	+= --source $(MBEDOSSRC)/FEZ/include
+MBEDCLIFLAGS	+= --source $(ARMSRC)/mbedos/FEZ/include
 MBEDCLIFLAGS	+= --source mbed-os/features/unsupported/USBDevice
 
-include $(MBEDOSSRC)/include/mbedos.mk
+include $(ARMSRC)/mbedos/include/mbedos.mk
 
 # Build the application
 
