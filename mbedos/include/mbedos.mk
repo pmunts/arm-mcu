@@ -59,7 +59,8 @@ library: $(LIBDIR)/libmbed-os.a
 
 # Build the Mbed OS application
 
-$(PROJECTNAME).bin: library
+$(PROJECTNAME).bin:
+	$(MAKE) $(LIBDIR)/libmbed-os.a
 	ln -s -f $(MBEDOSDIR)/mbed-os
 	ln -s -f $(MBEDOSDIR)/mbed_settings.py
 	$(MBED) compile $(MBEDCLIFLAGS)
