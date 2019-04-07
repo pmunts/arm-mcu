@@ -30,6 +30,20 @@ endif
 
 # Optional definitions for certain ARM Mbed OS target boards
 
+ifeq ($(BOARDNAME), LPC1768)
+# Original mbed LPC1768 board
+FLASHSUFFIX	?= flashmbed
+MBEDCLIFLAGS	+= -DSERIAL_TX=P0_2 -DSERIAL_RX=P0_3
+MBEDDIR		?= $(MBEDPREFIX)/MBED
+endif
+
+ifeq ($(BOARDNAME), LPC4088)
+# Embedded Artists LPC4088 QuickStart Board
+FLASHSUFFIX	?= flashmbed
+MBEDCLIFLAGS	+= -DSERIAL_TX=P0_2 -DSERIAL_RX=P0_3
+MBEDDIR		?= $(MBEDPREFIX)/MBED
+endif
+
 ifeq ($(BOARDNAME), NUCLEO_F072RB)
 FLASHSUFFIX	?= flashmbed
 FLASHWRITEADDR	?= 0x08000000
