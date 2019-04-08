@@ -34,7 +34,8 @@ int main()
 
   console.baud(115200);
 
-  console.printf("\033[H\033[2JConsole I/O Test (" __DATE__ " " __TIME__ ")\r\n\n");
+  console.printf("\033[H\033[2J%s SDRAM Test (" __DATE__ " " __TIME__
+    ")\r\n\n", BOARDNAME);
 
   console.printf("DEBUG: Initializing SDRAM controller...\r\n");
   sdram_init();
