@@ -22,6 +22,10 @@
 
 #include <mbed.h>
 
+#ifdef FEZ
+#include <FEZ.h>
+#endif
+
 Serial console(SERIAL_TX, SERIAL_RX);
 
 int main(void)
