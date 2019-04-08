@@ -32,17 +32,20 @@ MBEDOSDIR	?= /usr/local/lib/mbedos
 BLDDIRBASE	?= build
 LIBDIRBASE	?= $(HOME)/.mbedos
 
-BLDDIR		?= $(BLDDIRBASE)/$(BOARDNAME)
-LIBDIR		?= $(LIBDIRBASE)/$(BOARDNAME)
+BLDDIR		?= $(BLDDIRBASE)/$(TARGETNAME)
+LIBDIR		?= $(LIBDIRBASE)/$(TARGETNAME)
 SRCDIR		?= src
 
 PROJECTNAME	?= $(shell basename $(shell pwd))
 TOOLCHAINNAME	?= GCC_ARM
 
-MBEDCLIFLAGS	+= -m $(BOARDNAME) -N $(PROJECTNAME) -t $(TOOLCHAINNAME)
+MBEDCLIFLAGS	+= -N $(PROJECTNAME)
+MBEDCLIFLAGS	+= -t $(TOOLCHAINNAME)
+MBEDCLIFLAGS	+= -m $(TARGETNAME)
 MBEDCLIFLAGS	+= -D__mbedos__
 MBEDCLIFLAGS	+= -DBOARDNAME='"$(BOARDNAME)"'
 MBEDCLIFLAGS	+= -DPROJECTNAME='"$(PROJECTNAME)"'
+MBEDCLIFLAGS	+= -DTARGETNAME='"$(TOOLCHAINNAME)"'
 MBEDCLIFLAGS	+= -DTOOLCHAINNAME='"$(TOOLCHAINNAME)"'
 MBEDCLIFLAGS	+= --source=$(SRCDIR) --source=$(LIBDIR) --build=$(BLDDIR)
 
@@ -59,7 +62,7 @@ include $(ARMSRC)/mbedos/include/boards.mk
 $(LIBDIR)/libmbed-os.a:
 	ln -s -f $(MBEDOSDIR)/mbed-os
 	ln -s -f $(MBEDOSDIR)/mbed_settings.py
-	$(MBED) compile -t $(TOOLCHAINNAME) -m $(BOARDNAME) --library --source=mbed-os --build=$(LIBDIR)
+	$(MBED) compile -t $(TOOLCHAINNAME) -m $(TARGETNAME) --library --source=mbed-os --build=$(LIBDIR)
 
 library: $(LIBDIR)/libmbed-os.a
 
