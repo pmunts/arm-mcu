@@ -4,6 +4,7 @@ Priority: extra
 Maintainer: Philip Munts <phil@munts.net>
 Architecture: @@ARCH@@
 Version: @@VERSION@@
-Description: ARM Mbed OS CLI
+Description: ARM Mbed OS CLI Library
+Depends: build-essential, git, python-dev, python-pip, gnu-arm-embedded
 Conflicts: munts-mbed-cli, mbed5
 Replaces: munts-mbed-cli, mbed5
