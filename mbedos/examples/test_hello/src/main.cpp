@@ -27,7 +27,7 @@ Serial console(SERIAL_TX, SERIAL_RX);
 int main(void)
 {
   console.baud(115200);
-  console.printf("\033[H\033[2J%s Console Output Test (" __DATE__ " " __TIME__
+  console.printf("\033[H\033[2J%s Hello World Test (" __DATE__ " " __TIME__
     ")\r\n\n", BOARDNAME);
   console.printf("Project:    %s\r\n", PROJECTNAME);
   console.printf("OS:         ARM Mbed OS %d.%d.%d\r\n", MBED_MAJOR_VERSION,
@@ -38,12 +38,4 @@ int main(void)
   console.printf("CPU Freq:   %1.1f MHz\r\n\n", SystemCoreClock/1000000.0);
 
   console.printf("Hello, World\r\n\n");
-
-  for (;;)
-  {
-    console.printf("\rTick");
-    wait(1.0);
-    console.printf("\rTock");
-    wait(1.0);
-  }
 }
