@@ -26,11 +26,7 @@ ARMSRC		?= $(HOME)/arm-mcu
 
 # Project settings
 
-BOARDNAME	:= NUCLEO_F401RE
-FLASHSUFFIX	:= flashdfu
-FLASHWRITEADDR	:= 0x08000000
-MBEDCLIFLAGS	+= --source $(ARMSRC)/mbedos/FEZ/include
-MBEDCLIFLAGS	+= --source mbed-os/features/unsupported/USBDevice
+BOARDNAME	?= NUCLEO_F411RE
 
 include $(ARMSRC)/mbedos/include/mbedos.mk
 

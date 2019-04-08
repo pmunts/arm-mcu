@@ -33,7 +33,6 @@ endif
 ifeq ($(BOARDNAME), FEZ)
 FLASHSUFFIX	:= flashdfu
 FLASHWRITEADDR	:= 0x08000000
-MBEDCLIFLAGS	+= --source $(ARMSRC)/mbedos/FEZ/include
 TARGETNAME	:= NUCLEO_F401RE
 endif
 

@@ -1,6 +1,6 @@
-// GHI FEZ Board USB HID test
+// GHI FEZ Board PWM Output Test
 
-// Copyright (C)2019, Philip Munts, President, Munts AM Corp.
+// Copyright (C)2018, Philip Munts, President, Munts AM Corp.
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
@@ -21,26 +21,53 @@
 // POSSIBILITY OF SUCH DAMAGE.
 
 #include <mbed.h>
-#include <string.h>
 
+#ifdef FEZ
 #include <FEZ.h>
-#include <USBHID.h>
+#endif
+
+// Create an array of PWM outputs
+
+PwmOut outputs[] =
+{
+  PwmOut(PWM0),
+  PwmOut(PWM1),
+  PwmOut(PWM2),
+  PwmOut(PWM3),
+  PwmOut(PWM4),
+  PwmOut(PWM5),
+  PwmOut(PWM6),
+  PwmOut(PWM7)
+};
 
 int main(void)
 {
-  DigitalOut LED(LED1, false);
-  USBHID hid(64, 64, 0x16D0, 0x0AFA);
-  HID_REPORT cmd;
+  int i;
+  int d;
+
+  // Initialize PWM output pulse frequencies
+
+  for (i = 0; i < 8; i++)
+    outputs[i].period(0.001);
+
+  // Sweep output duty cycle back and forth
 
   for (;;)
   {
-    if (hid.read(&cmd))
+    for (d = 0; d <= 100; d++)
     {
-      if (!memcmp(cmd.data, "LEDON", 5))
-        LED = true;
+      for (i = 0; i < 8; i++)
+        outputs[i] = d/100.0;
 
-      if (!memcmp(cmd.data, "LEDOFF", 6))
-        LED = false;
+      wait_ms(50);
+    }
+
+    for (d = 100; d >= 0; d--)
+    {
+      for (i = 0; i < 8; i++)
+        outputs[i] = d/100.0;
+
+      wait_ms(50);
     }
   }
 }

@@ -21,17 +21,18 @@
 // POSSIBILITY OF SUCH DAMAGE.
 
 #include <mbed.h>
+
+#ifdef FEZ
 #include <FEZ.h>
+#endif
 
 int main(void)
 {
-  DigitalOut led1(LED1, true);
-  DigitalOut led2(LED2, false);
+  DigitalOut led(LED1, false);
 
   for (;;)
   {
-    led1 = !led1;
-    led2 = !led2;
+    led = !led;
     wait(0.5);
   }
 }
