@@ -26,7 +26,7 @@ ARMSRC		?= $(HOME)/arm-mcu
 
 # Project settings
 
-BOARDNAME	:= LPC4088
+BOARDNAME	:= LPC4088_QUICKSTART
 
 include $(ARMSRC)/mbedos/include/mbedos.mk
 
