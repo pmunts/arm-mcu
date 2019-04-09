@@ -1,0 +1,101 @@
+--- usr/local/lib/mbedos/mbed-os/targets/TARGET_STM/TARGET_STM32F4/TARGET_STM32F401xE/TARGET_NUCLEO_F401RE/PinNames.h.orig	2019-04-09 10:29:10.788169386 +0200
++++ usr/local/lib/mbedos/mbed-os/targets/TARGET_STM/TARGET_STM32F4/TARGET_STM32F401xE/TARGET_NUCLEO_F401RE/PinNames.h	2019-04-09 10:51:27.734837797 +0200
+@@ -118,6 +118,90 @@
+     ADC_VREF = 0xF1,
+     ADC_VBAT = 0xF2,
+ 
++#ifdef FEZ
++// GHI FEZ T18 board -- Use NUCLEO_F401RE target with different pin assignments
++
++    // FEZ Arduino expansion headers
++
++    A0		= PA_4,
++    A1		= PA_5,
++    A2		= PA_6,
++    A3		= PA_7,
++    A4		= PB_0,
++    A5		= PB_1,
++
++    D0		= PA_10,
++    D1		= PA_9,
++    D2		= PC_1,
++    D3		= PA_8,
++    D4		= PC_15,
++    D5		= PB_8,
++    D6		= PC_6,
++    D7		= PC_14,
++    D8		= PC_0,
++    D9		= PC_9,
++    D10		= PC_8,
++    D11		= PB_5,
++    D12		= PB_4,
++    D13		= PB_3,
++
++    // FEZ LEDs
++
++    LED1	= PB_9,
++    LED2	= PC_10,
++
++    // FEZ Buttons
++
++    BUTTON1	= PA_15,
++    BUTTON2	= PC_13,
++
++    // FEZ serial console
++
++#ifdef MBED_CONF_TARGET_STDIO_UART_TX
++    STDIO_UART_TX = MBED_CONF_TARGET_STDIO_UART_TX,
++#else
++    STDIO_UART_TX = PA_2,
++#endif
++
++#ifdef MBED_CONF_TARGET_STDIO_UART_RX
++    STDIO_UART_RX = MBED_CONF_TARGET_STDIO_UART_RX,
++#else
++    STDIO_UART_RX = PA_3,
++#endif
++
++    // FEZ I2C bus
++
++    I2C_SCL	= PB_6,
++    I2C_SDA	= PB_7,
++
++    // FEZ SPI bus
++
++    SPI_MOSI	= D11,
++    SPI_MISO	= D12,
++    SPI_SCK	= D13,
++    SPI_SS0	= D10,
++    SPI_SS1	= D9,
++
++    // FEZ PWM outputs
++
++    PWM0	= D0,
++    PWM1	= D1,
++    PWM2	= D3,
++    PWM3	= D5,
++    PWM4	= D6,
++    PWM5	= D9,
++    PWM6	= D10,
++    PWM7	= D11,
++
++    // Useful aliases
++
++    LED_RED	= LED1,
++    PWM_OUT	= PWM0,
++    SERIAL_TX	= STDIO_UART_TX,
++    SERIAL_RX	= STDIO_UART_RX,
++    SPI_CS	= SPI_SS0,
++    USER_BUTTON	= BUTTON1,
++#else
+     // Arduino connector namings
+     A0          = PA_0,
+     A1          = PA_1,
+@@ -174,6 +258,7 @@
+     SPI_SCK     = PA_5,
+     SPI_CS      = PB_6,
+     PWM_OUT     = PB_3,
++#endif
+ 
+     /**** USB pins ****/
+     USB_OTG_FS_DM = PA_11,

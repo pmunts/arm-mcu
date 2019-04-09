@@ -1,4 +1,4 @@
-// GHI FEZ Board USB HID test
+// USB raw HID test
 
 // Copyright (C)2019, Philip Munts, President, Munts AM Corp.
 //
@@ -21,10 +21,6 @@
 // POSSIBILITY OF SUCH DAMAGE.
 
 #include <mbed.h>
-
-#ifdef FEZ
-#include <FEZ.h>
-#endif
 
 #include <string.h>
 #include <USBHID.h>

@@ -22,10 +22,6 @@
 
 #include <mbed.h>
 
-#ifdef FEZ
-#include <FEZ.h>
-#endif
-
 #include <assert.h>
 #include <ctype.h>
 #include <errno.h>

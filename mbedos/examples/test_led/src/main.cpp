@@ -1,4 +1,4 @@
-// GHI FEZ Board LED Test
+// LED Test
 
 // Copyright (C)2018, Philip Munts, President, Munts AM Corp.
 //
@@ -21,10 +21,6 @@
 // POSSIBILITY OF SUCH DAMAGE.
 
 #include <mbed.h>
-
-#ifdef FEZ
-#include <FEZ.h>
-#endif
 
 int main(void)
 {

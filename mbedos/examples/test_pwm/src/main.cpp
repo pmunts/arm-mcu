@@ -21,7 +21,6 @@
 // POSSIBILITY OF SUCH DAMAGE.
 
 #include <mbed.h>
-#include <FEZ.h>
 
 // Create an array of PWM outputs
 
