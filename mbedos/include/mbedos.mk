@@ -32,8 +32,8 @@ MBEDOSDIR	?= /usr/local/lib/mbedos
 BLDDIRBASE	?= build
 LIBDIRBASE	?= $(HOME)/.mbedos
 
-BLDDIR		?= $(BLDDIRBASE)/$(TARGETNAME)
-LIBDIR		?= $(LIBDIRBASE)/$(TARGETNAME)
+BLDDIR		?= $(BLDDIRBASE)/$(BOARDNAME)
+LIBDIR		?= $(LIBDIRBASE)/$(BOARDNAME)
 SRCDIR		?= src
 
 PROJECTNAME	?= $(shell basename $(shell pwd))
