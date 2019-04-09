@@ -22,9 +22,7 @@
 
 #include <mbed.h>
 
-#ifdef FEZ
 #include <FEZ.h>
-#endif
 
 // Create an array of PWM outputs
 

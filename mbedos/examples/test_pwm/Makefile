@@ -26,7 +26,7 @@ ARMSRC		?= $(HOME)/arm-mcu
 
 # Project settings
 
-BOARDNAME	?= NUCLEO_F411RE
+BOARDNAME	:= FEZ
 
 include $(ARMSRC)/mbedos/include/mbedos.mk
 
