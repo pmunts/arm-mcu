@@ -5,11 +5,11 @@
 
    I am interested in alternatives to the traditional GCC development
    environment, so you will find here some experiments with [2]Astrobe
-   Oberon, [3]Free Pascal, [4]GNAT Ada, [5]Mbed OS 5, and [6]Mikropascal
+   Oberon, [3]Free Pascal, [4]GNAT Ada, [5]ARM Mbed OS, and [6]Mikropascal
    for ARM microcontrollers. I am convinced that the true value of a
    microcontroller development environment lies in the richness of its
    software component libraries more than any other factor. For this
-   reason, my own work has mostly switched to Mbed OS 5 and Mikropascal,
+   reason, my own work has mostly switched to ARM Mbed OS and Mikropascal,
    both of which include very extensive component libraries.
 
 News
@@ -27,17 +27,22 @@ News
        lightweight_strncasecmp() to conio.c.
      * 19 September 2017 -- Upgraded binutils to 2.29, gcc to 7.2.0, and
        gdb to 8.0.1.
+     * 9 April 2019 -- The framework here for using [9]ARM MbedOS has been
+       greatly improved and streamlined. Compiling the OS takes quite a
+       while, so it is now built as a library once for each target
+       platform and saved in ~/.mbedos. This speeds up building and
+       rebuilding applications.
 
 Git Repository
 
-   The source code is available at: [9]http://git.munts.com/arm-mcu
+   The source code is available at: [10]http://git.munts.com/arm-mcu
 
    Use the following command to clone it:
 
    git clone http://git.munts.com/arm-mcu.git
    _______________________________________________________________________
 
-   Questions or comments to Philip Munts [10]phil@munts.net
+   Questions or comments to Philip Munts [11]phil@munts.net
 
    I am available for custom system development (hardware and software) of
    products using these ARM microcontrollers.
@@ -52,5 +57,6 @@ References
    6. https://www.mikroe.com/mikropascal-arm
    7. http://wiki.freepascal.org/TARGET_Embedded
    8. https://www.lego.com/en-us/powerfunctions/articles/8884-control-5fcb2efbb4e74f0c926948df71445765
-   9. http://git.munts.com/arm-mcu
-  10. mailto:phil@munts.net
+   9. https://www.mbed.com/en/platform/mbed-os
+  10. http://git.munts.com/arm-mcu
+  11. mailto:phil@munts.net
