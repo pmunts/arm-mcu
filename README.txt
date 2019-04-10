@@ -27,11 +27,11 @@ News
        lightweight_strncasecmp() to conio.c.
      * 19 September 2017 -- Upgraded binutils to 2.29, gcc to 7.2.0, and
        gdb to 8.0.1.
-     * 9 April 2019 -- The framework here for using [9]ARM Mbed OS has been
-       greatly improved and streamlined. Compiling the OS takes quite a
-       while, so it is now built as a library once for each target
-       platform and saved in ~/.mbedos. This speeds up building and
-       rebuilding applications.
+     * 9 April 2019 -- The framework here for using [9]ARM Mbed OS has
+       been greatly improved and streamlined. Compiling the OS takes quite
+       a while, so it is now built as a library once for each target board
+       and saved in ~/.mbedos. This speeds up building and rebuilding
+       applications.
 
 Git Repository
 
