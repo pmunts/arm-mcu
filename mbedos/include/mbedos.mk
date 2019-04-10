@@ -20,14 +20,22 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-# To install the common Mbed OS libraries, either install Debian package
-# mbedos from http://repo.munts.com, or run the following commands:
+# To install the common Mbed OS commands and libraries, either install the
+# prebuilt Debian package mbedos from http://repo.munts.com, or run the
+# following commands:
 #
-# sudo pip install mbed-cli
+# sudo pip install -q -U mbed-cli
 # sudo mbed new /usr/local/lib/mbedos
+# sudo pip install -q -U -r /usr/local/lib/mbedos/mbed-os/requirements.txt
+
+# Import board specific definitions
+
+include $(ARMSRC)/mbedos/include/boards.mk
 
 MBED		?= mbed
 MBEDOSDIR	?= /usr/local/lib/mbedos
+
+# Default directory paths
 
 BLDDIRBASE	?= build
 LIBDIRBASE	?= $(HOME)/.mbedos
@@ -36,7 +44,11 @@ BLDDIR		?= $(BLDDIRBASE)/$(BOARDNAME)
 LIBDIR		?= $(LIBDIRBASE)/$(BOARDNAME)
 SRCDIR		?= src
 
+# All of BOARDNAME, PROJECTNAME, TARGETNAME, and TOOLCHAINNAME must be
+# defined, either here or in boards.mk or in the top-level Makefile.
+
 PROJECTNAME	?= $(shell basename $(shell pwd))
+TARGETNAME	?= $(BOARDNAME)
 TOOLCHAINNAME	?= GCC_ARM
 
 MBEDCLIFLAGS	+= -N $(PROJECTNAME)
@@ -51,13 +63,18 @@ MBEDCLIFLAGS	+= -DTOOLCHAINNAME='"$(TOOLCHAINNAME)"'
 MBEDCLIFLAGS	+= --source=$(ARMSRC)/mbedos/include
 MBEDCLIFLAGS	+= --source=$(SRCDIR) --source=$(LIBDIR) --build=$(BLDDIR)
 
+# Default flash programming settings
+
+FLASHSUFFIX	?= flashmbed
+FLASHWRITEADDR	?= 0x08000000
+
+ifneq ($(MBEDPREFIX),)
+MBEDDIR		?= $(MBEDPREFIX)/MBED
+endif
+
 # Default target placeholder
 
 mbedos_mk_default: default
-
-# Import board specific definitions
-
-include $(ARMSRC)/mbedos/include/boards.mk
 
 # Build the Mbed OS library
 
