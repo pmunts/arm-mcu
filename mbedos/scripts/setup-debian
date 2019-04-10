@@ -34,7 +34,7 @@ fi
 
 sudo apt-get update
 sudo apt-get install -y openssh-client build-essential git man subversion vim
-sudo apt-get install -y mbedos
+sudo apt-get install -y mbedos gnu-arm-embedded
 
 # Clone ARM MCU source code repository
 
