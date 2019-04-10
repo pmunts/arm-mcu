@@ -30,11 +30,12 @@ int main(void)
   console.printf("\033[H\033[2J%s Hello World Test (" __DATE__ " " __TIME__
     ")\r\n\n", BOARDNAME);
   console.printf("Project:    %s\r\n", PROJECTNAME);
+  console.printf("Board:      %s\r\n", BOARDNAME);
   console.printf("OS:         ARM Mbed OS %d.%d.%d\r\n", MBED_MAJOR_VERSION,
     MBED_MINOR_VERSION, MBED_PATCH_VERSION);
   console.printf("Tool chain: %s\r\n", TOOLCHAINNAME);
   console.printf("Compiler:   %s\r\n", __VERSION__);
-  console.printf("Target:     %s\r\n", BOARDNAME);
+  console.printf("Target:     %s\r\n", TARGETNAME);
   console.printf("CPU Freq:   %1.1f MHz\r\n\n", SystemCoreClock/1000000.0);
 
   console.printf("Hello, World\r\n\n");
