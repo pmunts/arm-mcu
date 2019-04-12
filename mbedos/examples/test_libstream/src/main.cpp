@@ -32,7 +32,7 @@ Serial console(SERIAL_TX, SERIAL_RX);
 
 // We will replace the default read() function in libstream with the following:
 
-ssize_t reader(int fd, void *buf, size_t bufsize)
+static ssize_t reader(int fd, void *buf, size_t bufsize)
 {
   while (!console.readable());
   uint8_t *dst = (uint8_t *) buf;
@@ -42,7 +42,7 @@ ssize_t reader(int fd, void *buf, size_t bufsize)
 
 // We will replace the default write() function in libstream with the following:
 
-ssize_t writer(int fd, const void *buf, size_t bufsize)
+static ssize_t writer(int fd, const void *buf, size_t bufsize)
 {
   uint8_t *src = (uint8_t *) buf;
   unsigned i;
