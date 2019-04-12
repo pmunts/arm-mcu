@@ -48,7 +48,6 @@ int main(void)
   printf("CPU Freq:%u Hz  Compiler:%s %s %s\n\n", (unsigned int) SystemCoreClock,
     __COMPILER__, __VERSION__, __ABI__);
 
-
   // Register serial port device
 
   if (serial_register("com6:") < 0)
