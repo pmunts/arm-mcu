@@ -1,6 +1,6 @@
-// Hello World Test
+// ARM Mbed OS Tasking Test
 
-// Copyright (C)2017-2018, Philip Munts, President, Munts AM Corp.
+// Copyright (C)2019, Philip Munts, President, Munts AM Corp.
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:

@@ -1,4 +1,4 @@
-// USB raw HID test
+// ARM MbedOS USB raw HID test
 
 // Copyright (C)2019, Philip Munts, President, Munts AM Corp.
 //
