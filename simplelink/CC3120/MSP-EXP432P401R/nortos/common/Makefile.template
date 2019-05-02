@@ -1,6 +1,6 @@
 # Build a SimpleLink WiFi application for the MSP-EXP432P401R with nortos
 
-CC3120SRC	?= $(HOME)/src/CC3120
+CC3120SRC	?= $(HOME)/src/ARM/simplelink/CC3120
 PLATFORM	:= MSP-EXP432P401R
 PROJECT		:= $(shell basename $(shell pwd))
 
