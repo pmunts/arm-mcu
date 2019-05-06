@@ -1,7 +1,7 @@
 # Common make definitions for building SimpleLink WiFi Applications for the
-# MSP-EXP432P401R + CC3120BOOST dev boards.
+# MSP-EXP432P401R + CC31xxBOOST dev boards.
 #
-# The project Makefile must define the CC3120SRC macro before including this
+# The project Makefile must define the CC31XXSRC macro before including this
 # file.
 
 GCC_ARMCOMPILER	?= /usr/local/gcc-arm-none-eabi
@@ -10,7 +10,7 @@ TIROOT		?= /opt/ti
 SIMPLELINK_MSP432_SDK_INSTALL_DIR := $(TIROOT)/simplelink_msp432p4_sdk
 SIMPLELINK_MSP432_SDK_WIFI_PLUGIN_INSTALL_DIR := $(TIROOT)/simplelink_sdk_wifi_plugin
 XDC_INSTALL_DIR	:= $(TIROOT)/xdctools
-COMMON		:= $(CC3120SRC)/$(PLATFORM)/nortos/common
+COMMON		:= $(CC31XXSRC)/$(PLATFORM)/nortos/common
 
 include $(SIMPLELINK_MSP432_SDK_WIFI_PLUGIN_INSTALL_DIR)/imports.mak
 
