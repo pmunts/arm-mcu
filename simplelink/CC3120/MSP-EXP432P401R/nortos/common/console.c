@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "console.h"
+#include <console.h>
 
 extern int vsnprintf(char * s,
                      size_t n,

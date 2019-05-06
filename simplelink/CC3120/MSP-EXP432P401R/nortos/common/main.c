@@ -43,7 +43,7 @@
 #include <NoRTOS.h>
 
 /* Example/Board Header files */
-#include "Board.h"
+#include <Board.h>
 
 extern void * mainThread(void *arg0);
 

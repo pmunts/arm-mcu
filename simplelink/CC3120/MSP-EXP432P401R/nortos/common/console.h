@@ -3,15 +3,13 @@
 
 // TI-Driver includes
 #include <ti/drivers/UART.h>
-#include "Board.h"
+#include <Board.h>
 
 //Defines
 
 #define UART_PRINT Report
 #define DBG_PRINT  Report
-#define ERR_PRINT(x) Report("Error [%d] at line [%d] in function [%s]  \n\r",x, \
-                            __LINE__, \
-                            __FUNCTION__)
+#define ERR_PRINT(x) Report("Error [%d] at line [%d] in function [%s]  \n\r", x,__LINE__, __FUNCTION__)
 
 /* API */
 

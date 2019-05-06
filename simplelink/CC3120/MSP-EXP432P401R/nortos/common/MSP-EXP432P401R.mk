@@ -6,11 +6,11 @@
 
 GCC_ARMCOMPILER	?= /usr/local/gcc-arm-none-eabi
 
-COMMON		:= $(CC3120SRC)/$(PLATFORM)/nortos/common
 TIROOT		?= /opt/ti
 SIMPLELINK_MSP432_SDK_INSTALL_DIR := $(TIROOT)/simplelink_msp432p4_sdk
 SIMPLELINK_MSP432_SDK_WIFI_PLUGIN_INSTALL_DIR := $(TIROOT)/simplelink_sdk_wifi_plugin
 XDC_INSTALL_DIR	:= $(TIROOT)/xdctools
+COMMON		:= $(CC3120SRC)/$(PLATFORM)/nortos/common
 
 include $(SIMPLELINK_MSP432_SDK_WIFI_PLUGIN_INSTALL_DIR)/imports.mak
 

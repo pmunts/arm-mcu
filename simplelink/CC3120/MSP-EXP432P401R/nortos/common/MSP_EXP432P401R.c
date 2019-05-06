@@ -59,7 +59,7 @@
 #include <ti/devices/msp432p4xx/driverlib/uart.h>
 #include <ti/devices/msp432p4xx/driverlib/wdt_a.h>
 
-#include "MSP_EXP432P401R.h"
+#include <MSP_EXP432P401R.h>
 
 /*
  *  =============================== ADC ===============================
