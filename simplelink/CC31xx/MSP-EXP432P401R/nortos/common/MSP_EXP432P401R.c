@@ -860,7 +860,7 @@ const SIMPLELINKWIFI_HWAttrsV1 wifiSimplelinkHWAttrs =
     .nHIBPin = MSP_EXP432P401R_nHIB_pin,
     .csPin = MSP_EXP432P401R_CS_pin,
     .maxDMASize = 1024,
-    .spiBitRate = 3000000
+    .spiBitRate = 12000000
 };
 
 const uint_least8_t WiFi_count = 1;
