@@ -24,13 +24,14 @@
 # The project Makefile must define the CC31XXSRC macro before including this
 # file.
 
-GCC_ARMCOMPILER	?= /usr/local/gcc-arm-none-eabi
-
-TIROOT		?= /opt/ti
-SIMPLELINK_MSP432_SDK_INSTALL_DIR := $(TIROOT)/simplelink_msp432p4_sdk
-SIMPLELINK_MSP432_SDK_WIFI_PLUGIN_INSTALL_DIR := $(TIROOT)/simplelink_sdk_wifi_plugin
-XDC_INSTALL_DIR	:= $(TIROOT)/xdctools
 COMMON		:= $(CC31XXSRC)/$(PLATFORM)/nortos/common
+
+GCC_ARMCOMPILER	?= /usr/local/gcc-arm-none-eabi
+SDK_INSTALL_DIR ?= /opt/simplelink
+
+SIMPLELINK_MSP432_SDK_INSTALL_DIR := $(SDK_INSTALL_DIR)/simplelink_msp432p4_sdk
+SIMPLELINK_MSP432_SDK_WIFI_PLUGIN_INSTALL_DIR := $(SDK_INSTALL_DIR)/simplelink_sdk_wifi_plugin
+XDC_INSTALL_DIR	:= $(SDK_INSTALL_DIR)/xdctools
 
 include $(SIMPLELINK_MSP432_SDK_WIFI_PLUGIN_INSTALL_DIR)/imports.mak
 
