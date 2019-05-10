@@ -45,8 +45,8 @@ CFLAGS		+= -mcpu=cortex-m4
 CFLAGS		+= -mfloat-abi=hard
 CFLAGS		+= -mfpu=fpv4-sp-d16
 CFLAGS		+= -mthumb
-CFLAGS		+= -ffunction-sections
 CFLAGS		+= -fdata-sections
+CFLAGS		+= -ffunction-sections
 CFLAGS		+= -D__MSP432P401R__
 CFLAGS		+= -DDeviceFamily_MSP432P401x
 CFLAGS		+= -DNORTOS_SUPPORT
