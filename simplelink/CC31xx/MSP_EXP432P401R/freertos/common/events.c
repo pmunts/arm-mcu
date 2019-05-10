@@ -42,6 +42,32 @@ int event_enqueue(const QueueHandle_t queue, const uint32_t code,
   return 0;
 }
 
+// Send an event message from an interrupt service routine
+
+int event_enqueue_isr(const QueueHandle_t queue, const uint32_t code,
+  const void * const payload, const size_t length)
+{
+  // Validate parameters
+
+  if (queue == NULL) return EINVAL;
+  if ((payload == NULL) && (length != 0)) return EINVAL;
+  if ((payload != NULL) && (length == 0)) return EINVAL;
+  if (length > MAX_PAYLOAD_SIZE) return EINVAL;
+  
+  // Build the event message
+
+  event_msg_t event = { code };
+
+  if (payload != NULL)
+    memcpy(event.payload, payload, length);
+
+  // Send the event message
+
+  if (!xQueueSendFromISR(queue, &event, NULL)) return EAGAIN;
+
+  return 0;
+}
+
 // Dispatch to an event handler
 
 int event_dispatch(const event_handler_t * const EventHandlers,

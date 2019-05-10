@@ -24,6 +24,9 @@ typedef int (*event_handler_t)(const event_msg_t * const event);
 extern int event_enqueue(const QueueHandle_t queue, const uint32_t code,
   const void * const payload, const size_t length, const unsigned timeoutms);
 
+extern int event_enqueue_isr(const QueueHandle_t queue, const uint32_t code,
+  const void * const payload, const size_t length);
+
 extern int event_dispatch(const event_handler_t *EventHandlers,
   const unsigned max_handlers, const event_msg_t * const event);
 
