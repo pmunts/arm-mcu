@@ -336,6 +336,20 @@ GPIO_PinConfig gpioPinConfigs[] = {
     /* MSP_EXP432P401R_CS_pin */
     GPIOMSP432_P3_0 | GPIO_CFG_OUT_STD | GPIO_CFG_OUT_STR_HIGH |
     GPIO_CFG_OUT_HIGH,
+
+    // BoosterPack 2 Click Shield mikroBUS socket 1
+    GPIOMSP432_P6_0 | GPIO_CFG_IN_PD,    // MIKROBUS_AN1
+    GPIOMSP432_P5_6 | GPIO_CFG_IN_PD,    // MIKROBUS_RST1
+    GPIOMSP432_P5_0 | GPIO_CFG_IN_PD,    // MIKROBUS_CS1
+    GPIOMSP432_P2_7 | GPIO_CFG_IN_PD,    // MIKROBUS_PWM1
+    GPIOMSP432_P2_4 | GPIO_CFG_IN_PD,    // MIKROBUS_INT1
+
+    // BoosterPack 2 Click Shield mikroBUS socket 2
+    GPIOMSP432_P4_3 | GPIO_CFG_IN_PD,    // MIKROBUS_AN2
+    GPIOMSP432_P6_7 | GPIO_CFG_IN_PD,    // MIKROBUS_RST2
+    GPIOMSP432_P5_2 | GPIO_CFG_IN_PD,    // MIKROBUS_CS2
+    GPIOMSP432_P2_6 | GPIO_CFG_IN_PD,    // MIKROBUS_PWM2
+    GPIOMSP432_P6_6 | GPIO_CFG_IN_PU,    // MIKROBUS_INT2
 };
 
 /*
@@ -345,21 +359,13 @@ GPIO_PinConfig gpioPinConfigs[] = {
  * NOTE: Pins not used for interrupts can be omitted from callbacks array to
  *       reduce memory usage (if placed at end of gpioPinConfigs array).
  */
-GPIO_CallbackFxn gpioCallbackFunctions[] = {
-    /* MSP_EXP432P401R_GPIO_S1 */
-    NULL,
-    /* MSP_EXP432P401R_GPIO_S2 */
-    NULL,
-    /* MSP_EXP432P401R_HOST_IRQ */
-    NULL
-};
+GPIO_CallbackFxn gpioCallbackFunctions[MSP_EXP432P401R_GPIOCOUNT] = { 0 };
 
 const GPIOMSP432_Config GPIOMSP432_config = {
     .pinConfigs = (GPIO_PinConfig *)gpioPinConfigs,
     .callbacks = (GPIO_CallbackFxn *)gpioCallbackFunctions,
     .numberOfPinConfigs = sizeof(gpioPinConfigs) / sizeof(GPIO_PinConfig),
-    .numberOfCallbacks = sizeof(gpioCallbackFunctions) /
-                         sizeof(GPIO_CallbackFxn),
+    .numberOfCallbacks = sizeof(gpioCallbackFunctions) / sizeof(GPIO_CallbackFxn),
     .intPriority = (~0)
 };
 

@@ -117,6 +117,22 @@ typedef enum MSP_EXP432P401R_GPIOName
     MSP_EXP432P401R_nHIB_pin,
     MSP_EXP432P401R_CS_pin,
 
+    // BoosterPack 2 Click Shield mikroBUS socket 1
+
+    MIKROBUS_AN1,
+    MIKROBUS_RST1,
+    MIKROBUS_CS1,
+    MIKROBUS_PWM1,
+    MIKROBUS_INT1,
+
+    // BoosterPack 2 Click Shield mikroBUS socket 2
+
+    MIKROBUS_AN2,
+    MIKROBUS_RST2,
+    MIKROBUS_CS2,
+    MIKROBUS_PWM2,
+    MIKROBUS_INT2,
+
     MSP_EXP432P401R_GPIOCOUNT
 } MSP_EXP432P401R_GPIOName;
 
