@@ -72,9 +72,7 @@ LDFLAGS		+= -Wl,-T,$(COMMON)/MSP_EXP432P401R.lds
 LDFLAGS		+= -Wl,--gc-sections
 LDFLAGS		+= -Wl,-Map,$(PROJECT).map
 LDFLAGS		+= -L"$(SIMPLELINK_MSP432_SDK_INSTALL_DIR)"/kernel/nortos/lib
-LDFLAGS		+= -L"$(SIMPLELINK_MSP432_SDK_INSTALL_DIR)"/source/third_party/fatfs/lib/gcc/m4f
 LDFLAGS		+= -L"$(SIMPLELINK_MSP432_SDK_INSTALL_DIR)"/source/ti/devices/msp432p4xx/driverlib/gcc
-LDFLAGS		+= -L"$(SIMPLELINK_MSP432_SDK_INSTALL_DIR)"/source/ti/display/lib
 LDFLAGS		+= -L"$(SIMPLELINK_MSP432_SDK_INSTALL_DIR)"/source/ti/drivers/lib
 LDFLAGS		+= -L"$(SIMPLELINK_MSP432_SDK_WIFI_PLUGIN_INSTALL_DIR)"/source/ti/drivers/net/wifi/gcc/nortos
 LDFLAGS		+= -L"$(SIMPLELINK_MSP432_SDK_WIFI_PLUGIN_INSTALL_DIR)"/source/ti/drivers/net/wifi/slnetif/ccs/Release
@@ -82,11 +80,11 @@ LDFLAGS		+= -L"$(SIMPLELINK_MSP432_SDK_WIFI_PLUGIN_INSTALL_DIR)"/source/ti/net/l
 LDFLAGS		+= -lc
 LDFLAGS		+= -lnosys
 LDFLAGS		+= -l:drivers_msp432p401x.am4fg
+LDFLAGS		+= -l:msp432p4xx_driverlib.a
+LDFLAGS		+= -l:simplelink/simplelink.a
 LDFLAGS		+= -l:slnetifwifi.a
 LDFLAGS		+= -l:slnetsock_release.a
-LDFLAGS		+= -l:simplelink/simplelink.a
 LDFLAGS		+= -l:nortos_msp432p401x.am4fg
-LDFLAGS		+= -l:msp432p4xx_driverlib.a
 
 # Object files
 
