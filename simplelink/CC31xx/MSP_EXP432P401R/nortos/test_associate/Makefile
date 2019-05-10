@@ -1,4 +1,4 @@
-# Build a SimpleLink WiFi application for the MSP-EXP432P401R with nortos
+# Build a SimpleLink WiFi application for the MSP-EXP432P401R using no RTOS
 
 # Copyright (C)2019, Philip Munts, President, Munts AM Corp.
 #
