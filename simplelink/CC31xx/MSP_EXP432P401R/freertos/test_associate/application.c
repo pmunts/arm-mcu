@@ -281,12 +281,10 @@ void SimpleLinkNetAppRequestMemFreeEventHandler(uint8_t *buffer)
 
 void vApplicationMallocFailedHook()
 {
-  abort();
 }
 
 void vApplicationStackOverflowHook(TaskHandle_t pxTask, char *pcTaskName)
 {
-  abort();
 }
 
 void vApplicationTickHook(void)
@@ -518,7 +516,7 @@ static const event_handler_t EventHandlers[MAX_EVENT_CODES] =
 __attribute__((noreturn)) void Main_Task(void *arg0)
 {
   int32_t status;
-  event_msg_t event;
+  static event_msg_t event;
 
   puts("\033[H\033[2JSimpleLink CC31xx WiFi Associate Test using FreeRTOS ("
     __DATE__ " " __TIME__ ")\r\n\n");
