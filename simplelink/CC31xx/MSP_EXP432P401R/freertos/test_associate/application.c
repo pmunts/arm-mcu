@@ -518,7 +518,6 @@ static const event_handler_t EventHandlers[MAX_EVENT_CODES] =
 __attribute__((noreturn)) void Main_Task(void *arg0)
 {
   int32_t status;
-  char outbuf[256];
   event_msg_t event;
 
   puts("\033[H\033[2JSimpleLink CC31xx WiFi Associate Test using FreeRTOS ("
@@ -540,6 +539,7 @@ __attribute__((noreturn)) void Main_Task(void *arg0)
 
   if(status < 0)
   {
+    char outbuf[256];
     snprintf(outbuf, sizeof(outbuf), "FATAL ERROR: sl_WifiConfig() failed, "
       "error=%ld\r\n", status);
     puts(outbuf);
@@ -550,6 +550,7 @@ __attribute__((noreturn)) void Main_Task(void *arg0)
 
   if (status < 0)
   {
+    char outbuf[256];
     snprintf(outbuf, sizeof(outbuf), "FATAL ERROR: sl_Start() failed, "
       "error=%ld\r\n", status);
     puts(outbuf);
