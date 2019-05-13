@@ -515,7 +515,7 @@ static const event_handler_t EventHandlers[MAX_EVENT_CODES] =
 
 // Main task function
 
-__attribute__((noreturn)) void *Main_Task(void *arg0)
+__attribute__((noreturn)) void Main_Task(void *arg0)
 {
   int32_t status;
   char outbuf[256];
@@ -533,8 +533,6 @@ __attribute__((noreturn)) void *Main_Task(void *arg0)
     puts("FATAL ERROR: xQueueCreate() failed\r\n");
     abort();
   }
-
-  event_enqueue(mqueue, NOP, NULL, 0, 0);
 
   // Start WiFi subsystem
 
