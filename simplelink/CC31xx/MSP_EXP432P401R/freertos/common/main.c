@@ -92,7 +92,7 @@ int main(void)
   pthread_attr_init(&pAttrs_main);
   priParam_main.sched_priority = 1;
   pthread_attr_setschedparam(&pAttrs_main, &priParam_main);
-  pthread_attr_setstacksize(&pAttrs_main, 4096);
+  pthread_attr_setstacksize(&pAttrs_main, 2048);
   pthread_attr_setdetachstate(&pAttrs_main, PTHREAD_CREATE_DETACHED);
 
   if(pthread_create(&thread_main, &pAttrs_main, Main_Task, NULL))
