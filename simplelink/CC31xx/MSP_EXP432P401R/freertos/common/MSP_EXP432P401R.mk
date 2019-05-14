@@ -50,6 +50,7 @@ CFLAGS		+= -fdata-sections
 CFLAGS		+= -ffunction-sections
 CFLAGS		+= -D__MSP432P401R__
 CFLAGS		+= -DDeviceFamily_MSP432P401x
+CFLAGS		+= -I.
 CFLAGS		+= -I$(COMMON)
 CFLAGS		+= -I"$(FREERTOS_INSTALL_DIR)"/FreeRTOS/Source/include
 CFLAGS		+= -I"$(FREERTOS_INSTALL_DIR)"/FreeRTOS/Source/portable/GCC/ARM_CM4F

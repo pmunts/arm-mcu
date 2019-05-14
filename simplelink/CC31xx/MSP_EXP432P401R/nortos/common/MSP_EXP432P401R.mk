@@ -50,6 +50,7 @@ CFLAGS		+= -ffunction-sections
 CFLAGS		+= -D__MSP432P401R__
 CFLAGS		+= -DDeviceFamily_MSP432P401x
 CFLAGS		+= -DNORTOS_SUPPORT
+CFLAGS		+= -I.
 CFLAGS		+= -I$(COMMON)
 CFLAGS		+= -I"$(SIMPLELINK_MSP432_SDK_INSTALL_DIR)"/kernel/nortos
 CFLAGS		+= -I"$(SIMPLELINK_MSP432_SDK_INSTALL_DIR)"/kernel/nortos/posix
