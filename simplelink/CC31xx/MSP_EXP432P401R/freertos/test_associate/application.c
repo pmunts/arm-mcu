@@ -56,7 +56,6 @@
 
 typedef enum
 {
-  NOP,
   SL_STARTED,
   SL_CONNECTED,
   SL_DISCONNECTED,
@@ -95,7 +94,7 @@ typedef struct
 
 // Global variables
 
-QueueHandle_t mqueue = NULL;
+static QueueHandle_t mqueue = NULL;
 
 /*****************************************************************************/
 
@@ -303,13 +302,6 @@ void vApplicationIdleHook(void)
 
 // Event handlers
 
-static int Handle_NOP(const event_msg_t * const event)
-{
-  puts("EVENT:     NOP\r\n");
-
-  return 0;
-}
-
 static int Handle_SL_STARTED(const event_msg_t * const event)
 {
   payload_SL_STARTED_t *p = (payload_SL_STARTED_t *) event->payload;
@@ -500,7 +492,6 @@ static int Handle_CMD_ASSOCIATE(const event_msg_t * const event)
 
 static const event_handler_t EventHandlers[MAX_EVENT_CODES] =
 {
-  Handle_NOP,
   Handle_SL_STARTED,
   Handle_SL_CONNECTED,
   Handle_SL_DISCONNECTED,
