@@ -201,7 +201,8 @@ void mainThread(void *pvParameters)
   InitTerm();
 
   // Display startup message
-  printf("\033[H\033[2JSimpleLink CC31xx WiFi Associate Test (" __DATE__ " " __TIME__ ")\r\n\n");
+  printf("\033[H\033[2JSimpleLink CC31xx WiFi Associate Test using no RTOS ("
+    __DATE__ " " __TIME__ ")\r\n\n");
 
   GPIO_write(LED1, false);
 
