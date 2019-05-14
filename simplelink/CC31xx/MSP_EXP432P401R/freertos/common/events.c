@@ -27,7 +27,7 @@ int event_enqueue(const QueueHandle_t queue, const uint32_t code,
   FAILIF((payload == NULL) && (length != 0), "payload and length are inconsistent", EINVAL);
   FAILIF((payload != NULL) && (length == 0), "payload and length are inconsistent", EINVAL);
   FAILIF(length > MAX_PAYLOAD_SIZE, "payload greater than MAX_PAYLOAD_SIZE", EINVAL);
-  
+
   // Build the event message
 
   event_msg_t event = { code };
@@ -53,7 +53,7 @@ int event_enqueue_isr(const QueueHandle_t queue, const uint32_t code,
   if ((payload == NULL) && (length != 0)) return EINVAL;
   if ((payload != NULL) && (length == 0)) return EINVAL;
   if (length > MAX_PAYLOAD_SIZE) return EINVAL;
-  
+
   // Build the event message
 
   event_msg_t event = { code };
