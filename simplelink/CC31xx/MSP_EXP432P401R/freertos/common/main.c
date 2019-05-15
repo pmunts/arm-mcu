@@ -40,9 +40,6 @@
 #include <FreeRTOS.h>
 #include <task.h>
 
-/* Driver library header files */
-#include <ti/drivers/GPIO.h>
-
 /* Board header files */
 #include <Board.h>
 #include <console.h>
@@ -57,15 +54,7 @@ int main(void)
 {
   /* Call board init functions */
   Board_initGeneral();
-  SPI_init();
-  GPIO_init();
   InitTerm();
-
-  /* Switch off all LEDs */
-  GPIO_write(Board_GPIO_LED0, false);
-  GPIO_write(Board_GPIO_LED1, false);
-  GPIO_write(Board_GPIO_LED2, false);
-  GPIO_write(Board_GPIO_LED3, false);
 
   /* Create the Simplelink task */
   pthread_t thread_simplelink;

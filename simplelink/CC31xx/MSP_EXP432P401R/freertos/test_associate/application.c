@@ -30,9 +30,9 @@
 #include <queue.h>
 #include <task.h>
 
-#include <ti/drivers/GPIO.h>
 #include <ti/drivers/net/wifi/simplelink.h>
 
+#include <Board.h>
 #include <console.h>
 #include <events.h>
 
@@ -511,6 +511,18 @@ __attribute__((noreturn)) void Main_Task(void *arg0)
 
   puts("\033[H\033[2JSimpleLink CC31xx WiFi Associate Test using FreeRTOS ("
     __DATE__ " " __TIME__ ")\r\n\n");
+
+  // Initialize hardware subsystems
+
+  GPIO_init();
+  SPI_init();
+
+  // Turn off LEDs
+
+  GPIO_write(Board_GPIO_LED0, false);
+  GPIO_write(Board_GPIO_LED1, false);
+  GPIO_write(Board_GPIO_LED2, false);
+  GPIO_write(Board_GPIO_LED3, false);
 
   // Create event message queue
 
