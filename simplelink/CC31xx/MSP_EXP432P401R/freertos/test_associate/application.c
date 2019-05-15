@@ -458,9 +458,6 @@ static int Handle_CMD_ASSOCIATE(const event_msg_t * const event)
   snprintf(outbuf, sizeof(outbuf), " SSID:     %s\r\n", p->ssid);
   puts(outbuf);
 
-  snprintf(outbuf, sizeof(outbuf), " Password: %s\r\n", p->pass);
-  puts(outbuf);
-
   snprintf(outbuf, sizeof(outbuf), " BSSID:    %02X:%02X:%02X:%02X:%02X:%02X\r\n",
     p->bssid[0], p->bssid[1], p->bssid[2], p->bssid[3], p->bssid[4], p->bssid[5]);
   puts(outbuf);
