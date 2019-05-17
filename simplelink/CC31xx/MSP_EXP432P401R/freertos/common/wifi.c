@@ -1,25 +1,3 @@
-// SimpleLink WiFi Associate Test using FreeRTOS
-
-// Copyright (C)2019, Philip Munts, President, Munts AM Corp.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are met:
-//
-// * Redistributions of source code must retain the above copyright notice,
-//   this list of conditions and the following disclaimer.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-// AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-// ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-// LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-// CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-// SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-// INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-// CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-// ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-// POSSIBILITY OF SUCH DAMAGE.
-
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -67,12 +45,6 @@ typedef enum
 
 typedef struct
 {
-  uint32_t status;
-  SlDeviceInitInfo_t info;
-} payload_SL_STARTED_t;
-
-typedef struct
-{
   uint8_t bssid[6];
   char ssid[32];
 } payload_SL_CONNECTED_t;
@@ -117,17 +89,9 @@ int Associate(char *ssid, char *pass)
 
 void SimpleLinkStartCallback(uint32_t Status, SlDeviceInitInfo_t *DeviceInitInfo)
 {
-  payload_SL_STARTED_t payload;
-
-  // Build payload structure
-
-  memset(&payload, 0, sizeof(payload));
-  payload.status = Status;
-  memcpy(&payload.info, DeviceInitInfo, sizeof(SlDeviceInitInfo_t));
-
   // Enqueue event message
 
-  event_enqueue(mqueue, SL_STARTED, &payload, sizeof(payload), 0);
+  event_enqueue(mqueue, SL_STARTED, NULL, 0, 0);
 }
 
 void SimpleLinkWlanEventHandler(SlWlanEvent_t *pWlanEvent)
@@ -170,11 +134,13 @@ void SimpleLinkWlanEventHandler(SlWlanEvent_t *pWlanEvent)
 
     default:
     {
+#ifdef DEBUG
       char outbuf[256];
 
       snprintf(outbuf, sizeof(outbuf), "DEBUG: Line %d: Unexpected WLAN Event: "
         " %ld\r\n", __LINE__ - 5, pWlanEvent->Id);
       puts(outbuf);
+#endif
     }
     break;
   }
@@ -202,11 +168,13 @@ void SimpleLinkNetAppEventHandler(SlNetAppEvent_t *pNetAppEvent)
 
     default:
     {
+#ifdef DEBUG
       char outbuf[256];
 
       snprintf(outbuf, sizeof(outbuf), "DEBUG: Line %d: Unexpected Net App Event: "
         "%ld\r\n", __LINE__ - 5, pNetAppEvent->Id);
       puts(outbuf);
+#endif
     }
     break;
   }
@@ -223,11 +191,13 @@ void SimpleLinkGeneralEventHandler(SlDeviceEvent_t *pDevEvent)
   {
     default:
     {
+#ifdef DEBUG
       char outbuf[256];
 
       snprintf(outbuf, sizeof(outbuf), "DEBUG: Line %d: Unexpected Device Event: "
         "%ld\r\n", __LINE__ - 5, pDevEvent->Id);
       puts(outbuf);
+#endif
     }
     break;
   }
@@ -239,11 +209,13 @@ void SimpleLinkSockEventHandler(SlSockEvent_t *pSock)
   {
     default:
     {
+#ifdef DEBUG
       char outbuf[256];
 
       snprintf(outbuf, sizeof(outbuf), "DEBUG: Line %d: Unexpected Socket Event: "
         "%ld\r\n", __LINE__ - 5, pSock->Event);
       puts(outbuf);
+#endif
     }
     break;
   }
@@ -255,11 +227,13 @@ void SimpleLinkFatalErrorEventHandler(SlDeviceFatal_t *pFatalErrorEvent)
   {
     default:
     {
+#ifdef DEBUG
       char outbuf[256];
 
       snprintf(outbuf, sizeof(outbuf), "DEBUG: Line %d: Unexpected Error Event: "
         "%ld\r\n", __LINE__ - 5, pFatalErrorEvent->Id);
       puts(outbuf);
+#endif
     }
     break;
   }
@@ -276,47 +250,13 @@ void SimpleLinkNetAppRequestMemFreeEventHandler(uint8_t *buffer)
 
 /*****************************************************************************/
 
-// Callbacks required by FreeRTOS
-
-void vApplicationMallocFailedHook()
-{
-}
-
-void vApplicationStackOverflowHook(TaskHandle_t pxTask, char *pcTaskName)
-{
-}
-
-void vApplicationTickHook(void)
-{
-}
-
-void vPreSleepProcessing(uint32_t ulExpectedIdleTime)
-{
-}
-
-void vApplicationIdleHook(void)
-{
-}
-
-/*****************************************************************************/
-
 // Event handlers
 
 static int Handle_SL_STARTED(const event_msg_t * const event)
 {
-  payload_SL_STARTED_t *p = (payload_SL_STARTED_t *) event->payload;
-  char outbuf[256];
-
+#ifdef DEBUG
   puts("EVENT:     STARTED\r\n");
-
-  snprintf(outbuf, sizeof(outbuf), " Status:   %08lX\r\n", p->status);
-  puts(outbuf);
-
-  snprintf(outbuf, sizeof(outbuf), " Chip ID:  %08lX\r\n", p->info.ChipId);
-  puts(outbuf);
-
-  snprintf(outbuf, sizeof(outbuf), " Data:     %08lX\r\n", p->info.MoreData);
-  puts(outbuf);
+#endif
 
   // Make LED2 red
 
@@ -330,7 +270,9 @@ static int Handle_SL_STARTED(const event_msg_t * const event)
 
 static int Handle_SL_CONNECTED(const event_msg_t * const event)
 {
+#ifdef DEBUG
   payload_SL_CONNECTED_t *p = (payload_SL_CONNECTED_t *) event->payload;
+
   char outbuf[256];
 
   puts("EVENT:     CONNECTED\r\n");
@@ -341,6 +283,7 @@ static int Handle_SL_CONNECTED(const event_msg_t * const event)
   snprintf(outbuf, sizeof(outbuf), " BSSID:    %02X:%02X:%02X:%02X:%02X:%02X\r\n",
     p->bssid[0], p->bssid[1], p->bssid[2], p->bssid[3], p->bssid[4], p->bssid[5]);
   puts(outbuf);
+#endif
 
   // Make LED2 yellow
 
@@ -352,7 +295,9 @@ static int Handle_SL_CONNECTED(const event_msg_t * const event)
 
 static int Handle_SL_DISCONNECTED(const event_msg_t * const event)
 {
+#ifdef DEBUG
   payload_SL_DISCONNECTED_t *p = (payload_SL_DISCONNECTED_t *) event->payload;
+
   char outbuf[256];
 
   puts("EVENT:     DISCONNECTED\r\n");
@@ -363,6 +308,7 @@ static int Handle_SL_DISCONNECTED(const event_msg_t * const event)
   snprintf(outbuf, sizeof(outbuf), " BSSID:    %02X:%02X:%02X:%02X:%02X:%02X\r\n",
     p->bssid[0], p->bssid[1], p->bssid[2], p->bssid[3], p->bssid[4], p->bssid[5]);
   puts(outbuf);
+#endif
 
   // Make LED2 red
 
@@ -378,11 +324,10 @@ static int Handle_SL_DISCONNECTED(const event_msg_t * const event)
 
 static int Handle_SL_IPV4CONFIGURED(const event_msg_t * const event)
 {
-  char outbuf[256];
-
   GPIO_write(Board_GPIO_LED0, false);
   GPIO_write(Board_GPIO_LED1, true);
 
+#ifdef DEBUG
   puts("EVENT:     IPV4CONFIGURED\r\n");
 
   // Fetch IP address configuration
@@ -398,6 +343,8 @@ static int Handle_SL_IPV4CONFIGURED(const event_msg_t * const event)
     printf("ERROR: sl_NetCfgGet() failed, error=%d\r\n", status);
     return status;
   }
+
+  char outbuf[256];
 
   snprintf(outbuf, sizeof(outbuf), " Address:  %ld.%ld.%ld.%ld\r\n",
     SL_IPV4_BYTE(ipconfig.Ip, 3),
@@ -426,6 +373,7 @@ static int Handle_SL_IPV4CONFIGURED(const event_msg_t * const event)
     SL_IPV4_BYTE(ipconfig.IpDnsServer, 1),
     SL_IPV4_BYTE(ipconfig.IpDnsServer, 0));
   puts(outbuf);
+#endif
 
   // Make LED2 green
 
@@ -437,7 +385,9 @@ static int Handle_SL_IPV4CONFIGURED(const event_msg_t * const event)
 
 static int Handle_SL_IPV4UNCONFIGURED(const event_msg_t * const event)
 {
+#ifdef DEBUG
   puts("EVENT:     IPV4UNCONFIGURED\r\n");
+#endif
 
   // Make LED2 yellow
 
@@ -450,8 +400,10 @@ static int Handle_SL_IPV4UNCONFIGURED(const event_msg_t * const event)
 static int Handle_CMD_ASSOCIATE(const event_msg_t * const event)
 {
   payload_CMD_ASSOCIATE_t *p = (payload_CMD_ASSOCIATE_t *) event->payload;
-  char outbuf[256];
   int16_t status;
+
+#ifdef DEBUG
+  char outbuf[256];
 
   puts("COMMAND:   ASSOCIATE\r\n");
 
@@ -461,6 +413,7 @@ static int Handle_CMD_ASSOCIATE(const event_msg_t * const event)
   snprintf(outbuf, sizeof(outbuf), " BSSID:    %02X:%02X:%02X:%02X:%02X:%02X\r\n",
     p->bssid[0], p->bssid[1], p->bssid[2], p->bssid[3], p->bssid[4], p->bssid[5]);
   puts(outbuf);
+#endif
 
   // Build credentials structure
 
@@ -477,9 +430,11 @@ static int Handle_CMD_ASSOCIATE(const event_msg_t * const event)
 
   if (status)
   {
+#ifdef DEBUG
     snprintf(outbuf, sizeof(outbuf), "ERROR: sl_WlanConnect() failed, "
       "error=%d\r\n", status);
     puts(outbuf);
+#endif
   }
 
   return status;
@@ -499,15 +454,14 @@ static const event_handler_t EventHandlers[MAX_EVENT_CODES] =
 
 /*****************************************************************************/
 
-// Main task function
+// WiFi task function
 
-__attribute__((noreturn)) void Main_Task(void *arg0)
+__attribute__((noreturn)) void WiFi_Task(void *arg0)
 {
   int32_t status;
   static event_msg_t event;
 
-  puts("\033[H\033[2JSimpleLink CC31xx WiFi Associate Test using FreeRTOS ("
-    __DATE__ " " __TIME__ ")\r\n\n");
+  puts("SimpleLink CC31xx WiFi Task\r\n");
 
   // Initialize hardware subsystems
 
@@ -528,19 +482,6 @@ __attribute__((noreturn)) void Main_Task(void *arg0)
   if (mqueue == NULL)
   {
     puts("FATAL ERROR: xQueueCreate() failed\r\n");
-    abort();
-  }
-
-  // Start WiFi subsystem
-
-  status = sl_WifiConfig();
-
-  if(status < 0)
-  {
-    char outbuf[256];
-    snprintf(outbuf, sizeof(outbuf), "FATAL ERROR: sl_WifiConfig() failed, "
-      "error=%ld\r\n", status);
-    puts(outbuf);
     abort();
   }
 

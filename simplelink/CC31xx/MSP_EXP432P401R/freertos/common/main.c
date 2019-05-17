@@ -33,9 +33,6 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-/* POSIX header files */
-#include <pthread.h>
-
 /* FreeRTOS header files */
 #include <FreeRTOS.h>
 #include <task.h>
@@ -43,12 +40,56 @@
 /* Board header files */
 #include <Board.h>
 #include <console.h>
+#include <tasklist.h>
+
+#define WEAK __attribute__((weak))
 
 /* Implemented in the SimpleLink library */
-extern void *sl_Task(void *arg0);
+extern void sl_Task(void *arg0);
 
 /* Implemented in application.c */
-extern void *Main_Task(void *arg0);
+extern void WiFi_Task(void *arg0);
+
+/* Framework base tasks */
+static const tasklist_item_t BaseTasks[] =
+{
+  { sl_Task,   "SimpleLink Task", 2048, 9 },
+  { WiFi_Task, "WiFi Task",       4096, 1 },
+  { NULL }
+};
+
+/* User application tasks */
+WEAK const tasklist_item_t UserTasks[] =
+{
+  { NULL }
+};
+
+/*****************************************************************************/
+
+// Callbacks required by FreeRTOS -- These are defined as weak so they can
+// be overridden in user code, if necessary.
+
+WEAK void vApplicationMallocFailedHook()
+{
+}
+
+WEAK void vApplicationStackOverflowHook(TaskHandle_t pxTask, char *pcTaskName)
+{
+}
+
+WEAK void vApplicationTickHook(void)
+{
+}
+
+WEAK void vPreSleepProcessing(uint32_t ulExpectedIdleTime)
+{
+}
+
+WEAK void vApplicationIdleHook(void)
+{
+}
+
+/*****************************************************************************/
 
 int main(void)
 {
@@ -56,43 +97,47 @@ int main(void)
   Board_initGeneral();
   InitTerm();
 
-  /* Create the Simplelink task */
-  pthread_t thread_simplelink;
-  pthread_attr_t pAttrs_simplelink;
-  struct sched_param priParam_simplelink;
+  puts("\033[H\033[2JSimpleLink CC31xx WiFi Framework using FreeRTOS (" __DATE__ " " __TIME__ ")\r\n");
 
-  pthread_attr_init(&pAttrs_simplelink);
-  priParam_simplelink.sched_priority = 9;
-  pthread_attr_setschedparam(&pAttrs_simplelink, &priParam_simplelink);
-  pthread_attr_setstacksize(&pAttrs_simplelink, 2048);
-  pthread_attr_setdetachstate(&pAttrs_simplelink, PTHREAD_CREATE_DETACHED);
+  // Create framework base tasks
 
-  if (pthread_create(&thread_simplelink, &pAttrs_simplelink, sl_Task, NULL))
+  tasklist_item_t const * p = BaseTasks;
+
+  while (p->func != NULL)
   {
-    puts("FATAL ERROR: Unable to create SimpleLink task\r\n");
-    abort();
+    if (xTaskCreate(p->func, p->name, p->stacksize/4, NULL, p->priority, NULL) != pdPASS)
+    {
+      puts("FATAL ERROR: Unable to create ");
+      puts(p->name);
+      puts("\r\n");
+      abort();
+    }
+
+    p++;
   }
 
-  /* Create the main task */
-  pthread_t thread_main;
-  pthread_attr_t pAttrs_main;
-  struct sched_param priParam_main;
+  // Create user application tasks
 
-  pthread_attr_init(&pAttrs_main);
-  priParam_main.sched_priority = 1;
-  pthread_attr_setschedparam(&pAttrs_main, &priParam_main);
-  pthread_attr_setstacksize(&pAttrs_main, 4096);
-  pthread_attr_setdetachstate(&pAttrs_main, PTHREAD_CREATE_DETACHED);
+  p = UserTasks;
 
-  if(pthread_create(&thread_main, &pAttrs_main, Main_Task, NULL))
+  while (p->func != NULL)
   {
-    puts("FATAL ERROR: Unable to create main task\r\n");
-    abort();
+    if (xTaskCreate(p->func, p->name, p->stacksize/4, NULL, p->priority, NULL) != pdPASS)
+    {
+      puts("FATAL ERROR: Unable to create ");
+      puts(p->name);
+      puts("\r\n");
+      abort();
+    }
+
+    p++;
   }
 
   /* Start the FreeRTOS scheduler */
   vTaskStartScheduler();
 }
+
+/*****************************************************************************/
 
 #if defined (__GNUC__)
 void * _sbrk(uint32_t delta)
