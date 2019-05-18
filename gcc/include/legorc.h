@@ -56,9 +56,9 @@ typedef enum
 
 typedef enum { BIT_LOW, BIT_HIGH, BIT_START, BIT_STOP } lego_bit_t;
 
-// 38 kHz half-cycles of silence following the mark burst
+// 38 kHz cycles of silence following the mark burst
 
-const uint8_t LEGO_RC_PAUSE[] = { 2*(16-6), 2*(27-6), 2*(45-6), 2*(45-6) };
+const uint8_t LEGO_RC_PAUSE[] = { 10, 21, 39, 39 };
 
 // Milliseconds delay before each frame transmission
 
@@ -121,10 +121,16 @@ void SendBit(lego_bit_t bit, void *userdata)
     Delay38kHz();
   }
 
-  // Pause n half-cycles
+  // Pause n cycles of 38 kHz square wave
 
   for (i = 1; i <= LEGO_RC_PAUSE[bit]; i++)
+  {
+    TURN_IRED_OFF;
     Delay38kHz();
+
+    TURN_IRED_OFF;
+    Delay38kHz();
+  }
 }
 
 /**************************************************************************/
