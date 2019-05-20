@@ -12,6 +12,6 @@ typedef struct
   unsigned priority;
 } tasklist_item_t;
 
-extern const tasklist_item_t UserTasks[];
+extern void CreateTasks(const tasklist_item_t list[]);
 
 #endif

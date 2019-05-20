@@ -13,6 +13,7 @@
 #include <Board.h>
 #include <console.h>
 #include <events.h>
+#include <wifi.h>
 
 // Override TEST_SSID and TEST_PASS with useful values with something like:
 //
@@ -67,6 +68,7 @@ typedef struct
 // Global variables
 
 static QueueHandle_t mqueue = NULL;
+static volatile bool connected = false;
 
 /*****************************************************************************/
 
@@ -81,6 +83,11 @@ int Associate(char *ssid, char *pass)
   memcpy(cmd.pass, pass, strlen(pass));
 
   return event_enqueue(mqueue, CMD_ASSOCIATE, &cmd, sizeof(cmd), 0);
+}
+
+bool Associated(void)
+{
+  return connected;
 }
 
 /*****************************************************************************/
@@ -315,6 +322,8 @@ static int Handle_SL_DISCONNECTED(const event_msg_t * const event)
   GPIO_write(Board_GPIO_LED0, true);
   GPIO_write(Board_GPIO_LED1, false);
 
+  connected = false;
+
   // Try to reconnect
 
   Associate(TEST_SSID, TEST_PASS);
@@ -380,6 +389,8 @@ static int Handle_SL_IPV4CONFIGURED(const event_msg_t * const event)
   GPIO_write(Board_GPIO_LED0, false);
   GPIO_write(Board_GPIO_LED1, true);
 
+  connected = true;
+
   return 0;
 }
 
@@ -393,6 +404,8 @@ static int Handle_SL_IPV4UNCONFIGURED(const event_msg_t * const event)
 
   GPIO_write(Board_GPIO_LED0, true);
   GPIO_write(Board_GPIO_LED1, true);
+
+  connected = false;
 
   return 0;
 }

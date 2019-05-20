@@ -47,7 +47,7 @@
 /* Implemented in the SimpleLink library */
 extern void sl_Task(void *arg0);
 
-/* Implemented in application.c */
+/* Implemented in wifi.c */
 extern void WiFi_Task(void *arg0);
 
 /* Framework base tasks */
@@ -58,7 +58,7 @@ static const tasklist_item_t BaseTasks[] =
   { NULL }
 };
 
-/* User application tasks */
+/* User application tasks (placeholder) */
 WEAK const tasklist_item_t UserTasks[] =
 {
   { NULL }
@@ -93,47 +93,26 @@ WEAK void vApplicationIdleHook(void)
 
 int main(void)
 {
-  /* Call board init functions */
+  // Call board init functions
+
   Board_initGeneral();
   InitTerm();
 
-  puts("\033[H\033[2JSimpleLink CC31xx WiFi Framework using FreeRTOS (" __DATE__ " " __TIME__ ")\r\n");
+  // Display startup banner
+
+  puts("\033[H\033[2JSimpleLink CC31xx WiFi Framework using FreeRTOS ("
+    __DATE__ " " __TIME__ ")\r\n");
 
   // Create framework base tasks
 
-  tasklist_item_t const * p = BaseTasks;
-
-  while (p->func != NULL)
-  {
-    if (xTaskCreate(p->func, p->name, p->stacksize/4, NULL, p->priority, NULL) != pdPASS)
-    {
-      puts("FATAL ERROR: Unable to create ");
-      puts(p->name);
-      puts("\r\n");
-      abort();
-    }
-
-    p++;
-  }
+  CreateTasks(BaseTasks);
 
   // Create user application tasks
 
-  p = UserTasks;
+  CreateTasks(UserTasks);
 
-  while (p->func != NULL)
-  {
-    if (xTaskCreate(p->func, p->name, p->stacksize/4, NULL, p->priority, NULL) != pdPASS)
-    {
-      puts("FATAL ERROR: Unable to create ");
-      puts(p->name);
-      puts("\r\n");
-      abort();
-    }
+  // Start the FreeRTOS scheduler
 
-    p++;
-  }
-
-  /* Start the FreeRTOS scheduler */
   vTaskStartScheduler();
 }
 
