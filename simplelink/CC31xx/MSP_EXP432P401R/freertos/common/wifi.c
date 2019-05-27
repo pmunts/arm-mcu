@@ -15,20 +15,6 @@
 #include <events.h>
 #include <wifi.h>
 
-// Override TEST_SSID and TEST_PASS with useful values with something like:
-//
-// export CFLAGS="-DTEST_SSID='\"MySSID\"' -DTEST_PASS='\"MyPassword\"'"
-//
-// before running make.
-
-#ifndef TEST_SSID
-#define TEST_SSID	"undefined"
-#endif
-
-#ifndef TEST_PASS
-#define TEST_PASS	"undefined"
-#endif
-
 /*****************************************************************************/
 
 // Type declarations
@@ -40,6 +26,8 @@ typedef enum
   SL_DISCONNECTED,
   SL_IPV4CONFIGURED,
   SL_IPV4UNCONFIGURED,
+  CMD_START,
+  CMD_STOP,
   CMD_ASSOCIATE,
   MAX_EVENT_CODES
 } event_code_t;
@@ -56,37 +44,57 @@ typedef struct
   char ssid[32];
 } payload_SL_DISCONNECTED_t;
 
-typedef struct
-{
-  char ssid[32];
-  char pass[32];
-  uint8_t bssid[6];
-} payload_CMD_ASSOCIATE_t;
-
 /*****************************************************************************/
 
 // Global variables
 
 static QueueHandle_t mqueue = NULL;
 static volatile bool connected = false;
+static char ssid[32];
+static char password[32];
+static uint8_t bssid[6] = { 0 };
 
 /*****************************************************************************/
 
-// Associate with the designated access point
+// Public API functions
 
-int Associate(char *ssid, char *pass)
+int WiFi_Register(char *newssid, char *newpass, uint8_t *newbssid)
 {
-  payload_CMD_ASSOCIATE_t cmd;
+  // Wait for WiFi task to finish initializing
+  while (mqueue == NULL) vTaskDelay(pdMS_TO_TICKS(100));
 
-  memset(&cmd, 0, sizeof(cmd));
-  memcpy(cmd.ssid, ssid, strlen(ssid));
-  memcpy(cmd.pass, pass, strlen(pass));
+  strncpy(ssid, newssid, sizeof(ssid) - 1);
+  strncpy(password, newpass, sizeof(password) - 1);
 
-  return event_enqueue(mqueue, CMD_ASSOCIATE, &cmd, sizeof(cmd), 0);
+  if (newbssid == NULL)
+    memset(bssid, 0, sizeof(bssid));
+  else
+    memcpy(bssid, newbssid, sizeof(bssid));
+
+  return 0;
 }
 
-bool Associated(void)
+int WiFi_Start(void)
 {
+  // Wait for WiFi task to finish initializing
+  while (mqueue == NULL) vTaskDelay(pdMS_TO_TICKS(100));
+
+  return event_enqueue(mqueue, CMD_START, NULL, 0, 0);
+}
+
+int WiFi_Stop(void)
+{
+  // Wait for WiFi task to finish initializing
+  while (mqueue == NULL) vTaskDelay(pdMS_TO_TICKS(100));
+
+  return event_enqueue(mqueue, CMD_STOP, NULL, 0, 0);
+}
+
+bool WiFi_Associated(void)
+{
+  // Wait for WiFi task to finish initializing
+  while (mqueue == NULL) vTaskDelay(pdMS_TO_TICKS(100));
+
   return connected;
 }
 
@@ -270,9 +278,9 @@ static int Handle_SL_STARTED(const event_msg_t * const event)
   GPIO_write(Board_GPIO_LED0, true);
   GPIO_write(Board_GPIO_LED1, false);
 
-  Associate(TEST_SSID, TEST_PASS);
+  // Now associate with the specified access point
 
-  return 0;
+  return event_enqueue(mqueue, CMD_ASSOCIATE, NULL, 0, 0);
 }
 
 static int Handle_SL_CONNECTED(const event_msg_t * const event)
@@ -280,16 +288,13 @@ static int Handle_SL_CONNECTED(const event_msg_t * const event)
 #ifdef DEBUG
   payload_SL_CONNECTED_t *p = (payload_SL_CONNECTED_t *) event->payload;
 
-  char outbuf[256];
-
   puts("EVENT:     CONNECTED\r\n");
 
-  snprintf(outbuf, sizeof(outbuf), " SSID:     %s\r\n", p->ssid);
-  puts(outbuf);
+  printf(" SSID:     %s\r\n", p->ssid);
 
-  snprintf(outbuf, sizeof(outbuf), " BSSID:    %02X:%02X:%02X:%02X:%02X:%02X\r\n",
-    p->bssid[0], p->bssid[1], p->bssid[2], p->bssid[3], p->bssid[4], p->bssid[5]);
-  puts(outbuf);
+  printf(" BSSID:    %02X:%02X:%02X:%02X:%02X:%02X\r\n",
+    p->bssid[0], p->bssid[1], p->bssid[2],
+    p->bssid[3], p->bssid[4], p->bssid[5]);
 #endif
 
   // Make LED2 yellow
@@ -305,16 +310,12 @@ static int Handle_SL_DISCONNECTED(const event_msg_t * const event)
 #ifdef DEBUG
   payload_SL_DISCONNECTED_t *p = (payload_SL_DISCONNECTED_t *) event->payload;
 
-  char outbuf[256];
-
   puts("EVENT:     DISCONNECTED\r\n");
 
-  snprintf(outbuf, sizeof(outbuf), " SSID:     %s\r\n", p->ssid);
-  puts(outbuf);
+  printf(" SSID:     %s\r\n", p->ssid);
 
-  snprintf(outbuf, sizeof(outbuf), " BSSID:    %02X:%02X:%02X:%02X:%02X:%02X\r\n",
+  printf(" BSSID:    %02X:%02X:%02X:%02X:%02X:%02X\r\n",
     p->bssid[0], p->bssid[1], p->bssid[2], p->bssid[3], p->bssid[4], p->bssid[5]);
-  puts(outbuf);
 #endif
 
   // Make LED2 red
@@ -324,11 +325,9 @@ static int Handle_SL_DISCONNECTED(const event_msg_t * const event)
 
   connected = false;
 
-  // Try to reconnect
+  // Try to reconnect to the specified access point
 
-  Associate(TEST_SSID, TEST_PASS);
-
-  return 0;
+  return event_enqueue(mqueue, CMD_ASSOCIATE, NULL, 0, 0);
 }
 
 static int Handle_SL_IPV4CONFIGURED(const event_msg_t * const event)
@@ -353,35 +352,29 @@ static int Handle_SL_IPV4CONFIGURED(const event_msg_t * const event)
     return status;
   }
 
-  char outbuf[256];
-
-  snprintf(outbuf, sizeof(outbuf), " Address:  %ld.%ld.%ld.%ld\r\n",
+  printf(" Address:  %ld.%ld.%ld.%ld\r\n",
     SL_IPV4_BYTE(ipconfig.Ip, 3),
     SL_IPV4_BYTE(ipconfig.Ip, 2),
     SL_IPV4_BYTE(ipconfig.Ip, 1),
     SL_IPV4_BYTE(ipconfig.Ip, 0));
-  puts(outbuf);
 
-  snprintf(outbuf, sizeof(outbuf), " Netmask:  %ld.%ld.%ld.%ld\r\n",
+  printf(" Netmask:  %ld.%ld.%ld.%ld\r\n",
     SL_IPV4_BYTE(ipconfig.IpMask, 3),
     SL_IPV4_BYTE(ipconfig.IpMask, 2),
     SL_IPV4_BYTE(ipconfig.IpMask, 1),
     SL_IPV4_BYTE(ipconfig.IpMask, 0));
-  puts(outbuf);
 
-  snprintf(outbuf, sizeof(outbuf), " Gateway:  %ld.%ld.%ld.%ld\r\n",
+  printf(" Gateway:  %ld.%ld.%ld.%ld\r\n",
     SL_IPV4_BYTE(ipconfig.IpGateway, 3),
     SL_IPV4_BYTE(ipconfig.IpGateway, 2),
     SL_IPV4_BYTE(ipconfig.IpGateway, 1),
     SL_IPV4_BYTE(ipconfig.IpGateway, 0));
-  puts(outbuf);
 
-  snprintf(outbuf, sizeof(outbuf), " DNS:      %ld.%ld.%ld.%ld\r\n",
+  printf(" DNS:      %ld.%ld.%ld.%ld\r\n",
     SL_IPV4_BYTE(ipconfig.IpDnsServer, 3),
     SL_IPV4_BYTE(ipconfig.IpDnsServer, 2),
     SL_IPV4_BYTE(ipconfig.IpDnsServer, 1),
     SL_IPV4_BYTE(ipconfig.IpDnsServer, 0));
-  puts(outbuf);
 #endif
 
   // Make LED2 green
@@ -410,43 +403,75 @@ static int Handle_SL_IPV4UNCONFIGURED(const event_msg_t * const event)
   return 0;
 }
 
+static int Handle_CMD_START(const event_msg_t * const event)
+{
+#ifdef DEBUG
+  puts("COMMAND:   START\r\n");
+#endif
+
+  int16_t status = sl_Start(NULL, NULL, SimpleLinkStartCallback);
+
+  if (status < 0)
+  {
+    printf("FATAL ERROR: sl_Start() failed, error=%d\r\n", status);
+    abort();
+  }
+
+  return 0;
+}
+
+static int Handle_CMD_STOP(const event_msg_t * const event)
+{
+#ifdef DEBUG
+  puts("COMMAND:   STOP\r\n");
+#endif
+
+  int16_t status = sl_Stop(0);
+
+  if (status < 0)
+  {
+    printf("FATAL ERROR: sl_Stop() failed, error=%d\r\n", status);
+    abort();
+  }
+
+  // Turn LED2 off
+
+  GPIO_write(Board_GPIO_LED0, false);
+  GPIO_write(Board_GPIO_LED1, false);
+
+  connected = false;
+
+  return 0;
+}
+
 static int Handle_CMD_ASSOCIATE(const event_msg_t * const event)
 {
-  payload_CMD_ASSOCIATE_t *p = (payload_CMD_ASSOCIATE_t *) event->payload;
-  int16_t status;
-
 #ifdef DEBUG
-  char outbuf[256];
-
   puts("COMMAND:   ASSOCIATE\r\n");
 
-  snprintf(outbuf, sizeof(outbuf), " SSID:     %s\r\n", p->ssid);
-  puts(outbuf);
+  printf(" SSID:     %s\r\n", ssid);
 
-  snprintf(outbuf, sizeof(outbuf), " BSSID:    %02X:%02X:%02X:%02X:%02X:%02X\r\n",
-    p->bssid[0], p->bssid[1], p->bssid[2], p->bssid[3], p->bssid[4], p->bssid[5]);
-  puts(outbuf);
+  printf(" BSSID:    %02X:%02X:%02X:%02X:%02X:%02X\r\n",
+    bssid[0], bssid[1], bssid[2], bssid[3], bssid[4], bssid[5]);
 #endif
 
   // Build credentials structure
 
   SlWlanSecParams_t secParams;
   memset(&secParams, 0, sizeof(secParams));
-  secParams.Key = (signed char *) p->pass;
-  secParams.KeyLen = strlen(p->pass);
+  secParams.Key = (signed char *) password;
+  secParams.KeyLen = strlen(password);
   secParams.Type = SL_WLAN_SEC_TYPE_WPA_WPA2;
 
   // Try to connect to the specified access point
 
-  status = sl_WlanConnect((signed char *) p->ssid, strlen(p->ssid), p->bssid,
+  int16_t status = sl_WlanConnect((signed char *) ssid, strlen(ssid), bssid,
     &secParams, NULL);
 
   if (status)
   {
 #ifdef DEBUG
-    snprintf(outbuf, sizeof(outbuf), "ERROR: sl_WlanConnect() failed, "
-      "error=%d\r\n", status);
-    puts(outbuf);
+    printf("ERROR: sl_WlanConnect() failed, error=%d\r\n", status);
 #endif
   }
 
@@ -462,6 +487,8 @@ static const event_handler_t EventHandlers[MAX_EVENT_CODES] =
   Handle_SL_DISCONNECTED,
   Handle_SL_IPV4CONFIGURED,
   Handle_SL_IPV4UNCONFIGURED,
+  Handle_CMD_START,
+  Handle_CMD_STOP,
   Handle_CMD_ASSOCIATE,
 };
 
@@ -471,7 +498,6 @@ static const event_handler_t EventHandlers[MAX_EVENT_CODES] =
 
 __attribute__((noreturn)) void WiFi_Task(void *arg0)
 {
-  int32_t status;
   static event_msg_t event;
 
   puts("SimpleLink CC31xx WiFi Task\r\n");
@@ -495,17 +521,6 @@ __attribute__((noreturn)) void WiFi_Task(void *arg0)
   if (mqueue == NULL)
   {
     puts("FATAL ERROR: xQueueCreate() failed\r\n");
-    abort();
-  }
-
-  status = sl_Start(NULL, NULL, SimpleLinkStartCallback);
-
-  if (status < 0)
-  {
-    char outbuf[256];
-    snprintf(outbuf, sizeof(outbuf), "FATAL ERROR: sl_Start() failed, "
-      "error=%ld\r\n", status);
-    puts(outbuf);
     abort();
   }
 

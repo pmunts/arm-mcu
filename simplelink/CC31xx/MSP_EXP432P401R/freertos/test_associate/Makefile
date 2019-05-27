@@ -9,6 +9,8 @@ PROJECT		:= $(shell basename $(shell pwd))
 CFLAGS		+= -DDEBUG
 CFLAGS		+= -DMAX_PAYLOAD_SIZE=256
 
+OBJECTS		+= application.o
+
 default: msp_exp432p401r_default
 
 clean: msp_exp432p401r_clean
