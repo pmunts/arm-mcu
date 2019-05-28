@@ -270,7 +270,7 @@ void SimpleLinkNetAppRequestMemFreeEventHandler(uint8_t *buffer)
 static int Handle_SL_STARTED(const event_msg_t * const event)
 {
 #ifdef DEBUG
-  puts("EVENT:     STARTED\r\n");
+  puts("EVENT:     WIFI STARTED\r\n");
 #endif
 
   // Make LED2 red
@@ -288,7 +288,7 @@ static int Handle_SL_CONNECTED(const event_msg_t * const event)
 #ifdef DEBUG
   payload_SL_CONNECTED_t *p = (payload_SL_CONNECTED_t *) event->payload;
 
-  puts("EVENT:     CONNECTED\r\n");
+  puts("EVENT:     WIFI CONNECTED\r\n");
 
   printf(" SSID:     %s\r\n", p->ssid);
 
@@ -310,7 +310,7 @@ static int Handle_SL_DISCONNECTED(const event_msg_t * const event)
 #ifdef DEBUG
   payload_SL_DISCONNECTED_t *p = (payload_SL_DISCONNECTED_t *) event->payload;
 
-  puts("EVENT:     DISCONNECTED\r\n");
+  puts("EVENT:     WIFI DISCONNECTED\r\n");
 
   printf(" SSID:     %s\r\n", p->ssid);
 
@@ -336,7 +336,7 @@ static int Handle_SL_IPV4CONFIGURED(const event_msg_t * const event)
   GPIO_write(Board_GPIO_LED1, true);
 
 #ifdef DEBUG
-  puts("EVENT:     IPV4CONFIGURED\r\n");
+  puts("EVENT:     IPV4 CONFIGURED\r\n");
 
   // Fetch IP address configuration
 
@@ -390,7 +390,7 @@ static int Handle_SL_IPV4CONFIGURED(const event_msg_t * const event)
 static int Handle_SL_IPV4UNCONFIGURED(const event_msg_t * const event)
 {
 #ifdef DEBUG
-  puts("EVENT:     IPV4UNCONFIGURED\r\n");
+  puts("EVENT:     IPV4 UNCONFIGURED\r\n");
 #endif
 
   // Make LED2 yellow
@@ -406,7 +406,7 @@ static int Handle_SL_IPV4UNCONFIGURED(const event_msg_t * const event)
 static int Handle_CMD_START(const event_msg_t * const event)
 {
 #ifdef DEBUG
-  puts("COMMAND:   START\r\n");
+  puts("COMMAND:   WIFI START\r\n");
 #endif
 
   int16_t status = sl_Start(NULL, NULL, SimpleLinkStartCallback);
@@ -423,7 +423,7 @@ static int Handle_CMD_START(const event_msg_t * const event)
 static int Handle_CMD_STOP(const event_msg_t * const event)
 {
 #ifdef DEBUG
-  puts("COMMAND:   STOP\r\n");
+  puts("COMMAND:   WIFI STOP\r\n");
 #endif
 
   int16_t status = sl_Stop(0);
@@ -447,7 +447,7 @@ static int Handle_CMD_STOP(const event_msg_t * const event)
 static int Handle_CMD_ASSOCIATE(const event_msg_t * const event)
 {
 #ifdef DEBUG
-  puts("COMMAND:   ASSOCIATE\r\n");
+  puts("COMMAND:   WIFI ASSOCIATE\r\n");
 
   printf(" SSID:     %s\r\n", ssid);
 
