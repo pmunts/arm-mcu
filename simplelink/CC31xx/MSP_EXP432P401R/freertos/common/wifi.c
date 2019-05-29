@@ -148,15 +148,10 @@ void SimpleLinkWlanEventHandler(SlWlanEvent_t *pWlanEvent)
     break;
 
     default:
-    {
 #ifdef DEBUG
-      char outbuf[256];
-
-      snprintf(outbuf, sizeof(outbuf), "DEBUG: Line %d: Unexpected WLAN Event: "
-        " %ld\r\n", __LINE__ - 5, pWlanEvent->Id);
-      puts(outbuf);
+      printf("DEBUG: Line %d: Unexpected WLAN Event: %ld\r\n", __LINE__,
+        pWlanEvent->Id);
 #endif
-    }
     break;
   }
 }
@@ -182,15 +177,10 @@ void SimpleLinkNetAppEventHandler(SlNetAppEvent_t *pNetAppEvent)
     break;
 
     default:
-    {
 #ifdef DEBUG
-      char outbuf[256];
-
-      snprintf(outbuf, sizeof(outbuf), "DEBUG: Line %d: Unexpected Net App Event: "
-        "%ld\r\n", __LINE__ - 5, pNetAppEvent->Id);
-      puts(outbuf);
+      printf("DEBUG: Line %d: Unexpected Net App Event: %ld\r\n", __LINE__,
+        pNetAppEvent->Id);
 #endif
-    }
     break;
   }
 }
@@ -205,15 +195,10 @@ void SimpleLinkGeneralEventHandler(SlDeviceEvent_t *pDevEvent)
   switch (pDevEvent->Id)
   {
     default:
-    {
 #ifdef DEBUG
-      char outbuf[256];
-
-      snprintf(outbuf, sizeof(outbuf), "DEBUG: Line %d: Unexpected Device Event: "
+      printf("DEBUG: Line %d: Unexpected Device Event: "
         "%ld\r\n", __LINE__ - 5, pDevEvent->Id);
-      puts(outbuf);
 #endif
-    }
     break;
   }
 }
@@ -223,15 +208,10 @@ void SimpleLinkSockEventHandler(SlSockEvent_t *pSock)
   switch (pSock->Event)
   {
     default:
-    {
 #ifdef DEBUG
-      char outbuf[256];
-
-      snprintf(outbuf, sizeof(outbuf), "DEBUG: Line %d: Unexpected Socket Event: "
-        "%ld\r\n", __LINE__ - 5, pSock->Event);
-      puts(outbuf);
+      printf("DEBUG: Line %d: Unexpected Socket Event: %ld\r\n", __LINE__,
+        pSock->Event);
 #endif
-    }
     break;
   }
 }
@@ -241,15 +221,10 @@ void SimpleLinkFatalErrorEventHandler(SlDeviceFatal_t *pFatalErrorEvent)
   switch (pFatalErrorEvent->Id)
   {
     default:
-    {
 #ifdef DEBUG
-      char outbuf[256];
-
-      snprintf(outbuf, sizeof(outbuf), "DEBUG: Line %d: Unexpected Error Event: "
-        "%ld\r\n", __LINE__ - 5, pFatalErrorEvent->Id);
-      puts(outbuf);
+      printf("DEBUG: Line %d: Unexpected Error Event: %ld\r\n", __LINE__,
+        pFatalErrorEvent->Id);
 #endif
-    }
     break;
   }
 }
@@ -273,10 +248,11 @@ static int Handle_SL_STARTED(const event_msg_t * const event)
   puts("EVENT:     WIFI STARTED\r\n");
 #endif
 
+#ifndef NOLEDS
   // Make LED2 red
-
   GPIO_write(Board_GPIO_LED0, true);
   GPIO_write(Board_GPIO_LED1, false);
+#endif
 
   // Now associate with the specified access point
 
@@ -297,10 +273,11 @@ static int Handle_SL_CONNECTED(const event_msg_t * const event)
     p->bssid[3], p->bssid[4], p->bssid[5]);
 #endif
 
+#ifndef NOLEDS
   // Make LED2 yellow
-
   GPIO_write(Board_GPIO_LED0, true);
   GPIO_write(Board_GPIO_LED1, true);
+#endif
 
   return 0;
 }
@@ -318,10 +295,11 @@ static int Handle_SL_DISCONNECTED(const event_msg_t * const event)
     p->bssid[0], p->bssid[1], p->bssid[2], p->bssid[3], p->bssid[4], p->bssid[5]);
 #endif
 
+#ifndef NOLEDS
   // Make LED2 red
-
   GPIO_write(Board_GPIO_LED0, true);
   GPIO_write(Board_GPIO_LED1, false);
+#endif
 
   connected = false;
 
@@ -332,9 +310,6 @@ static int Handle_SL_DISCONNECTED(const event_msg_t * const event)
 
 static int Handle_SL_IPV4CONFIGURED(const event_msg_t * const event)
 {
-  GPIO_write(Board_GPIO_LED0, false);
-  GPIO_write(Board_GPIO_LED1, true);
-
 #ifdef DEBUG
   puts("EVENT:     IPV4 CONFIGURED\r\n");
 
@@ -377,10 +352,11 @@ static int Handle_SL_IPV4CONFIGURED(const event_msg_t * const event)
     SL_IPV4_BYTE(ipconfig.IpDnsServer, 0));
 #endif
 
+#ifndef NOLEDS
   // Make LED2 green
-
   GPIO_write(Board_GPIO_LED0, false);
   GPIO_write(Board_GPIO_LED1, true);
+#endif
 
   connected = true;
 
@@ -393,10 +369,11 @@ static int Handle_SL_IPV4UNCONFIGURED(const event_msg_t * const event)
   puts("EVENT:     IPV4 UNCONFIGURED\r\n");
 #endif
 
+#ifndef NOLEDS
   // Make LED2 yellow
-
   GPIO_write(Board_GPIO_LED0, true);
   GPIO_write(Board_GPIO_LED1, true);
+#endif
 
   connected = false;
 
@@ -434,10 +411,11 @@ static int Handle_CMD_STOP(const event_msg_t * const event)
     abort();
   }
 
+#ifndef NOLEDS
   // Turn LED2 off
-
   GPIO_write(Board_GPIO_LED0, false);
   GPIO_write(Board_GPIO_LED1, false);
+#endif
 
   connected = false;
 
@@ -530,7 +508,9 @@ __attribute__((noreturn)) void WiFi_Task(void *arg0)
   {
     if (xQueueReceive(mqueue, &event, pdMS_TO_TICKS(1000)) == pdPASS)
       event_dispatch(EventHandlers, MAX_EVENT_CODES, &event);
+#ifndef NOLEDS
     else
       GPIO_toggle(Board_GPIO_LED3);
+#endif
   }
 }
