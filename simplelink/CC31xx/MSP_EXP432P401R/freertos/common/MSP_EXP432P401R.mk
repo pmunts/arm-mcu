@@ -73,6 +73,7 @@ LDFLAGS		+= -lnosys
 OBJECTS		+= $(COMMON)/MSP_EXP432P401R.o
 OBJECTS		+= $(COMMON)/console.o
 OBJECTS		+= $(COMMON)/events.o
+OBJECTS		+= $(COMMON)/libstream.o
 OBJECTS		+= $(COMMON)/main.o
 OBJECTS		+= $(COMMON)/tasklist.o
 OBJECTS		+= $(COMMON)/ti_drivers_net_wifi_Config.o
