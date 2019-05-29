@@ -34,8 +34,12 @@
 
 void Application_Task(void *arg0)
 {
+  puts("SimpleLink CC31xx WiFi Application Task\r\n");
+
   WiFi_Register(TEST_SSID, TEST_PASS, NULL);
   WiFi_Start();
+
+  vTaskDelete(NULL);
 }
 
 /*****************************************************************************/
