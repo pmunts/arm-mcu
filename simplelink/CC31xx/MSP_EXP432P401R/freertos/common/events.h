@@ -1,10 +1,6 @@
 #ifndef _EVENTS_H_
 #define _EVENTS_H_
 
-#include <stdint.h>
-#include <FreeRTOS.h>
-#include <queue.h>
-
 #ifndef MAX_PAYLOAD_SIZE
 #define MAX_PAYLOAD_SIZE 64
 #endif
