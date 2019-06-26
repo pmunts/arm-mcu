@@ -270,7 +270,7 @@ int timer_configure_match_value(unsigned id, unsigned m, unsigned n)
 
   MRn(m) = n;
 
-  TC = 0; 
+  TC = 0;
 
   errno_r = 0;
   return 0;
