@@ -26,8 +26,8 @@
 # Register Munts Technologies Debian package repository
 
 if [ ! -f /etc/apt/sources.list.d/repo.munts.com.list ]; then
-  wget http://repo.munts.com/debian9/PublicKey.txt && sudo apt-key add PublicKey.txt && rm PublicKey.txt
-  wget http://repo.munts.com/debian9/amd64/munts-repo.deb && sudo dpkg -i munts-repo.deb && rm munts-repo.deb
+  wget http://repo.munts.com/debian10/PublicKey.txt && sudo apt-key add PublicKey.txt && rm PublicKey.txt
+  wget http://repo.munts.com/debian10/amd64/munts-repo.deb && sudo dpkg -i munts-repo.deb && rm munts-repo.deb
 fi
 
 # Install packages
