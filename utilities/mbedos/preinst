@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# Install Python stuff
+
+pip install mbed-cli -q -U

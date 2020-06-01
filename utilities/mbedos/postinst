@@ -5,14 +5,3 @@
 if [ -x /usr/local/gcc-arm-none-eabi/bin/arm-none-eabi-gcc ]; then
   sed -i 's@#GCC_ARM_PATH = ""@GCC_ARM_PATH = "/usr/local/gcc-arm-none-eabi/bin"@g' /usr/local/lib/mbedos/mbed_settings.py
 fi
-
-# Otherwise use Debian gcc-arm-none-eabi, if available
-
-if [ -x /usr/bin/arm-none-eabi-gcc ]; then
-  sed -i 's@#GCC_ARM_PATH = ""@GCC_ARM_PATH = "/usr/bin"@g' /usr/local/lib/mbedos/mbed_settings.py
-fi
-
-# Install Python stuff
-
-pip install mbed-cli -q -U
-pip install -q -U -r /usr/local/lib/mbedos/mbed-os/requirements.txt

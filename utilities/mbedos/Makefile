@@ -39,6 +39,7 @@ $(PKGFILE): $(PKGDIR)
 $(PKGDIR):
 	mkdir -p $(PKGDIR)/DEBIAN
 	install -cm 0444 control		$(PKGDIR)/DEBIAN
+	install -cm 0755 preinst		$(PKGDIR)/DEBIAN
 	install -cm 0755 postinst		$(PKGDIR)/DEBIAN
 	sed -i s/@@ARCH@@/$(PKGARCH)/g		$(PKGDIR)/DEBIAN/control
 	sed -i s/@@NAME@@/$(PKGNAME)/g		$(PKGDIR)/DEBIAN/control
@@ -66,7 +67,7 @@ tarball: $(TARBALL)
 # Remove working files
 
 clean:
-	-rm -rf $(PKGDIR) $(PKGFILE) $(TARBALL)
+	-rm -rf $(PKGDIR) $(PKGFILE) $(TARBALL) mbed*
 
 reallyclean: clean
 
