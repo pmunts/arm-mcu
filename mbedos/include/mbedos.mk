@@ -103,10 +103,9 @@ mbedos_mk_install: $(PROJECTNAME).$(FLASHSUFFIX)
 # Remove working files
 
 mbedos_mk_clean:
-	-rm -rf $(PROJECTNAME).bin $(BLDDIR)
+	-rm -rf .mbed mbed* $(BUILDDIRBASE) $(PROJECTNAME).bin
 
 mbedos_mk_reallyclean: mbedos_mk_clean
-	-rm -rf .mbed mbed* $(BLDDIRBASE)
 
 mbedos_mk_distclean: mbedos_mk_reallyclean
 	-rm -rf $(LIBDIRBASE)
