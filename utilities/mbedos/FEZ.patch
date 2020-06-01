@@ -1,5 +1,5 @@
---- usr/local/lib/mbedos/mbed-os/targets/TARGET_STM/TARGET_STM32F4/TARGET_STM32F401xE/TARGET_NUCLEO_F401RE/PinNames.h.orig	2019-04-09 10:29:10.788169386 +0200
-+++ usr/local/lib/mbedos/mbed-os/targets/TARGET_STM/TARGET_STM32F4/TARGET_STM32F401xE/TARGET_NUCLEO_F401RE/PinNames.h	2019-04-09 10:51:27.734837797 +0200
+--- usr/local/lib/mbedos/mbed-os/targets/TARGET_STM/TARGET_STM32F4/TARGET_STM32F401xE/TARGET_NUCLEO_F401RE/PinNames.h.orig	2020-06-01 08:26:46.195087774 -0700
++++ usr/local/lib/mbedos/mbed-os/targets/TARGET_STM/TARGET_STM32F4/TARGET_STM32F401xE/TARGET_NUCLEO_F401RE/PinNames.h	2020-06-01 08:26:52.567118616 -0700
 @@ -118,6 +118,90 @@
      ADC_VREF = 0xF1,
      ADC_VBAT = 0xF2,
@@ -97,5 +97,5 @@
      PWM_OUT     = PB_3,
 +#endif
  
-     /**** USB pins ****/
+     /**** USB FS pins ****/
      USB_OTG_FS_DM = PA_11,
