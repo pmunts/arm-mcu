@@ -28,10 +28,6 @@
 # sudo mbed new /usr/local/lib/mbedos
 # sudo pip install -q -U -r /usr/local/lib/mbedos/mbed-os/requirements.txt
 
-# Import board specific definitions
-
-include $(ARMSRC)/mbedos/include/boards.mk
-
 MBED		?= mbed
 MBEDOSDIR	?= /usr/local/lib/mbedos
 

@@ -28,6 +28,7 @@ ARMSRC		?= $(HOME)/arm-mcu
 
 BOARDNAME	:= LPC4088_QUICKSTART
 
+include $(ARMSRC)/mbedos/include/boards.mk
 include $(ARMSRC)/mbedos/include/mbedos.mk
 
 # Build the application
