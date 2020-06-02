@@ -55,7 +55,7 @@ int main(void)
       for (i = 0; i < 8; i++)
         outputs[i] = d/100.0;
 
-      wait_ms(50);
+      ThisThread::sleep_for(50);
     }
 
     for (d = 100; d >= 0; d--)
@@ -63,7 +63,7 @@ int main(void)
       for (i = 0; i < 8; i++)
         outputs[i] = d/100.0;
 
-      wait_ms(50);
+      ThisThread::sleep_for(50);
     }
   }
 }

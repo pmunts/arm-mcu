@@ -146,17 +146,17 @@ int main(void)
     for (i = 0; i < 100; i++)
     {
       display_write_decimal(i, false, false, true, true);
-      wait(0.1);
+      ThisThread::sleep_for(100);
     }
 
-    wait(1.0);
+    ThisThread::sleep_for(1000);
 
     for (i = 99; i >= 0; i--)
     {
       display_write_decimal(i, false, false, true, true);
-      wait(0.1);
+      ThisThread::sleep_for(100);
     }
 
-    wait(1.0);
+    ThisThread::sleep_for(1000);
   }
 }

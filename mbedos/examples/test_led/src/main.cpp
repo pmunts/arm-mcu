@@ -29,6 +29,6 @@ int main(void)
   for (;;)
   {
     led = !led;
-    wait(0.5);
+    ThisThread::sleep_for(500);
   }
 }

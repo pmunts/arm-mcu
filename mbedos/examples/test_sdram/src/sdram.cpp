@@ -470,7 +470,7 @@ uint32_t sdram_init (void)
 #endif
 
   LPC_EMC->DynamicControl    = 0x00000183; /* Issue NOP command */
-  wait(0.2);                         /* wait 200ms */
+  ThisThread::sleep_for(200);              /* wait 200ms */
   LPC_EMC->DynamicControl    = 0x00000103; /* Issue PALL command */
   LPC_EMC->DynamicRefresh    = 0x00000002; /* ( n * 16 ) -> 32 clock cycles */
   for(i = 0; i < 0x80; i++);               /* wait 128 AHB clock cycles */

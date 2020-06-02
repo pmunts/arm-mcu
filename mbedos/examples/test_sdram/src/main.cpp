@@ -47,7 +47,7 @@ int main()
 
   for (;;)
   {
-    wait(2.0);
+    ThisThread::sleep_for(2000);
 
     for (i = 0; i < 256; i++)
       console.printf("SDRAM location %08X is %02X\r\n", i, sdram[i]);
