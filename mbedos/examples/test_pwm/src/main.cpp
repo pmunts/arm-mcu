@@ -22,18 +22,18 @@
 
 #include <mbed.h>
 
+Serial console(SERIAL_TX, SERIAL_RX);
+
 // Create an array of PWM outputs
 
 PwmOut outputs[] =
 {
-  PwmOut(PWM0),
-  PwmOut(PWM1),
-  PwmOut(PWM2),
-  PwmOut(PWM3),
-  PwmOut(PWM4),
-  PwmOut(PWM5),
-  PwmOut(PWM6),
-  PwmOut(PWM7)
+  PwmOut(PB_3),   // D3
+  PwmOut(PB_4),   // D5
+  PwmOut(PB_10),  // D6
+  PwmOut(PC_7),   // D9
+  PwmOut(PB_6),   // D10
+  PwmOut(PA_7),   // D11
 };
 
 int main(void)
@@ -41,10 +41,22 @@ int main(void)
   int i;
   int d;
 
+  console.baud(115200);
+  console.printf("\033[H\033[2J%s PWM Output Test (" __DATE__ " " __TIME__
+    ")\r\n\n", BOARDNAME);
+  console.printf("Project:    %s\r\n", PROJECTNAME);
+  console.printf("Board:      %s\r\n", BOARDNAME);
+  console.printf("OS:         ARM Mbed OS %d.%d.%d\r\n", MBED_MAJOR_VERSION,
+    MBED_MINOR_VERSION, MBED_PATCH_VERSION);
+  console.printf("Tool chain: %s\r\n", TOOLCHAINNAME);
+  console.printf("Compiler:   %s\r\n", __VERSION__);
+  console.printf("Target:     %s\r\n", TARGETNAME);
+  console.printf("CPU Freq:   %1.1f MHz\r\n\n", SystemCoreClock/1000000.0);
+
   // Initialize PWM output pulse frequencies
 
-  for (i = 0; i < 8; i++)
-    outputs[i].period(0.001);
+  for (PwmOut &outp : outputs)
+    outp.period(0.001);
 
   // Sweep output duty cycle back and forth
 
@@ -52,16 +64,16 @@ int main(void)
   {
     for (d = 0; d <= 100; d++)
     {
-      for (i = 0; i < 8; i++)
-        outputs[i] = d/100.0;
+      for (PwmOut &outp : outputs)
+        outp = d/100.0;
 
       ThisThread::sleep_for(50);
     }
 
     for (d = 100; d >= 0; d--)
     {
-      for (i = 0; i < 8; i++)
-        outputs[i] = d/100.0;
+      for (PwmOut &outp : outputs)
+        outp = d/100.0;
 
       ThisThread::sleep_for(50);
     }
