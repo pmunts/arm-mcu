@@ -32,6 +32,8 @@ News
        a while, so it is now built as a library once for each target board
        and saved in ~/.mbedos. This speeds up building and rebuilding
        applications.
+     * 2 June 2020 -- Upgraded Mbed OS to 5.15.3. Also made some minor
+       tweaks to the Mbed OS framework.
 
 Git Repository
 
