@@ -33,7 +33,7 @@ static void TaskHello(void)
   for (i = 0; i < 10; i++)
   {
     console.printf("Hello, World\r\n");
-    wait(2.0);
+    ThisThread::sleep_for(2000);
   }
 }
 
@@ -46,7 +46,7 @@ static void TaskBlink(void)
   for (;;)
   {
     led = !led;
-    wait(0.3);
+    ThisThread::sleep_for(300);
   }
 }
 
