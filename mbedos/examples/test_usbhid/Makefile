@@ -1,6 +1,6 @@
 # Makefile for building an Mbed OS application
 
-# Copyright (C)2017-2019, Philip Munts, President, Munts AM Corp.
+# Copyright (C)2017-2020, Philip Munts, President, Munts AM Corp.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -27,7 +27,6 @@ ARMSRC		?= $(HOME)/arm-mcu
 # Project settings
 
 BOARDNAME	?= FEZ
-MBEDCLIFLAGS	+= --source mbed-os/features/unsupported/USBDevice
 
 include $(ARMSRC)/mbedos/include/boards.mk
 include $(ARMSRC)/mbedos/include/mbedos.mk

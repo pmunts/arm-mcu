@@ -1,6 +1,6 @@
 // ARM MbedOS USB raw HID test
 
-// Copyright (C)2019, Philip Munts, President, Munts AM Corp.
+// Copyright (C)2019-2020, Philip Munts, President, Munts AM Corp.
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
@@ -28,7 +28,7 @@
 int main(void)
 {
   DigitalOut LED(LED1, false);
-  USBHID hid(64, 64, 0x16D0, 0x0AFA);
+  USBHID hid(true, 64, 64, 0x16D0, 0x0AFA);
   HID_REPORT cmd;
 
   for (;;)
