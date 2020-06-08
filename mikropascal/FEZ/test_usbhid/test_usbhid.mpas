@@ -1,0 +1,76 @@
+{ Simple HID device program for the FEZ T18 board }
+
+{ Copyright (C)2020, Philip Munts, President, Munts AM Corp.                  }
+{                                                                             }
+{ Redistribution and use in source and binary forms, with or without          }
+{ modification, are permitted provided that the following conditions are met: }
+{                                                                             }
+{ * Redistributions of source code must retain the above copyright notice,    }
+{   this list of conditions and the following disclaimer.                     }
+{                                                                             }
+{ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" }
+{ AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE   }
+{ IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE  }
+{ ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE   }
+{ LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR         }
+{ CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF        }
+{ SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS    }
+{ INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN     }
+{ CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)     }
+{ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE  }
+{ POSSIBILITY OF SUCH DAMAGE.                                                 }
+
+PROGRAM test_usbhid;
+
+VAR
+  LED      : sbit AT GPIOB_ODR.B9;
+  readbuf  : string[HID_OUTPUT_REPORT_BYTES];
+  writebuf : string[HID_INPUT_REPORT_BYTES];
+
+  PROCEDURE USBInterrupt(); IV IVT_INT_OTG_FS;
+
+  BEGIN
+    USB_Interrupt_Proc();
+  END;
+
+BEGIN
+
+  { Initialize USB HID library }
+
+  HID_Enable(@readbuf, @writebuf);
+
+  { Enable USB interrupt }
+
+  NVIC_IntEnable(IVT_INT_OTG_FS);
+
+  { WORKAROUND: The FEZ T18 doesn't have PA9 connected to VBUS!          }
+  { We have to force PA9 high by making it an output and setting it high }
+
+  //GPIO_Digital_Output(@GPIOA_BASE, _GPIO_PINMASK_9);
+  //GPIOA_ODR.B9 := 1;
+
+  { Configure LED output }
+
+  GPIO_Digital_Output(@GPIOB_BASE, _GPIO_PINMASK_9);
+
+  { Initialize LED output }
+
+  LED := False;
+
+  { Event loop }
+
+  WHILE True DO
+    BEGIN
+
+      { Check for message from host }
+
+      IF (HID_Read() <> 0) THEN
+        BEGIN
+          IF strncmp(readbuf, 'LEDON', 5) = 0 THEN
+            LED := True;
+
+          IF strncmp(readbuf, 'LEDOFF', 6) = 0 THEN
+            LED := False;
+        END
+    END
+END.
