@@ -46,8 +46,8 @@ BEGIN
   { WORKAROUND: The FEZ T18 doesn't have PA9 connected to VBUS!          }
   { We have to force PA9 high by making it an output and setting it high }
 
-  //GPIO_Digital_Output(@GPIOA_BASE, _GPIO_PINMASK_9);
-  //GPIOA_ODR.B9 := 1;
+  GPIO_Digital_Output(@GPIOA_BASE, _GPIO_PINMASK_9);
+  GPIOA_ODR.B9 := 1;
 
   { Configure LED output }
 
