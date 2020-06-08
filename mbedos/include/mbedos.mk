@@ -34,7 +34,7 @@ MBEDOSDIR	?= /usr/local/lib/mbedos
 # Default directory paths
 
 BLDDIRBASE	?= build
-LIBDIRBASE	?= $(HOME)/.mbedos
+LIBDIRBASE	?= $(HOME)/.mbed/lib
 
 BLDDIR		?= $(BLDDIRBASE)/$(BOARDNAME)
 LIBDIR		?= $(LIBDIRBASE)/$(BOARDNAME)
@@ -104,7 +104,7 @@ mbedos_mk_clean:
 mbedos_mk_reallyclean: mbedos_mk_clean
 
 mbedos_mk_distclean: mbedos_mk_reallyclean
-	-rm -rf $(LIBDIRBASE)
+	-rm -rf $(HOME)/.mbed $(LIBDIRBASE)
 
 # Include some more subordinate makefiles
 
