@@ -38,4 +38,4 @@ test_usbhid: test_usbhid.c
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
 clean:
-	rm test_usbhid
+	rm -f test_usbhid
