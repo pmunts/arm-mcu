@@ -30,6 +30,7 @@ BOARDNAME	?= MBED_LPC1768
 
 include $(ARMSRC)/mbedos/include/boards.mk
 include $(ARMSRC)/mbedos/include/mbedos.mk
+include $(ARMSRC)/utilities/test_usbhid/test_usbhid.mk
 
 # Build the application
 
@@ -39,27 +40,10 @@ default: mbedos_mk_build
 
 install: mbedos_mk_install
 
-# Build the blinky host test program
-
-LIBSIMPLEIO	?= /usr/local/share/libsimpleio
-
-BLINKCFLAGS	+= -Wall
-BLINKCFLAGS	+= -I$(LIBSIMPLEIO)/c++/interfaces
-BLINKCFLAGS	+= -I$(LIBSIMPLEIO)/c++/objects
-
-BLINKSRCS	+= blink.cpp
-BLINKSRCS	+= $(LIBSIMPLEIO)/c++/objects/exception-libsimpleio.cpp
-BLINKSRCS	+= $(LIBSIMPLEIO)/c++/objects/hid-libsimpleio.cpp
-
-BLINKLDFLAGS	+= -lsimpleio
-
-blink: $(BLINKSRCS)
-	$(CXX) $(BLINKCFLAGS) -o $@ $^ -lsimpleio
-
 # Remove working files
 
 clean: mbedos_mk_clean
-	rm -f blink
+	rm -f test_usbhid
 
 reallyclean: mbedos_mk_reallyclean
 

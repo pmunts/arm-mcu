@@ -1,6 +1,6 @@
-# Makefile for building a Mikropascal ARM application program
+# Makefile for a simple USB HID device host program
 
-# Copyright (C)2014-2018, Philip Munts, President, Munts AM Corp.
+# Copyright (C)2015-2020, Philip Munts, President, Munts AM Corp.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -20,28 +20,19 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-# Override the following macros to build out of tree
+CFLAGS		+= -Wall
 
-ARMSRC		?= $(HOME)/arm-mcu
-MIKROPASCALSRC	?= $(ARMSRC)/mikropascal
+ifeq ($(findstring CYGWIN, $(shell uname)), CYGWIN)
+LDFLAGS		+= -lhidapi
+endif
 
-FLASHWRITEADDR	?= 0x08000000
+ifeq ($(shell uname), Darwin)
+LDFLAGS		+= -lhidapi
+endif
 
-# Compile the program
+ifeq ($(shell uname), Linux)
+LDFLAGS		+= -lhidapi-hidraw
+endif
 
-build: test_usbhid.bin
-
-# Write the program to code flash
-
-install: test_usbhid.flashstlink
-
-# Remove working files
-
-clean: mikropascal_mk_clean
-	rm -f test_usbhid
-
-# Include subordinate makefiles
-
-include $(MIKROPASCALSRC)/include/mikropascal.mk
-include $(ARMSRC)/gcc/include/stlinkwin.mk
-include $(ARMSRC)/utilities/test_usbhid/test_usbhid.mk
+test_usbhid: $(ARMSRC)/utilities/test_usbhid/test_usbhid.c
+	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)

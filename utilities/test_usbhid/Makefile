@@ -1,6 +1,6 @@
-# Makefile for USB HID device host program
+# Makefile for a simple USB HID device host program
 
-# Copyright (C)2015-2018, Philip Munts, President, Munts AM Corp.
+# Copyright (C)2015-2020, Philip Munts, President, Munts AM Corp.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -20,22 +20,19 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-CFLAGS		+= -Wall
+# Override the following macro to build out of tree
 
-ifeq ($(findstring CYGWIN, $(shell uname)), CYGWIN)
-LDFLAGS		+= -lhidapi
-endif
+ARMSRC		?= $(HOME)/arm-mcu
 
-ifeq ($(shell uname), Darwin)
-LDFLAGS		+= -lhidapi
-endif
+# Compile the test program
 
-ifeq ($(shell uname), Linux)
-LDFLAGS		+= -lhidapi-hidraw
-endif
+default: test_usbhid
 
-test_usbhid: test_usbhid.c
-	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
+# Remove working files
 
 clean:
 	rm -f test_usbhid
+
+# Include subordinate makefiles
+
+include $(ARMSRC)/utilities/test_usbhid/test_usbhid.mk

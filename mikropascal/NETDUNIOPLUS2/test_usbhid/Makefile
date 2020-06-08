@@ -38,8 +38,10 @@ install: test_usbhid.flashstlink
 # Remove working files
 
 clean: mikropascal_mk_clean
+	rm -f test_usbhid
 
 # Include subordinate makefiles
 
 include $(MIKROPASCALSRC)/include/mikropascal.mk
 include $(ARMSRC)/gcc/include/stlinkwin.mk
+include $(ARMSRC)/utilities/test_usbhid/test_usbhid.mk
