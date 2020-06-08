@@ -49,11 +49,11 @@ BEGIN
   GPIO_Digital_Output(@GPIOA_BASE, _GPIO_PINMASK_9);
   GPIOA_ODR.B9 := 1;
 
-  { Configure LED outputs }
+  { Configure LED output }
 
   GPIO_Digital_Output(@GPIOB_BASE, _GPIO_PINMASK_5);
 
-  { Initialize LED outputs }
+  { Initialize LED output }
 
   LED := False;
 

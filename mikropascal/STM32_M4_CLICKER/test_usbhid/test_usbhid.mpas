@@ -44,12 +44,12 @@ BEGIN
 
   NVIC_IntEnable(IVT_INT_OTG_FS);
 
-  { Configure LED outputs }
+  { Configure LED output }
 
   GPIO_Digital_Output(@GPIOA_BASE, _GPIO_PINMASK_1);
   GPIO_Digital_Output(@GPIOA_BASE, _GPIO_PINMASK_2);
 
-  { Initialize LED outputs }
+  { Initialize LED output }
 
   LD1 := False;
   LD2 := False;
