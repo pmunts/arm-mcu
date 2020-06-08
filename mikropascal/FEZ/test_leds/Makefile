@@ -25,8 +25,6 @@
 ARMSRC		?= $(HOME)/arm-mcu
 MIKROPASCALSRC	?= $(ARMSRC)/mikropascal
 
-# Flash programmer settings
-
 FLASHWRITEADDR	:= 0x08000000
 
 include $(ARMSRC)/gcc/include/dfu.mk
