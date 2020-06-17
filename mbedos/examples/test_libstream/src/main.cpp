@@ -28,32 +28,22 @@
 
 #include <libstream.h>
 
-Serial console(SERIAL_TX, SERIAL_RX);
+UnbufferedSerial UART(SERIAL_TX, SERIAL_RX, 115200);
 
 // We will replace the default read() function in libstream with the following:
 
 static ssize_t reader(int fd, void *buf, size_t bufsize)
 {
-  while (!console.readable());
-  uint8_t *dst = (uint8_t *) buf;
-  *dst = console.getc();
-  return 1;
+  while (!UART.readable());
+  return UART.read(buf, 1);
 }
 
 // We will replace the default write() function in libstream with the following:
 
 static ssize_t writer(int fd, const void *buf, size_t bufsize)
 {
-  uint8_t *src = (uint8_t *) buf;
-  unsigned i;
-
-  for (i = 0; i < bufsize; i++)
-  {
-    while (!console.writable());
-    console.putc(*src++);
-  }
-
-  return bufsize;
+  while (!UART.writable());
+  return UART.write(buf, bufsize);
 }
 
 #define MSGSIZE		1024
@@ -69,10 +59,6 @@ int main(void)
   int32_t framesize;
   int32_t count;
   int i;
-
-  // Initialize the serial port
-
-  console.baud(115200);
 
   // Replace the default stream reader and writer functions in libstream
 

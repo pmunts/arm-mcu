@@ -1,6 +1,6 @@
 // ARM Mbed OS Mikroelektronika 7 Seg Click Test
 
-// Copyright (C)2019, Philip Munts, President, Munts AM Corp.
+// Copyright (C)2019-2020, Philip Munts, President, Munts AM Corp.
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
@@ -27,6 +27,7 @@
 // Mikroelektronika 7seg Click in mikroBUS socket 1
 
 #include <mbed.h>
+#include <appinfo.h>
 
 static const uint8_t PermuteSegments[256] =
 {
@@ -121,23 +122,13 @@ static void display_write_decimal(unsigned n, bool leftdp = false,
   display_write_raw(outbuf);
 }
 
+BufferedSerial UART(SERIAL_TX, SERIAL_RX, 115200);
+
 int main(void)
 {
   int i;
 
-  Serial console(SERIAL_TX, SERIAL_RX);
-
-  console.baud(115200);
-  console.printf("\033[H\033[2J%s Mikroelektronika 7 Seg Click Test ("
-    __DATE__ " " __TIME__ ")\r\n\n", BOARDNAME);
-  console.printf("Project:    %s\r\n", PROJECTNAME);
-  console.printf("Board:      %s\r\n", BOARDNAME);
-  console.printf("OS:         ARM Mbed OS %d.%d.%d\r\n", MBED_MAJOR_VERSION,
-    MBED_MINOR_VERSION, MBED_PATCH_VERSION);
-  console.printf("Tool chain: %s\r\n", TOOLCHAINNAME);
-  console.printf("Compiler:   %s\r\n", __VERSION__);
-  console.printf("Target:     %s\r\n", TARGETNAME);
-  console.printf("CPU Freq:   %1.1f MHz\r\n\n", SystemCoreClock/1000000.0);
+  MUNTS::AppInfo::Banner("Mikroelektronika 7 Seg Click Test");
 
   display_init();
 
@@ -146,17 +137,17 @@ int main(void)
     for (i = 0; i < 100; i++)
     {
       display_write_decimal(i, false, false, true, true);
-      ThisThread::sleep_for(100);
+      ThisThread::sleep_for(100ms);
     }
 
-    ThisThread::sleep_for(1000);
+    ThisThread::sleep_for(1s);
 
     for (i = 99; i >= 0; i--)
     {
       display_write_decimal(i, false, false, true, true);
-      ThisThread::sleep_for(100);
+      ThisThread::sleep_for(100ms);
     }
 
-    ThisThread::sleep_for(1000);
+    ThisThread::sleep_for(1s);
   }
 }

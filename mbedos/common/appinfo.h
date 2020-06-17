@@ -1,6 +1,6 @@
-// LPC4088 Quick Start SDRAM Test
+// Application Information Services
 
-// Copyright (C)2017-2018, Philip Munts, President, Munts AM Corp.
+// Copyright (C)2020, Philip Munts, President, Munts AM Corp.
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
@@ -20,36 +20,13 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#include <stdint.h>
+#ifndef __APPINFO_H_
+#define __APPINFO_H_
 
-#include <mbed.h>
-#include <sdram.h>
-
-Serial console(USBTX, USBRX);
-
-int main()
+namespace MUNTS::AppInfo
 {
-  uint8_t *sdram = (uint8_t *) SDRAM_BASE;
-  int i;
-
-  console.baud(115200);
-
-  console.printf("\033[H\033[2J%s SDRAM Test (" __DATE__ " " __TIME__
-    ")\r\n\n", BOARDNAME);
-
-  console.printf("DEBUG: Initializing SDRAM controller...\r\n");
-  sdram_init();
-
-  console.printf("DEBUG: Filling some SDRAM...\r\n\n");
-
-  for (i = 0; i < 256; i++)
-    sdram[i] = i;
-
-  for (;;)
-  {
-    ThisThread::sleep_for(2000);
-
-    for (i = 0; i < 256; i++)
-      console.printf("SDRAM location %08X is %02X\r\n", i, sdram[i]);
-  }
+  // Display application information
+  void Banner(const char *title);
 }
+
+#endif

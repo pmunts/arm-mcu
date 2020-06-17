@@ -20,10 +20,13 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
+VERSION		?= 6.0.0
+BRANCH		?= mbed-os-$(VERSION)
+
 OSNAME		?= unknown
 PKGNAME		= mbedos
 PKGARCH		:= all
-PKGVERSION	:= $(shell date +%Y.%j)
+PKGVERSION	:= $(VERSION)
 PKGDIR		:= $(PKGNAME)-$(PKGVERSION)-$(OSNAME)-$(PKGARCH)
 PKGFILE		:= $(PKGDIR).deb
 TARBALL		:= $(PKGNAME)-$(PKGVERSION).tgz
@@ -45,11 +48,8 @@ $(PKGDIR):
 	sed -i s/@@NAME@@/$(PKGNAME)/g		$(PKGDIR)/DEBIAN/control
 	sed -i s/@@VERSION@@/$(PKGVERSION)/g	$(PKGDIR)/DEBIAN/control
 	mkdir -p				$(PKGDIR)/usr/local/lib
-	cd $(PKGDIR)/usr/local/lib ; mbed new mbedos
-ifneq ($(BRANCH),)
-	cd $(PKGDIR)/usr/local/lib/mbedos/mbed-os ; git reset --hard origin/$(BRANCH) ; git checkout $(BRANCH)
-endif
-	cd $(PKGDIR) ; patch -b -p0 <../FEZ.patch
+	cd $(PKGDIR)/usr/local/lib && mbed new mbedos
+	cd $(PKGDIR)/usr/local/lib/mbedos/mbed-os && mbed update $(BRANCH)
 	rm $(PKGDIR)/usr/local/lib/mbedos/mbed_app.json
 	rm $(PKGDIR)/usr/local/lib/mbedos/mbed-os.lib
 	-find $(PKGDIR) -name '.git*' -exec rm -rf {} ";"

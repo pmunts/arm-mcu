@@ -1,6 +1,6 @@
 // ARM Mbed OS Hello World Test
 
-// Copyright (C)2017-2019, Philip Munts, President, Munts AM Corp.
+// Copyright (C)2017-2020, Philip Munts, President, Munts AM Corp.
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
@@ -21,22 +21,13 @@
 // POSSIBILITY OF SUCH DAMAGE.
 
 #include <mbed.h>
+#include <appinfo.h>
 
-Serial console(SERIAL_TX, SERIAL_RX);
+BufferedSerial UART(SERIAL_TX, SERIAL_RX, 115200);
 
 int main(void)
 {
-  console.baud(115200);
-  console.printf("\033[H\033[2J%s Hello World Test (" __DATE__ " " __TIME__
-    ")\r\n\n", BOARDNAME);
-  console.printf("Project:    %s\r\n", PROJECTNAME);
-  console.printf("Board:      %s\r\n", BOARDNAME);
-  console.printf("OS:         ARM Mbed OS %d.%d.%d\r\n", MBED_MAJOR_VERSION,
-    MBED_MINOR_VERSION, MBED_PATCH_VERSION);
-  console.printf("Tool chain: %s\r\n", TOOLCHAINNAME);
-  console.printf("Compiler:   %s\r\n", __VERSION__);
-  console.printf("Target:     %s\r\n", TARGETNAME);
-  console.printf("CPU Freq:   %1.1f MHz\r\n\n", SystemCoreClock/1000000.0);
+  MUNTS::AppInfo::Banner("ARM Mbed OS Hello World Test");
 
-  console.printf("Hello, World\r\n\n");
+  puts("Hello, World");
 }

@@ -1,6 +1,6 @@
 // ARM Mbed OS Tasking Test
 
-// Copyright (C)2019, Philip Munts, President, Munts AM Corp.
+// Copyright (C)2019-2020, Philip Munts, President, Munts AM Corp.
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
@@ -21,8 +21,7 @@
 // POSSIBILITY OF SUCH DAMAGE.
 
 #include <mbed.h>
-
-Serial console(SERIAL_TX, SERIAL_RX);
+#include <appinfo.h>
 
 // Finite duration task -- periodically display "Hello, World"
 
@@ -32,8 +31,8 @@ static void TaskHello(void)
 
   for (i = 0; i < 10; i++)
   {
-    console.printf("Hello, World\r\n");
-    ThisThread::sleep_for(2000);
+    printf("Hello, World\n");
+    ThisThread::sleep_for(2s);
   }
 }
 
@@ -46,23 +45,15 @@ static void TaskBlink(void)
   for (;;)
   {
     led = !led;
-    ThisThread::sleep_for(300);
+    ThisThread::sleep_for(300ms);
   }
 }
 
+BufferedSerial UART(SERIAL_TX, SERIAL_RX, 115200);
+
 int main(void)
 {
-  console.baud(115200);
-  console.printf("\033[H\033[2J%s Tasking Test (" __DATE__ " " __TIME__
-    ")\r\n\n", BOARDNAME);
-  console.printf("Project:    %s\r\n", PROJECTNAME);
-  console.printf("Board:      %s\r\n", BOARDNAME);
-  console.printf("OS:         ARM Mbed OS %d.%d.%d\r\n", MBED_MAJOR_VERSION,
-    MBED_MINOR_VERSION, MBED_PATCH_VERSION);
-  console.printf("Tool chain: %s\r\n", TOOLCHAINNAME);
-  console.printf("Compiler:   %s\r\n", __VERSION__);
-  console.printf("Target:     %s\r\n", TARGETNAME);
-  console.printf("CPU Freq:   %1.1f MHz\r\n\n", SystemCoreClock/1000000.0);
+  MUNTS::AppInfo::Banner("ARM Mbed OS Tasking Test");
 
   // Start some subtasks
 
@@ -75,13 +66,13 @@ int main(void)
   // Wait for finite duration substasks to finish
 
   hello.join();
-  console.printf("DEBUG: TaskHello() has terminated.\r\n");
+  printf("DEBUG: TaskHello() has terminated.\n");
 
   // Terminate infinite duration subtasks and wait for them to finish
 
   blink.terminate();
   blink.join();
-  console.printf("DEBUG: TaskBlink() has terminated.\r\n");
+  printf("DEBUG: TaskBlink() has terminated.\n");
 
-  console.printf("END OF PROGRAM\r\n");
+  printf("END OF PROGRAM\n");
 }

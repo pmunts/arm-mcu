@@ -1,6 +1,6 @@
-// ARM MbedOS USB raw HID test
+// Application Information Services
 
-// Copyright (C)2019-2020, Philip Munts, President, Munts AM Corp.
+// Copyright (C)2020, Philip Munts, President, Munts AM Corp.
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
@@ -21,28 +21,21 @@
 // POSSIBILITY OF SUCH DAMAGE.
 
 #include <mbed.h>
-#include <USBHID.h>
-#include <appinfo.h>
 
-BufferedSerial UART(SERIAL_TX, SERIAL_RX, 115200);
-
-int main(void)
+namespace MUNTS::AppInfo
 {
-  MUNTS::AppInfo::Banner("ARM Mbed OS USB HID Test");
-  
-  DigitalOut LED(LED1, false);
-  USBHID hid(true, 64, 64, 0x16D0, 0x0AFA);
-  HID_REPORT cmd;
-
-  for (;;)
+  // Display application information
+  void Banner(const char *title)
   {
-    if (hid.read(&cmd))
-    {
-      if (!memcmp(cmd.data, "LEDON", 5))
-        LED = true;
-
-      if (!memcmp(cmd.data, "LEDOFF", 6))
-        LED = false;
-    }
+    printf("\033[H\033[2J%s %s (" __DATE__ " " __TIME__ ")\n\n", title,
+      BOARDNAME);
+    printf("Project:    %s\n", PROJECTNAME);
+    printf("Board:      %s\n", BOARDNAME);
+    printf("OS:         ARM Mbed OS %d.%d.%d\n", MBED_MAJOR_VERSION,
+      MBED_MINOR_VERSION, MBED_PATCH_VERSION);
+    printf("Tool chain: %s\n", TOOLCHAINNAME);
+    printf("Compiler:   %s\n", __VERSION__);
+    printf("Target:     %s\n", TARGETNAME);
+    printf("CPU Freq:   %ld MHz\n\n", SystemCoreClock/1000000);
   }
 }
