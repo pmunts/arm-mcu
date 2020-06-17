@@ -34,6 +34,7 @@ News
        applications.
      * 2 June 2020 -- Upgraded Mbed OS to 5.15.3. Also made some minor
        tweaks to the Mbed OS framework.
+     * 17 June 2020 -- Upgraded Mbed OS to 6.0.0.
 
 Git Repository
 
