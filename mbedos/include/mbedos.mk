@@ -1,6 +1,6 @@
 # Common make definitions for building Mbed OS applications
 
-# Copyright (C)2017-2019, Philip Munts, President, Munts AM Corp.
+# Copyright (C)2017-2020, Philip Munts, President, Munts AM Corp.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -47,6 +47,12 @@ PROJECTNAME	?= $(shell basename $(shell pwd))
 TARGETNAME	?= $(BOARDNAME)
 TOOLCHAINNAME	?= GCC_ARM
 
+MBEDLIBFLAGS	+= --library
+MBEDLIBFLAGS	+= -t $(TOOLCHAINNAME)
+MBEDLIBFLAGS	+= -m $(TARGETNAME)
+MBEDLIBFLAGS	+= --build=$(LIBDIR)
+MBEDLIBFLAGS	+= --source=mbed-os
+
 MBEDCLIFLAGS	+= -N $(PROJECTNAME)
 MBEDCLIFLAGS	+= -t $(TOOLCHAINNAME)
 MBEDCLIFLAGS	+= -m $(TARGETNAME)
@@ -56,9 +62,11 @@ MBEDCLIFLAGS	+= -DBOARDNAME='"$(BOARDNAME)"'
 MBEDCLIFLAGS	+= -DPROJECTNAME='"$(PROJECTNAME)"'
 MBEDCLIFLAGS	+= -DTARGETNAME='"$(TARGETNAME)"'
 MBEDCLIFLAGS	+= -DTOOLCHAINNAME='"$(TOOLCHAINNAME)"'
+MBEDCLIFLAGS	+= --build=$(BLDDIR)
 MBEDCLIFLAGS	+= --source=$(ARMSRC)/mbedos/common
 MBEDCLIFLAGS	+= --source=$(ARMSRC)/mbedos/include
-MBEDCLIFLAGS	+= --source=$(SRCDIR) --source=$(LIBDIR) --build=$(BLDDIR)
+MBEDCLIFLAGS	+= --source=$(SRCDIR)
+MBEDCLIFLAGS	+= --source=$(LIBDIR)
 
 # Default flash programming settings
 
@@ -78,7 +86,7 @@ mbedos_mk_default: default
 $(LIBDIR)/libmbed-os.a:
 	ln -s -f $(MBEDOSDIR)/mbed-os
 	ln -s -f $(MBEDOSDIR)/mbed_settings.py
-	$(MBED) compile -t $(TOOLCHAINNAME) -m $(TARGETNAME) --library --source=mbed-os --build=$(LIBDIR)
+	$(MBED) compile $(MBEDLIBFLAGS)
 
 library: $(LIBDIR)/libmbed-os.a
 
@@ -100,7 +108,7 @@ mbedos_mk_install: $(PROJECTNAME).$(FLASHSUFFIX)
 # Remove working files
 
 mbedos_mk_clean:
-	-rm -rf .mbed mbed* $(BLDDIRBASE) $(PROJECTNAME).bin
+	-rm -rf .mbed mbed-os mbed_settings.* $(BLDDIRBASE) $(PROJECTNAME).bin
 
 mbedos_mk_reallyclean: mbedos_mk_clean
 
