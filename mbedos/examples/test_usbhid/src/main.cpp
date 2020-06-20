@@ -29,7 +29,7 @@ BufferedSerial UART(SERIAL_TX, SERIAL_RX, 115200);
 int main(void)
 {
   MUNTS::AppInfo::Banner("ARM Mbed OS USB HID Test");
-  
+
   DigitalOut LED(LED1, false);
   USBHID hid(true, 64, 64, 0x16D0, 0x0AFA);
   HID_REPORT cmd;
