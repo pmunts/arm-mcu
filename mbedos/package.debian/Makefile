@@ -22,11 +22,12 @@
 
 VERSION		?= 6.0.0
 BRANCH		?= mbed-os-$(VERSION)
+BUILDNUM	?= 1
 
 OSNAME		?= unknown
 PKGNAME		= mbedos
 PKGARCH		:= all
-PKGVERSION	:= $(VERSION)
+PKGVERSION	:= $(VERSION)-$(BUILDNUM)
 PKGDIR		:= $(PKGNAME)-$(PKGVERSION)-$(OSNAME)-$(PKGARCH)
 PKGFILE		:= $(PKGDIR).deb
 TARBALL		:= $(PKGNAME)-$(PKGVERSION).tgz
@@ -50,6 +51,7 @@ $(PKGDIR):
 	mkdir -p				$(PKGDIR)/usr/local/lib
 	cd $(PKGDIR)/usr/local/lib && mbed new mbedos
 	cd $(PKGDIR)/usr/local/lib/mbedos/mbed-os && mbed update $(BRANCH)
+	cd $(PKGDIR) && for P in ../*.patch ; do patch -p 0 <$$P ; done
 	rm $(PKGDIR)/usr/local/lib/mbedos/mbed_app.json
 	rm $(PKGDIR)/usr/local/lib/mbedos/mbed-os.lib
 	-find $(PKGDIR) -name '.git*' -exec rm -rf {} ";"
