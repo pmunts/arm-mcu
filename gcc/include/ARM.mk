@@ -1,6 +1,6 @@
 # Generic Makefile for compiling ARM microcontroller firmware
 
-# Copyright (C)2013-2018, Philip Munts, President, Munts AM Corp.
+# Copyright (C)2013-2020, Philip Munts, President, Munts AM Corp.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -32,8 +32,7 @@ ARM_mk_default:
 
 # Toolchain definitions
 
-ARMTOOLS	?= /usr/local/arm-mcu-tools
-CROSS_COMPILE	?= $(ARMTOOLS)/bin/arm-none-eabi-
+CROSS_COMPILE	?= /usr/local/gcc-arm-none-eabi/bin/arm-none-eabi-
 
 CC		= $(CROSS_COMPILE)gcc
 CXX		= $(CROSS_COMPILE)g++
@@ -123,7 +122,6 @@ LDFLAGS		+= -Wl,-Map=$*.map,--cref,--gc-sections $(EXTRAOBJS)
 # Recursive make flags, to be passed to subordinate makes
 
 RMAKEFLAGS	+= ARMSRC=$(ARMSRC)
-RMAKEFLAGS	+= ARMTOOLS=$(ARMTOOLS)
 RMAKEFLAGS	+= BOARDNAME=$(BOARDNAME)
 RMAKEFLAGS	+= CFLAGS='$(CFLAGS)' CXXFLAGS='$(CXXFLAGS)' LDFLAGS='$(LDFLAGS)'
 ifeq ($(WITH_FREERTOS), yes)
