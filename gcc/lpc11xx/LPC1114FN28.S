@@ -175,7 +175,8 @@ call_main:	eors		r0, r0			// argc=0
 
 		bl		main			// Call C main()
 		bl		_exit			// Call _exit() if main() returns
-		b		.			// Loop if _exit() returns
+wfi_loop:	wfi					// Loop if _exit() returns
+		b		wfi_loop
 
 //=============================================================================
 

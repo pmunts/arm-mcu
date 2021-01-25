@@ -200,6 +200,8 @@ call_main:	mov		r0, #0			// argc=0
 
 		bl		main			// Call C main()
 		bl		_exit			// Call _exit() if main() returns
+wfi_loop:	wfi					// Loop if _exit() returns
+		b		wfi_loop
 
 //=============================================================================
 
