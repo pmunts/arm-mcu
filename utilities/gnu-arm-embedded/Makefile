@@ -28,7 +28,7 @@ INSTALLDIR	= /usr/local/bin
 
 OSNAME		?= unknown
 PKGNAME		:= gnu-arm-embedded
-PKGVERSION	:= $(shell date +%Y.%j)
+PKGVERSION	:= $(shell basename $(DISTFILE) | awk -F '[-]' '{ printf("%s-%s\n", $$5, $$6) }')
 PKGARCH		:= $(shell dpkg --print-architecture)
 PKGDIR		:= $(PKGNAME)-$(PKGVERSION)-$(OSNAME)-$(PKGARCH)
 PKGFILE		:= $(PKGDIR).deb
