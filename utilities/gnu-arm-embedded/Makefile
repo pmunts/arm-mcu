@@ -44,7 +44,7 @@ package.deb:
 	install -cm 0755 postinst			$(PKGDIR)/DEBIAN
 	install -cm 0755 prerm				$(PKGDIR)/DEBIAN
 	mkdir -p					$(PKGDIR)/usr/local
-	tar xjf $(DISTFILE) -C				$(PKGDIR)/usr/local
+	tar xJf $(DISTFILE) -C				$(PKGDIR)/usr/local
 	sed -i "s#@@DESTDIR@@#`ls $(PKGDIR)/usr/local`#g" $(PKGDIR)/DEBIAN/postinst
 	chmod -R ugo-w $(PKGDIR)/usr
 	fakeroot dpkg-deb --build $(PKGDIR)
