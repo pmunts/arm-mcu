@@ -1,6 +1,6 @@
 # Makefile for packaging GNU ARM Embedded for Debian
 
-# Copyright (C)2019, Philip Munts, President, Munts AM Corp.
+# Copyright (C)2019-2023, Philip Munts dba Munts Technologies.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -28,7 +28,7 @@ INSTALLDIR	= /usr/local/bin
 
 OSNAME		?= unknown
 PKGNAME		:= gnu-arm-embedded
-PKGVERSION	:= $(shell basename $(DISTFILE) | awk -F '[-]' '{ printf("%s-%s\n", $$5, $$6) }')
+PKGVERSION	:= $(shell basename $(DISTFILE) | awk -F '[-]' '{ printf("%s\n", $$4) }')
 PKGARCH		:= $(shell dpkg --print-architecture)
 PKGDIR		:= $(PKGNAME)-$(PKGVERSION)-$(OSNAME)-$(PKGARCH)
 PKGFILE		:= $(PKGDIR).deb
