@@ -27,7 +27,7 @@ DISTFILE	?= unknown
 INSTALLDIR	= /usr/local/bin
 
 OSNAME		?= unknown
-PKGNAME		:= gnu-arm-embedded
+PKGNAME		:= munts-gnu-arm-embedded
 PKGVERSION	:= $(shell basename $(DISTFILE) | awk -F '[-]' '{ printf("%s\n", $$4) }')
 PKGARCH		:= $(shell dpkg --print-architecture)
 PKGDIR		:= $(PKGNAME)-$(PKGVERSION)-$(OSNAME)-$(PKGARCH)
