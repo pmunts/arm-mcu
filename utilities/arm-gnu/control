@@ -4,4 +4,4 @@ Priority: extra
 Maintainer: Philip Munts <phil@munts.net>
 Architecture: @@ARCH@@
 Version: @@VERSION@@
-Description: GNU ARM Embedded
+Description: ARM GNU Embedded Cross-Toolchain

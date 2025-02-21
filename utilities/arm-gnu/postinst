@@ -1,0 +1,3 @@
+#!/bin/sh
+
+ln -s -f @@DESTDIR@@ /usr/local/@@LINKNAME@@

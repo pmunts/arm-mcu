@@ -1,6 +1,6 @@
 # Makefile for packaging GNU ARM Embedded for Debian
 
-# Copyright (C)2019-2023, Philip Munts dba Munts Technologies.
+# Copyright (C)2019-2025, Philip Munts dba Munts Technologies.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -24,16 +24,18 @@
 # then do make DISTFILE=<filename>
 
 DISTFILE	?= unknown
-INSTALLDIR	= /usr/local/bin
 
-OSNAME		?= unknown
-PKGNAME		:= munts-gnu-arm-embedded
-PKGVERSION	:= $(shell basename $(DISTFILE) | awk -F '[-]' '{ printf("%s\n", $$4) }')
+PKGNAME		:= $(strip $(shell basename $(DISTFILE) .tar.xz | awk -F '[-]' '{ printf("%s-%s-%s-%s-%s-%s-%s", $$1, $$2, $$3, $$4, $$6, $$7, $$8) }'))
+PKGVERSION	:= $(strip $(shell basename $(DISTFILE) .tar.xz | awk -F '[-]' '{ printf("%s", $$4) }'))
+PKGTARGET	:= $(strip $(shell basename $(DISTFILE) .tar.xz | awk -F '[-]' '{ printf("gcc-%s-%s-%s", $$6, $$7, $$8) }'))
 PKGARCH		:= $(shell dpkg --print-architecture)
-PKGDIR		:= $(PKGNAME)-$(PKGVERSION)-$(OSNAME)-$(PKGARCH)
+PKGDIR		:= $(PKGNAME)-$(PKGARCH)
 PKGFILE		:= $(PKGDIR).deb
 
-# Create Debian package file
+SRCDIR		:= /usr/local/$(shell basename $(DISTFILE) .tar.xz)
+DSTDIR		:= /usr/local/$(PKGNAME)
+
+# Create Debian package fil
 
 package.deb:
 	mkdir -p					$(PKGDIR)/DEBIAN
@@ -42,10 +44,13 @@ package.deb:
 	sed -i 's/@@NAME@@/$(PKGNAME)/g'		$(PKGDIR)/DEBIAN/control
 	sed -i 's/@@VERSION@@/$(PKGVERSION)/g'		$(PKGDIR)/DEBIAN/control
 	install -cm 0755 postinst			$(PKGDIR)/DEBIAN
+	sed -i 's#@@DESTDIR@@#$(PKGNAME)#g'		$(PKGDIR)/DEBIAN/postinst
+	sed -i 's/@@LINKNAME@@/$(PKGTARGET)/g'		$(PKGDIR)/DEBIAN/postinst
 	install -cm 0755 prerm				$(PKGDIR)/DEBIAN
+	sed -i 's/@@LINKNAME@@/$(PKGTARGET)/g'		$(PKGDIR)/DEBIAN/prerm
 	mkdir -p					$(PKGDIR)/usr/local
 	tar xJf $(DISTFILE) -C				$(PKGDIR)/usr/local
-	sed -i "s#@@DESTDIR@@#`ls $(PKGDIR)/usr/local`#g" $(PKGDIR)/DEBIAN/postinst
+	mv $(PKGDIR)$(SRCDIR) $(PKGDIR)$(DSTDIR)
 	chmod -R ugo-w $(PKGDIR)/usr
 	fakeroot dpkg-deb --build $(PKGDIR)
 	chmod -R ugo+w $(PKGDIR)/usr
