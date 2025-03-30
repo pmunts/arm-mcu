@@ -1,5 +1,5 @@
-<h1>ARM Microcontroller Firmware Development Framework</h1>
-<p>Here are some frameworks for developing firmware for a number of <a href=
+<h1>ARM Microcontroller Development Frameworks</h1>
+<p>Here are some frameworks for developing firmware for certain 32-bit <a href=
 "http://www.arm.com" target="_blank">ARM</a> (Advanced RISC Machine)
 architecture single chip microcontrollers.</p>
 <p>I am interested in alternatives to the traditional GCC development
@@ -7,49 +7,9 @@ environment, so you will find here some experiments with <a href=
 "http://www.astrobe.com">Astrobe Oberon</a>, <a href=
 "http://wiki.freepascal.org/Embedded">Free Pascal</a>, <a href=
 "https://docs.adacore.com/gnat_ugx-docs/html/gnat_ugx/gnat_ugx/arm-elf_topics_and_tutorial.html">
-GNAT Ada</a>, <a href="https://os.mbed.com">ARM Mbed OS</a>, and <a href=
+GNAT Ada</a>, <a href="https://os.mbed.com">Mbed OS</a>, and <a href=
 "https://www.mikroe.com/mikropascal-arm">Mikropascal</a> for ARM
-microcontrollers. I am convinced that the true value of a microcontroller
-development environment lies in the richness of its software component
-libraries more than any other factor. For this reason, my own work has mostly
-switched to ARM Mbed OS and Mikropascal, both of which include very extensive
-component libraries.</p>
-<h2>News</h2>
-<ul>
-<li>13 March 2017 -- Moved the original GCC framework into the <tt>gcc/</tt>
-subdirectory. Removed some obsolete cruft (EFM32, mbed Classic, etc.). Started
-adding support for developing with <a href=
-"http://wiki.freepascal.org/TARGET_Embedded">Free Pascal Embedded</a> for ARM
-microcontrollers.</li>
-<li>17 March 2017 -- Updated binutils to 2.28, gcc to 6.3.0, newlib to 2.5.0,
-and gdb to 7.12.1. Imported <a href=
-"https://www.lego.com/en-us/powerfunctions/articles/8884-control-5fcb2efbb4e74f0c926948df71445765">
-LEGO Power Functions Infrared Remote Control Protocol</a> implementation.</li>
-<li>20 March 2017 -- Cleaned up and reordered <tt>ARM.mk</tt>. Modified
-<tt>ARM.mk</tt> to append <tt>CFLAGS</tt>, <tt>CXXFLAGS</tt>, and
-<tt>LDFLAGS</tt> to <tt>RMAKEFLAGS</tt> so ensure that they are propagated to
-subordinate make jobs. Added <tt>lightweight_strncasecmp()</tt> to
-<tt>conio.c</tt>.</li>
-<li>19 September 2017 -- Upgraded binutils to 2.29, gcc to 7.2.0, and gdb to
-8.0.1.</li>
-<li>9 April 2019 -- The framework here for using <a href=
-"https://www.mbed.com/en/platform/mbed-os">ARM Mbed OS</a> has been greatly
-improved and streamlined. Compiling the OS takes quite a while, so it is now
-built as a library once for each target board and saved in <tt>~/.mbedos</tt>.
-This speeds up building and rebuilding applications.</li>
-<li>2 June 2020 -- Upgraded Mbed OS to 5.15.3. Also made some minor tweaks to
-the Mbed OS framework.</li>
-<li>17 June 2020 -- Upgraded Mbed OS to 6.0.0.</li>
-</ul>
-<h2>Git Repository</h2>
-<p>The source code is available at: <a href=
-"http://git.munts.com/arm-mcu">http://git.munts.com/arm-mcu</a></p>
-<p>Use the following command to clone it:</p>
-<pre>
-git clone http://git.munts.com/arm-mcu.git
-</pre>
+microcontrollers.</p>
 <hr>
 Questions or comments to Philip Munts <a href=
 "mailto:phil@munts.net">phil@munts.net</a>
-<p>I am available for custom system development (hardware and software) of
-products using these ARM microcontrollers.</p>
