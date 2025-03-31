@@ -27,7 +27,11 @@ ifeq ($(shell uname), Darwin)
 PICOBOOTDEST	?= /Volumes/RPI-RP2
 endif
 ifeq ($(shell uname), Linux)
+ifneq ($(wildcard /mnt/chromeos/removable),)
+PICOBOOTDEST	?= /mnt/chromeos/removable/RPI-RP2
+else
 PICOBOOTDEST	?= /media/$(USER)/RPI-RP2
+endif
 endif
 ifeq ($(OS), Windows_NT)
 PICOBOOTDEST	?= /d
