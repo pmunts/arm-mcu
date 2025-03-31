@@ -45,7 +45,7 @@ ifneq ($(findstring CYGWIN, $(shell uname)),)
 	/bin/find . -type f -exec chmod 644 {} ";"
 endif
 
-alire_mk_distclean: reallyclean
+alire_mk_distclean: alire_mk_reallyclean
 ifeq ($(shell uname), Darwin)
 	rm -rf ~/.local/share/alire/builds
 	rm -rf ~/.local/share/alire/releases
