@@ -24,14 +24,8 @@ include $(ARMSRC)/alire/include/alire.mk
 
 # Build the Alire project
 
-build:
-	alr build $(ALRFLAGS)
-	$(MAKE) picoboot_mk_flash
+build: alire_mk_build
 
 # Remove working files
 
-clean: alire_mk_clean
-
-reallyclean: alire_mk_reallyclean
-
-distclean: alire_mk_distclean
+clean: alire_mk_reallyclean

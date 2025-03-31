@@ -18,20 +18,29 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-include $(ARMSRC)/alire/include/picoboot.mk
+# Placeholder default target
 
 alire_mk_default: build
 
+include $(ARMSRC)/alire/include/picoboot.mk
+
 ###############################################################################
 
-# Remove working files
+# Build the project
+
+alire_mk_build:
+	alr build $(ALRFLAGS)
+	$(MAKE) picoboot_mk_flash
+
+###############################################################################
+
+# Remove project working files
 
 alire_mk_clean:
 	rm -rf bin/* obj/*
 
-alire_mk_reallyclean: clean
+alire_mk_reallyclean: alire_mk_clean
 	rm -rf alire bin config obj share
-	echo $(shell uname)
 ifneq ($(findstring CYGWIN, $(shell uname)),)
 	/bin/find . -type f -exec chmod 644 {} ";"
 endif

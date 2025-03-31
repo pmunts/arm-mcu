@@ -33,10 +33,6 @@ ifeq ($(OS), Windows_NT)
 PICOBOOTDEST	?= /d
 endif
 
-# Placeholder default target
-
-picoboot_mk_default: default
-
 # Flash Alire program to target
 
 picoboot_mk_flash:
