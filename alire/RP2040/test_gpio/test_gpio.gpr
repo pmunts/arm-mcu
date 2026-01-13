@@ -20,7 +20,7 @@ project test_gpio is
    end Binder;
 
    package Linker is
-      for Switches ("Ada") use Pico_BSP.Linker_Switches;
+      for Switches ("Ada") use Pico_BSP.Linker_Switches & ("-Wl,--gc-sections");
    end Linker;
 
 end test_gpio;
