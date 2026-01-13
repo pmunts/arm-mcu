@@ -19,7 +19,6 @@
 -- POSSIBILITY OF SUCH DAMAGE.
 
 WITH HAL;
-WITH RP.Clock;
 WITH RP.Device;
 WITH USB.Device.Serial;
 
@@ -61,7 +60,7 @@ PACKAGE BODY USBSerial IS
 
     USB_Stack.Start;
 
-    Delay_Milliseconds(200);
+    Delay_Milliseconds(500);
   END Initialize;
 
   PROCEDURE Delay_Milliseconds(t : Positive) IS
