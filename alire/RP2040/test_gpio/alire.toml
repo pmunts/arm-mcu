@@ -6,3 +6,7 @@ executables = ["test_gpio"]
 
 [[depends-on]]
 pico_bsp = "^2.2.0"
+
+[[actions]]
+type = "post-build"
+command = ["sh", "-c", "./postbuild.sh"]
