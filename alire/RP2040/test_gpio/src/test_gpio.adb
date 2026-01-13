@@ -1,16 +1,22 @@
+WITH Ada.Text_IO; USE Ada.Text_IO;
+
 WITH RP.Clock;
+WITH RP.Device;
 WITH RP.GPIO;
-WITH Pico;
+WITH SparkFun_Pro_Micro_RP2040;
 
 PROCEDURE test_gpio IS
 
-BEGIN
-  RP.Clock.Initialize(Pico.XOSC_Frequency);
-  RP.GPIO.Enable;
+  LED RENAMES SparkFun_Pro_Micro_RP2040.GP2;
 
-  Pico.GP2.Configure(RP.GPIO.Output);
+BEGIN
+  RP.Clock.Initialize(SparkFun_Pro_Micro_RP2040.Crystal);
+  RP.Device.Timer.Enable;
+
+  LED.Configure(RP.GPIO.Output);
 
   LOOP
-    Pico.GP2.Toggle;
+    LED.Toggle;
+    RP.Device.Timer.Delay_Milliseconds(500); 
   END LOOP;
 END test_gpio;
