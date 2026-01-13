@@ -24,7 +24,7 @@ PACKAGE SparkFun_Pro_Micro_RP2040 IS
 
   Crystal : CONSTANT := 12_000_000; -- Hz
 
-  -- Left edge
+  -- Left edge (DIP pin order)
 
   GP0  : RP.GPIO.GPIO_Point := (Pin => 0);
   GP1  : RP.GPIO.GPIO_Point := (Pin => 1);
@@ -45,7 +45,7 @@ PACKAGE SparkFun_Pro_Micro_RP2040 IS
   SDA RENAMES GP16;
   SCL RENAMES GP17;
 
-  -- Right edge
+  -- Right edge (DIP pin order)
 
   GP21 : RP.GPIO.GPIO_Point := (Pin => 21);
   GP23 : RP.GPIO.GPIO_Point := (Pin => 23);
