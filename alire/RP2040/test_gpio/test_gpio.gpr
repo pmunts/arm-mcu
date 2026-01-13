@@ -12,7 +12,7 @@ project test_gpio is
    for Main use ("test_gpio.adb");
 
    package Compiler is
-      for Default_Switches ("Ada") use test_gpio_Config.Ada_Compiler_Switches & ("-gnaty-g");
+      for Default_Switches ("Ada") use test_gpio_Config.Ada_Compiler_Switches & ("-gnat2022", "-gnaty-g");
    end Compiler;
 
    package Binder is
