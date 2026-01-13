@@ -1,4 +1,5 @@
--- SparkFun Pro Micro RP2040 LED Test 
+-- SparkFun Pro Micro RP2040 LED Test
+
 -- Copyright (C)2026, Philip Munts dba Munts Technologies.
 --
 -- Redistribution and use in source and binary forms, with or without
@@ -40,6 +41,6 @@ BEGIN
 
   LOOP
     LED.Toggle;
-    Delay_Milliseconds(500); 
+    Delay_Milliseconds(500);
   END LOOP;
 END test_led;

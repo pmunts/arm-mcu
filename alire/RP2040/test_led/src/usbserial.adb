@@ -61,7 +61,7 @@ PACKAGE BODY USBSerial IS
 
     USB_Stack.Start;
 
-    Delay_Milliseconds(500);
+    Delay_Milliseconds(200);
   END Initialize;
 
   PROCEDURE Delay_Milliseconds(t : Positive) IS
@@ -69,7 +69,7 @@ PACKAGE BODY USBSerial IS
   BEGIN
     FOR i IN 1 .. t LOOP
       USB_Stack.Poll;
-      RP.Device.Timer.Delay_Milliseconds(1);      
+      RP.Device.Timer.Delay_Milliseconds(1);
     END LOOP;
   END Delay_Milliseconds;
 
