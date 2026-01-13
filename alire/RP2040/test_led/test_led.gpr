@@ -1,18 +1,18 @@
-with "config/test_gpio_config.gpr";
+with "config/test_led_config.gpr";
 with "rp2040_hal.gpr";
 
-project test_gpio is
+project test_led is
 
    for Target use "arm-eabi";
    for Runtime ("Ada") use "light-cortex-m0p";
    for Source_Dirs use ("src/", "config/");
-   for Object_Dir use "obj/" & test_gpio_Config.Build_Profile;
+   for Object_Dir use "obj/" & test_led_Config.Build_Profile;
    for Create_Missing_Dirs use "True";
    for Exec_Dir use "bin";
-   for Main use ("test_gpio.adb");
+   for Main use ("test_led.adb");
 
    package Compiler is
-      for Default_Switches ("Ada") use test_gpio_Config.Ada_Compiler_Switches & ("-gnat2022", "-gnaty-g");
+      for Default_Switches ("Ada") use test_led_Config.Ada_Compiler_Switches & ("-gnat2022", "-gnaty-g");
    end Compiler;
 
    package Binder is
@@ -23,4 +23,4 @@ project test_gpio is
       for Switches ("Ada") use RP2040_HAL.Linker_Switches & ("-Wl,--gc-sections");
    end Linker;
 
-end test_gpio;
+end test_led;

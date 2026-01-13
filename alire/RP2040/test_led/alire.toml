@@ -1,8 +1,8 @@
-name = "test_gpio"
+name = "test_led"
 description = ""
 version = "0.1.0-dev"
 
-executables = ["test_gpio"]
+executables = ["test_led"]
 
 [[depends-on]]
 rp2040_hal = "^2"
