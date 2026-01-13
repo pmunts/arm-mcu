@@ -5,7 +5,7 @@ version = "0.1.0-dev"
 executables = ["test_gpio"]
 
 [[depends-on]]
-pico_bsp = "^2.2.0"
+rp2040_hal = "^2"
 
 [[actions]]
 type = "post-build"

@@ -1,5 +1,5 @@
 with "config/test_gpio_config.gpr";
-with "pico_bsp.gpr";
+with "rp2040_hal.gpr";
 
 project test_gpio is
 
@@ -20,7 +20,7 @@ project test_gpio is
    end Binder;
 
    package Linker is
-      for Switches ("Ada") use Pico_BSP.Linker_Switches & ("-Wl,--gc-sections");
+      for Switches ("Ada") use RP2040_HAL.Linker_Switches & ("-Wl,--gc-sections");
    end Linker;
 
 end test_gpio;
