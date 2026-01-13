@@ -1,4 +1,4 @@
-# Copyright (C)2025, Philip Munts dba Munts Technologies.
+# Copyright (C)2025-2026, Philip Munts dba Munts Technologies.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -22,15 +22,12 @@
 
 alire_mk_default: build
 
-include $(ARMSRC)/alire/include/picoboot.mk
-
 ###############################################################################
 
 # Build the project
 
 alire_mk_build:
 	alr build $(ALRFLAGS)
-	$(MAKE) picoboot_mk_flash
 
 ###############################################################################
 
@@ -41,20 +38,12 @@ alire_mk_clean:
 
 alire_mk_reallyclean: alire_mk_clean
 	rm -rf alire bin config obj share
-ifneq ($(findstring CYGWIN, $(shell uname)),)
-	/bin/find . -type f -exec chmod 644 {} ";"
-endif
+	find . -type f -exec chmod 644 {} ";"
 
 alire_mk_distclean: alire_mk_reallyclean
-ifeq ($(shell uname), Darwin)
+	# Unix
 	rm -rf ~/.local/share/alire/builds
 	rm -rf ~/.local/share/alire/releases
-endif
-ifeq ($(shell uname), Linux)
-	rm -rf ~/.local/share/alire/builds
-	rm -rf ~/.local/share/alire/releases
-endif
-ifeq ($(OS), Windows_NT)
+	# Windows
 	rm -rf ~/AppData/Local/alire/cache/builds
 	rm -rf ~/AppData/Local/alire/cache/releases
-endif
