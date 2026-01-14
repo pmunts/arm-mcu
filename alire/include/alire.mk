@@ -39,6 +39,7 @@ alire_mk_clean:
 alire_mk_reallyclean: alire_mk_clean
 	rm -rf alire bin config obj share
 	find . -type f -exec chmod 644 {} ";"
+	find . -type f -name '*.sh' -exec chmod 755 {} ";"
 
 alire_mk_distclean: alire_mk_reallyclean
 	# Unix
