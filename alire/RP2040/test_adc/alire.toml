@@ -1,0 +1,12 @@
+name = "test_adc"
+description = ""
+version = "0.1.0-dev"
+
+executables = ["test_adc"]
+
+[[depends-on]]
+rp2040_hal = "^2"
+
+[[actions]]
+type = "post-build"
+command = ["sh", "-c", "./postbuild.sh"]
