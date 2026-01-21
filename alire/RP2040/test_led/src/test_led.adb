@@ -23,7 +23,7 @@
 WITH RP.Clock;
 WITH RP.GPIO;
 WITH SparkFun_Pro_Micro_RP2040;
-WITH USBSerial; USE USBSerial;
+WITH USB_Console; USE USB_Console;
 
 PROCEDURE test_led IS
 
@@ -31,7 +31,7 @@ PROCEDURE test_led IS
 
 BEGIN
   RP.Clock.Initialize(SparkFun_Pro_Micro_RP2040.Crystal);
-  USBSerial.Initialize;
+  USB_Console.Initialize;
 
   New_Line;
   Put_Line("SparkFun Pro Micro RP2040 LED Test");

@@ -24,7 +24,7 @@ WITH USB.Device.Serial;
 
 USE TYPE USB.Device.Init_Result;
 
-PACKAGE BODY USBSerial IS
+PACKAGE BODY USB_Console IS
 
   CRLF       : CONSTANT String := ASCII.CR & ASCII.LF;
 
@@ -39,9 +39,9 @@ PACKAGE BODY USBSerial IS
     Status : USB.Device.Init_Result;
 
   BEGIN
-    if not USB_Stack.Register_Class (USB_Serial'Unchecked_Access) then
-      raise Program_Error;
-    end if;
+    IF NOT USB_Stack.Register_Class (USB_Serial'Unchecked_Access) THEN
+      RAISE Program_Error;
+    END IF;
 
     Status := USB_Stack.Initialize
      (Controller      => RP.Device.UDC'Access,
@@ -52,9 +52,9 @@ PACKAGE BODY USBSerial IS
       Vendor_ID       => 16#16D0#,
       Product_ID      => 16#0AFB#);
 
-    if Status /= USB.Device.Ok then
-      raise Program_Error;
-    end if;
+    IF Status /= USB.Device.Ok THEN
+      RAISE Program_Error;
+    END IF;
 
     USB_Stack.Start;
 
@@ -96,4 +96,4 @@ PACKAGE BODY USBSerial IS
     Put(s & CRLF);
   END Put_Line;
 
-END USBSerial;
+END USB_Console;
