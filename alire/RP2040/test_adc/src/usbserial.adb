@@ -39,8 +39,6 @@ PACKAGE BODY USBSerial IS
     Status : USB.Device.Init_Result;
 
   BEGIN
-    RP.Device.Timer.Enable;
-
     if not USB_Stack.Register_Class (USB_Serial'Unchecked_Access) then
       raise Program_Error;
     end if;
@@ -68,7 +66,7 @@ PACKAGE BODY USBSerial IS
   BEGIN
     FOR i IN 1 .. t LOOP
       USB_Stack.Poll;
-      RP.Device.Timer.Delay_Milliseconds(1);
+      DELAY 0.001;
     END LOOP;
   END Delay_Milliseconds;
 
