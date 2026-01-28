@@ -27,7 +27,7 @@ WITH USB_Console; USE USB_Console;
 
 PROCEDURE test_adc IS
 
-  ADC0 : CONSTANT RP.ADC.ADC_Channel := 
+  ADC0 : CONSTANT RP.ADC.ADC_Channel :=
     RP.ADC.To_ADC_Channel(SparkFun_Pro_Micro_RP2040.ADC0);
 
 BEGIN
