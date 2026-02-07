@@ -21,13 +21,12 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 ARDUINOCLI	?= arduino-cli
-ARDUINOPORT	?= COM1
 ARDUINOBOARD	?= arduino:mbed_rp2040:pico
 
-upload: compile
-	$(ARDUINOCLI) upload -b $(ARDUINOBOARD) -p $(ARDUINOPORT)
+install: build
+	$(ARDUINOCLI) upload -b $(ARDUINOBOARD)
 
-compile:
+build:
 	$(ARDUINOCLI) compile -b $(ARDUINOBOARD) -e
 
 clean:
