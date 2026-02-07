@@ -42,5 +42,5 @@ void loop()
   // Toggle the LED
   digitalWrite(LED, !digitalRead(LED));
   // Wait a while
-  delay(100);
+  delay(500);
 }
