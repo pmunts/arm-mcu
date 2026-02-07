@@ -51,7 +51,7 @@ FindDestDir /f
 
 if [ -z "${DESTDIR}" ] ; then
   echo ""
-  echo "ERROR: Cannot file Raspberry Pi Pico mass storage directory."
+  echo "ERROR: Cannot find Raspberry Pi Pico mass storage directory."
   echo ""
   exit 1
 fi
