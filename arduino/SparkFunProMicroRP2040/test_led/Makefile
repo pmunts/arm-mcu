@@ -22,7 +22,7 @@
 
 ARDUINOCLI	?= arduino-cli
 ARDUINOPORT	?= COM1
-ARDUINOBOARD	?= arduino:mbed_rp20240:pico
+ARDUINOBOARD	?= arduino:mbed_rp2040:pico
 
 upload: compile
 	$(ARDUINOCLI) upload -b $(ARDUINOBOARD) -p $(ARDUINOPORT)
