@@ -1,6 +1,6 @@
 # Arduino makefile definitions
 
-# Copyright (C)2025-2026, Philip Munts dba Munts Technologies.
+# Copyright (C)2026, Philip Munts dba Munts Technologies.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -21,13 +21,14 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 ARDUINOCLI	?= arduino-cli
-ARDUINOBOARD	?= arduino:mbed_rp2040:pico
+ARDUINOFQBN	= arduino:mbed_rp2040:pico
+ARDUINOFLAGS	= -b $(ARDUINOFQBN)
 
 install: build
-	$(ARDUINOCLI) upload -b $(ARDUINOBOARD)
+	$(ARDUINOCLI) upload  $(ARDUINOFLAGS)
 
 build:
-	$(ARDUINOCLI) compile -b $(ARDUINOBOARD) -e
+	$(ARDUINOCLI) compile $(ARDUINOFLAGS) -e
 
 clean:
 	rm -rf build
