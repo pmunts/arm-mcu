@@ -21,16 +21,13 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 ARDUINOCLI	?= arduino-cli
-ARDUINOFQBN	= STMicroelectronics:stm32:Nucleo_64
-ARDUINOFLAGS	= -b $(ARDUINOFQBN)
-ARDUINOFLAGS	+= --board-options pnum=NUCLEO_F411RE
-ARDUINOFLAGS	+= --board-options upload_method=swdMethod
+ARDUINOFQBN	= STMicroelectronics:stm32:Nucleo_64:pnum=NUCLEO_F411RE:upload_method=swdMethod
 
 install: build
-	$(ARDUINOCLI) upload  $(ARDUINOFLAGS)
+	$(ARDUINOCLI) upload  -b $(ARDUINOFQBN)
 
 build:
-	$(ARDUINOCLI) compile $(ARDUINOFLAGS) -e
+	$(ARDUINOCLI) compile -b $(ARDUINOFQBN) -e
 
 clean:
 	rm -rf build
