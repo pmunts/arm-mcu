@@ -26,7 +26,7 @@
 
 // GPIO pin assignments:
 
-const int LED = 2;
+#define LED 2
 
 // Initialization Code (run once at startup)
 
