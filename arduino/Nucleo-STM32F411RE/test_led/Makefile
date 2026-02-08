@@ -1,4 +1,5 @@
-# Arduino makefile definitions
+# Makefile for building and installing an Arduino application program
+# targeting the ST Microelectronics Nucleo STM32F411RE development board.
 
 # Copyright (C)2026, Philip Munts dba Munts Technologies.
 #

@@ -1,4 +1,5 @@
-# Arduino makefile definitions
+# Makefile for building and installing an Arduino application program
+# targeting the Raspberry Pi RP2040 microcontroller.
 
 # Copyright (C)2026, Philip Munts dba Munts Technologies.
 #
