@@ -30,7 +30,7 @@ install: build
 	$(ARDUINOCLI) upload  $(ARDUINOFLAGS)
 
 build:
-	$(ARDUINOCLI) compile $(ARDUINOFLAGS)
+	$(ARDUINOCLI) compile $(ARDUINOFLAGS) -e
 
 clean:
 	rm -rf build
