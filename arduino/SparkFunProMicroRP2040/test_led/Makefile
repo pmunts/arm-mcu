@@ -22,13 +22,12 @@
 
 ARDUINOCLI	?= arduino-cli
 ARDUINOFQBN	= arduino:mbed_rp2040:pico
-ARDUINOFLAGS	= -b $(ARDUINOFQBN)
 
 install: build
-	$(ARDUINOCLI) upload  $(ARDUINOFLAGS)
+	$(ARDUINOCLI) upload  -b $(ARDUINOFQBN)
 
 build:
-	$(ARDUINOCLI) compile $(ARDUINOFLAGS) -e
+	$(ARDUINOCLI) compile -b $(ARDUINOFQBN) -e
 
 clean:
 	rm -rf build
