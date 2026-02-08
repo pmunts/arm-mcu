@@ -1,6 +1,6 @@
 # Make definitions for ST-Link
 
-# Copyright (C)2017-2018, Philip Munts, President, Munts AM Corp.
+# Copyright (C)2017-2026, Philip Munts, President, Munts AM Corp.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -20,17 +20,18 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-# ST Microelectronics ST-LINK_CLI.exe for Windows
+# ST Microelectronics STM32 Cube Programmer for Windows
 
+FLASHFREQUENCY		?= 4000
+FLASHPORT		?= SWD
 FLASHWRITEADDR		?= 0x08000000
 
-STLINKFLASH		?= "C:/PROGRA~2/STMicroelectronics/STM32 ST-LINK Utility/ST-LINK Utility/ST-LINK_CLI.exe"
-STLINKFLASHOPTS1	?= -c SWD -ME -P
-STLINKFLASHOPTS2	?= $(FLASHWRITEADDR) -Rst
+STM32CUBEPROG		?= C:/PROGRA~1/STMicroelectronics/STM32Cube/STM32CubeProgrammer/bin/STM32_Programmer_CLI.exe
+STM32CUBEPROGOPTS	+= -c port=$(FLASHPORT) freq=$(FLASHFREQUENCY)
 
 .SUFFIXES: .bin .flashstlink
 
 # Program flash with ST-Link
 
 .bin.flashstlink:
-	$(STLINKFLASH) $(STLINKFLASHOPTS1) $< $(STLINKFLASHOPTS2)
+	$(STM32CUBEPROG) $(STM32CUBEPROGOPTS) -e all -w $< $(FLASHWRITEADDR) -hardRst

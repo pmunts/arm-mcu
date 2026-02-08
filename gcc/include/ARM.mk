@@ -1,6 +1,6 @@
 # Generic Makefile for compiling ARM microcontroller firmware
 
-# Copyright (C)2013-2020, Philip Munts, President, Munts AM Corp.
+# Copyright (C)2013-2026, Philip Munts, President, Munts AM Corp.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -207,4 +207,8 @@ include $(ARMSRC)/gcc/include/jlink.mk
 include $(ARMSRC)/gcc/include/lpc21isp.mk
 include $(ARMSRC)/gcc/include/mbed.mk
 include $(ARMSRC)/gcc/include/openocd.mk
+ifeq ($(OS), Windows_NT)
+include $(ARMSRC)/gcc/include/stlinkwin.mk
+else
 include $(ARMSRC)/gcc/include/stlink.mk
+endif
