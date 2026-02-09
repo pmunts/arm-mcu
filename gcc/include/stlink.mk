@@ -1,4 +1,4 @@
-# Make definitions for ST-Link
+# Make definitions for STM32 Cube Programmer
 
 # Copyright (C)2017-2026, Philip Munts, President, Munts AM Corp.
 #
@@ -19,8 +19,6 @@
 # CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
-
-# ST Microelectronics STM32 Cube Programmer for Windows
 
 FLASHFREQUENCY		?= 4000
 FLASHPORT		?= SWD
