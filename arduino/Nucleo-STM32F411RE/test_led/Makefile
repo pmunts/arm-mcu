@@ -22,7 +22,7 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 ARDUINOCLI	?= arduino-cli
-ARDUINOFQBN	= STMicroelectronics:stm32:Nucleo_64:pnum=NUCLEO_F411RE:upload_method=swdMethod
+ARDUINOFQBN	:= STMicroelectronics:stm32:Nucleo_64:pnum=NUCLEO_F411RE,upload_method=swdMethod
 
 install: build
 	$(ARDUINOCLI) upload  -b $(ARDUINOFQBN)
