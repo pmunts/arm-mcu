@@ -1,0 +1,10 @@
+[Desktop Entry]
+Encoding=UTF-8
+Exec=/usr/local/stm32cubeprogrammer/bin/STM32CubeProgrammer
+Icon=/usr/local/stm32cubeprogrammer/util/Programmer.ico
+Type=Application
+Terminal=false
+Name=STM32 Cube Programmer
+GenericName=STM32 Cube Programmer
+StartupNotify=false
+Categories=Development

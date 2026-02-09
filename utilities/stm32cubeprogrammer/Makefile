@@ -20,8 +20,12 @@ $(PKGDIR): install
 	mkdir -p				$(PKGDIR)/usr/local/bin
 	cp -R -P -p install			$(PKGDIR)/usr/local/stm32cubeprogrammer
 	sed -i 's#DIR=.*$$#DIR=/usr/local/stm32cubeprogrammer/bin#g' $(PKGDIR)/usr/local/stm32cubeprogrammer/bin/STM32CubeProgrammer
-	cd $(PKGDIR)/usr/local/bin && ln -s ../stm32cubeprogrammer/bin/STM32CubeProgrammer STM32_Programmer
-	cd $(PKGDIR)/usr/local/bin && ln -s ../stm32cubeprogrammer/bin/STM32_Programmer_CLI
+	sed -i 's#DIR=.*$$#DIR=/usr/local/stm32cubeprogrammer/bin#g' $(PKGDIR)/usr/local/stm32cubeprogrammer/bin/STM32_Programmer.sh
+	cd $(PKGDIR)/usr/local/bin && ln -s ../stm32cubeprogrammer/bin/STM32CubeProgrammer STM32_Programmer_GUI
+	cd $(PKGDIR)/usr/local/bin && ln -s ../stm32cubeprogrammer/bin/STM32_Programmer.sh
+	cd $(PKGDIR)/usr/local/bin && ln -s STM32_Programmer.sh STM32_Programmer_CLI
+	mkdir -p				$(PKGDIR)/usr/local/share/applications
+	cp *.desktop				$(PKGDIR)/usr/local/share/applications
 	find $(PKGDIR) -name '*.so' -exec chmod 755 {} ";"
 
 $(PKGFILE): $(PKGDIR)
@@ -30,8 +34,7 @@ $(PKGFILE): $(PKGDIR)
 	chmod -R u+w $(PKGDIR)/usr
 
 clean:
-	-rm $(PKGFILE)
-	-rm -rf $(PKGDIR)
+	-rm -rf $(PKGDIR) $(PKGFILE)
 
 reallyclean: clean
 	rm -rf install
