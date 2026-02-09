@@ -1,6 +1,6 @@
 # Make definitions for ST-Link
 
-# Copyright (C)2013-2018, Philip Munts, President, Munts AM Corp.
+# Copyright (C)2017-2026, Philip Munts, President, Munts AM Corp.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -20,38 +20,23 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-# texane/stlink
+# ST Microelectronics STM32 Cube Programmer for Windows
 
+FLASHFREQUENCY		?= 4000
+FLASHPORT		?= SWD
 FLASHWRITEADDR		?= 0x08000000
 
-STLINKFLASH		?= stlink-flash
-STLINKFLASHOPTS1	?= --reset write $(STLINKIF)
-STLINKFLASHOPTS2	?= $(FLASHWRITEADDR)
+ifeq ($(findstring CYGWIN, $(shell uname)), CYGWIN)
+STM32CUBEPROG		?= C:/PROGRA~1/STMicroelectronics/STM32Cube/STM32CubeProgrammer/bin/STM32_Programmer_CLI.exe
+else
+STM32CUBEPROG		?= STM32_Programmer_CLI
+endif
 
-STLINKDEBUG		?= $(ARMSRC)/gcc/common/main.gdb
-STLINKGDB		?= stlink-gdbserver
-STLINKGDBOPTS		?= -p $(GDBSERVERPORT)
+STM32CUBEPROGOPTS	+= -c port=$(FLASHPORT) freq=$(FLASHFREQUENCY)
 
-.SUFFIXES: .bin .debugstlink .elf .flashstlink
-
-# Start ST-Link GDB server
-
-startstlink:
-	$(STLINKGDB) $(STLINKGDBIF) $(STLINKGDBOPTS) >debug.log 2>&1 &
-
-# Stop ST-Link GDB server
-
-stopstlink:
-	-skill `basename $(STLINKGDB) .exe`
-
-# Debug with ST-Link GDB server
-
-.elf.debugstlink:
-	$(MAKE) startstlink
-	$(GDBGUI) $(GDB) $(GDBFLAGS) -x $(STLINKDEBUG) $<
-	$(MAKE) stopstlink
+.SUFFIXES: .bin .flashstlink
 
 # Program flash with ST-Link
 
 .bin.flashstlink:
-	$(STLINKFLASH) $(STLINKFLASHOPTS1) $< $(STLINKFLASHOPTS2)
+	$(STM32CUBEPROG) $(STM32CUBEPROGOPTS) -e all -w $< $(FLASHWRITEADDR) -hardRst

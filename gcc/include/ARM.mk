@@ -207,8 +207,4 @@ include $(ARMSRC)/gcc/include/jlink.mk
 include $(ARMSRC)/gcc/include/lpc21isp.mk
 include $(ARMSRC)/gcc/include/mbed.mk
 include $(ARMSRC)/gcc/include/openocd.mk
-ifeq ($(OS), Windows_NT)
-include $(ARMSRC)/gcc/include/stlinkwin.mk
-else
 include $(ARMSRC)/gcc/include/stlink.mk
-endif
