@@ -1,0 +1,7 @@
+Package: stm32cubeprogrammer
+Section: misc
+Priority: extra
+Maintainer: Philip Munts <phil@munts.net>
+Architecture: @@ARCH@@
+Version: @@VERSION@@
+Description: STMicroelectronics STM32 Cube Programmer
