@@ -6,7 +6,7 @@
          {
             "label": "make <program>",
             "type": "shell",
-            "command": "make clean install"
+            "command": "make clean install",
             "problemMatcher": [],
             "group": {
                 "kind": "build",
