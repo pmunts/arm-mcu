@@ -28,7 +28,7 @@ install: build
 	$(ARDUINOCLI) upload  -b $(ARDUINOFQBN)
 
 build:
-	$(ARDUINOCLI) compile -b $(ARDUINOFQBN) -e
+	$(ARDUINOCLI) compile $(COMPILEFLAGS) -b $(ARDUINOFQBN) -e
 
 clean:
 	rm -rf build
