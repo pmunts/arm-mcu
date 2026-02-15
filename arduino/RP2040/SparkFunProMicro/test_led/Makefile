@@ -1,7 +1,6 @@
 # Makefile for building and installing an Arduino application program
-# targeting the Raspberry Pi RP2040 microcontroller.
 
-# Copyright (C)2026, Philip Munts dba Munts Technologies.
+# Copyright (C)2025-2026, Philip Munts dba Munts Technologies.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -22,13 +21,14 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 ARDUINOCLI	?= arduino-cli
-ARDUINOFQBN	= arduino:mbed_rp2040:pico
+ARDUINOFQBN	?= arduino:mbed_rp2040:pico
+ARDUINOPORT	?= COM1
 
 install: build
-	$(ARDUINOCLI) upload  -b $(ARDUINOFQBN)
+	$(ARDUINOCLI) upload -b $(ARDUINOFQBN) -p $(ARDUINOPORT)
 
 build:
-	$(ARDUINOCLI) compile -b $(ARDUINOFQBN) -e
+	$(ARDUINOCLI) compile $(COMPILEFLAGS) -b $(ARDUINOFQBN) -e
 
 clean:
 	rm -rf build
