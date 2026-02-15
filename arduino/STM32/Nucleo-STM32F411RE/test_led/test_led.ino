@@ -20,6 +20,8 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
+#include <Arduino.h>
+
 // Hardware configuration (bottom to top):
 //
 // Nucleo STM32F411RE (3.3V logic!)
