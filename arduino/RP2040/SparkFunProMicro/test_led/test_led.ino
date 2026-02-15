@@ -30,19 +30,14 @@
 
 #define LED 2
 
-// Initialization Code (run once at startup)
-
 void setup()
 {
   pinMode(LED, OUTPUT);
 }
 
-// Event Loop (run repeatedly forever)
-
 void loop()
 {
   // Toggle the LED
   digitalWrite(LED, !digitalRead(LED));
-  // Wait a while
   delay(500);
 }
