@@ -1,7 +1,6 @@
 # Makefile for building and installing an Arduino application program
-# targeting the ST Microelectronics Nucleo STM32F411RE development board.
 
-# Copyright (C)2026, Philip Munts dba Munts Technologies.
+# Copyright (C)2025-2026, Philip Munts dba Munts Technologies.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -25,7 +24,7 @@ ARDUINOCLI	?= arduino-cli
 ARDUINOFQBN	:= STMicroelectronics:stm32:Nucleo_64:pnum=NUCLEO_F411RE,upload_method=swdMethod
 
 install: build
-	$(ARDUINOCLI) upload  -b $(ARDUINOFQBN)
+	$(ARDUINOCLI) upload -b $(ARDUINOFQBN)
 
 build:
 	$(ARDUINOCLI) compile $(COMPILEFLAGS) -b $(ARDUINOFQBN) -e
