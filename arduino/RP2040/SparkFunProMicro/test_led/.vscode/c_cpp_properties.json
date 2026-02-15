@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "name": "Arduino",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${HOME}/.arduino15/packages/arduino/hardware/mbed_rp2040/4.5.0/**"
+            ],
+            "compilerPath": "${HOME}/.arduino15/packages/arduino/tools/arm-none-eabi-gcc/7-2017q4/bin/arm-none-eabi-g++"
+            "intelliSenseMode": "${default}"
+        }
+    ],
+    "version": 4
+}
