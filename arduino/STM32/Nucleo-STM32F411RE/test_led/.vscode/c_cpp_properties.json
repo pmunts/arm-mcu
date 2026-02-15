@@ -4,7 +4,9 @@
             "name": "Arduino",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${HOME}/.arduino15/packages/STMicroelectronics/hardware/stm32/2.12.0/cores/arduino/**"
+                "${HOME}/.arduino15/packages/STMicroelectronics/hardware/stm32/2.12.0/cores/arduino/**",
+                "${HOME}/.arduino15/packages/STMicroelectronics/hardware/stm32/2.12.0/libraries/**"
+ 
             ],
             "compilerPath": "${HOME}/.arduino15/packages/STMicroelectronics/tools/xpack-arm-none-eabi-gcc/14.2.1-1.1/bin/arm-none-eabi-gcc",
             "intelliSenseMode": "${default}"
