@@ -26,18 +26,14 @@
 
 #include <Arduino.h>
 
-// GPIO pin assignments:
-
-#define LED 13
-
 void setup()
 {
-  pinMode(LED, OUTPUT);
+  pinMode(LED_BUILTIN, OUTPUT);
 }
 
 void loop()
 {
   // Toggle the LED
-  digitalWrite(LED, !digitalRead(LED));
+  digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
   delay(500);
 }
