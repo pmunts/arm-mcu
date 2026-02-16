@@ -20,8 +20,10 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
+BOARDNAME	?= NUCLEO_F411RE
+
 ARDUINOCLI	?= arduino-cli
-ARDUINOFQBN	:= STMicroelectronics:stm32:Nucleo_64:pnum=NUCLEO_F411RE,upload_method=swdMethod
+ARDUINOFQBN	:= STMicroelectronics:stm32:Nucleo_64:pnum=$(BOARDNAME),upload_method=swdMethod
 
 install: build
 	$(ARDUINOCLI) upload -b $(ARDUINOFQBN)
