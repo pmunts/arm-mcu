@@ -53,11 +53,11 @@ void MainTaskFunction(void *parameters)
 
     if (xQueueReceive(EdgeQueue, &newstate, pdMS_TO_TICKS(1000)) == pdPASS)
     {
-      Serial.println(newstate ? "PRESS" : "RELEASE");
+      Serial2.println(newstate ? "PRESS" : "RELEASE");
       digitalWrite(LED_BUILTIN, newstate);
     }
     else
-      Serial.println("Tick...");
+      Serial2.println("Tick...");
   }
 }
 
