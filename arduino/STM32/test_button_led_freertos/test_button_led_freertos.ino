@@ -20,13 +20,9 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-// Hardware configuration (bottom to top):
-//
-// Nucleo STM32F411RE (3.3V logic!)
-
 #include <Arduino.h>
-#include <STM32FreeRTOS.h>
 #include <Nucleo.h>
+#include <STM32FreeRTOS.h>
 
 QueueHandle_t EdgeQueue;
 
@@ -62,18 +58,18 @@ void MainTaskFunction(void *parameters)
   }
 }
 
-// Configure hardware and start FreeRTOS.  Does not return because
-// vTaskStartScheduler() does not return.
+// Configure hardware and start FreeRTOS.
+// **Does not return because vTaskStartScheduler() does not return!**
 
 void setup()
 {
   Serial.begin(115200);
   Serial.println("\ecSTM32 Arduino Button and LED Test using FreeRTOS\n");
 
-  // Configure GPIO pins
-
   pinMode(BUTTON, BUTTON_MODE);
   pinMode(LED, OUTPUT);
+
+  digitalWrite(LED, !digitalRead(BUTTON));
 
   // Create FreeRTOS entities and start the scheduler
 
@@ -83,7 +79,7 @@ void setup()
 }
 
 // With FreeRTOS running, loop() is called by the idle task instead of the
-// Arduino main() function (which blocked because setup() did not return).
+// Arduino main() function (which will block because setup() does not return).
 
 void loop()
 {
