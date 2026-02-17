@@ -1,4 +1,4 @@
-// Simplest Arduino Example Program: Flash an LED
+// STM32 Arduino LED Test
 
 // Copyright (C)2026, Philip Munts dba Munts Technologies.
 //
@@ -28,6 +28,11 @@
 
 void setup()
 {
+  Serial.begin(115200);
+  Serial.println("\ecSTM32 Arduino LED Test\n");
+
+  // Configure GPIO pins
+
   pinMode(LED_BUILTIN, OUTPUT);
 }
 
