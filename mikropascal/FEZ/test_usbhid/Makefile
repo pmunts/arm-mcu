@@ -1,6 +1,6 @@
 # Makefile for building a Mikropascal ARM application program
 
-# Copyright (C)2020, Philip Munts, President, Munts AM Corp.
+# Copyright (C)2020-2026, Philip Munts dba Munts Technologies.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -24,8 +24,6 @@
 
 ARMSRC		?= $(HOME)/arm-mcu
 MIKROPASCALSRC	?= $(ARMSRC)/mikropascal
-
-FLASHWRITEADDR	:= 0x08000000
 
 # Compile the program
 
