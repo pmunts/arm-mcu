@@ -53,11 +53,11 @@ void MainTaskFunction(void *parameters)
 
     if (xQueueReceive(EdgeQueue, &newstate, pdMS_TO_TICKS(1000)) == pdPASS)
     {
-      Serial2.println(newstate ? "PRESS" : "RELEASE");
+      Serial.println(newstate ? "PRESS" : "RELEASE");
       digitalWrite(LED_BUILTIN, newstate);
     }
     else
-      Serial2.println("Tick...");
+      Serial.println("Tick...");
   }
 }
 
@@ -66,8 +66,8 @@ void MainTaskFunction(void *parameters)
 
 void setup()
 {
-  Serial2.begin(115200);
-  Serial2.println("\ecArduino Button and LED Test using FreeRTOS\n");
+  Serial.begin(115200);
+  Serial.println("\ecArduino Button and LED Test using FreeRTOS\n");
 
   // Configure GPIO pins
 
