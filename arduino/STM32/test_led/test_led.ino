@@ -20,11 +20,8 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-// Hardware configuration (bottom to top):
-//
-// Nucleo STM32F411RE (3.3V logic!)
-
 #include <Arduino.h>
+#include <Nucleo.h>
 
 void setup()
 {
@@ -33,12 +30,12 @@ void setup()
 
   // Configure GPIO pins
 
-  pinMode(LED_BUILTIN, OUTPUT);
+  pinMode(LED, OUTPUT);
 }
 
 void loop()
 {
   // Toggle the LED
-  digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
+  digitalWrite(LED, !digitalRead(LED));
   delay(500);
 }

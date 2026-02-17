@@ -26,6 +26,7 @@
 
 #include <Arduino.h>
 #include <STM32FreeRTOS.h>
+#include <Nucleo.h>
 
 QueueHandle_t EdgeQueue;
 
@@ -33,7 +34,7 @@ QueueHandle_t EdgeQueue;
 
 void EdgeHandler(void)
 {
-  bool newstate = !digitalRead(USER_BTN);
+  bool newstate = !digitalRead(BUTTON);
   xQueueSendFromISR(EdgeQueue, &newstate, NULL);
 }
 
@@ -43,7 +44,7 @@ void MainTaskFunction(void *parameters)
 {
   // Attach button GPIO pin interrupt service routine
 
-  attachInterrupt(digitalPinToInterrupt(USER_BTN), EdgeHandler, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(BUTTON), EdgeHandler, CHANGE);
 
   // Main event loop
 
@@ -54,7 +55,7 @@ void MainTaskFunction(void *parameters)
     if (xQueueReceive(EdgeQueue, &newstate, pdMS_TO_TICKS(1000)) == pdPASS)
     {
       Serial.println(newstate ? "PRESS" : "RELEASE");
-      digitalWrite(LED_BUILTIN, newstate);
+      digitalWrite(LED, newstate);
     }
     else
       Serial.println("Tick...");
@@ -71,8 +72,8 @@ void setup()
 
   // Configure GPIO pins
 
-  pinMode(USER_BTN, INPUT);
-  pinMode(LED_BUILTIN, OUTPUT);
+  pinMode(BUTTON, BUTTON_MODE);
+  pinMode(LED, OUTPUT);
 
   // Create FreeRTOS entities and start the scheduler
 
