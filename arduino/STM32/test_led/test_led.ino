@@ -28,8 +28,6 @@ void setup()
   Serial.begin(115200);
   Serial.println("\ecSTM32 Arduino LED Test\n");
 
-  // Configure GPIO pins
-
   pinMode(LED, OUTPUT);
 }
 
