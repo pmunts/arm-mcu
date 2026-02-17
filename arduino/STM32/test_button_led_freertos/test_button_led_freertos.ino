@@ -1,4 +1,4 @@
-// Arduino Button and LED Test using FreeRTOS
+// STM32 Arduino Button and LED Test using FreeRTOS
 
 // Copyright (C)2026, Philip Munts dba Munts Technologies.
 //
@@ -67,7 +67,7 @@ void MainTaskFunction(void *parameters)
 void setup()
 {
   Serial.begin(115200);
-  Serial.println("\ecArduino Button and LED Test using FreeRTOS\n");
+  Serial.println("\ecSTM32 Arduino Button and LED Test using FreeRTOS\n");
 
   // Configure GPIO pins
 

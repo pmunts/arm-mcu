@@ -1,6 +1,6 @@
-// Arduino Button and LED Test
+// STM32 Arduino Button and LED Test
 
-// Copyright (C)2025-2026, Philip Munts dba Munts Technologies.
+// Copyright (C)2026, Philip Munts dba Munts Technologies.
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
@@ -28,8 +28,8 @@
 
 void setup()
 {
-  Serial2.begin(115200);
-  Serial2.println("\ecArduino Button and LED Test\n");
+  Serial.begin(115200);
+  Serial.println("\ecSTM32 Arduino Button and LED Test\n");
 
   pinMode(USER_BTN, INPUT);
   pinMode(LED_BUILTIN, OUTPUT);
@@ -42,13 +42,13 @@ void loop()
 
   if (!oldstate && newstate)
   {
-    Serial2.println("PRESS");
+    Serial.println("PRESS");
     digitalWrite(LED_BUILTIN, true);
   }
 
   if (oldstate && !newstate)
   {
-    Serial2.println("RELEASE");
+    Serial.println("RELEASE");
     digitalWrite(LED_BUILTIN, false);
   }
 
