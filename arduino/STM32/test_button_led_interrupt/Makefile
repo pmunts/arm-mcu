@@ -27,7 +27,6 @@ BOARDNAME	?= NUCLEO_F411RE
 ARDUINOCLI	?= arduino-cli
 ARDUINOFQBN	:= STMicroelectronics:stm32:$(BOARDFAMILY):pnum=$(BOARDNAME),upload_method=swdMethod
 EXTRACFLAGS	+= -D$(BOARDFAMILY)
-EXTRACFLAGS	+= -I$(ARMSRC)/arduino/STM32/include
 COMPILEFLAGS	+= --build-property build.extra_flags="$(EXTRACFLAGS)"
 COMPILEFLAGS	+= --libraries $(ARMSRC)/arduino/STM32/libraries
 
