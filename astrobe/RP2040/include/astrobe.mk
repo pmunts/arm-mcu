@@ -32,7 +32,7 @@ FLASHPICO	?= flashpico
 
 # Default make target
 
-astrobe_mk_default: build
+astrobe_mk_default: install
 
 # Define a pattern rule to compile an Oberon main module source program to binary flash image
 
