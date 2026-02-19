@@ -31,7 +31,7 @@ include		$(ASTROBESRC)/RP2040/include/astrobe.mk
 
 # Build the firmware
 
-default: test_led.uf2
+build: test_led.uf2
 
 # Install the firmware to the RP2040 code flash
 

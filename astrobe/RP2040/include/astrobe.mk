@@ -20,6 +20,9 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
+# Note: Install both Astrobe programs and Astrobe examples & libraries to
+# C:\Program Files\AstrobeRP2040
+
 ASTROBE		?= "$(PROGRAMFILES)/AstrobeRP2040"
 ASTROBECOMPILE	:= $(ASTROBE)/AstrobeCompile
 ASTROBEBUILD	:= $(ASTROBE)/AstrobeBuild
@@ -29,7 +32,7 @@ FLASHPICO	?= flashpico
 
 # Default make target
 
-astrobe_mk_default: default
+astrobe_mk_default: build
 
 # Define a pattern rule to compile an Oberon main module source program to binary flash image
 
