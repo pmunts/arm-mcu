@@ -1,7 +1,0 @@
-#!/bin/sh
-
-# Prefer GNU ARM Embedded, if available
-
-if [ -x /usr/local/gcc-arm-none-eabi/bin/arm-none-eabi-gcc ]; then
-  sed -i 's@#GCC_ARM_PATH = ""@GCC_ARM_PATH = "/usr/local/gcc-arm-none-eabi/bin"@g' /usr/local/lib/mbedos/mbed_settings.py
-fi
