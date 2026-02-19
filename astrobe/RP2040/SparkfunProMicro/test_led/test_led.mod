@@ -49,6 +49,6 @@ BEGIN
 
   WHILE TRUE DO
     GPIO.Toggle(LED);
-    Timers.Delay(timer, 200);
+    Timers.Delay(timer, 500);
   END
 END test_led.
