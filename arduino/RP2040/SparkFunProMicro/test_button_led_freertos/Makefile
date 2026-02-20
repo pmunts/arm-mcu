@@ -26,7 +26,7 @@ ARDUINOPORT	?= COM1
 COMPILEFLAGS	+= --libraries $(ARMSRC)/arduino/RP2040/libraries
 
 install: build
-	$(ARDUINOCLI) upload -b $(ARDUINOFQBN) -p $(ARDUINOPORT)
+	flashpico build/*/*.uf2
 
 build:
 	$(ARDUINOCLI) compile $(COMPILEFLAGS) -b $(ARDUINOFQBN) -e
