@@ -34,6 +34,10 @@
 // main() also creates a task that provides USB serial port emulation.
 // Serial.println() et al are redirected to the USB serial port.
 
+// Hardware configuration (bottom to top):
+//
+// Raspberry Pi Pico2 or equivalent (3.3V logic!)
+
 #include <Arduino.h>
 #include <FreeRTOS.h>
 
@@ -85,7 +89,7 @@ void setup()
 
   pinMode(BUTTON, INPUT_PULLUP);
   pinMode(LED_BUILTIN, OUTPUT);
-  digitalWrite(LED_BUILTIN, false);
+  digitalWrite(LED_BUILTIN, !digitalRead(BUTTON));
 
   // Create FreeRTOS entities and start the scheduler
 
