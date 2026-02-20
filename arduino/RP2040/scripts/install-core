@@ -22,12 +22,13 @@
 
 arduino-cli core install arduino:mbed_rp2040
 
-uname | grep Linux
+uname | grep -q Linux
 
 if [ $? -eq 0 ]; then
-  patch -N -p0 <<EOD
---- ~/.arduino15/packages/arduino/hardware/mbed_rp2040/4.5.0/platform.txt.orig
-+++ ~/.arduino15/packages/arduino/hardware/mbed_rp2040/4.5.0/platform.txt
+  cd ~/.arduino15
+  patch -N -p0 -r - <<EOD
+--- packages/arduino/hardware/mbed_rp2040/4.5.0/platform.txt.orig
++++ packages/arduino/hardware/mbed_rp2040/4.5.0/platform.txt
 @@ -183,7 +183,7 @@
  tools.picotool.cmd=rp2040load
  tools.picotool.upload.params.verbose=-v
