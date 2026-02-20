@@ -21,13 +21,12 @@
 // POSSIBILITY OF SUCH DAMAGE.
 
 #include <Arduino.h>
-#define __FREERTOS 1
 #include <FreeRTOS.h>
 
 // Assign GPIO pins
 
-#define LED	2
-#define BUTTON	3
+#define LED    2
+#define BUTTON 3
 
 QueueHandle_t EdgeQueue;
 
@@ -71,7 +70,7 @@ void setup()
   Serial.begin(115200);
   Serial.println("\ecArduino RP2040 Button and LED Test Using FreeRTOS\n");
 
-  pinMode(BUTTON, BUTTON_MODE);
+  pinMode(BUTTON, INPUT_PULLUP);
   pinMode(LED, OUTPUT);
 
   digitalWrite(LED, !digitalRead(BUTTON));
