@@ -21,8 +21,9 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 ARDUINOCLI	?= arduino-cli
-ARDUINOFQBN	?= arduino:mbed_rp2040:pico
+ARDUINOFQBN	:= arduino:mbed_rp2040:pico
 ARDUINOPORT	?= COM1
+COMPILEFLAGS	+= --libraries $(ARMSRC)/arduino/RP2040/libraries
 
 install: build
 	$(ARDUINOCLI) upload -b $(ARDUINOFQBN) -p $(ARDUINOPORT)
