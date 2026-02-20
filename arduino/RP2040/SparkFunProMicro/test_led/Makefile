@@ -21,7 +21,7 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 ARDUINOCLI	?= arduino-cli
-ARDUINOFQBN	:= arduino:mbed_rp2040:pico
+ARDUINOFQBN	:= rp2040:rp2040:sparkfun_promicrorp2040 
 ARDUINOPORT	?= COM1
 COMPILEFLAGS	+= --libraries $(ARMSRC)/arduino/RP2040/libraries
 
