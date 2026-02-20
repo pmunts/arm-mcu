@@ -1,4 +1,4 @@
-// Simplest Arduino Example Program: Flash an LED
+// Arduino RP2040 LED Test
 
 // Copyright (C)2026, Philip Munts dba Munts Technologies.
 //
