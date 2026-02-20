@@ -4,9 +4,10 @@
             "name": "Arduino",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${HOME}/.arduino15/packages/arduino/hardware/mbed_rp2040/4.5.0/**"
+                "${env:ARMSRC}/arduino/RP2040/libraries/**",
+                "${env:HOME}/.arduino15/packages/rp2040/hardware/rp2040/5.5.0/**"
             ],
-            "compilerPath": "${HOME}/.arduino15/packages/arduino/tools/arm-none-eabi-gcc/7-2017q4/bin/arm-none-eabi-gcc",
+            "compilerPath": "${env:HOME}/.arduino15/packages/rp2040/tools/pqt-gcc/4.1.0-1aec55e/bin/arm-none-eabi-gcc",
             "intelliSenseMode": "${default}"
         }
     ],
