@@ -20,6 +20,20 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
+// NOTE: With the Arduino-Pico core, if FreeRTOS is enabled (:os=freertos
+// appended to the FQBN), the normal Arduino main program function main()
+// that calls setup() and loop() is replaced by one that creates some
+// background tasks and then calls vTaskStartScheduler().
+//
+// The setup() and setup1() functions called by tasks running on CPU
+// core 0 and core 1 respectively.
+//
+// The loop() and loop1() functions are called by idle tasks running on CPU
+// core 0 and 1 respectively..
+//
+// main() also creates a task that provides USB serial port emulation.
+// Serial.println() et al are redirected to the USB serial port.
+
 // Hardware configuration (bottom to top):
 //
 // Sparkfun Electronics Pro Micro - RP2040  (3.3V logic!)
@@ -66,8 +80,7 @@ void MainTaskFunction(void *parameters)
   }
 }
 
-// Configure hardware and start FreeRTOS.
-// **Does not return because vTaskStartScheduler() does not return!**
+// Configure hardware and start main task.
 
 void setup()
 {
@@ -76,19 +89,10 @@ void setup()
 
   pinMode(BUTTON, INPUT_PULLUP);
   pinMode(LED, OUTPUT);
-
   digitalWrite(LED, !digitalRead(BUTTON));
 
   // Create FreeRTOS entities and start the scheduler
 
   EdgeQueue = xQueueCreate(10, sizeof(bool));
   xTaskCreate(MainTaskFunction, "main", 512, NULL, 1, NULL);
-  vTaskStartScheduler();
-}
-
-// With FreeRTOS running, loop() is called by the idle task instead of the
-// Arduino main() function (which will block because setup() does not return).
-
-void loop()
-{
 }
