@@ -4,6 +4,7 @@
             "name": "Arduino",
             "includePath": [
                 "${workspaceFolder}/**",
+                "${env:ARMSRC}/arduino/libraries/**",
                 "${env:ARMSRC}/arduino/RP2040/libraries/**",
                 "${env:HOME}/.arduino15/packages/rp2040/hardware/rp2040/5.5.0/**"
             ],

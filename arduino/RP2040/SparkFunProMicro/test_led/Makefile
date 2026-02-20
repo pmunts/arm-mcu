@@ -23,7 +23,7 @@
 ARDUINOCLI	?= arduino-cli
 ARDUINOFQBN	:= rp2040:rp2040:sparkfun_promicrorp2040 
 ARDUINOPORT	?= COM1
-COMPILEFLAGS	+= --libraries $(ARMSRC)/arduino/RP2040/libraries
+COMPILEFLAGS	+= --libraries "$(ARMSRC)/arduino/libraries $(ARMSRC)/arduino/RP2040/libraries"
 
 install: build
 	flashpico build/*/*.uf2
