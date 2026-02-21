@@ -1,6 +1,6 @@
 # Makefile for building and installing an Arduino application program
 
-# Copyright (C)2025-2026, Philip Munts dba Munts Technologies.
+# Copyright (C)2026, Philip Munts dba Munts Technologies.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -20,10 +20,11 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
+ARMSRC		?= $(HOME)/arm-mcu
 ARDUINOCLI	?= arduino-cli
 ARDUINOFQBN	:= rp2040:rp2040:sparkfun_promicrorp2040:os=freertos
 ARDUINOPORT	?= COM1
-COMPILEFLAGS	+= --libraries "$(ARMSRC)/arduino/libraries $(ARMSRC)/arduino/RP2040/libraries"
+COMPILEFLAGS	+= --libraries "$(ARMSRC)/arduino/libraries,$(ARMSRC)/arduino/RP2040/libraries"
 
 install: build
 	flashpico build/*/*.uf2

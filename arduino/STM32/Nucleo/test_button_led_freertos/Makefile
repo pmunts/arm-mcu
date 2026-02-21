@@ -23,12 +23,11 @@
 ARMSRC		?= $(HOME)/arm-mcu
 BOARDFAMILY	?= Nucleo_64
 BOARDNAME	?= NUCLEO_F411RE
-
 ARDUINOCLI	?= arduino-cli
 ARDUINOFQBN	:= STMicroelectronics:stm32:$(BOARDFAMILY):pnum=$(BOARDNAME),upload_method=swdMethod
 EXTRACFLAGS	+= -D$(BOARDFAMILY)
 COMPILEFLAGS	+= --build-property build.extra_flags="$(EXTRACFLAGS)"
-COMPILEFLAGS	+= --libraries $(ARMSRC)/arduino/STM32/libraries
+COMPILEFLAGS	+= --libraries "$(ARMSRC)/arduino/libraries,$(ARMSRC)/arduino/STM32/libraries"
 
 install: build
 	$(ARDUINOCLI) upload -b $(ARDUINOFQBN)
