@@ -22,7 +22,7 @@
 
 ARMSRC		?= $(HOME)/arm-mcu
 ARDUINOCLI	?= arduino-cli
-ARDUINOFQBN	:= rp2040:rp2040:waveshare_rp2350_plus
+ARDUINOFQBN	:= rp2040:rp2040:rpipico2
 ARDUINOPORT	?= COM1
 COMPILEFLAGS	+= --libraries "$(ARMSRC)/arduino/libraries,$(ARMSRC)/arduino/RP2350/libraries"
 
