@@ -1,6 +1,6 @@
 // Abstract interface for RC (Radio Controlled) analog servo outputs
 
-// Copyright (C)2018-2026, Philip Munts dba Munts Technologies.
+// Copyright (C)2026, Philip Munts dba Munts Technologies.
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
@@ -39,10 +39,7 @@ namespace MuntsTech::Interfaces::Servo
 
     // Servo output operators
 
-    void Output_Interface::operator =(const double position)
-    {
-      this->write(position);
-    }
+    virtual void operator =(const double position) = 0;
   };
 
   typedef Output_Interface *Output;
