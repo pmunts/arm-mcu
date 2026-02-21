@@ -66,8 +66,6 @@ namespace MuntsTech::RP2040::HardwarePWM
 
     virtual void operator =(const double dutycycle)
     {
-      assert(dutycycle >= MuntsTech::Interfaces::PWM::DUTYCYCLE_MIN);
-      assert(dutycycle <= MuntsTech::Interfaces::PWM::DUTYCYCLE_MAX);
       this->write(dutycycle);
     }
 
