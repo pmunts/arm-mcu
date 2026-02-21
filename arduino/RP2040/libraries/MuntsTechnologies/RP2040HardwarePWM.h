@@ -28,6 +28,7 @@
 #ifndef _MUNTSTECH_RP2040_PWM_H
 #define _MUNTSTECH_RP2040_PWM_H
 
+#include <assert.h>
 #include <RP2040_PWM.h>
 #include <pwm-interface.h>
 
@@ -42,6 +43,10 @@ namespace MuntsTech::RP2040::HardwarePWM
     Output(unsigned pin, unsigned frequency,
       double dutycycle = MuntsTech::Interfaces::PWM::DUTYCYCLE_MIN)
     {
+      assert(pin <= 29);
+      assert(frequency >= 50);
+      assert(dutycycle >= MuntsTech::Interfaces::PWM::DUTYCYCLE_MIN);
+      assert(dutycycle <= MuntsTech::Interfaces::PWM::DUTYCYCLE_MAX);
       this->pin  = pin;
       this->freq = frequency;
       this->outp = new RP2040_PWM(pin, frequency, dutycycle);
@@ -52,6 +57,8 @@ namespace MuntsTech::RP2040::HardwarePWM
 
     virtual void write(const double dutycycle)
     {
+      assert(dutycycle >= MuntsTech::Interfaces::PWM::DUTYCYCLE_MIN);
+      assert(dutycycle <= MuntsTech::Interfaces::PWM::DUTYCYCLE_MAX);
       this->outp->setPWM(this->pin, this->freq, dutycycle);
     }
 
@@ -59,6 +66,8 @@ namespace MuntsTech::RP2040::HardwarePWM
 
     virtual void operator =(const double dutycycle)
     {
+      assert(dutycycle >= MuntsTech::Interfaces::PWM::DUTYCYCLE_MIN);
+      assert(dutycycle <= MuntsTech::Interfaces::PWM::DUTYCYCLE_MAX);
       this->write(dutycycle);
     }
 
