@@ -42,21 +42,18 @@ void loop()
 {
   for (double pos = POSITION_NEUTRAL; pos <= POSITION_MAX; pos += 0.015)
   {
-    Serial.println(pos);
     outp = pos;
     delay(20);
   }
 
   for (double pos = POSITION_MAX; pos >= POSITION_MIN; pos -= 0.015)
   {
-    Serial.println(pos);
     outp = pos;
     delay(20);
   }
   
   for (double pos = POSITION_MIN; pos <= POSITION_NEUTRAL; pos += 0.015)
   {
-    Serial.println(pos);
     outp = pos;
     delay(20);
   }
