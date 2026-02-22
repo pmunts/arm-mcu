@@ -38,7 +38,9 @@
 //
 // Sparkfun Electronics Pro Micro - RP2040  (3.3V logic!)
 
-#define __FREERTOS // For Visual Studio Code IntelliSense
+// Fix to enable Visual Studio Code IntelliSense
+#define __FREERTOS 1
+
 #include <Arduino.h>
 #include <FreeRTOS.h>
 

@@ -38,7 +38,9 @@
 //
 // Raspberry Pi Pico2 or equivalent (3.3V logic!)
 
-#define __FREERTOS // For Visual Studio Code IntelliSense
+// Fix to enable Visual Studio Code IntelliSense
+#define __FREERTOS 1
+
 #include <Arduino.h>
 #include <FreeRTOS.h>
 
