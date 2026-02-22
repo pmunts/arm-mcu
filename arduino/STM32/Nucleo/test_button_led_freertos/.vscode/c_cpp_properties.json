@@ -4,7 +4,7 @@
             "name": "Arduino",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${env:ARMSRC}/arduino/STM32/libraries/MuntsTechNucleoBoards",
+                "${env:ARMSRC}/arduino/STM32/libraries/MuntsTechnologies",
                 "${env:ARMSRC}/arduino/STM32/libraries/STM32duino_FreeRTOS/src",
                 "${env:HOME}/.arduino15/packages/STMicroelectronics/hardware/stm32/2.12.0/**"
             ],
