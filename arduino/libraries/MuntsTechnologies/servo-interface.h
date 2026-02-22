@@ -27,19 +27,19 @@ namespace MuntsTech::Interfaces::Servo
 {
   // Normalized servo position constants
 
-  static constexpr double POSITION_MIN     = -1.0;
-  static constexpr double POSITION_NEUTRAL = 0.0;
-  static constexpr double POSITION_MAX     = 1.0;
+  static constexpr float POSITION_MIN     = -1.0F;
+  static constexpr float POSITION_NEUTRAL = 0.0F;
+  static constexpr float POSITION_MAX     = 1.0F;
 
   struct Output_Interface
   {
     // Servo output methods
 
-    virtual void write(const double position) = 0;
+    virtual void write(const float position) = 0;
 
     // Servo output operators
 
-    virtual void operator =(const double position) = 0;
+    virtual void operator =(const float position) = 0;
   };
 
   typedef Output_Interface *Output;

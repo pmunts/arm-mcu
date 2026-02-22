@@ -41,7 +41,7 @@ namespace MuntsTech::RP2040::HardwarePWM
     // PWM output Constructor
 
     Output(unsigned pin, unsigned frequency,
-      double dutycycle = MuntsTech::Interfaces::PWM::DUTYCYCLE_MIN)
+      float dutycycle = MuntsTech::Interfaces::PWM::DUTYCYCLE_MIN)
     {
       assert(pin <= 29);
       assert(frequency >= 50);
@@ -55,7 +55,7 @@ namespace MuntsTech::RP2040::HardwarePWM
 
     // PWM output methods
 
-    virtual void write(const double dutycycle)
+    virtual void write(const float dutycycle)
     {
       assert(dutycycle >= MuntsTech::Interfaces::PWM::DUTYCYCLE_MIN);
       assert(dutycycle <= MuntsTech::Interfaces::PWM::DUTYCYCLE_MAX);
@@ -64,7 +64,7 @@ namespace MuntsTech::RP2040::HardwarePWM
 
     // PWM output operators
 
-    virtual void operator =(const double dutycycle)
+    virtual void operator =(const float dutycycle)
     {
       this->write(dutycycle);
     }

@@ -39,7 +39,7 @@ void setup()
 
 void loop()
 {
-  for (double duty = DUTYCYCLE_MIN; duty <= DUTYCYCLE_MAX; duty += 0.5)
+  for (float duty = DUTYCYCLE_MIN; duty <= DUTYCYCLE_MAX; duty += 0.5F)
   {
     outp = duty;
     delay(50);

@@ -34,34 +34,34 @@ namespace MuntsTech::ServoPWM
     // Servo output constructor
 
     Output(MuntsTech::Interfaces::PWM::Output pwmout, unsigned frequency,
-      double position = MuntsTech::Interfaces::Servo::POSITION_NEUTRAL,
-      double minwidth = 1.0E-3, double maxwidth = 2.0E-3)
+      float position = MuntsTech::Interfaces::Servo::POSITION_NEUTRAL,
+      float minwidth = 1.0E-3F, float maxwidth = 2.0E-3F)
     {
       assert(pwmout != NULL);
       assert(frequency > 0);
       assert(position >= MuntsTech::Interfaces::Servo::POSITION_MIN);
       assert(position <= MuntsTech::Interfaces::Servo::POSITION_MAX);
       assert(maxwidth > minwidth);
-      assert(maxwidth < 1.0/frequency);
+      assert(maxwidth < 1.0F/frequency);
       this->pwmout   = pwmout;
       this->freq     = frequency;
-      this->swing    = (maxwidth - minwidth)/2.0;
+      this->swing    = (maxwidth - minwidth)/2.0F;
       this->midpoint = minwidth + swing;
       this->write(position);
     }
 
     // Servo output methods
 
-    virtual void write(const double position)
+    virtual void write(const float position)
     {
       assert(position >= MuntsTech::Interfaces::Servo::POSITION_MIN);
       assert(position <= MuntsTech::Interfaces::Servo::POSITION_MAX);
-      this->pwmout->write((this->midpoint + this->swing*position)*this->freq*100.0);
+      this->pwmout->write((this->midpoint + this->swing*position)*this->freq*100.0F);
     }
 
     // Servo output operators
 
-    virtual void operator =(const double position)
+    virtual void operator =(const float position)
     {
       this->write(position);
     }
@@ -69,9 +69,9 @@ namespace MuntsTech::ServoPWM
   private:
 
     MuntsTech::Interfaces::PWM::Output pwmout;
-    double freq;
-    double swing;
-    double midpoint;
+    float freq;
+    float swing;
+    float midpoint;
   };
 }
 

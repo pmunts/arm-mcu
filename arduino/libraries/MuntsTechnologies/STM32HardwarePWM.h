@@ -36,7 +36,7 @@ namespace MuntsTech::STM32::HardwarePWM
     // PWM output Constructor
 
     Output(unsigned pin, unsigned frequency,
-      double dutycycle = MuntsTech::Interfaces::PWM::DUTYCYCLE_MIN)
+      float dutycycle = MuntsTech::Interfaces::PWM::DUTYCYCLE_MIN)
     {
       assert(frequency >= 50);
       assert(dutycycle >= MuntsTech::Interfaces::PWM::DUTYCYCLE_MIN);
@@ -59,23 +59,23 @@ namespace MuntsTech::STM32::HardwarePWM
       this->timer->setPrescaleFactor(1);
       this->timer->setOverflow(this->period, TICK_FORMAT);
       this->timer->setMode(this->channel, TIMER_OUTPUT_COMPARE_PWM1, pin);
-      this->timer->setCaptureCompare(this->channel, round(dutycycle/100.0*this->period), TICK_COMPARE_FORMAT);
+      this->timer->setCaptureCompare(this->channel, round(dutycycle/100.0F*this->period), TICK_COMPARE_FORMAT);
       this->timer->resume();
     }
 
     // PWM output methods
 
-    virtual void write(const double dutycycle)
+    virtual void write(const float dutycycle)
     {
       assert(dutycycle >= MuntsTech::Interfaces::PWM::DUTYCYCLE_MIN);
       assert(dutycycle <= MuntsTech::Interfaces::PWM::DUTYCYCLE_MAX);
 
-      this->timer->setCaptureCompare(this->channel, round(dutycycle/100.0*this->period), TICK_COMPARE_FORMAT);
+      this->timer->setCaptureCompare(this->channel, round(dutycycle/100.0F*this->period), TICK_COMPARE_FORMAT);
     }
 
     // PWM output operators
 
-    virtual void operator =(const double dutycycle)
+    virtual void operator =(const float dutycycle)
     {
       this->write(dutycycle);
     }
