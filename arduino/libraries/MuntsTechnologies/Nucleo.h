@@ -37,18 +37,30 @@
 #define D11	11	// PWM MOSI
 #define D12	12	//     MISO
 #define D13	13	// LED SCLK
-#define LED	D13
 
-// Nucleo-32 (Nano footprint) boards need a momentary switch connected to D12
+#ifndef LED
+#define LED	D13
+#endif
+
+// Nucleo-32 boards need a momentary button switch from D12 to ground
+
 #ifdef Nucleo_32
-#define BUTTON	12
+#ifndef BUTTON_PIN
+#define BUTTON_PIN	12
+#endif
+#ifndef BUTTON_MODE
 #define BUTTON_MODE	INPUT_PULLUP
 #endif
-
-// Nucleo-64 (Uno footprint) boards have an on-board momentary switch
-#ifdef Nucleo_64
-#define BUTTON	USER_BTN
-#define BUTTON_MODE	INPUT
 #endif
 
+// Nucleo-64 boards have an on-board user button switch
+
+#ifdef Nucleo_64
+#endif
+#ifndef BUTTON_PIN
+#define BUTTON_PIN	USER_BTN
+#endif
+#ifndef BUTTON_MODE
+#define BUTTON_MODE	INPUT
+#endif
 #endif
