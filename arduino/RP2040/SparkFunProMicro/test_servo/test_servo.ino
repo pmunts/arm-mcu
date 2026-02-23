@@ -51,7 +51,7 @@ void loop()
     outp = pos;
     delay(20);
   }
-  
+
   for (float pos = POSITION_MIN; pos <= POSITION_NEUTRAL; pos += 0.015F)
   {
     outp = pos;
