@@ -1,4 +1,4 @@
-# Makefile for building and installing an Arduino application program
+# Makefile for building and installing Arduino STM32 programs
 
 # Copyright (C)2026, Philip Munts dba Munts Technologies.
 #
@@ -20,20 +20,6 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-ARMSRC		?= $(HOME)/arm-mcu
-BOARDFAMILY	?= Nucleo_64
-BOARDNAME	?= NUCLEO_F411RE
-ARDUINOCLI	?= arduino-cli
-ARDUINOFQBN	:= STMicroelectronics:stm32:$(BOARDFAMILY):pnum=$(BOARDNAME),upload_method=swdMethod
-EXTRACFLAGS	+= -D$(BOARDFAMILY)
-COMPILEFLAGS	+= --build-property build.extra_flags="$(EXTRACFLAGS)"
-COMPILEFLAGS	+= --libraries "$(ARMSRC)/arduino/libraries"
+ARMSRC ?= $(HOME)/arm-mcu
 
-install: build
-	$(ARDUINOCLI) upload -b $(ARDUINOFQBN)
-
-build:
-	$(ARDUINOCLI) compile $(COMPILEFLAGS) -b $(ARDUINOFQBN) -e
-
-clean:
-	rm -rf build
+include $(ARMSRC)/arduino/libraries/MuntsTechnologies/STM32.mk
