@@ -24,7 +24,8 @@
 #ifndef _MUNTSTECH_RP2040_PWM_H
 #define _MUNTSTECH_RP2040_PWM_H
 
-#include <assert.h>
+#include <cassert>
+#include <cmath>
 #include <pico/stdlib.h>
 #include <hardware/pwm.h>
 #include <pwm-interface.h>
@@ -45,7 +46,7 @@ namespace MuntsTech::RP2040::HardwarePWM
       assert(dutycycle >= MuntsTech::Interfaces::PWM::DUTYCYCLE_MIN);
       assert(dutycycle <= MuntsTech::Interfaces::PWM::DUTYCYCLE_MAX);
 
-      unsigned slice = pwm_gpio_to_slice_num(pin);
+      unsigned slice   = pwm_gpio_to_slice_num(pin);
       unsigned channel = pwm_gpio_to_channel(pin);
       unsigned top;
       unsigned div_int;
@@ -53,7 +54,7 @@ namespace MuntsTech::RP2040::HardwarePWM
 
       GetDividers(frequency_count_khz(CLOCKS_FC0_SRC_VALUE_CLK_SYS)*1000,
         frequency, &top, &div_int, &div_frac);
-      
+
       pwm_set_clkdiv_mode(slice, PWM_DIV_FREE_RUNNING);
       pwm_set_clkdiv_int_frac4(slice, div_int, div_frac);
       pwm_set_phase_correct(slice, false);
@@ -62,10 +63,11 @@ namespace MuntsTech::RP2040::HardwarePWM
       pwm_set_enabled(slice, true);
 
       gpio_set_function(pin, GPIO_FUNC_PWM);
-      pwm_set_gpio_level(pin, (uint16_t) (dutycycle/100.0F*top));
 
       this->pin    = pin;
       this->period = top;
+
+      this->write(dutycycle);
     }
 
     // PWM output methods
@@ -90,10 +92,15 @@ namespace MuntsTech::RP2040::HardwarePWM
     unsigned pin;
     unsigned period;
 
-    static double fpwm_actual(double fsys, double top, double div_int,
-      double div_frac)
+    static float fpwm_actual(float fsys, float top, float div_int,
+      float div_frac)
     {
-      return fsys/((top + 1.0)*(div_int + div_frac/16.0));
+      return fsys/((top + 1.0F)*(div_int + div_frac/16.0F));
+    }
+
+    static float error(float desired, float measured)
+    {
+      return fabs(desired - measured)/desired;
     }
 
     static bool GetDividers(unsigned fsys, unsigned fpwm, unsigned *top,
@@ -105,11 +112,9 @@ namespace MuntsTech::RP2040::HardwarePWM
           {
             if ((i == 256) && (frac > 0)) continue;
 
-            double ftry = fpwm_actual(fsys, t, i, frac);
-
-            if (fabs(fpwm - ftry)/fpwm < 0.001)
+            if (error(fpwm, fpwm_actual(fsys, t, i, frac)) < 0.001F)
             {
-              *top = t;
+              *top = t - 1;
               *div_int = i;
               *div_frac= frac;
               return true;
