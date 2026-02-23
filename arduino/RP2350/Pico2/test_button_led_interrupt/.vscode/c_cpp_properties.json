@@ -1,0 +1,15 @@
+{
+    "configurations": [
+        {
+            "name": "Arduino",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${env:HOME}/.arduino15/packages/rp2040/hardware/rp2040/5.5.0/**",
+                "${env:ARMSRC}/arduino/libraries/**"
+            ],
+            "compilerPath": "${env:HOME}/.arduino15/packages/rp2040/tools/pqt-gcc/4.1.0-1aec55e/bin/arm-none-eabi-gcc",
+            "intelliSenseMode": "${default}"
+        }
+    ],
+    "version": 4
+}
