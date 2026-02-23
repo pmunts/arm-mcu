@@ -28,14 +28,14 @@ void setup()
   Serial.begin(115200);
   Serial.println("\ecSTM32 Arduino Button and LED Test\n");
 
-  pinMode(BUTTON, BUTTON_MODE);
+  pinMode(BUTTON_PIN, BUTTON_MODE);
   pinMode(LED, OUTPUT);
 }
 
 void loop()
 {
-  static bool oldstate = digitalRead(BUTTON);
-  bool newstate = !digitalRead(BUTTON);
+  static bool oldstate = digitalRead(BUTTON_PIN);
+  bool newstate = !digitalRead(BUTTON_PIN);
 
   if (!oldstate && newstate)
   {
