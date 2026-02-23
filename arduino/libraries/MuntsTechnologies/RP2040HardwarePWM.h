@@ -1,9 +1,5 @@
-// PWM output services using RP2040 Hardware PWM Library
-//
-// See also:
-//
-// https://docs.arduino.cc/libraries/rp2040_pwm
-// https://github.com/khoih-prog/RP2040_PWM
+// Hardware PWM output services using Pico SDK PWM services
+// Works on both RP2040 and RP2350.
 
 // Copyright (C)2026, Philip Munts dba Munts Technologies.
 //
@@ -29,7 +25,8 @@
 #define _MUNTSTECH_RP2040_PWM_H
 
 #include <assert.h>
-#include <RP2040_PWM.h>
+#include <pico/stdlib.h>
+#include <hardware/pwm.h>
 #include <pwm-interface.h>
 
 namespace MuntsTech::RP2040::HardwarePWM
@@ -47,10 +44,28 @@ namespace MuntsTech::RP2040::HardwarePWM
       assert(frequency >= 50);
       assert(dutycycle >= MuntsTech::Interfaces::PWM::DUTYCYCLE_MIN);
       assert(dutycycle <= MuntsTech::Interfaces::PWM::DUTYCYCLE_MAX);
-      this->pin  = pin;
-      this->freq = frequency;
-      this->outp = new RP2040_PWM(pin, frequency, dutycycle);
-      this->outp->setPWM();
+
+      unsigned slice = pwm_gpio_to_slice_num(pin);
+      unsigned channel = pwm_gpio_to_channel(pin);
+      unsigned top;
+      unsigned div_int;
+      unsigned div_frac;
+
+      GetDividers(frequency_count_khz(CLOCKS_FC0_SRC_VALUE_CLK_SYS)*1000,
+        frequency, &top, &div_int, &div_frac);
+      
+      pwm_set_clkdiv_mode(slice, PWM_DIV_FREE_RUNNING);
+      pwm_set_clkdiv_int_frac4(slice, div_int, div_frac);
+      pwm_set_phase_correct(slice, false);
+      pwm_set_wrap(slice, top);
+      pwm_set_chan_level(slice, channel, 0);
+      pwm_set_enabled(slice, true);
+
+      gpio_set_function(pin, GPIO_FUNC_PWM);
+      pwm_set_gpio_level(pin, (uint16_t) (dutycycle/100.0F*top));
+
+      this->pin    = pin;
+      this->period = top;
     }
 
     // PWM output methods
@@ -59,7 +74,8 @@ namespace MuntsTech::RP2040::HardwarePWM
     {
       assert(dutycycle >= MuntsTech::Interfaces::PWM::DUTYCYCLE_MIN);
       assert(dutycycle <= MuntsTech::Interfaces::PWM::DUTYCYCLE_MAX);
-      this->outp->setPWM(this->pin, this->freq, dutycycle);
+
+      pwm_set_gpio_level(this->pin, (uint16_t) (dutycycle/100.0F*this->period));
     }
 
     // PWM output operators
@@ -72,8 +88,36 @@ namespace MuntsTech::RP2040::HardwarePWM
   private:
 
     unsigned pin;
-    unsigned freq;
-    RP2040_PWM *outp;
+    unsigned period;
+
+    static double fpwm_actual(double fsys, double top, double div_int,
+      double div_frac)
+    {
+      return fsys/((top + 1.0)*(div_int + div_frac/16.0));
+    }
+
+    static bool GetDividers(unsigned fsys, unsigned fpwm, unsigned *top,
+      unsigned *div_int, unsigned *div_frac)
+    {
+      for (unsigned t = 65536; t > 0; t--)
+        for (unsigned i = 1; i <= 256; i++)
+          for (unsigned frac = 0; frac < 16; frac++)
+          {
+            if ((i == 256) && (frac > 0)) continue;
+
+            double ftry = fpwm_actual(fsys, t, i, frac);
+
+            if (fabs(fpwm - ftry)/fpwm < 0.001)
+            {
+              *top = t;
+              *div_int = i;
+              *div_frac= frac;
+              return true;
+            }
+          }
+
+      return false;
+    }
   };
 }
 
