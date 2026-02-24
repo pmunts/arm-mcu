@@ -27,7 +27,7 @@ ASTROBESRC	?= $(ARMSRC)/astrobe
 
 # Include subordinate makefiles
 
-include		$(ASTROBESRC)/RP2040/include/astrobe.mk
+include		$(ASTROBESRC)/include/astrobe-rp2040.mk
 
 # Build the firmware
 
