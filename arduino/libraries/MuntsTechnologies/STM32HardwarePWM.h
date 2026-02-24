@@ -38,8 +38,10 @@ namespace MuntsTech::STM32::HardwarePWM
 
     Output()
     {
-      this->pin = 0;
-      this->period = 0;
+      this->timer   = NULL;
+      this->channel = 0;
+      this->pin     = 0;
+      this->period  = 0;
     }
 
     // PWM output constructor
@@ -84,7 +86,7 @@ namespace MuntsTech::STM32::HardwarePWM
 
     virtual void write(const float dutycycle)
     {
-      assert(this->period > 0);
+      assert(this->timer != NULL);
       assert(dutycycle >= MuntsTech::Interfaces::PWM::DUTYCYCLE_MIN);
       assert(dutycycle <= MuntsTech::Interfaces::PWM::DUTYCYCLE_MAX);
 
