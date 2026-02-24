@@ -1,4 +1,4 @@
-# Makefile definitions for compiling Oberon programs for the RP2040 MCU
+# Makefile definitions for compiling Oberon firmware for the RP2040 MCU
 
 # Copyright (C)2026, Philip Munts dba Munts Technologies.
 #
@@ -23,10 +23,10 @@
 # Note: Install both Astrobe programs and Astrobe examples & libraries to
 # C:\Program Files\AstrobeRP2040
 
-ASTROBE		?= "$(PROGRAMFILES)/AstrobeRP2040"
-ASTROBECOMPILE	:= $(ASTROBE)/AstrobeCompile
-ASTROBEBUILD	:= $(ASTROBE)/AstrobeBuild
-ASTROBELINK	:= $(ASTROBE)/AstrobeLink
+ASTROBEBINDIR	?= "$(PROGRAMFILES)/AstrobeRP2040"
+ASTROBECOMPILE	:= $(ASTROBEBINDIR)/AstrobeCompile
+ASTROBEBUILD	:= $(ASTROBEBINDIR)/AstrobeBuild
+ASTROBELINK	:= $(ASTROBEBINDIR)/AstrobeLink
 ASTROBECONFIG	:= astrobe.ini
 FLASHPICO	?= flashpico
 

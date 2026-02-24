@@ -1,6 +1,6 @@
 # Makefile definitions for compiling Oberon for Cortex-M4 programs
 
-# Copyright (C)2014-2018, Philip Munts, President, Munts AM Corp.
+# Copyright (C)2014-2026, Philip Munts dba Munts Technologies.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -20,37 +20,27 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-# Keep intermediate files
-
-.SECONDARY:
-
-ASTROBEBINDIR	?= "$(PROGRAMFILES)/AstrobeM4 Professional Edition"/
-
-ASTROBECOMPILE	= $(ASTROBEBINDIR)AstrobeCompile
-ASTROBEBUILD	= $(ASTROBEBINDIR)AstrobeBuild
-ASTROBELINK	= $(ASTROBEBINDIR)AstrobeLink
-ASTROBECONFIG	= astrobe.ini
+ASTROBEBINDIR	?= "$(PROGRAMFILES)/AstrobeM4 Professional Edition"
+ASTROBECOMPILE	:= $(ASTROBEBINDIR)/AstrobeCompile
+ASTROBEBUILD	:= $(ASTROBEBINDIR)/AstrobeBuild
+ASTROBELINK	:= $(ASTROBEBINDIR)/AstrobeLink
+ASTROBECONFIG	:= astrobe.ini
 
 # Default make target
 
 astrobe_mk_default: default
 
-# Define a pattern rule to compile an Oberon source program
-
-%.arm: %.mod
-	$(ASTROBECOMPILE) $(ASTROBECONFIG) $<
-
 # Define a pattern rule to compile an Oberon main module source program to binary flash image
 
 %.bin: %.mod
-	$(ASTROBEBUILD) $(ASTROBECONFIG) ./$<
-	$(ASTROBELINK) $(ASTROBECONFIG) $<
+	$(ASTROBEBUILD) $(ASTROBECONFIG) $<
+	$(ASTROBELINK)  $(ASTROBECONFIG) $<
 
 # Define a pattern rule to compile an Oberon main module source program to Intel hex flash image
 
 %.hex: %.mod
-	$(ASTROBEBUILD) $(ASTROBECONFIG) ./$<
-	$(ASTROBELINK) $(ASTROBECONFIG) $<
+	$(ASTROBEBUILD) $(ASTROBECONFIG) $<
+	$(ASTROBELINK)  $(ASTROBECONFIG) $<
 
 # Remove working files
 
