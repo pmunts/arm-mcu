@@ -1,4 +1,4 @@
-# Makefile for building and installing an Arduino application program
+# Makefile for building and installing Arduino RP2350 programs
 
 # Copyright (C)2026, Philip Munts dba Munts Technologies.
 #
@@ -20,17 +20,7 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-ARMSRC		?= $(HOME)/arm-mcu
-ARDUINOCLI	?= arduino-cli
-ARDUINOFQBN	:= rp2040:rp2040:rpipico2
-ARDUINOPORT	?= COM1
-COMPILEFLAGS	+= --libraries "$(ARMSRC)/arduino/libraries"
+ARMSRC    ?= $(HOME)/arm-mcu
+BOARDNAME ?= waveshare_rp2350_plus
 
-install: build
-	flashpico build/*/*.uf2
-
-build:
-	$(ARDUINOCLI) compile $(COMPILEFLAGS) -b $(ARDUINOFQBN) -e
-
-clean:
-	rm -rf build
+include $(ARMSRC)/arduino/libraries/MuntsTechnologies/Pico.mk

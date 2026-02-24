@@ -1,4 +1,5 @@
-# Makefile for building and installing an Arduino application program
+# Make definitions for building and installing Arduino RP2040 or RP2350 programs
+# using the Arduino-Pico Core (https://github.com/earlephilhower/arduino-pico).
 
 # Copyright (C)2026, Philip Munts dba Munts Technologies.
 #
@@ -20,17 +21,20 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-ARMSRC		?= $(HOME)/arm-mcu
 ARDUINOCLI	?= arduino-cli
-ARDUINOFQBN	:= rp2040:rp2040:sparkfun_promicrorp2040:os=freertos
+ARDUINOFQBN	:= rp2040:rp2040:$(BOARDNAME)
 ARDUINOPORT	?= COM1
-COMPILEFLAGS	+= --libraries "$(ARMSRC)/arduino/libraries"
+SKETCHBOOK	:= $(ARMSRC)/arduino
+COMPILEFLAGS	+= --build-property build.extra_flags="-DMUNTSTECH $(EXTRACFLAGS)"
+COMPILEFLAGS	+= --libraries "$(SKETCHBOOK)/libraries"
 
-install: build
-	flashpico build/*/*.uf2
+pico_mk_default: clean install
 
 build:
 	$(ARDUINOCLI) compile $(COMPILEFLAGS) -b $(ARDUINOFQBN) -e
+
+install: build
+	flashpico build/*/*.uf2
 
 clean:
 	rm -rf build
