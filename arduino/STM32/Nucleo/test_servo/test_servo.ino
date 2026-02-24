@@ -1,4 +1,4 @@
-// STM32 Arduino Servo Output Test
+// Arduino STM32 Servo Output Test
 
 // Copyright (C)2026, Philip Munts dba Munts Technologies.
 //
@@ -32,7 +32,7 @@ MuntsTech::ServoPWM::Output outp;
 void setup()
 {
   Serial.begin(115200);
-  Serial.println("\ecSTM32 Arduino Servo Output Test\n");
+  Serial.println("\ecArduino STM32 Servo Output Test\n");
 
   pwmout.Initialize(3, 50);
   outp.Initialize(&pwmout, 50);

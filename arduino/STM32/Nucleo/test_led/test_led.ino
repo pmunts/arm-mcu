@@ -1,4 +1,4 @@
-// STM32 Arduino LED Test
+// Arduino STM32 LED Test
 
 // Copyright (C)2026, Philip Munts dba Munts Technologies.
 //
@@ -26,7 +26,7 @@
 void setup()
 {
   Serial.begin(115200);
-  Serial.println("\ecSTM32 Arduino LED Test\n");
+  Serial.println("\ecArduino STM32 LED Test\n");
 
   pinMode(LED, OUTPUT);
 }

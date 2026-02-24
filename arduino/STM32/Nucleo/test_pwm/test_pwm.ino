@@ -1,4 +1,4 @@
-// STM32 Arduino PWM Output Test
+// Arduino STM32 PWM Output Test
 
 // Copyright (C)2026, Philip Munts dba Munts Technologies.
 //
@@ -30,7 +30,7 @@ MuntsTech::STM32::HardwarePWM::Output outp;
 void setup()
 {
   Serial.begin(115200);
-  Serial.println("\ecSTM32 Arduino PWM Output Test\n");
+  Serial.println("\ecArduino STM32 PWM Output Test\n");
 
   outp.Initialize(3, 1000);
 }
