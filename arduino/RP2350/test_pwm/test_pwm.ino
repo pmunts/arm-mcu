@@ -36,7 +36,7 @@ void setup()
   Serial.begin(115200);
   Serial.println("\ecArduino RP2350 PWM Output Test\n");
 
-  outp.Initialize(3, 1000);
+  outp.Initialize(22, 1000);
 }
 
 void loop()
