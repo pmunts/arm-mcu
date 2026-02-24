@@ -1,6 +1,6 @@
 # Makefile for STM32 Cube Programmer Debian package
 
-DISTVERSION	?= 2-21-0
+DISTVERSION	?= 2.22.0
 
 BUILDNUM	?= 1
 OSNAME		?= unknown
