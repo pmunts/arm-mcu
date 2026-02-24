@@ -31,7 +31,7 @@ namespace MuntsTech::STM32::HardwarePWM
 {
   // PWM output class definition
 
-  struct Output: public MuntsTech::Interfaces::PWM::Output_Interface
+  struct Output: public MuntsTech::Interfaces::PWM::Output
   {
     // PWM output Constructor
 

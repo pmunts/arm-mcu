@@ -31,7 +31,7 @@ namespace MuntsTech::Interfaces::Servo
   static constexpr float POSITION_NEUTRAL = 0.0F;
   static constexpr float POSITION_MAX     = 1.0F;
 
-  struct Output_Interface
+  struct Output
   {
     // Servo output methods
 
@@ -41,8 +41,6 @@ namespace MuntsTech::Interfaces::Servo
 
     virtual void operator =(const float position) = 0;
   };
-
-  typedef Output_Interface *Output;
 }
 
 #endif

@@ -29,11 +29,11 @@
 
 namespace MuntsTech::ServoPWM
 {
-  struct Output: public MuntsTech::Interfaces::Servo::Output_Interface
+  struct Output: public MuntsTech::Interfaces::Servo::Output
   {
     // Servo output constructor
 
-    Output(MuntsTech::Interfaces::PWM::Output pwmout, unsigned frequency,
+    Output(MuntsTech::Interfaces::PWM::Output *pwmout, unsigned frequency,
       float position = MuntsTech::Interfaces::Servo::POSITION_NEUTRAL,
       float minwidth = 1.0E-3F, float maxwidth = 2.0E-3F)
     {
@@ -68,7 +68,7 @@ namespace MuntsTech::ServoPWM
 
   private:
 
-    MuntsTech::Interfaces::PWM::Output pwmout;
+    MuntsTech::Interfaces::PWM::Output *pwmout;
     float freq;
     float swing;
     float midpoint;

@@ -30,7 +30,7 @@ namespace MuntsTech::Interfaces::PWM
   static constexpr float DUTYCYCLE_MIN = 0.0F;
   static constexpr float DUTYCYCLE_MAX = 100.0F;
 
-  struct Output_Interface
+  struct Output
   {
     // PWM output methods
 
@@ -40,8 +40,6 @@ namespace MuntsTech::Interfaces::PWM
 
     virtual void operator =(const float dutycycle) = 0;
   };
-
-  typedef Output_Interface *Output;
 }
 
 #endif
