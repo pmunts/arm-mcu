@@ -36,9 +36,26 @@ namespace MuntsTech::RP2040::HardwarePWM
 
   struct Output: public MuntsTech::Interfaces::PWM::Output
   {
-    // PWM output Constructor
+    // Parameterless stub constructor--Requires a subsequent
+    // call to Initialize().
+
+    Output()
+    {
+      this->pin = 0;
+      this->period = 0;
+    }
+
+    // PWM output constructor
 
     Output(unsigned pin, unsigned frequency,
+      float dutycycle = MuntsTech::Interfaces::PWM::DUTYCYCLE_MIN)
+    {
+      this->Initialize(pin, frequency, dutycycle);
+    }
+
+    // PWM output initializer method
+
+    void Initialize(unsigned pin, unsigned frequency,
       float dutycycle = MuntsTech::Interfaces::PWM::DUTYCYCLE_MIN)
     {
       assert(pin <= 29);
@@ -74,6 +91,7 @@ namespace MuntsTech::RP2040::HardwarePWM
 
     virtual void write(const float dutycycle)
     {
+      assert(this->period > 0);
       assert(dutycycle >= MuntsTech::Interfaces::PWM::DUTYCYCLE_MIN);
       assert(dutycycle <= MuntsTech::Interfaces::PWM::DUTYCYCLE_MAX);
 
