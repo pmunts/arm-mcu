@@ -25,19 +25,21 @@
 
 using namespace MuntsTech::Interfaces::PWM;
 
-MuntsTech::STM32::HardwarePWM::Output outp(3, 1000);
+MuntsTech::Interfaces::PWM::Output *outp;
 
 void setup()
 {
   Serial.begin(115200);
   Serial.println("\ecSTM32 Arduino PWM Output Test\n");
+
+  outp = new MuntsTech::STM32::HardwarePWM::Output(3, 1000);
 }
 
 void loop()
 {
   for (float duty = DUTYCYCLE_MIN; duty <= DUTYCYCLE_MAX; duty += 0.5F)
   {
-    outp = duty;
+    *outp = duty;
     delay(50);
   }
 }

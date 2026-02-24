@@ -30,31 +30,33 @@
 
 using namespace MuntsTech::Interfaces::Servo;
 
-MuntsTech::ServoPWM::Output outp(new MuntsTech::RP2040::HardwarePWM::Output(3, 50), 50);
+MuntsTech::Interfaces::Servo::Output *outp;
 
 void setup()
 {
   Serial.begin(115200);
   Serial.println("\ecArduino RP2040 Servo Output Test\n");
+
+  outp = new MuntsTech::ServoPWM::Output(new MuntsTech::RP2040::HardwarePWM::Output(3, 50), 50);
 }
 
 void loop()
 {
   for (float pos = POSITION_NEUTRAL; pos <= POSITION_MAX; pos += 0.015F)
   {
-    outp = pos;
+    *outp = pos;
     delay(20);
   }
 
   for (float pos = POSITION_MAX; pos >= POSITION_MIN; pos -= 0.015F)
   {
-    outp = pos;
+    *outp = pos;
     delay(20);
   }
 
   for (float pos = POSITION_MIN; pos <= POSITION_NEUTRAL; pos += 0.015F)
   {
-    outp = pos;
+    *outp = pos;
     delay(20);
   }
 }
