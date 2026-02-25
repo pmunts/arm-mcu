@@ -28,6 +28,7 @@ void setup()
   Serial.println("\ecArduino Button and LED Test\n");
   Serial.print("LED    on "); Serial.println(LED);
   Serial.print("Button on "); Serial.println(BUTTON);
+  Serial.println();
 
   pinMode(BUTTON, INPUT_PULLUP);
   pinMode(LED, OUTPUT);

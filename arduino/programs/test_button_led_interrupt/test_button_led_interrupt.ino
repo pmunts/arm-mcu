@@ -35,6 +35,9 @@ void setup()
 
   pinMode(BUTTON, INPUT_PULLUP);
   pinMode(LED, OUTPUT);
+  Serial.print("LED    on "); Serial.println(LED);
+  Serial.print("Button on "); Serial.println(BUTTON);
+  Serial.println();
 
   digitalWrite(LED, !digitalRead(BUTTON));
 
