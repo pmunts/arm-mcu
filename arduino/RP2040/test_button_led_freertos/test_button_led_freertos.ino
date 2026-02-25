@@ -42,7 +42,7 @@
 #define __FREERTOS 1
 
 #include <Arduino.h>
-#include <FreeRTOS.h>
+//#include <FreeRTOS.h>
 
 // Assign GPIO pins
 

@@ -20,9 +20,8 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#include <Arduino.h>
+#include <Arduino_ARM.h>
 #include <PCA9685PWM.h>
-
 
 using namespace MuntsTech::Interfaces::PWM;
 

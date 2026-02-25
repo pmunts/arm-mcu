@@ -18,8 +18,10 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef _NUCLEO_H_
-#define _NUCLEO_H_
+#ifndef _ARDUINO_ARM_H_
+#define _ARDUINO_ARM_H_
+
+#include <Arduino.h>
 
 // Arduino compatible GPIO pins
 
@@ -38,29 +40,68 @@
 #define D12	12	//     MISO
 #define D13	13	// LED SCLK
 
+// LED configuration
+
 #ifndef LED
-#define LED	D13
+#ifdef ARDUINO_SPARKFUN_PROMICRO_RP2040
+// SparkFun Pro Micro RP2040 does not have a GPIO LED
+#define LED	D2
+// Most other boards have an LED connected to D13
+#elifdef LED_BUILTIN
+#define LED	LED_BUILTIN
+#endif
 #endif
 
-// Nucleo-32 boards need a momentary button switch from D12 to ground
+// User button configuration
 
-#ifdef Nucleo_32
 #ifndef BUTTON_PIN
-#define BUTTON_PIN	12
-#endif
-#ifndef BUTTON_MODE
-#define BUTTON_MODE	INPUT_PULLUP
+#ifdef ARDUINO_NUCLEO_F042K6
+#define BUTTON_PIN  12
+#define BUTTON_MODE INPUT_PULLUP
+#elifdef USER_BTN
+#define BUTTON_PIN  USER_BTN
+#define BUTTON_MODE INPUT
+#elifdef ARDUINO_SPARKFUN_PROMICRO_RP2040
+#define BUTTON_PIN  3
+#define BUTTON_MODE INPUT_PULLUP
+#elifdef ARDUINO_RASPBERRY_PI_PICO_2
+#define BUTTON_PIN  22
+#define BUTTON_MODE INPUT_PULLUP
+#elifdef ARDUINO_RASPBERRY_PI_PICO_2W
+#define BUTTON_PIN  22
+#define BUTTON_MODE INPUT_PULLUP
+#elifdef ARDUINO_WAVESHARE_RP2350_PLUS
+#define BUTTON_PIN  22
+#define BUTTON_MODE INPUT_PULLUP
 #endif
 #endif
 
-// Nucleo-64 boards have an on-board user button switch
+// Enable FreeRTOS
 
-#ifdef Nucleo_64
+#ifdef ENABLE_FREERTOS
+#ifdef ARDUINO_ARCH_RP2040
+#define __FREERTOS 1
+#include <FreeRTOS.h>
+#elifdef ARDUINO_ARCH_STM32
+#include <STM32FreeRTOS.h>
 #endif
-#ifndef BUTTON_PIN
-#define BUTTON_PIN	USER_BTN
 #endif
-#ifndef BUTTON_MODE
-#define BUTTON_MODE	INPUT
+
+// Hardware PWM servo configuration
+
+#ifdef ENABLE_HARDWARE_SERVO
+#include <ServoPWM.h>
+#define ENABLE_HARDWARE_PWM
 #endif
+
+// Hardware PWM configuration
+
+#ifdef ENABLE_HARDWARE_PWM
+#ifdef ARDUINO_ARCH_RP2040
+#include <RP2040HardwarePWM.h>
+#elifdef ARDUINO_ARCH_STM32
+#include <STM32HardwarePWM.h>
+#endif
+#endif
+
 #endif
