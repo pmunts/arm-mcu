@@ -43,36 +43,33 @@
 // LED configuration
 
 #ifndef LED
-#ifdef ARDUINO_SPARKFUN_PROMICRO_RP2040
+#ifdef ENABLE_GROVE_LED_BUTTON
+#define LED D2
+#elifdef ARDUINO_SPARKFUN_PROMICRO_RP2040
 // SparkFun Pro Micro RP2040 does not have a GPIO LED
-#define LED	D2
+#define LED D2
 #elifdef LED_BUILTIN
 // Most other boards have an on-board LED connected to D13
-#define LED	LED_BUILTIN
+#define LED LED_BUILTIN
 #endif
 #endif
 
 // User button configuration
 
-#ifndef BUTTON_PIN
-#ifdef ARDUINO_NUCLEO_F042K6
-#define BUTTON_PIN  12
-#define BUTTON_MODE INPUT_PULLUP
+#ifndef BUTTON
+#ifdef ENABLE_GROVE_LED_BUTTON
+#define BUTTON D3
+#elifdef ARDUINO_ARCH_RP2040
+// Use D3 for button with all RP2040 and RP2350 boards.
+#define BUTTON D3
+#elifdef ARDUINO_NUCLEO_F042K6
+// Nucleo-F042K6 expects an external button switch from D26 to GND.
+// This is unrealizable so override for a button switch from D9 to GND.
+#define BUTTON D9
 #elifdef USER_BTN
-#define BUTTON_PIN  USER_BTN
-#define BUTTON_MODE INPUT
-#elifdef ARDUINO_SPARKFUN_PROMICRO_RP2040
-#define BUTTON_PIN  3
-#define BUTTON_MODE INPUT_PULLUP
-#elifdef ARDUINO_RASPBERRY_PI_PICO_2
-#define BUTTON_PIN  22
-#define BUTTON_MODE INPUT_PULLUP
-#elifdef ARDUINO_RASPBERRY_PI_PICO_2W
-#define BUTTON_PIN  22
-#define BUTTON_MODE INPUT_PULLUP
-#elifdef ARDUINO_WAVESHARE_RP2350_PLUS
-#define BUTTON_PIN  22
-#define BUTTON_MODE INPUT_PULLUP
+// Some Nucleo-32 boards expect an external button switch from D9 to GND.
+// All  Nucleo-64 boards have an on board button switch.
+#define BUTTON USER_BTN
 #endif
 #endif
 
