@@ -31,7 +31,7 @@ MuntsTech::HardwarePWM::Output outp;
 void setup()
 {
   Serial.begin(115200);
-  Serial.println("\ecArduino PWM Output Test\n");
+  Serial.println("\n\n\ecArduino PWM Output Test\n");
 
   outp.Initialize(3, 1000);
 }

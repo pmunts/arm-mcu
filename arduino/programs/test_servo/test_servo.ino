@@ -32,7 +32,7 @@ MuntsTech::ServoPWM::Output outp;
 void setup()
 {
   Serial.begin(115200);
-  Serial.println("\ecArduino Servo Output Test\n");
+  Serial.println("\n\n\ecArduino Servo Output Test\n");
 
   pwmout.Initialize(3, 50);
   outp.Initialize(&pwmout, 50);

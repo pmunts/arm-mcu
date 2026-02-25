@@ -31,7 +31,7 @@ void EdgeHandler(void)
 void setup()
 {
   Serial.begin(115200);
-  Serial.println("\ecArduino Button and LED Test Using Interrupt\n");
+  Serial.println("\n\n\ecArduino Button and LED Test Using Interrupt\n");
 
   pinMode(BUTTON, INPUT_PULLUP);
   pinMode(LED, OUTPUT);

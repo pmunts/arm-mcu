@@ -61,7 +61,7 @@ void MainTaskFunction(void *parameters)
 void setup()
 {
   Serial.begin(115200);
-  Serial.println("\ecArduino Button and LED Test using FreeRTOS\n");
+  Serial.println("\n\n\ecArduino Button and LED Test using FreeRTOS\n");
   Serial.print("LED    on D"); Serial.println(LED);
   Serial.print("Button on D"); Serial.println(BUTTON);
   Serial.println();

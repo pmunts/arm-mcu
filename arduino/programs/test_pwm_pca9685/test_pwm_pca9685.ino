@@ -31,7 +31,7 @@ MuntsTech::PCA9685::PWM::Output outp;
 void setup()
 {
   Serial.begin(115200);
-  Serial.println("\ecArduino PCA9685 PWM Output Test\n");
+  Serial.println("\n\n\ecArduino PCA9685 PWM Output Test\n");
 
   dev.Initialize(0x40, 1000);
   outp.Initialize(&dev, 0);
