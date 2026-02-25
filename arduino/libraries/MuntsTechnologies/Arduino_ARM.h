@@ -80,8 +80,10 @@
 
 #ifdef ENABLE_FREERTOS
 #ifdef ARDUINO_ARCH_RP2040
-#define __FREERTOS 1
 #include <FreeRTOS.h>
+// The Arduino-Pico core main() calls vTaskStartScheduler(), so redefine it
+// as an empty macro to prevent application code from calling it again.
+#define vTaskStartScheduler()
 #elifdef ARDUINO_ARCH_STM32
 #include <STM32FreeRTOS.h>
 #endif
