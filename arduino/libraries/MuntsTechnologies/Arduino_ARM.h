@@ -46,8 +46,8 @@
 #ifdef ARDUINO_SPARKFUN_PROMICRO_RP2040
 // SparkFun Pro Micro RP2040 does not have a GPIO LED
 #define LED	D2
-// Most other boards have an LED connected to D13
 #elifdef LED_BUILTIN
+// Most other boards have an on-board LED connected to D13
 #define LED	LED_BUILTIN
 #endif
 #endif
