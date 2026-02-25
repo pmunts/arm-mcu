@@ -58,18 +58,35 @@
 
 #ifndef BUTTON
 #ifdef ENABLE_GROVE_LED_BUTTON
-#define BUTTON D3
+// Active low button on D3
+#define BUTTON         D3
+#define BUTTON_PINMODE INPUT
+#define BUTTON_XOR     1
 #elifdef ARDUINO_ARCH_RP2040
-// Use D3 for button with all RP2040 and RP2350 boards.
-#define BUTTON D3
+// All RP2040 and RP2350 boards expect an external active low button switch
+// from D3 to GND.
+#define BUTTON         D3
+#define BUTTON_PINMODE INPUT_PULLUP
+#define BUTTON_XOR     1
+#elifdef ARDUINO_DISCO_F407VG
+// STM32F4-Discovery has an on-board active high button.
+#define BUTTON         USER_BTN
+#define BUTTON_PINMODE INPUT
+#define BUTTON_XOR     0
 #elifdef ARDUINO_NUCLEO_F042K6
-// Nucleo-F042K6 expects an external button switch from D26 to GND.
-// This is unrealizable so override for a button switch from D9 to GND.
-#define BUTTON D9
+// Nucleo-F042K6 expects an external active low button switch from D26 to GND.
+// This is unrealizable so override for an external active low button switch
+// from D9 to GND, and matching some other Nucleo-32 boards.
+#define BUTTON         D9
+#define BUTTON_PINMODE INPUT_PULLUP
+#define BUTTON_XOR     1
 #elifdef USER_BTN
-// Some Nucleo-32 boards expect an external button switch from D9 to GND.
-// All  Nucleo-64 boards have an on board button switch.
-#define BUTTON USER_BTN
+// Some Nucleo-32 boards expect an external active low button switch from D9
+// to GND.
+// All  Nucleo-64 boards have an on-board active low button.
+#define BUTTON         USER_BTN
+#define BUTTON_PINMODE INPUT_PULLUP
+#define BUTTON_XOR     1
 #endif
 #endif
 
