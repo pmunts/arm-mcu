@@ -24,7 +24,7 @@
 
 void EdgeHandler(void)
 {
-  digitalWrite(LED, !digitalRead(BUTTON));
+  digitalWrite(LED, digitalRead(BUTTON) ^ BUTTON_XOR);
   Serial.println(digitalRead(LED) ? "PRESS" : "RELEASE");
 }
 
@@ -33,13 +33,13 @@ void setup()
   Serial.begin(115200);
   Serial.println("\n\n\ecArduino Button and LED Test Using Interrupt\n");
 
-  pinMode(BUTTON, INPUT_PULLUP);
+  pinMode(BUTTON, BUTTON_PINMODE);
   pinMode(LED, OUTPUT);
   Serial.print("LED    on D"); Serial.println(LED);
   Serial.print("Button on D"); Serial.println(BUTTON);
   Serial.println();
 
-  digitalWrite(LED, !digitalRead(BUTTON));
+  digitalWrite(LED, digitalRead(BUTTON) ^ BUTTON_XOR);
 
   attachInterrupt(digitalPinToInterrupt(BUTTON), EdgeHandler, CHANGE);
 }

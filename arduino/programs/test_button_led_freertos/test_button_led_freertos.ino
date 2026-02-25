@@ -30,7 +30,7 @@ QueueHandle_t EdgeQueue;
 
 void EdgeHandler(void)
 {
-  bool newstate = !digitalRead(BUTTON);
+  bool newstate = digitalRead(BUTTON ^ BUTTON_XOR);
   xQueueSendFromISR(EdgeQueue, &newstate, NULL);
 }
 
@@ -66,10 +66,10 @@ void setup()
   Serial.print("Button on D"); Serial.println(BUTTON);
   Serial.println();
 
-  pinMode(BUTTON, INPUT_PULLUP);
+  pinMode(BUTTON, BUTTON_PINMODE);
   pinMode(LED, OUTPUT);
 
-  digitalWrite(LED, !digitalRead(BUTTON));
+  digitalWrite(LED, digitalRead(BUTTON) ^ BUTTON_XOR);
 
   // Create FreeRTOS entities and start the scheduler
 

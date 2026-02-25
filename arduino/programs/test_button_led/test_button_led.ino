@@ -30,14 +30,14 @@ void setup()
   Serial.print("Button on D"); Serial.println(BUTTON);
   Serial.println();
 
-  pinMode(BUTTON, INPUT_PULLUP);
+  pinMode(BUTTON, BUTTON_PINMODE);
   pinMode(LED, OUTPUT);
 }
 
 void loop()
 {
-  static bool oldstate = digitalRead(BUTTON);
-  bool newstate = !digitalRead(BUTTON);
+  static bool oldstate = digitalRead(BUTTON) ^ BUTTON_XOR;
+  bool newstate = digitalRead(BUTTON) ^ BUTTON_XOR;
 
   if (!oldstate && newstate)
   {
