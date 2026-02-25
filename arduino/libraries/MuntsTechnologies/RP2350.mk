@@ -19,7 +19,11 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 BOARDNAME	?= waveshare_rp2350_plus
-ARDUINOFQBN	:= rp2040:rp2040:$(BOARDNAME)$(BOARDSUFFIX)
+ifneq ($(shell grep -P '^#define +ENABLE_FREERTOS\r?$$' *.ino),)
+ARDUINOFQBN	:= rp2040:rp2040:$(BOARDNAME):os=freertos
+else
+ARDUINOFQBN	:= rp2040:rp2040:$(BOARDNAME)
+endif
 ARDUINOCORESRC	:= $(ARDUINOPKGSDIR)/rp2040/hardware/rp2040/5.5.0
 ARDUINOCOREGCC	:= $(ARDUINOPKGSDIR)/rp2040/tools/pqt-gcc/4.1.0-1aec55e/bin/arm-none-eabi-gcc
 
