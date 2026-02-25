@@ -72,12 +72,7 @@ void setup()
 
   EdgeQueue = xQueueCreate(10, sizeof(bool));
   xTaskCreate(MainTaskFunction, "main", 512, NULL, 1, NULL);
-
-#ifndef ARDUINO_ARCH_RP2040
-  // The Arduino-Pico core main() calls vTaskStartScheduler() so we can't
-  // call it here.
   vTaskStartScheduler();
-#endif
 }
 
 void loop()
