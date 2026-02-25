@@ -29,7 +29,7 @@
 
 using namespace MuntsTech::Interfaces::PWM;
 
-MuntsTech::RP2040::HardwarePWM::Output outp;
+MuntsTech::HardwarePWM::Output outp;
 
 void setup()
 {

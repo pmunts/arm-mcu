@@ -30,7 +30,7 @@
 
 using namespace MuntsTech::Interfaces::Servo;
 
-MuntsTech::RP2040::HardwarePWM::Output pwmout;
+MuntsTech::HardwarePWM::Output pwmout;
 MuntsTech::ServoPWM::Output outp;
 
 void setup()
