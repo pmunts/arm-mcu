@@ -26,15 +26,17 @@ void setup()
 {
   Serial.begin(115200);
   Serial.println("\ecArduino Button and LED Test\n");
+  Serial.print("LED    on "); Serial.println(LED);
+  Serial.print("Button on "); Serial.println(BUTTON);
 
-  pinMode(BUTTON_PIN, BUTTON_MODE);
+  pinMode(BUTTON, INPUT_PULLUP);
   pinMode(LED, OUTPUT);
 }
 
 void loop()
 {
-  static bool oldstate = digitalRead(BUTTON_PIN);
-  bool newstate = !digitalRead(BUTTON_PIN);
+  static bool oldstate = digitalRead(BUTTON);
+  bool newstate = !digitalRead(BUTTON);
 
   if (!oldstate && newstate)
   {
