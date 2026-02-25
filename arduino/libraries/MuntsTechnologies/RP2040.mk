@@ -39,5 +39,5 @@ install: build
 clean:
 	rm -rf build
 
-edit:
+code edit:
 	CORESRC=$(ARDUINOCORESRC) COREGCC=$(ARDUINOCOREGCC) code .
