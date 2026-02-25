@@ -33,7 +33,7 @@
 #include "HardwareTimer.h"
 #include <pwm-interface.h>
 
-namespace MuntsTech::STM32::HardwarePWM
+namespace MuntsTech::HardwarePWM
 {
   // PWM output class definition
 

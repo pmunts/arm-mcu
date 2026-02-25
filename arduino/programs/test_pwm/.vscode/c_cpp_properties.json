@@ -1,0 +1,15 @@
+{
+    "configurations": [
+        {
+            "name": "Arduino",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${env:CORESRC}/**",
+                "${env:ARMSRC}/arduino/libraries/**"
+            ],
+            "compilerPath": "${env:COREGCC}",
+            "intelliSenseMode": "${default}"
+        }
+    ],
+    "version": 4
+}
