@@ -41,7 +41,7 @@ void FaBoPWM::init(uint8_t value)
   writeI2c(PCA9685_ALL_LED_ON_L_REG, 0x00);
   writeI2c(PCA9685_ALL_LED_ON_H_REG, 0x00);
   writeI2c(PCA9685_ALL_LED_OFF_L_REG, value & 0xFF);
-  writeI2c(PCA9685_ALL_LED_OFF_L_REG, value >> 8);
+  writeI2c(PCA9685_ALL_LED_OFF_H_REG, value >> 8);
 
   writeI2c(PCA9685_MODE2_REG, PCA9685_OUTDRV);
   writeI2c(PCA9685_MODE1_REG, PCA9685_ALLCALL);
