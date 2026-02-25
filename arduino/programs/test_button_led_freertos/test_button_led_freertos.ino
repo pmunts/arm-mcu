@@ -62,8 +62,8 @@ void setup()
 {
   Serial.begin(115200);
   Serial.println("\ecArduino Button and LED Test using FreeRTOS\n");
-  Serial.print("LED    on "); Serial.println(LED);
-  Serial.print("Button on "); Serial.println(BUTTON);
+  Serial.print("LED    on D"); Serial.println(LED);
+  Serial.print("Button on D"); Serial.println(BUTTON);
   Serial.println();
 
   pinMode(BUTTON, INPUT_PULLUP);

@@ -26,6 +26,7 @@ void setup()
 {
   Serial.begin(115200);
   Serial.println("\ecArduino LED Test\n");
+  Serial.print("LED on D"); Serial.println(LED);
 
   pinMode(LED, OUTPUT);
 }
