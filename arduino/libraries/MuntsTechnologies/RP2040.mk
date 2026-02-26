@@ -19,7 +19,7 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 BOARDNAME	?= sparkfun_promicrorp2040
-ifneq ($(shell grep -P '^#define +ENABLE_FREERTOS\r?$$' *.ino),)
+ifneq ($(shell $(GREP) -P '^#define +ENABLE_FREERTOS\r*$$' *.ino),)
 ARDUINOFQBN	:= rp2040:rp2040:$(BOARDNAME):os=freertos
 else
 ARDUINOFQBN	:= rp2040:rp2040:$(BOARDNAME)
