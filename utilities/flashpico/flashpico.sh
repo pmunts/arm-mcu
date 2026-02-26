@@ -40,9 +40,7 @@ FindDestDir()
 
 SearchMounts()
 {
-  if [ -d $1 ]; then
-    for M in $1/* ; do FindDestDir $M ; done
-  fi
+  test -d $1 && for M in $1/* ; do FindDestDir $M ; done
 }
 
 # macOS
