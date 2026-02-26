@@ -35,22 +35,24 @@ unset DESTDIR
 
 FindDestDir()
 {
-  test -f $1/INFO_UF2.TXT && export DESTDIR=$1
+  test -d $1 && test -f $1/INFO_UF2.TXT && export DESTDIR=$1
+}
+
+SearchMounts()
+{
+  if [ -d $1 ]; then
+    for M in $1/* ; do FindDestDir $M ; done
+  fi
 }
 
 # macOS
-FindDestDir /Volumes/RPI-RP2
-FindDestDir /Volumes/RP2350
+SearchMounts /Volumes
 # Debian Linux
-FindDestDir /media/${USER}/RPI-RP2
-FindDestDir /media/${USER}/RP2350
+SearchMounts /media/${USER}
 # Chromeos
-FindDestDir /mnt/chromeos/removable/RPI-RP2
-FindDestDir /mnt/chromeos/removable/RP2350
+SearchMounts /mnt/chromeos/removable
 # Windows
-FindDestDir /d
-FindDestDir /e
-FindDestDir /f
+for D in d e f g h i j k ; do FindDestDir /${D} ; done
 
 if [ -z "${DESTDIR}" ] ; then
   echo ""
