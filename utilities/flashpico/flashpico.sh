@@ -40,10 +40,13 @@ FindDestDir()
 
 # macOS
 FindDestDir /Volumes/RPI-RP2
+FindDestDir /Volumes/RP2350
 # Debian Linux
 FindDestDir /media/${USER}/RPI-RP2
+FindDestDir /media/${USER}/RP2350
 # Chromeos
 FindDestDir /mnt/chromeos/removable/RPI-RP2
+FindDestDir /mnt/chromeos/removable/RP2350
 # Windows
 FindDestDir /d
 FindDestDir /e
