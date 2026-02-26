@@ -114,7 +114,7 @@ namespace MuntsTech::PCA9685::PWM
       assert(dutycycle >= MuntsTech::Interfaces::PWM::DUTYCYCLE_MIN);
       assert(dutycycle <= MuntsTech::Interfaces::PWM::DUTYCYCLE_MAX);
 
-      this->dev->write(this->channel, (unsigned) (dutycycle/100.0*4096));
+      this->dev->write(this->channel, (unsigned) (dutycycle/100.0*4095));
     }
 
     // PWM output operators
