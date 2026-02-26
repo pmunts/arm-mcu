@@ -26,6 +26,12 @@ SKETCHBOOK	?= $(ARMSRC)/arduino
 COMPILEFLAGS	+= --build-property build.extra_flags="-DMUNTSTECH $(EXTRACFLAGS)"
 COMPILEFLAGS	+= --libraries "$(SKETCHBOOK)/libraries"
 
+ifeq ($(shell uname), Darwin)
+# Need to use Homebrew versions of certain Unix utility programs
+GREP		:= ggrep
+MAKE		:= gmake
+endif
+
 arduino_arm_mk_default: clean install
 
 include $(ARMSRC)/arduino/libraries/MuntsTechnologies/$(BOARDFAMILY).mk
