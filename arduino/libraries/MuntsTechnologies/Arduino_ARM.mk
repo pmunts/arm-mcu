@@ -28,8 +28,9 @@ COMPILEFLAGS	+= --libraries "$(SKETCHBOOK)/libraries"
 
 ifeq ($(shell uname), Darwin)
 # Need to use Homebrew versions of certain Unix utility programs
-GREP		:= ggrep
-MAKE		:= gmake
+GREP		?= ggrep
+else
+GREP		?= grep
 endif
 
 arduino_arm_mk_default: clean install
