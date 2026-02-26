@@ -26,6 +26,7 @@ ARDUINOFQBN	:= rp2040:rp2040:$(BOARDNAME)
 endif
 ARDUINOCORESRC	:= $(ARDUINOPKGSDIR)/rp2040/hardware/rp2040/5.5.0
 ARDUINOCOREGCC	:= $(ARDUINOPKGSDIR)/rp2040/tools/pqt-gcc/4.1.0-1aec55e/bin/arm-none-eabi-gcc
+ARDUINOPORT	?= COM1
 
 # Fix Arduino core pathnames for Windows
 
@@ -38,7 +39,11 @@ build:
 	$(ARDUINOCLI) compile $(COMPILEFLAGS) -b $(ARDUINOFQBN) -e
 
 install: build
+ifeq ($(FLASHPICO), no)
+	$(ARDUINOCLI) upload -b $(ARDUINOFQBN) -p $(ARDUINOPORT)
+else
 	flashpico build/*/*.uf2
+endif
 
 clean:
 	rm -rf build
