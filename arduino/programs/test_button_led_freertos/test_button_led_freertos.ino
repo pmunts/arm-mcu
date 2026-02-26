@@ -30,7 +30,7 @@ QueueHandle_t EdgeQueue;
 
 void EdgeHandler(void)
 {
-  bool newstate = digitalRead(BUTTON ^ BUTTON_XOR);
+  bool newstate = digitalRead(BUTTON) ^ BUTTON_XOR;
   xQueueSendFromISR(EdgeQueue, &newstate, NULL);
 }
 
