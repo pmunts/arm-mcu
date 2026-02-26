@@ -39,10 +39,10 @@ build:
 	$(ARDUINOCLI) compile $(COMPILEFLAGS) -b $(ARDUINOFQBN) -e
 
 install: build
-ifeq ($(FLASHPICO), no)
-	$(ARDUINOCLI) upload -b $(ARDUINOFQBN) -p $(ARDUINOPORT)
-else
+ifeq ($(FLASHPICO), yes)
 	flashpico build/*/*.uf2
+else
+	$(ARDUINOCLI) upload -b $(ARDUINOFQBN) -p $(ARDUINOPORT)
 endif
 
 clean:
