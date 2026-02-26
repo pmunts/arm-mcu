@@ -40,7 +40,7 @@
 #define D12	12	//     MISO
 #define D13	13	// LED SCLK
 
-// LED configuration
+// User LED configuration
 
 #ifndef LED
 #ifdef ENABLE_GROVE_LED_BUTTON
