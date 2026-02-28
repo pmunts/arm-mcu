@@ -22,4 +22,4 @@
 
 ARMSRC ?= $(HOME)/arm-mcu
 
-include $(ARMSRC)/arduino/libraries/MuntsTechnologies/Arduino_ARM.mk
+include $(ARMSRC)/arduino/libraries/MuntsTechBoards/Arduino_ARM.mk

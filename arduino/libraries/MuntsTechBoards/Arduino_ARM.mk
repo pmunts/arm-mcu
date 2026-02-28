@@ -1,5 +1,3 @@
-# Makefile for building and installing Arduino programs
-
 # Copyright (C)2026, Philip Munts dba Munts Technologies.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -20,6 +18,14 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-ARMSRC ?= $(HOME)/arm-mcu
+BOARDFAMILY	?= Nucleo_64
 
-include $(ARMSRC)/arduino/libraries/MuntsTechnologies/Arduino_ARM.mk
+ARDUINOCLI	?= arduino-cli
+ARDUINOPKGSDIR	?= $(HOME)/.arduino15/packages
+SKETCHBOOK	?= $(ARMSRC)/arduino
+COMPILEFLAGS	+= --build-property build.extra_flags="-DMUNTSTECH $(EXTRACFLAGS)"
+COMPILEFLAGS	+= --libraries "$(SKETCHBOOK)/libraries"
+
+arduino_arm_mk_default: clean install
+
+include $(ARMSRC)/arduino/libraries/MuntsTechBoards/$(BOARDFAMILY).mk
