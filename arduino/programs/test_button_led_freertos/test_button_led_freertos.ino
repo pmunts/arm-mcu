@@ -30,7 +30,7 @@ QueueHandle_t EdgeQueue;
 
 void EdgeHandler(void)
 {
-  bool newstate = digitalRead(BUTTON) ^ BUTTON_XOR;
+  bool newstate = digitalRead(BUTTON_PIN) ^ BUTTON_XOR;
   xQueueSendFromISR(EdgeQueue, &newstate, NULL);
 }
 
@@ -40,7 +40,7 @@ void MainTaskFunction(void *parameters)
 {
   // Attach button GPIO pin interrupt service routine
 
-  attachInterrupt(digitalPinToInterrupt(BUTTON), EdgeHandler, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(BUTTON_PIN), EdgeHandler, CHANGE);
 
   // Main event loop
 
@@ -51,7 +51,7 @@ void MainTaskFunction(void *parameters)
     if (xQueueReceive(EdgeQueue, &newstate, pdMS_TO_TICKS(1000)) == pdPASS)
     {
       Serial.println(newstate ? "PRESS" : "RELEASE");
-      digitalWrite(LED, newstate);
+      digitalWrite(LED_PIN, newstate);
     }
     else
       Serial.println("Tick...");
@@ -62,14 +62,14 @@ void setup()
 {
   Serial.begin(115200);
   Serial.println("\n\n\ecArduino Button and LED Test using FreeRTOS\n");
-  Serial.print("LED    on D"); Serial.println(LED);
-  Serial.print("Button on D"); Serial.println(BUTTON);
+  Serial.print("LED    on D"); Serial.println(LED_PIN);
+  Serial.print("Button on D"); Serial.println(BUTTON_PIN);
   Serial.println();
 
-  pinMode(BUTTON, BUTTON_PINMODE);
-  pinMode(LED, OUTPUT);
+  pinMode(BUTTON_PIN, BUTTON_MODE);
+  pinMode(LED_PIN, OUTPUT);
 
-  digitalWrite(LED, digitalRead(BUTTON) ^ BUTTON_XOR);
+  digitalWrite(LED_PIN, digitalRead(BUTTON_PIN) ^ BUTTON_XOR);
 
   // Create FreeRTOS entities and start the scheduler
 

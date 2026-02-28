@@ -26,14 +26,14 @@ void setup()
 {
   Serial.begin(115200);
   Serial.println("\n\n\ecArduino LED Test\n");
-  Serial.print("LED on D"); Serial.println(LED);
+  Serial.print("LED on D"); Serial.println(LED_PIN);
 
-  pinMode(LED, OUTPUT);
+  pinMode(LED_PIN, OUTPUT);
 }
 
 void loop()
 {
   // Toggle the LED
-  digitalWrite(LED, !digitalRead(LED));
+  digitalWrite(LED_PIN, !digitalRead(LED_PIN));
   delay(500);
 }
