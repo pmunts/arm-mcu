@@ -30,8 +30,8 @@
 #define _STM32_HARDWARE_PWM_H
 
 #include <assert.h>
-#include "HardwareTimer.h"
 #include <pwm-interface.h>
+#include <HardwareTimer.h>
 
 namespace MuntsTech::HardwarePWM
 {
