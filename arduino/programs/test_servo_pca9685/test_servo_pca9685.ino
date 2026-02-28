@@ -44,19 +44,19 @@ void loop()
 {
   for (float pos = POSITION_NEUTRAL; pos <= POSITION_MAX; pos += 0.015F)
   {
-    outp = pos;
+    outp.write(pos);
     delay(20);
   }
 
   for (float pos = POSITION_MAX; pos >= POSITION_MIN; pos -= 0.015F)
   {
-    outp = pos;
+    outp.write(pos);
     delay(20);
   }
   
   for (float pos = POSITION_MIN; pos <= POSITION_NEUTRAL; pos += 0.015F)
   {
-    outp = pos;
+    outp.write(pos);
     delay(20);
   }
 }

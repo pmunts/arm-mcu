@@ -41,7 +41,7 @@ void loop()
 {
   for (float duty = DUTYCYCLE_MIN; duty <= DUTYCYCLE_MAX; duty += 0.5F)
   {
-    outp = duty;
+    outp.write(duty);
     delay(50);
   }
 }
