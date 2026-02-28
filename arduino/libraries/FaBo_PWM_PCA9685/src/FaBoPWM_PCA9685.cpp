@@ -36,7 +36,7 @@ bool FaBoPWM::begin()
 /**
  @brief Set Config
 */
-void FaBoPWM::init(uint8_t value)
+void FaBoPWM::init(uint16_t value)
 {
   writeI2c(PCA9685_ALL_LED_ON_L_REG, 0x00);
   writeI2c(PCA9685_ALL_LED_ON_H_REG, 0x00);

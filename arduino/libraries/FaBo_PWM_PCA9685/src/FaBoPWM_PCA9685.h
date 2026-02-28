@@ -56,7 +56,7 @@ class FaBoPWM
 public:
 	FaBoPWM(uint8_t addr = PCA9685_SLAVE_ADDRESS);
 	bool begin(void);
-	void init(uint8_t value = PCA9685_DEFAULT_VALUE);
+	void init(uint16_t value = PCA9685_DEFAULT_VALUE);
 	uint16_t calc_prescale(uint16_t hz);
 	void set_hz(uint16_t hz);
 	void calc_hz(uint16_t prescale, uint16_t *value);
