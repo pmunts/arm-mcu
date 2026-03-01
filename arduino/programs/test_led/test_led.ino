@@ -21,6 +21,9 @@
 // POSSIBILITY OF SUCH DAMAGE.
 
 #include <Arduino_ARM.h>
+#include <GPIO-Arduino.h>
+
+MuntsTech::GPIO::Arduino::Pin_Class LED;
 
 void setup()
 {
@@ -28,12 +31,12 @@ void setup()
   Serial.println("\n\n\ecArduino LED Test\n");
   Serial.print("LED on D"); Serial.println(LED_PIN);
 
-  pinMode(LED_PIN, OUTPUT);
+  LED.Initialize(LED_PIN, OUTPUT);
 }
 
 void loop()
 {
   // Toggle the LED
-  digitalWrite(LED_PIN, !digitalRead(LED_PIN));
+  LED.write(!LED.read());
   delay(500);
 }

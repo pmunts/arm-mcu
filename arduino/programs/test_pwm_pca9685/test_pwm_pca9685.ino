@@ -26,7 +26,7 @@
 using namespace MuntsTech::Interfaces::PWM;
 
 MuntsTech::PCA9685::PWM::Device dev;
-MuntsTech::PCA9685::PWM::Output outp;
+MuntsTech::PCA9685::PWM::Output_Class outp;
 
 void setup()
 {

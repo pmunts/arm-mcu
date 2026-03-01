@@ -72,12 +72,12 @@ namespace MuntsTech::PCA9685::PWM
 
   // PWM output class definition
 
-  struct Output: public MuntsTech::Interfaces::PWM::Output
+  struct Output_Class: public MuntsTech::Interfaces::PWM::Output_Interface
   {
     // Parameterless stub constructor--Requires a subsequent
     // call to Initialize().
 
-    Output()
+    Output_Class()
     {
       this->dev     = NULL;
       this->channel = 0;
@@ -85,7 +85,7 @@ namespace MuntsTech::PCA9685::PWM
 
     // PWM output constructor
 
-    Output(Device *dev, unsigned channel, 
+    Output_Class(Device *dev, unsigned channel, 
       float dutycycle = MuntsTech::Interfaces::PWM::DUTYCYCLE_MIN)
     {
       this->Initialize(dev, channel, dutycycle);

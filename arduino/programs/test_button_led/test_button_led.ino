@@ -21,6 +21,10 @@
 // POSSIBILITY OF SUCH DAMAGE.
 
 #include <Arduino_ARM.h>
+#include <GPIO-Arduino.h>
+
+MuntsTech::GPIO::Arduino::Pin_Class Button;
+MuntsTech::GPIO::Arduino::Pin_Class LED;
 
 void setup()
 {
@@ -30,25 +34,25 @@ void setup()
   Serial.print("Button on D"); Serial.println(BUTTON_PIN);
   Serial.println();
 
-  pinMode(BUTTON_PIN, BUTTON_MODE);
-  pinMode(LED_PIN, OUTPUT);
+  Button.Initialize(BUTTON_PIN, BUTTON_MODE, BUTTON_XOR);
+  LED.Initialize(LED_PIN, OUTPUT);
 }
 
 void loop()
 {
-  static bool oldstate = digitalRead(BUTTON_PIN) ^ BUTTON_XOR;
-  bool newstate = digitalRead(BUTTON_PIN) ^ BUTTON_XOR;
+  static bool oldstate = !Button.read();
+  bool newstate = Button.read();
 
   if (!oldstate && newstate)
   {
     Serial.println("PRESS");
-    digitalWrite(LED_PIN, true);
+    LED.write(true);
   }
 
   if (oldstate && !newstate)
   {
     Serial.println("RELEASE");
-    digitalWrite(LED_PIN, false);
+    LED.write(false);
   }
 
   oldstate = newstate;

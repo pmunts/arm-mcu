@@ -23,6 +23,10 @@
 #define ENABLE_FREERTOS
 
 #include <Arduino_ARM.h>
+#include <GPIO-Arduino.h>
+
+MuntsTech::GPIO::Arduino::Pin_Class Button;
+MuntsTech::GPIO::Arduino::Pin_Class LED;
 
 QueueHandle_t EdgeQueue;
 
@@ -30,7 +34,7 @@ QueueHandle_t EdgeQueue;
 
 void EdgeHandler(void)
 {
-  bool newstate = digitalRead(BUTTON_PIN) ^ BUTTON_XOR;
+  bool newstate = Button.read();
   xQueueSendFromISR(EdgeQueue, &newstate, NULL);
 }
 
@@ -51,7 +55,7 @@ void MainTaskFunction(void *parameters)
     if (xQueueReceive(EdgeQueue, &newstate, pdMS_TO_TICKS(1000)) == pdPASS)
     {
       Serial.println(newstate ? "PRESS" : "RELEASE");
-      digitalWrite(LED_PIN, newstate);
+      LED.write(newstate);
     }
     else
       Serial.println("Tick...");
@@ -66,10 +70,10 @@ void setup()
   Serial.print("Button on D"); Serial.println(BUTTON_PIN);
   Serial.println();
 
-  pinMode(BUTTON_PIN, BUTTON_MODE);
-  pinMode(LED_PIN, OUTPUT);
+  Button.Initialize(BUTTON_PIN, BUTTON_MODE, BUTTON_XOR);
+  LED.Initialize(LED_PIN, OUTPUT);
 
-  digitalWrite(LED_PIN, digitalRead(BUTTON_PIN) ^ BUTTON_XOR);
+  LED.write(Button.read());
 
   // Create FreeRTOS entities and start the scheduler
 

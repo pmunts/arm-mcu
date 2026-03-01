@@ -26,7 +26,7 @@
 
 using namespace MuntsTech::Interfaces::PWM;
 
-MuntsTech::HardwarePWM::Output outp;
+MuntsTech::HardwarePWM::Output_Class outp;
 
 void setup()
 {

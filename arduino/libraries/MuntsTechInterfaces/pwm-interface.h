@@ -23,23 +23,22 @@
 #ifndef _MUNTSTECH_PWM_INTERFACE_H
 #define _MUNTSTECH_PWM_INTERFACE_H
 
+#include <actuator-interface.h>
+
 namespace MuntsTech::Interfaces::PWM
 {
   // Duty cycle constants
 
-  static constexpr float DUTYCYCLE_MIN = 0.0F;
+  static constexpr float DUTYCYCLE_MIN =   0.0F;
   static constexpr float DUTYCYCLE_MAX = 100.0F;
 
-  struct Output
+  // Duty cycle output interface
+
+  struct Output_Interface : MuntsTech::Interfaces::Actuator_Interface<float>
   {
-    // PWM output methods
-
-    virtual void write(const float dutycycle) = 0;
-
-    // PWM output operators
-
-    virtual void operator =(const float dutycycle) = 0;
   };
+
+  typedef Output_Interface *Output;
 }
 
 #endif

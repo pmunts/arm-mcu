@@ -34,12 +34,12 @@ namespace MuntsTech::HardwarePWM
 {
   // PWM output class definition
 
-  struct Output: public MuntsTech::Interfaces::PWM::Output
+  struct Output_Class: public MuntsTech::Interfaces::PWM::Output_Interface
   {
     // Parameterless stub constructor--Requires a subsequent
     // call to Initialize().
 
-    Output()
+    Output_Class()
     {
       this->pin = 0;
       this->period = 0;
@@ -47,7 +47,7 @@ namespace MuntsTech::HardwarePWM
 
     // PWM output constructor
 
-    Output(unsigned pin, unsigned frequency,
+    Output_Class(unsigned pin, unsigned frequency,
       float dutycycle = MuntsTech::Interfaces::PWM::DUTYCYCLE_MIN)
     {
       this->Initialize(pin, frequency, dutycycle);
