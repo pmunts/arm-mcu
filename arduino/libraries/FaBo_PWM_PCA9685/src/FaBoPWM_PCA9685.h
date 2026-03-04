@@ -12,7 +12,7 @@
 #ifndef FABOPWM_PCA9685_H
 #define FABOPWM_PCA9685_H
 
-#include "Arduino.h"
+#include "Arduino_ARM.h"
 #include "Wire.h"
 
 /** PCA9685 Slave Address register */

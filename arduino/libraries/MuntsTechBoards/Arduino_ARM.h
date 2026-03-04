@@ -90,6 +90,22 @@
 #endif
 #endif
 
+// I2C bus pins
+
+#ifdef ARDUINO_ARCH_RP2040
+#ifdef PICO_RP2350
+// I2C bus on GP4 and GP5, same as Raspberry Pi Pico 2
+#define I2C_SDA_PIN 4
+#define I2C_SCL_PIN 5
+#elifdef ARDUINO_SPARKFUN_PROMICRO_RP2040
+// I2C bus on GPIO16 and GPIO17
+#define I2C_SDA_PIN 16
+#define I2C_SCL_PIN 17
+#else
+// I2C bus on GP4 and GP5, same as Raspberry Pi Pico
+#endif
+#endif
+
 // Enable FreeRTOS
 
 #ifdef ENABLE_FREERTOS
