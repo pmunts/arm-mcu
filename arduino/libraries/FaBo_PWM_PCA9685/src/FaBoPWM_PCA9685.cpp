@@ -16,10 +16,13 @@
 */
 FaBoPWM::FaBoPWM(uint8_t addr){
   _i2caddr = addr;
-#ifdef ARDUINO_ARCH_RP2040
-  // Select I2C0 on GP4 and GP5
-  Wire.setSDA(4);
-  Wire.setSCL(5);
+#ifdef I2C_SDA_PIN
+  // Override normal SDA PIN
+  Wire.setSDA(I2C_SDA_PIN);
+#endif
+#ifdef I2C_SCL_PIN
+  // Override normal SCL PIN
+  Wire.setSCL(I2C_SCL_PIN);
 #endif
   Wire.begin();
 }
