@@ -27,6 +27,7 @@ endif
 ARDUINOCORESRC	:= $(ARDUINOPKGSDIR)/rp2040/hardware/rp2040/5.5.0
 ARDUINOCOREGCC	:= $(ARDUINOPKGSDIR)/rp2040/tools/pqt-gcc/4.1.0-1aec55e/bin/arm-none-eabi-gcc
 ARDUINOPORT	?= COM1
+VSCODE		?= code
 
 # Fix Arduino core pathnames for Windows
 
@@ -49,4 +50,4 @@ clean:
 	rm -rf build
 
 code edit:
-	CORESRC=$(ARDUINOCORESRC) COREGCC=$(ARDUINOCOREGCC) code .
+	CORESRC=$(ARDUINOCORESRC) COREGCC=$(ARDUINOCOREGCC) $(VSCODE) .

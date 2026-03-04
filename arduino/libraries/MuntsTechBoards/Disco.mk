@@ -22,6 +22,7 @@ BOARDNAME	?= DISCO_F407VG
 ARDUINOFQBN	:= STMicroelectronics:stm32:$(BOARDFAMILY):pnum=$(BOARDNAME),upload_method=swdMethod
 ARDUINOCORESRC	:= $(ARDUINOPKGSDIR)/STMicroelectronics/hardware/stm32/2.12.0
 ARDUINOCOREGCC	:= $(ARDUINOPKGSDIR)/STMicroelectronics/tools/xpack-arm-none-eabi-gcc/14.2.1-1.1/bin/arm-none-eabi-gcc
+VSCODE		?= code
 
 # Fix Arduino core pathnames for Windows
 
@@ -40,4 +41,4 @@ clean:
 	rm -rf build
 
 code edit:
-	CORESRC=$(ARDUINOCORESRC) COREGCC=$(ARDUINOCOREGCC) code .
+	CORESRC=$(ARDUINOCORESRC) COREGCC=$(ARDUINOCOREGCC) $(VSCODE) .
