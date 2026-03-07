@@ -22,13 +22,13 @@
 
 #include <Arduino_ARM.h>
 #include <PCA9685PWM.h>
-#include <ServoPWM.h>
+#include <Servo-PWM.h>
 
 using namespace MuntsTech::Interfaces::Servo;
 
 MuntsTech::PCA9685::PWM::Device dev;
 MuntsTech::PCA9685::PWM::Output_Class pwmout;
-MuntsTech::ServoPWM::Output_Class outp;
+MuntsTech::Servo::PWM::Output_Class outp;
 
 void setup()
 {

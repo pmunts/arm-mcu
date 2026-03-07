@@ -23,13 +23,15 @@
 #ifndef _MUNTSTECH_SERVO_PWM_H
 #define _MUNTSTECH_SERVO_PWM_H
 
-#include <assert.h>
+#include <cassert>
 #include <pwm-interface.h>
 #include <servo-interface.h>
 
-namespace MuntsTech::ServoPWM
+using namespace MuntsTech::Interfaces::Servo;
+
+namespace MuntsTech::Servo::PWM
 {
-  struct Output_Class: public MuntsTech::Interfaces::Servo::Output_Interface
+  struct Output_Class: public Output_Interface
   {
     // Parameterless stub constructor--Requires a subsequent
     // call to Initialize().
@@ -43,7 +45,7 @@ namespace MuntsTech::ServoPWM
     }
 
     Output_Class(MuntsTech::Interfaces::PWM::Output pwmout, unsigned frequency,
-      float position = MuntsTech::Interfaces::Servo::POSITION_NEUTRAL,
+      float position = POSITION_NEUTRAL,
       float minwidth = 1.0E-3F, float maxwidth = 2.0E-3F)
     {
       this->Initialize(pwmout, frequency, position, minwidth, maxwidth);
@@ -52,13 +54,13 @@ namespace MuntsTech::ServoPWM
     // Servo output initializer
 
     void Initialize(MuntsTech::Interfaces::PWM::Output pwmout, unsigned frequency,
-      float position = MuntsTech::Interfaces::Servo::POSITION_NEUTRAL,
+      float position = POSITION_NEUTRAL,
       float minwidth = 1.0E-3F, float maxwidth = 2.0E-3F)
     {
       assert(pwmout != NULL);
       assert(frequency > 0);
-      assert(position >= MuntsTech::Interfaces::Servo::POSITION_MIN);
-      assert(position <= MuntsTech::Interfaces::Servo::POSITION_MAX);
+      assert(position >= POSITION_MIN);
+      assert(position <= POSITION_MAX);
       assert(maxwidth > minwidth);
       assert(maxwidth < 1.0F/frequency);
       this->pwmout   = pwmout;
@@ -73,8 +75,8 @@ namespace MuntsTech::ServoPWM
     virtual void write(const float position)
     {
       assert(this->pwmout != NULL);
-      assert(position >= MuntsTech::Interfaces::Servo::POSITION_MIN);
-      assert(position <= MuntsTech::Interfaces::Servo::POSITION_MAX);
+      assert(position >= POSITION_MIN);
+      assert(position <= POSITION_MAX);
       this->pwmout->write((this->midpoint + this->swing*position)*this->freq*100.0F);
     }
 
