@@ -20,9 +20,8 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#define ENABLE_HARDWARE_PWM
-
 #include <Arduino_ARM.h>
+#include <PWM-Hardware.h>
 
 using namespace MuntsTech::Interfaces::PWM;
 
