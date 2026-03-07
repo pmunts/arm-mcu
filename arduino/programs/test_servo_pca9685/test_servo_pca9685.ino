@@ -21,13 +21,13 @@
 // POSSIBILITY OF SUCH DAMAGE.
 
 #include <Arduino_ARM.h>
-#include <PCA9685PWM.h>
+#include <PWM-PCA9685.h>
 #include <Servo-PWM.h>
 
 using namespace MuntsTech::Interfaces::Servo;
 
-MuntsTech::PCA9685::PWM::Device dev;
-MuntsTech::PCA9685::PWM::Output_Class pwmout;
+MuntsTech::PWM::PCA9685::Device dev;
+MuntsTech::PWM::PCA9685::Output_Class pwmout;
 MuntsTech::Servo::PWM::Output_Class outp;
 
 void setup()

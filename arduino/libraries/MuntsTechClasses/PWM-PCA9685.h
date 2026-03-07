@@ -20,14 +20,14 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef _PCA9685_PWM_H
-#define _PCA9685_PWM_H
+#ifndef _PWM_PCA9685_H
+#define _PWM_PCA9685_H
 
 #include <assert.h>
 #include <pwm-interface.h>
 #include <FaBoPWM_PCA9685.h>
 
-namespace MuntsTech::PCA9685::PWM
+namespace MuntsTech::PWM::PCA9685
 {
   // PCA9685 device class definition
 

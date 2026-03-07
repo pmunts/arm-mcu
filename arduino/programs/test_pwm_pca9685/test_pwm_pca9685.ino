@@ -21,12 +21,12 @@
 // POSSIBILITY OF SUCH DAMAGE.
 
 #include <Arduino_ARM.h>
-#include <PCA9685PWM.h>
+#include <PWM-PCA9685.h>
 
 using namespace MuntsTech::Interfaces::PWM;
 
-MuntsTech::PCA9685::PWM::Device dev;
-MuntsTech::PCA9685::PWM::Output_Class outp;
+MuntsTech::PWM::PCA9685::Device dev;
+MuntsTech::PWM::PCA9685::Output_Class outp;
 
 void setup()
 {
