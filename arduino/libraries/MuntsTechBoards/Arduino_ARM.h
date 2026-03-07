@@ -119,21 +119,4 @@
 #endif
 #endif
 
-// Hardware PWM servo configuration
-
-#ifdef ENABLE_HARDWARE_SERVO
-#include <ServoPWM.h>
-#define ENABLE_HARDWARE_PWM
-#endif
-
-// Hardware PWM configuration
-
-#ifdef ENABLE_HARDWARE_PWM
-#ifdef ARDUINO_ARCH_RP2040
-#include <RP2040HardwarePWM.h>
-#elifdef ARDUINO_ARCH_STM32
-#include <STM32HardwarePWM.h>
-#endif
-#endif
-
 #endif
