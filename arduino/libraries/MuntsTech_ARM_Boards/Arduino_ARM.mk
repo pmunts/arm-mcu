@@ -28,4 +28,4 @@ COMPILEFLAGS	+= --libraries "$(SKETCHBOOK)/libraries"
 
 arduino_arm_mk_default: clean install
 
-include $(ARMSRC)/arduino/libraries/MuntsTechBoards/$(BOARDFAMILY).mk
+include $(ARMSRC)/arduino/libraries/MuntsTech_ARM_Boards/$(BOARDFAMILY).mk
