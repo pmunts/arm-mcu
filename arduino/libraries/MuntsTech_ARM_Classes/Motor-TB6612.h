@@ -101,6 +101,15 @@ namespace MuntsTech::Motor::TB6612
       }
     }
 
+    // Motor driver output operators
+
+#ifdef ENABLE_ASSIGNMENT_OPERATOR
+    virtual void operator =(const float velocity)
+    {
+      this->write(velocity);
+    }
+#endif
+
   private:
 
     MuntsTech::Interfaces::PWM::Output pwmout;

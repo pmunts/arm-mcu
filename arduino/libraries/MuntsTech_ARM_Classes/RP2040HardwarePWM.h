@@ -100,10 +100,12 @@ namespace MuntsTech::HardwarePWM
 
     // PWM output operators
 
+#ifdef ENABLE_ASSIGNMENT_OPERATOR
     virtual void operator =(const float dutycycle)
     {
       this->write(dutycycle);
     }
+#endif
 
   private:
 
