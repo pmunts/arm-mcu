@@ -18,7 +18,7 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-BOARDNAME	?= waveshare_rp2350_plus
+BOARDNAME	?= sparkfun_promicrorp2350
 ifneq ($(shell grep -E '^#define.*ENABLE_FREERTOS' *.ino),)
 ARDUINOFQBN	:= rp2040:rp2040:$(BOARDNAME):os=freertos
 else
