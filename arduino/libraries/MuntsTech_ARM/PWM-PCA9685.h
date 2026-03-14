@@ -85,7 +85,7 @@ namespace MuntsTech::PWM::PCA9685
 
     // PWM output constructor
 
-    Output_Class(Device *dev, unsigned channel, 
+    Output_Class(Device *dev, unsigned channel,
       float dutycycle = MuntsTech::Interfaces::PWM::DUTYCYCLE_MIN)
     {
       this->Initialize(dev, channel, dutycycle);

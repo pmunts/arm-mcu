@@ -30,7 +30,7 @@ namespace MuntsTech::Interfaces::Motor
   // Full speed rotation counterclocksize (nominal)
   static constexpr float SPEED_MIN  = -1.0F;
 
-  // Stopped 
+  // Stopped
   static constexpr float SPEED_STOP =  0.0F;
 
   // Full speed rotation clockwise (nominal)
