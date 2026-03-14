@@ -57,6 +57,17 @@
 #endif
 #endif
 
+// Some boards have a NeoPixel compatible on-board RGB LED
+
+#ifndef NEOPIXEL_PIN
+#ifdef ARDUINO_SPARKFUN_PROMICRO_RP2040
+#define NEOPIXEL_PIN LED_BUILTIN
+#endif
+#ifdef ARDUINO_SPARKFUN_PROMICRO_RP2350
+#define NEOPIXEL_PIN LED_BUILTIN
+#endif
+#endif
+
 // User button configuration
 
 #ifndef BUTTON_PIN
