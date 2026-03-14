@@ -91,7 +91,7 @@ namespace MuntsTech::GPIO::Arduino
       return digitalRead(this->pin) ^ this->activelow;
     }
 
-    // PWM output operators
+    // GPIO pin operators
 
 #ifdef ENABLE_ASSIGNMENT_OPERATOR
     operator bool(void)
@@ -101,7 +101,7 @@ namespace MuntsTech::GPIO::Arduino
 
     virtual void operator =(const bool state)
     {
-      this->write(dutycycle);
+      this->write(state);
     }
 #endif
 
