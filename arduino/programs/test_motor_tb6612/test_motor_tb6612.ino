@@ -35,16 +35,20 @@ void setup()
 
 void loop()
 {
-  for (float V = 1.0F; V > -1.0F; V -= 1.0E-2F)
+  for (float V = 0.0F; V < 1.0F; V += 1.0E-2F)
   {
-    Serial.println(V);
     outp.write(V);
     delay(200);
   }
 
-  for (float V = -1.0F; V < 1.0F; V += 1.0E-2F)
+  for (float V = 1.0F; V > -1.0F; V -= 1.0E-2F)
   {
-    Serial.println(V);
+    outp.write(V);
+    delay(200);
+  }
+
+  for (float V = -1.0F; V < 0.0F; V += 1.0E-2F)
+  {
     outp.write(V);
     delay(200);
   }
