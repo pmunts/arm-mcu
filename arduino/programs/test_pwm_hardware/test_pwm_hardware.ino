@@ -1,4 +1,4 @@
-// Arduino PWM Output Test
+// Arduino Hardware PWM Output Test
 
 // Copyright (C)2026, Philip Munts dba Munts Technologies.
 //
@@ -30,7 +30,7 @@ MuntsTech::HardwarePWM::Output_Class outp;
 void setup()
 {
   Serial.begin(115200);
-  Serial.println("\n\n\ecArduino PWM Output Test\n");
+  Serial.println("\n\n\ecArduino Hardware PWM Output Test\n");
 
   outp.Initialize(3, 1000);
 }

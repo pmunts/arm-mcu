@@ -1,4 +1,4 @@
-// Arduino Servo Output Test
+// Arduino Hardware PWM Servo Output Test
 
 // Copyright (C)2026, Philip Munts dba Munts Technologies.
 //
@@ -32,7 +32,7 @@ MuntsTech::Servo::PWM::Output_Class outp;
 void setup()
 {
   Serial.begin(115200);
-  Serial.println("\n\n\ecArduino Servo Output Test\n");
+  Serial.println("\n\n\ecArduino Hardware PWM Servo Output Test\n");
 
   pwmout.Initialize(3, 50);
   outp.Initialize(&pwmout, 50);
