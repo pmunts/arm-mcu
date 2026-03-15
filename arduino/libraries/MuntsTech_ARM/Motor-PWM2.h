@@ -58,8 +58,8 @@ namespace MuntsTech::Motor::PWM2
     {
       assert(velocity >= SPEED_MIN);
       assert(velocity <= SPEED_MAX);
-      this->pwmout1 = new MuntsTech::HardwarePWM::Output_Class(pwmpin1, freq);
-      this->pwmout2 = new MuntsTech::HardwarePWM::Output_Class(pwmpin2, freq);
+      this->pwmout1 = new MuntsTech::PWM::Hardware::Output_Class(pwmpin1, freq);
+      this->pwmout2 = new MuntsTech::PWM::Hardware::Output_Class(pwmpin2, freq);
 
       this->write(velocity);
     }

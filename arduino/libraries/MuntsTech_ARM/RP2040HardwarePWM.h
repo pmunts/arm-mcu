@@ -30,7 +30,7 @@
 #include <hardware/pwm.h>
 #include <pwm-interface.h>
 
-namespace MuntsTech::HardwarePWM
+namespace MuntsTech::PWM::Hardware
 {
   // PWM output class definition
 

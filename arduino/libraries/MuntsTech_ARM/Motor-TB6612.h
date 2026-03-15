@@ -61,7 +61,7 @@ namespace MuntsTech::Motor::TB6612
     {
       assert(velocity >= SPEED_MIN);
       assert(velocity <= SPEED_MAX);
-      this->pwmout = new MuntsTech::HardwarePWM::Output_Class(pwmpin, freq);
+      this->pwmout = new MuntsTech::PWM::Hardware::Output_Class(pwmpin, freq);
       this->in1out = new MuntsTech::GPIO::Arduino::Pin_Class(in1pin, OUTPUT);
       this->in2out = new MuntsTech::GPIO::Arduino::Pin_Class(in2pin, OUTPUT);
 

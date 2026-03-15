@@ -26,7 +26,7 @@
 
 using namespace MuntsTech::Interfaces::Servo;
 
-MuntsTech::HardwarePWM::Output_Class pwmout;
+MuntsTech::PWM::Hardware::Output_Class pwmout;
 MuntsTech::Servo::PWM::Output_Class outp;
 
 void setup()
