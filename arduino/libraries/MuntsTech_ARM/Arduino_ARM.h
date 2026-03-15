@@ -66,6 +66,14 @@
 #ifdef ARDUINO_SPARKFUN_PROMICRO_RP2350
 #define NEOPIXEL_PIN LED_BUILTIN
 #endif
+#ifdef ARDUINO_SEEED_XIAO_RP2040
+#define NEOPIXEL_PWR 11
+#define NEOPIXEL_PIN 12
+#endif
+#ifdef ARDUINO_SEEED_XIAO_RP2350
+#define NEOPIXEL_PIN 22
+#define NEOPIXEL_PWR 23
+#endif
 #endif
 
 // User button configuration
