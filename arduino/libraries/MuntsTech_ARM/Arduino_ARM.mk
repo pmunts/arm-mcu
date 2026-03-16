@@ -22,10 +22,10 @@ BOARDFAMILY	?= Nucleo_64
 
 ARDUINOCLI	?= arduino-cli
 ARDUINOPKGSDIR	?= $(HOME)/.arduino15/packages
-SKETCHBOOK	?= $(ARMSRC)/arduino
+SKETCHBOOK	?= $(HOME)/arduino-arm
 COMPILEFLAGS	+= --build-property build.extra_flags="-DMUNTSTECH $(EXTRACFLAGS)"
 COMPILEFLAGS	+= --libraries "$(SKETCHBOOK)/libraries"
 
 arduino_arm_mk_default: clean install
 
-include $(ARMSRC)/arduino/libraries/MuntsTech_ARM/$(BOARDFAMILY).mk
+include $(SKETCHBOOK)/libraries/MuntsTech_ARM/$(BOARDFAMILY).mk

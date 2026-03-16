@@ -5,7 +5,7 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "${env:CORESRC}/**",
-                "${env:ARMSRC}/arduino/libraries/**"
+                "${env:SKETCHBOOK}/libraries/**"
             ],
             "compilerPath": "${env:COREGCC}",
             "intelliSenseMode": "${default}"

@@ -1,4 +1,4 @@
-# Makefile for building and installing Arduino programs
+# Makefile for building and installing Arduino ARM programs
 
 # Copyright (C)2026, Philip Munts dba Munts Technologies.
 #
@@ -20,6 +20,6 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-ARMSRC ?= $(HOME)/arm-mcu
+SKETCHBOOK ?= $(HOME)/arduino-arm
 
-include $(ARMSRC)/arduino/libraries/MuntsTech_ARM/Arduino_ARM.mk
+include $(SKETCHBOOK)/libraries/MuntsTech_ARM/Arduino_ARM.mk
