@@ -94,7 +94,7 @@ namespace MuntsTech::GPIO::NeoPixel
       return this->read();
     }
 
-    void operatior =(const bool state)
+    void operator =(const bool state)
     {
       this->write(state);
     }

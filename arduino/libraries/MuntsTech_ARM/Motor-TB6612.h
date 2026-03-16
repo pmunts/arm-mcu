@@ -104,7 +104,7 @@ namespace MuntsTech::Motor::TB6612
     // Motor driver output operators
 
 #ifdef ENABLE_ASSIGNMENT_OPERATOR
-    void operatior =(const float velocity)
+    void operator =(const float velocity)
     {
       this->write(velocity);
     }

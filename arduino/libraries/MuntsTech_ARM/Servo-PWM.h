@@ -83,7 +83,7 @@ namespace MuntsTech::Servo::PWM
     // Servo output operators
 
 #ifdef ENABLE_ASSIGNMENT_OPERATOR
-    void operatior =(const float position)
+    void operator =(const float position)
     {
       this->write(position);
     }
