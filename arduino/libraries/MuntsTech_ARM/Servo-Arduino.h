@@ -83,7 +83,7 @@ namespace MuntsTech::Servo::Arduino
     // Servo output operators
 
 #ifdef ENABLE_ASSIGNMENT_OPERATOR
-    virtual void operator =(const float position)
+    void operatior =(const float position)
     {
       this->write(position);
     }

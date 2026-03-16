@@ -30,14 +30,6 @@ namespace MuntsTech::Interfaces
     // Actuator output methods
 
     virtual void write(const T item) = 0;
-
-    // Actuator output operators
-
-#ifdef ENABLE_ASSIGNMENT_OPERATOR
-    operator T(void);
-
-    void operator =(const T item);
-#endif
   };
 }
 

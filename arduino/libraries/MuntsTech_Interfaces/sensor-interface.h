@@ -30,14 +30,6 @@ namespace MuntsTech::Interfaces
     // Sensor input methods
 
     virtual T read(void) = 0;
-
-    // Sensor input operators
-
-#ifdef ENABLE_ASSIGNMENT_OPERATOR
-    operator T(void);
-
-    void operator =(const T state);
-#endif
   };
 }
 

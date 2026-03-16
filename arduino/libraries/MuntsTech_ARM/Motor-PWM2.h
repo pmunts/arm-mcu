@@ -96,7 +96,7 @@ namespace MuntsTech::Motor::PWM2
     // Motor driver output operators
 
 #ifdef ENABLE_ASSIGNMENT_OPERATOR
-    virtual void operator =(const float velocity)
+    void operatior =(const float velocity)
     {
       this->write(velocity);
     }
