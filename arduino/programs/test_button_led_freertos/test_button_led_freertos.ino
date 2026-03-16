@@ -23,10 +23,6 @@
 #define ENABLE_FREERTOS
 
 #include <Arduino_ARM.h>
-#include <GPIO-Arduino.h>
-
-MuntsTech::GPIO::Arduino::Pin_Class Button;
-MuntsTech::GPIO::Arduino::Pin_Class LED;
 
 QueueHandle_t EdgeQueue;
 
@@ -34,7 +30,7 @@ QueueHandle_t EdgeQueue;
 
 void EdgeHandler(void)
 {
-  bool newstate = Button.read();
+  bool newstate = UserButton.read();
   xQueueSendFromISR(EdgeQueue, &newstate, NULL);
 }
 
@@ -44,7 +40,7 @@ void MainTaskFunction(void *parameters)
 {
   // Attach button GPIO pin interrupt service routine
 
-  attachInterrupt(digitalPinToInterrupt(BUTTON_PIN), EdgeHandler, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(UserButton.pin()), EdgeHandler, CHANGE);
 
   // Main event loop
 
@@ -55,7 +51,7 @@ void MainTaskFunction(void *parameters)
     if (xQueueReceive(EdgeQueue, &newstate, pdMS_TO_TICKS(1000)) == pdPASS)
     {
       Serial.println(newstate ? "PRESS" : "RELEASE");
-      LED.write(newstate);
+      UserLED.write(newstate);
     }
     else
       Serial.println("Tick...");
@@ -66,14 +62,8 @@ void setup()
 {
   Serial.begin(115200);
   Serial.println("\n\n\ecArduino Button and LED Test using FreeRTOS\n");
-  Serial.print("LED    on D"); Serial.println(LED_PIN);
-  Serial.print("Button on D"); Serial.println(BUTTON_PIN);
-  Serial.println();
 
-  Button.Initialize(BUTTON_PIN, BUTTON_MODE, BUTTON_XOR);
-  LED.Initialize(LED_PIN, OUTPUT);
-
-  LED.write(Button.read());
+  UserLED.write(UserButton.read());
 
   // Create FreeRTOS entities and start the scheduler
 

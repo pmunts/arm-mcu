@@ -21,31 +21,21 @@
 // POSSIBILITY OF SUCH DAMAGE.
 
 #include <Arduino_ARM.h>
-#include <GPIO-Arduino.h>
-
-MuntsTech::GPIO::Arduino::Pin_Class Button;
-MuntsTech::GPIO::Arduino::Pin_Class LED;
 
 void EdgeHandler(void)
 {
-  LED.write(Button.read());
-  Serial.println(LED.read() ? "PRESS" : "RELEASE");
+  UserLED.write(UserButton.read());
+  Serial.println(UserLED.read() ? "PRESS" : "RELEASE");
 }
 
 void setup()
 {
   Serial.begin(115200);
   Serial.println("\n\n\ecArduino Button and LED Test Using Interrupt\n");
-  Serial.print("LED    on D"); Serial.println(LED_PIN);
-  Serial.print("Button on D"); Serial.println(BUTTON_PIN);
-  Serial.println();
 
-  Button.Initialize(BUTTON_PIN, BUTTON_MODE, BUTTON_XOR);
-  LED.Initialize(LED_PIN, OUTPUT);
+  UserLED.write(UserButton.read());
 
-  LED.write(Button.read());
-
-  attachInterrupt(digitalPinToInterrupt(BUTTON_PIN), EdgeHandler, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(UserButton.pin()), EdgeHandler, CHANGE);
 }
 
 void loop()
