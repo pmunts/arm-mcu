@@ -36,19 +36,21 @@ void setup()
   Serial.begin(115200);
   Serial.println("\n\n\ecArduino LED Test\n");
 
-#ifdef NEOPIXEL_PWR
-  // Turn on NeoPixel LED power
-  pinMode(NEOPIXEL_PWR, OUTPUT);
-  digitalWrite(NEOPIXEL_PWR, true);
-#endif
-
-  LED.Initialize(NEOPIXEL_PIN);
-  LED.setColor(RED);
+  LED.Initialize(NEOPIXEL_PIN, NEOPIXEL_PWR);
 }
 
 void loop()
 {
   // Toggle the LED
+  LED.setColor(RED);
+  LED = !LED;
+  delay(500);
+  // Toggle the LED
+  LED.setColor(BLUE);
+  LED = !LED;
+  delay(500);
+  // Toggle the LED
+  LED.setColor(GREEN);
   LED = !LED;
   delay(500);
 }

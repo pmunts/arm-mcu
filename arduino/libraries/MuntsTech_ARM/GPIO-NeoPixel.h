@@ -29,7 +29,8 @@
 
 namespace MuntsTech::GPIO::NeoPixel
 {
-  const uint32_t DefaultOnColor = 0x00400000;
+  const uint32_t DefaultOnColor = 0x00400000; // Red
+  const uint32_t PowerUnused    = 0xFFFFFFFF;
 
   // GPIO pin class definition
 
@@ -48,17 +49,26 @@ namespace MuntsTech::GPIO::NeoPixel
 
     // GPIO pin constructor
 
-    Pin_Class(unsigned pin, bool state = false, unsigned nleds = 1,
-      unsigned index = 0, uint32_t color = DefaultOnColor)
+    Pin_Class(unsigned pin, unsigned pwrpin = PowerUnused, bool state = false,
+      unsigned nleds = 1, unsigned index = 0, uint32_t color = DefaultOnColor)
     {
-      this->Initialize(pin, state, nleds, index, color);
+      this->Initialize(pin, pwrpin, state, nleds, index, color);
     }
 
     // GPIO pin initializer
 
-    void Initialize(unsigned pin, bool state = false, unsigned nleds = 1,
-      unsigned index = 0, uint32_t color = DefaultOnColor)
+    void Initialize(unsigned pin, unsigned pwrpin = PowerUnused, bool state = false,
+      unsigned nleds = 1, unsigned index = 0, uint32_t color = DefaultOnColor)
     {
+      // Certain boards (e.g. Seeed Studio Xiao RP2040) can control power to the
+      // NeoPixel LED with a GPIO pin.
+
+      if (pwrpin < PowerUnused)
+      {
+        pinMode(pwrpin, OUTPUT);
+        digitalWrite(pwrpin, true);
+      }
+
       this->LED     = new Adafruit_NeoPixel(nleds, pin, NEO_GRB + NEO_KHZ800);
       this->state   = state;
       this->index   = index;
