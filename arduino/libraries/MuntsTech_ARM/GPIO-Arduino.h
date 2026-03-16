@@ -41,8 +41,8 @@ namespace MuntsTech::GPIO::Arduino
 
     Pin_Class()
     {
-      this->pin = -1;
-      this->output = false;
+      this->pinnum    = -1;
+      this->output    = false;
       this->activelow = false;
     }
 
@@ -62,7 +62,6 @@ namespace MuntsTech::GPIO::Arduino
 #ifdef ARDUINO_ARCH_RP2040
       assert(mode <= OUTPUT_12MA);
       this->output = (mode == OUTPUT) || ((mode >= OUTPUT_OPENDRAIN) && (mode <= OUTPUT_12MA));
-
 #elifdef ARDUINO_ARCH_STM32
       assert(mode <= OUTPUT_OPEN_DRAIN);
       this->output = (mode == OUTPUT) || (mode = OUTPUT_OPEN_DRAIN);
@@ -72,7 +71,7 @@ namespace MuntsTech::GPIO::Arduino
 #endif
       pinMode(pin, mode);
 
-      this->pin       = pin;
+      this->pinnum    = pin;
       this->activelow = activelow;
 
       if (this->output) this->write(state);
@@ -83,12 +82,17 @@ namespace MuntsTech::GPIO::Arduino
     virtual void write(bool state)
     {
       assert(this->output);
-      digitalWrite(this->pin, state ^ this->activelow);
+      digitalWrite(this->pinnum, state ^ this->activelow);
     }
 
     virtual bool read(void)
     {
-      return digitalRead(this->pin) ^ this->activelow;
+      return digitalRead(this->pinnum) ^ this->activelow;
+    }
+
+    unsigned pin(void)
+    {
+      return this->pinnum;
     }
 
     // GPIO pin operators
@@ -99,7 +103,7 @@ namespace MuntsTech::GPIO::Arduino
       return this->read();
     }
 
-    virtual void operator =(const bool state)
+    void operator =(const bool state)
     {
       this->write(state);
     }
@@ -107,7 +111,7 @@ namespace MuntsTech::GPIO::Arduino
 
   private:
 
-    unsigned pin;
+    unsigned pinnum;
     bool output;
     bool activelow;
   };
