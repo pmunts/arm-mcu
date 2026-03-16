@@ -42,74 +42,99 @@
 
 // User LED configuration
 
-#ifndef LED_PIN
-#ifdef ENABLE_GROVE_LED_BUTTON
-#define LED_PIN D2
+#ifndef UserLED
+#ifdef LED_PIN
+// Use make defined GPIO pin for user LED
+#include <GPIO-Arduino.h>
+MuntsTech::GPIO::Arduino::Pin_Class _UserLED(LED_PIN, OUTPUT);
+#elifdef ENABLE_GROVE_LED_BUTTON_D2
+// Use Grove LED Button (plugged into Grove socket D2) for user LED
+#include <GPIO-Arduino.h>
+MuntsTech::GPIO::Arduino::Pin_Class _UserLED(D2, OUTPUT);
 #elifdef ARDUINO_SPARKFUN_PROMICRO_RP2040
-// SparkFun Pro Micro RP2040 does not have a GPIO LED
-#define LED_PIN D2
+// Use NeoPixel LED for user LED
+#include <GPIO-NeoPixel.h>
+MuntsTech::GPIO::NeoPixel::Pin_Class _UserLED(LED_BUILTIN);
 #elifdef ARDUINO_SPARKFUN_PROMICRO_RP2350
-// SparkFun Pro Micro RP2040 does not have a GPIO LED
-#define LED_PIN D2
+// Use NeoPixel LED for user LED
+#include <GPIO-NeoPixel.h>
+MuntsTech::GPIO::NeoPixel::Pin_Class _UserLED(LED_BUILTIN);
+#elifdef ARDUINO_SEEED_XIAO_RP2040
+// Xiao RP2040 has three active low user LEDs
+#include <GPIO-Arduino.h>
+MuntsTech::GPIO::Arduino::Pin_Class _UserLED(LED_BUILTIN, OUTPUT, true, false);
+MuntsTech::GPIO::Arduino::Pin_Class _UserLEDRed(17, OUTPUT, true, false);
+MuntsTech::GPIO::Arduino::Pin_Class _UserLEDGreen(16, OUTPUT, true, false);
+MuntsTech::GPIO::Arduino::Pin_Class _UserLEDBlue(25, OUTPUT, true, false);
+#elifdef ARDUINO_SEEED_XIAO_RP2350
+// Xiao RP2350 has one active low user LED
+MuntsTech::GPIO::Arduino::Pin_Class _UserLED(LED_BUILTIN, OUTPUT, true, false);
 #elifdef LED_BUILTIN
-// Most other boards have an on-board LED connected to D13
-#define LED_PIN LED_BUILTIN
+// Most other boards have an on-board LED, often connected to D13
+#include <GPIO-Arduino.h>
+MuntsTech::GPIO::Arduino::Pin_Class _UserLED(LED_BUILTIN, OUTPUT);
 #endif
-#endif
-
-// Some boards have a NeoPixel compatible on-board RGB LED
-
-#ifndef NEOPIXEL_PIN
-#ifdef ARDUINO_SPARKFUN_PROMICRO_RP2040
-#define NEOPIXEL_PIN LED_BUILTIN
-#endif
-#ifdef ARDUINO_SPARKFUN_PROMICRO_RP2350
-#define NEOPIXEL_PIN LED_BUILTIN
-#endif
-#ifdef ARDUINO_SEEED_XIAO_RP2040
-#define NEOPIXEL_PWR 11
-#define NEOPIXEL_PIN 12
-#endif
-#ifdef ARDUINO_SEEED_XIAO_RP2350
-#define NEOPIXEL_PIN 22
-#define NEOPIXEL_PWR 23
-#endif
+#define UserLED _UserLED
 #endif
 
 // User button configuration
 
-#ifndef BUTTON_PIN
-#ifdef ENABLE_GROVE_LED_BUTTON
+#ifndef UserButton
+#if defined(BUTTON_PIN) || defined(BUTTON_MODE) || defined(BUTTON_ACTIVELOW)
+// Use make defined GPIO pin for user button
+#include <GPIO-Arduino.h>
+MuntsTech::GPIO::Arduino::Pin_Class _UserButton(BUTTON_PIN, BUTTON_MODE, BUTTON_ACTIVELOW);
+#elifdef ENABLE_GROVE_LED_BUTTON_D2
+// Use Grove LED Button plugged into Grove socket D2 for user button
 // Active low button on D3
-#define BUTTON_PIN  D3
-#define BUTTON_MODE INPUT
-#define BUTTON_XOR  1
+#include <GPIO-Arduino.h>
+MuntsTech::GPIO::Arduino::Pin_Class _UserButton(D3, INPUT, true);
+#elifdef ARDUINO_SEEED_XIAO_RP2040
+// Xiao RP2040 doesn't have an uncommitted GPIO pin for a user button
+#elifdef ARDUINO_SEEED_XIAO_RP2350
+// Xiao RP2350 doesn't have an uncommitted GPIO pin for a user button
 #elifdef ARDUINO_ARCH_RP2040
-// All RP2040 and RP2350 boards expect an external active low button switch
-// from D3 to GND.
-#define BUTTON_PIN  D3
-#define BUTTON_MODE INPUT_PULLUP
-#define BUTTON_XOR  1
+// All other RP2040 and RP2350 boards need an external active low button
+// switch from D2 to GND.
+#include <GPIO-Arduino.h>
+MuntsTech::GPIO::Arduino::Pin_Class _UserButton(D2, INPUT_PULLUP, true);
 #elifdef ARDUINO_DISCO_F407VG
 // STM32F4-Discovery has an on-board active high button.
-#define BUTTON_PIN  USER_BTN
-#define BUTTON_MODE INPUT
-#define BUTTON_XOR  0
+#include <GPIO-Arduino.h>
+MuntsTech::GPIO::Arduino::Pin_Class _UserButton(USER_BTN, INPUT, false);
 #elifdef ARDUINO_NUCLEO_F042K6
 // Nucleo-F042K6 expects an external active low button switch from D26 to GND.
 // This is unrealizable so override for an external active low button switch
 // from D9 to GND, and matching some other Nucleo-32 boards.
-#define BUTTON_PIN  D9
-#define BUTTON_MODE INPUT_PULLUP
-#define BUTTON_XOR  1
+#include <GPIO-Arduino.h>
+MuntsTech::GPIO::Arduino::Pin_Class _UserButton(D9, INPUT_PULLUP, true);
 #elifdef USER_BTN
-// Some Nucleo-32 boards expect an external active low button switch from D9
-// to GND.
+// Some Nucleo-32 boards expect an external active low button switch from
+// USER_BTN to GND.
 // All  Nucleo-64 boards have an on-board active low button.
-#define BUTTON_PIN  USER_BTN
-#define BUTTON_MODE INPUT_PULLUP
-#define BUTTON_XOR  1
+#include <GPIO-Arduino.h>
+MuntsTech::GPIO::Arduino::Pin_Class _UserButton(USER_BTN, INPUT_PULLUP, true);
 #endif
+#define UserButton _UserButton
+#endif
+
+// Some boards have a NeoPixel compatible on-board RGB LED
+
+#ifdef ARDUINO_SPARKFUN_PROMICRO_RP2040
+#define NEOPIXEL_PIN LED_BUILTIN
+#define NEOPIXEL_PWR 0xFFFFFFFF
+#endif
+#ifdef ARDUINO_SPARKFUN_PROMICRO_RP2350
+#define NEOPIXEL_PIN LED_BUILTIN
+#define NEOPIXEL_PWR 0xFFFFFFFF
+#endif
+#ifdef ARDUINO_SEEED_XIAO_RP2040
+#define NEOPIXEL_PIN 12
+#define NEOPIXEL_PWR 11
+#endif
+#ifdef ARDUINO_SEEED_XIAO_RP2350
+#define NEOPIXEL_PIN 22
+#define NEOPIXEL_PWR 23
 #endif
 
 // I2C bus pins
