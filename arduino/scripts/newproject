@@ -63,7 +63,7 @@ if [ -f ${COPYING}.h ]; then
 fi
 
 cat <<EOD >>"$1"/"$1".ino
-#include <Arduino_ARM>
+#include <Arduino_ARM.h>
 
 void setup()
 {
