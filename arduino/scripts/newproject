@@ -1,0 +1,147 @@
+#! /bin/bash
+
+# Create a new Munts Technologies Arduino ARM Framework project tree.
+
+# Copyright (C)2026, Philip Munts dba Munts Technologies.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+#
+# * Redistributions of source code must retain the above copyright notice,
+#   this list of conditions and the following disclaimer.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+# ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+# LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+# CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+# SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+# INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+# CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+# ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+# POSSIBILITY OF SUCH DAMAGE.
+
+if [ $# -ne 1 ]; then
+  echo ""
+  echo "Arduino ARM Project Creator"
+  echo ""
+  echo "Usage: arduino-arm-newproject <project name>"
+  echo ""
+  exit 1
+fi
+
+if [ -e "$1" ]; then
+  echo ""
+  echo "Arduino ARM Project Creator"
+  echo ""
+  echo "ERROR: $1 already exists."
+  echo ""
+  echo "Usage: arduino-arm-newproject <project name>"
+  echo ""
+fi
+
+mkdir -p "$1"/.vscode
+
+cat <<EOD >"$1"/Makefile
+# Makefile for building and installing Arduino ARM programs
+
+EOD
+
+if [ -f ${COPYING}.sh ]; then
+  cat ${COPYING}.sh >>"$1"/Makefile
+fi
+
+cat <<EOD >>"$1"/Makefile
+SKETCHBOOK ?= \$(HOME)/arduino-arm
+
+include \$(SKETCHBOOK)/libraries/MuntsTech_ARM/Arduino_ARM.mk
+EOD
+
+if [ -f ${COPYING}.h ]; then
+  cat ${COPYING}.h >>"$1"/"$1".ino
+fi
+
+cat <<EOD >>"$1"/"$1".ino
+#include <Arduino_ARM>
+
+void setup()
+{
+  // put your setup code here, to run once:
+
+}
+
+void loop()
+{
+  // put your main code here, to run repeatedly:
+
+}
+EOD
+
+cat <<EOD >"$1"/.vscode/c_cpp_properties.json
+{
+    "configurations": [
+        {
+            "name": "Arduino",
+            "includePath": [
+                "\${workspaceFolder}/**",
+                "\${env:CORESRC}/**",
+                "\${env:SKETCHBOOK}/libraries/**"
+            ],
+            "compilerPath": "\${env:COREGCC}",
+            "intelliSenseMode": "\${default}"
+        }
+    ],
+    "version": 4
+}
+EOD
+
+cat <<EOD >"$1"/.vscode/tasks.json
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+         {
+            "label": "make <program>",
+            "type": "shell",
+            "command": "make clean install",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+         }
+         {
+            "label": "make build",
+            "type": "shell",
+            "command": "make clean build",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+         }
+         {
+            "label": "make install",
+            "type": "shell",
+            "command": "make install",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+         }
+         {
+            "label": "make clean",
+            "type": "shell",
+            "command": "make clean",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+         }
+    ]
+}
+EOD
