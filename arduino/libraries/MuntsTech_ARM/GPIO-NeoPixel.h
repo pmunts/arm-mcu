@@ -29,7 +29,7 @@
 
 namespace MuntsTech::GPIO::NeoPixel
 {
-  const uint32_t DefaultOnColor = 0x00000040;
+  const uint32_t DefaultOnColor = 0x00400000;
 
   // GPIO pin class definition
 
