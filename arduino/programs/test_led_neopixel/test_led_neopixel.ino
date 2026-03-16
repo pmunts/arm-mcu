@@ -1,4 +1,4 @@
-// Arduino LED Test
+// Arduino NeoPixel LED Test
 
 // Copyright (C)2026, Philip Munts dba Munts Technologies.
 //
@@ -20,37 +20,32 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#define ENABLE_ASSIGNMENT_OPERATOR
-
 #include <Arduino_ARM.h>
-#include <GPIO-NeoPixel.h>
 
 #define RED   0x00100000
 #define GREEN 0x00001000
 #define BLUE  0x00000010
 
-MuntsTech::GPIO::NeoPixel::Pin_Class LED;
-
 void setup()
 {
   Serial.begin(115200);
-  Serial.println("\n\n\ecArduino LED Test\n");
-
-  LED.Initialize(NEOPIXEL_PIN, NEOPIXEL_PWR);
+  Serial.println("\n\n\ecArduino NeoPixel LED Test\n");
 }
 
 void loop()
 {
   // Toggle the LED
-  LED.setColor(RED);
-  LED = !LED;
+  NeoPixelLED.setColor(RED);
+  NeoPixelLED.write(!NeoPixelLED.read());
   delay(500);
+
   // Toggle the LED
-  LED.setColor(BLUE);
-  LED = !LED;
+  NeoPixelLED.setColor(BLUE);
+  NeoPixelLED.write(!NeoPixelLED.read());
   delay(500);
+
   // Toggle the LED
-  LED.setColor(GREEN);
-  LED = !LED;
+  NeoPixelLED.setColor(GREEN);
+  NeoPixelLED.write(!NeoPixelLED.read());
   delay(500);
 }

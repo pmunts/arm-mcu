@@ -121,20 +121,15 @@ MuntsTech::GPIO::Arduino::Pin_Class _UserButton(USER_BTN, INPUT_PULLUP, true);
 // Some boards have a NeoPixel compatible on-board RGB LED
 
 #ifdef ARDUINO_SPARKFUN_PROMICRO_RP2040
-#define NEOPIXEL_PIN LED_BUILTIN
-#define NEOPIXEL_PWR 0xFFFFFFFF
-#endif
-#ifdef ARDUINO_SPARKFUN_PROMICRO_RP2350
-#define NEOPIXEL_PIN LED_BUILTIN
-#define NEOPIXEL_PWR 0xFFFFFFFF
-#endif
-#ifdef ARDUINO_SEEED_XIAO_RP2040
-#define NEOPIXEL_PIN 12
-#define NEOPIXEL_PWR 11
-#endif
-#ifdef ARDUINO_SEEED_XIAO_RP2350
-#define NEOPIXEL_PIN 22
-#define NEOPIXEL_PWR 23
+#define NeoPixelLED UserLED
+#elifdef ARDUINO_SPARKFUN_PROMICRO_RP2350
+#define NeoPixelLED UserLED
+#elifdef ARDUINO_SEEED_XIAO_RP2040
+#include <GPIO-NeoPixel.h>
+MuntsTech::GPIO::NeoPixel::Pin_Class NeoPixelLED(12, 11);
+#elifdef ARDUINO_SEEED_XIAO_RP2350
+#include <GPIO-NeoPixel.h>
+MuntsTech::GPIO::NeoPixel::Pin_Class NeoPixelLED(22, 23);
 #endif
 
 // I2C bus pins
