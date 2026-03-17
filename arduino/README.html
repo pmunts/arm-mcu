@@ -1,4 +1,4 @@
-<h1>Arduino Framework for ARM Platforms</h1>
+<h1>Arduino Framework for ARM MCU Platforms</h1>
 <p>In order to use this framework, you will need to clone the <a href=
 "https://github.com/pmunts/arm-mcu">arm-mcu</a> <b><tt>git</tt></b> repository
 with the following command:</p>
@@ -16,12 +16,12 @@ framework within the Arduino IDE 2, all you need to do is:
 <li>Select the <b>communication port</b> from <b><tt>Tools →
 Port</tt></b>.</li>
 <li>Set the <b>sketchbook directory</b> to your <b>Arduino Framework for ARM
-Platforms</b> checkout directory (<i>e.g.</i>
+MCU Platforms</b> checkout directory (<i>e.g.</i>
 <b><tt>~/arm-mcu/arduino/</tt></b>) from <b><tt>File → Preferences → Sketchbook
 location</tt></b>.</li>
 </ul>
 <p>Your project does <b><i>not</i></b> need to be within the <b>Arduino
-Framework for ARM Platforms</b> checkout directory.</p>
+Framework for ARM MCU Platforms</b> checkout directory.</p>
 <p>The Arduino IDE 2 does not use anything from the GNU make project except for
 the sketch source file(s).</p>
 <p>An Arduino IDE 2 Debian package for Linux x86-64 <i>aka</i> amd64 machines
@@ -30,7 +30,110 @@ Technologies Debian Package Repository</a>. It is packaged from the official
 Arduino release. Unfortunately there is no official Arduino IDE 2 release for
 ARMv8 <i>aka</i> arm64 machines.</p>
 <h2>Visual Studio Code</h2>
-<h2>FreeRTOS</h2>
+<h2><a href="https://www.freertos.org">FreeRTOS</a></h2>
+<p>FreeRTOS is an <a href="https://en.wikipedia.org/wiki/Open_source">open
+source</a> lightweight <a href=
+"https://en.wikipedia.org/wiki/Real-time_operating_system">Real Time Operating
+System</a> that has been ported to many microcontrollers, including ARM 32-bit
+microcontrollers. FreeRTOS was originally published in 2003 by Richard Barry.
+<a href="https://aws.amazon.com">Amazon Web Services</a> acquired ownership or
+a least stewardship of the FreeRTOS project in 2017, apparently to facilitate
+the creation of microcontroller <a href=
+"https://en.wikipedia.org/wiki/Internet_of_things">Internet of Things</a> nodes
+to feed AWS backend applications. FreeRTOS has been very widely used throughout
+the world by developers across industries ranging from hobbyists to <a href=
+"https://us500.com/fortune-500-companies">Fortune 500</a> companies.</p>
+<h3>RP2040/RP2350</h3>
+<p>The <a href=
+"https://github.com/earlephilhower/arduino-pico">Arduino-Pico</a> core package
+for RP2040 and RP2350 microcontrollers includes a tightly integrated
+implementation of <a href=
+"https://www.freertos.org/Documentation/02-Kernel/02-Kernel-features/13-Symmetric-multiprocessing-introduction">
+FreeRTOS SMP</a> (Symmetric Multi-Processing). The following minimal sketch
+skeleton illustrates how create an RP2040 or RP2350 multicore Arduino FreeRTOS
+application:</p>
+<pre><b>
+#define ENABLE_FREERTOS
+
+#include &lt;Arduino_ARM.h&gt;
+
+void Task0(void *parameters) // Runs on CPU core 0
+{
+  for (;;)
+  {
+    taskYIELD();
+  }
+}
+
+void Task1(void *parameters) // Runs on CPU core 1
+{
+  for (;;)
+  {
+    taskYIELD();
+  }
+}
+
+void setup() // Runs on CPU core 0
+{
+  xTaskCreate(Task0, "main", 512, NULL, 1, NULL);
+}
+
+void loop() // Runs on CPU core 0
+{
+}
+
+void setup1() // Runs on CPU core 1
+{
+  xTaskCreate(Task1, "main", 512, NULL, 1, NULL);
+}
+
+void loop1() // Runs on CPU core 1
+{
+}
+</b></pre>
+<p>All of <b><tt>loop()</tt></b>, <b><tt>setup1()</tt></b>, and
+<b><tt>loop1()</tt></b> are optional. For compatibility, an idle task running
+on core 0 will call <b><tt>loop()</tt></b> if it is defined and an idle task
+running on core 1 will call <b><tt>loop1()</tt></b> if it is defined.</p>
+<p>Because of how well FreeRTOS has been integrated into the Arduino-Pico core
+package, it is now probably easier to develop a FreeRTOS application for an
+Arduino RP2040 or RP2350 platform than for any other hardware/software
+combination.</p>
+<h3>STM32</h3>
+<p>The <a href="https://github.com/stm32duino/STM32FreeRTOS">STM32FreeRTOS</a>
+Arduino library provides FreeRTOS support for STM32 microcontrollers. Since it
+is delivered as a library, it is not integrated as tightly with the STM32 core
+package, and FreeRTOS applications for Arduino are implemented exactly the same
+as with any other GCC C or C++ framework. The following minimal sketch skeleton
+illustrates how create an STM32 Arduino FreeRTOS application:</p>
+<pre><b>
+#define ENABLE_FREERTOS
+
+#include &lt;Arduino_ARM.h&gt;
+
+void Task0(void *parameters)
+{
+  for (;;)
+  {
+    taskYIELD();
+  }
+}
+
+void setup()
+{
+  xTaskCreate(Task0, "main", 512, NULL, 1, NULL);
+  vTaskStartScheduler();
+}
+
+void loop()
+{
+}
+</b></pre>
+<p>Your <b><tt>setup()</tt></b> function must call
+<b><tt>xTaskCreate()</tt></b> to create at least one FreeRTOS task and then
+call <b><tt>vTaskStartScheduler()</tt></b> which does not return and replaces
+all of the normal Arduino background processing. For compatibility, the
+FreeRTOS idle task calls <b><tt>loop()</tt></b>.</p>
 <h2>Libraries</h2>
 <hr>
 Questions or comments to Philip Munts <a href=
