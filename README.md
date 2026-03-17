@@ -8,7 +8,7 @@ framework. I am interested in alternatives to the traditional GCC
 development environment, so there are also some experiments with [Alire
 Ada](https://pico-doc.synack.me), [Arduino
 C++](https://www.arduino.cc/), [Astrobe Oberon](http://www.astrobe.com),
-and [Mikropascal](https://www.mikroe.com/mikropascal-arm) for ARM
+and [mikroPascal](https://www.mikroe.com/mikropascal-arm) for ARM
 microcontrollers.
 
 ## Framework Status
@@ -19,7 +19,7 @@ microcontrollers.
 | [Arduino C++](arduino/)     | Active, Production |
 | [Astrobe Oberon](astrobe/)  | Investigation      |
 | [GCC C/C++](gcc/)           | Frozen             |
-| [Mikropascal](mikropascal/) | Frozen             |
+| [mikroPascal](mikropascal/) | Frozen             |
 
 ------------------------------------------------------------------------
 
