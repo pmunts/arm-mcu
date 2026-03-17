@@ -132,7 +132,7 @@ namespace MuntsTech::PWM::Hardware
           {
             if ((i == 256) && (frac > 0)) continue;
 
-            if (error(fpwm, fpwm_actual(fsys, t, i, frac)) < 0.001F)
+            if (error(fpwm, fpwm_actual(fsys, t, i, frac)) < 0.01F)
             {
               *top = t - 1;
               *div_int = i;
