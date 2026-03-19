@@ -145,3 +145,8 @@ cat <<EOD >"$1"/.vscode/tasks.json
     ]
 }
 EOD
+
+chmod 644 "$1"/Makefile
+chmod 644 "$1"/"$1".ino
+chmod 644 "$1"/.vscode/*.json
+unix2dos "$1"/"$1".ino "$1"/.vscode/*.json
