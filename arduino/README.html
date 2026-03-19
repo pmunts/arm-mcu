@@ -51,51 +51,48 @@ for RP2040 and RP2350 microcontrollers includes a tightly integrated
 implementation of <a href=
 "https://www.freertos.org/Documentation/02-Kernel/02-Kernel-features/13-Symmetric-multiprocessing-introduction">
 FreeRTOS SMP</a> (Symmetric Multi-Processing). The following minimal sketch
-skeleton illustrates how create an RP2040 or RP2350 multicore Arduino FreeRTOS
-application:</p>
+skeleton illustrates how to create a multicore RP2040 or RP2350 Arduino
+FreeRTOS application:</p>
 <pre><b>
 #define ENABLE_FREERTOS
 
 #include &lt;Arduino_ARM.h&gt;
 
-void Task0(void *parameters) // Runs on CPU core 0
+void Task0(void *parameters)
 {
+  vTaskCoreAffinitySet(NULL, 0x01); // Pin task to core 0
+
   for (;;)
   {
     taskYIELD();
   }
 }
 
-void Task1(void *parameters) // Runs on CPU core 1
+void Task1(void *parameters)
 {
+  vTaskCoreAffinitySet(NULL, 0x02); // Pin task to core 1
+
   for (;;)
   {
     taskYIELD();
   }
 }
 
-void setup() // Runs on CPU core 0
+void setup()
 {
-  xTaskCreate(Task0, "main", 512, NULL, 1, NULL);
-}
-
-void loop() // Runs on CPU core 0
-{
-}
-
-void setup1() // Runs on CPU core 1
-{
-  xTaskCreate(Task1, "main", 512, NULL, 1, NULL);
-}
-
-void loop1() // Runs on CPU core 1
-{
+  xTaskCreate(Task0, "task0", 512, NULL, 1, NULL);
+  xTaskCreate(Task0, "task1", 512, NULL, 1, NULL);
 }
 </b></pre>
 <p>All of <b><tt>loop()</tt></b>, <b><tt>setup1()</tt></b>, and
 <b><tt>loop1()</tt></b> are optional. For compatibility, an idle task running
 on core 0 will call <b><tt>loop()</tt></b> if it is defined and an idle task
-running on core 1 will call <b><tt>loop1()</tt></b> if it is defined.</p>
+running on core 1 will call <b><tt>loop1()</tt></b> if it is defined. The
+Arduino-Pico <b><tt>main()</tt></b> function calls
+<b><tt>vTaskStartScheduler()</tt></b> therefore <b><tt>setup()</tt></b> must
+<b>not</b> call it again. For this reason, <b><tt>Arduino_ARM.h</tt></b>
+defines <b><tt>vTaskStartScheduler()</tt></b> as an empty macro for RP2040 and
+RP2350 platforms.</p>
 <p>Because of how well FreeRTOS has been integrated into the Arduino-Pico core
 package, it is now probably easier to develop a FreeRTOS application for an
 Arduino RP2040 or RP2350 platform than for any other hardware/software

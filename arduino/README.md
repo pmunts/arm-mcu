@@ -57,51 +57,47 @@ package for RP2040 and RP2350 microcontrollers includes a tightly
 integrated implementation of [FreeRTOS
 SMP](https://www.freertos.org/Documentation/02-Kernel/02-Kernel-features/13-Symmetric-multiprocessing-introduction)
 (Symmetric Multi-Processing). The following minimal sketch skeleton
-illustrates how create an RP2040 or RP2350 multicore Arduino FreeRTOS
+illustrates how to create a multicore RP2040 or RP2350 Arduino FreeRTOS
 application:
 
     #define ENABLE_FREERTOS
 
     #include <Arduino_ARM.h>
 
-    void Task0(void *parameters) // Runs on CPU core 0
+    void Task0(void *parameters)
     {
+      vTaskCoreAffinitySet(NULL, 0x01); // Pin task to core 0
+
       for (;;)
       {
         taskYIELD();
       }
     }
 
-    void Task1(void *parameters) // Runs on CPU core 1
+    void Task1(void *parameters)
     {
+      vTaskCoreAffinitySet(NULL, 0x02); // Pin task to core 1
+
       for (;;)
       {
         taskYIELD();
       }
     }
 
-    void setup() // Runs on CPU core 0
+    void setup()
     {
-      xTaskCreate(Task0, "main", 512, NULL, 1, NULL);
-    }
-
-    void loop() // Runs on CPU core 0
-    {
-    }
-
-    void setup1() // Runs on CPU core 1
-    {
-      xTaskCreate(Task1, "main", 512, NULL, 1, NULL);
-    }
-
-    void loop1() // Runs on CPU core 1
-    {
+      xTaskCreate(Task0, "task0", 512, NULL, 1, NULL);
+      xTaskCreate(Task0, "task1", 512, NULL, 1, NULL);
     }
 
 All of **`loop()`**, **`setup1()`**, and **`loop1()`** are optional. For
 compatibility, an idle task running on core 0 will call **`loop()`** if
 it is defined and an idle task running on core 1 will call **`loop1()`**
-if it is defined.
+if it is defined. The Arduino-Pico **`main()`** function calls
+**`vTaskStartScheduler()`** therefore **`setup()`** must **not** call it
+again. For this reason, **`Arduino_ARM.h`** defines
+**`vTaskStartScheduler()`** as an empty macro for RP2040 and RP2350
+platforms.
 
 Because of how well FreeRTOS has been integrated into the Arduino-Pico
 core package, it is now probably easier to develop a FreeRTOS
