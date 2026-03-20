@@ -44,6 +44,8 @@ the creation of microcontroller <a href=
 to feed AWS backend applications. FreeRTOS has been very widely used throughout
 the world by developers across industries ranging from hobbyists to <a href=
 "https://us500.com/fortune-500-companies">Fortune 500</a> companies.</p>
+<p>To enable FreeRTOS, just add <b><tt>#define ENABLE_FREERTOS</tt></b> before
+<b><tt>#include &lt;Arduino_ARM.h&gt;</tt></b>.</p>
 <h3>RP2040/RP2350</h3>
 <p>The <a href=
 "https://github.com/earlephilhower/arduino-pico">Arduino-Pico</a> core package
@@ -93,6 +95,13 @@ Arduino-Pico <b><tt>main()</tt></b> function calls
 <b>not</b> call it again. For this reason, <b><tt>Arduino_ARM.h</tt></b>
 defines <b><tt>vTaskStartScheduler()</tt></b> as an empty macro for RP2040 and
 RP2350 platforms.</p>
+<p>To build an RP2040 or RP2350 FreeRTOS application, you must append
+<b><tt>:os=freertos</tt></b> to the FQBN (Fully Qualified Board Name). When
+building with <b><tt>gmake</tt></b>, either from the command line or from
+Visual Studio Code, this is automatically done by <b><tt>RP2040.mk</tt></b> or
+<b><tt>RP2350.mk</tt></b>. When building with Arduino IDE 2, this must be done
+explicitly from <b><tt>Tools &rarr; Operating System &rarr; FreeRTOS
+SMP</tt></b>.</p>
 <p>Because of how well FreeRTOS has been integrated into the Arduino-Pico core
 package, it is now probably easier to develop a FreeRTOS application for an
 Arduino RP2040 or RP2350 platform than for any other hardware/software
