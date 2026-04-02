@@ -1,0 +1,76 @@
+-- Copyright (C)2026, Philip Munts dba Munts Technologies.
+--
+-- Redistribution and use in source and binary forms, with or without
+-- modification, are permitted provided that the following conditions are met:
+--
+-- * Redistributions of source code must retain the above copyright notice,
+--   this list of conditions and the following disclaimer.
+--
+-- THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+-- AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+-- IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+-- ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+-- LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+-- CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+-- SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+-- INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+-- CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+-- ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+-- POSSIBILITY OF SUCH DAMAGE.
+
+-- See https://files.seeedstudio.com/wiki/XIAO-RP2040/img/xinpin.jpg
+
+WITH RP.GPIO;
+
+PACKAGE Seeed_Xiao_RP2040 IS
+
+  Crystal : CONSTANT := 12_000_000; -- Hz
+
+  -- Left edge (DIP pin order)
+
+  GP26 : RP.GPIO.GPIO_Point := (Pin => 26);
+  GP27 : RP.GPIO.GPIO_Point := (Pin => 27);
+  GP28 : RP.GPIO.GPIO_Point := (Pin => 28);
+  GP29 : RP.GPIO.GPIO_Point := (Pin => 28);
+  GP6  : RP.GPIO.GPIO_Point := (Pin => 6);
+  GP7  : RP.GPIO.GPIO_Point := (Pin => 7);
+  GP0  : RP.GPIO.GPIO_Point := (Pin => 0);
+
+  A0   RENAMES GP26;
+  A1   RENAMES GP27;
+  A2   RENAMES GP28;
+  A3   RENAMES GP29;
+
+  D0   RENAMES GP26;
+  D1   RENAMES GP27;
+  D2   RENAMES GP28;
+  D3   RENAMES GP29;
+  D4   RENAMES GP6;
+  D5   RENAMES GP7;
+  D6   RENAMES GP0;
+
+  SDA1 RENAMES GP6;
+  SCL1 RENAMES GP7;
+
+  TXD0 RENAMES GP0;
+
+  -- Right edge (DIP pin order)
+
+  GP1  : RP.GPIO.GPIO_Point := (Pin => 1);
+  GP2  : RP.GPIO.GPIO_Point := (Pin => 2);
+  GP4  : RP.GPIO.GPIO_Point := (Pin => 4);
+  GP3  : RP.GPIO.GPIO_Point := (Pin => 3);
+
+  D7   RENAMES GP1;
+  D8   RENAMES GP2;
+  D9   RENAMES GP4;
+  D10  RENAMES GP3;
+
+  MISO RENAMES GP4;
+  MOSI RENAMES GP3;
+  SCK  RENAMES GP2;
+  SS   RENAMES GP1;
+
+  RXD0 RENAMES GP1;
+
+END Seeed_Xiao_RP2040;
