@@ -7,7 +7,6 @@ executables = ["test_adc"]
 [[depends-on]]
 light_tasking_rp2040 = "*"
 rp2040_hal = "^2"
-usb_embedded = "^1"
 
 [configuration.values]
 rp2040_hal.Use_Startup = false
