@@ -18,9 +18,11 @@
 -- ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 -- POSSIBILITY OF SUCH DAMAGE.
 
+-- See https://cdn.sparkfun.com/assets/e/2/7/6/b/ProMicroRP2040_Graphical_Datasheet.pdf
+
 WITH RP.GPIO;
 
-PACKAGE SparkFun_Pro_Micro_RP2040 IS
+PACKAGE SparkFun_ProMicro_RP2040 IS
 
   Crystal : CONSTANT := 12_000_000; -- Hz
 
@@ -37,20 +39,26 @@ PACKAGE SparkFun_Pro_Micro_RP2040 IS
   GP8  : RP.GPIO.GPIO_Point := (Pin => 8);
   GP9  : RP.GPIO.GPIO_Point := (Pin => 9);
 
+  TXD0 RENAMES GP0;
+  RXD0 RENAMES GP1;
+
+  TXD1 RENAMES GP8;
+  RXD1 RENAMES GP9;
+
   -- QWIIC connector
 
   GP16 : RP.GPIO.GPIO_Point := (Pin => 16);  -- aka SDA
   GP17 : RP.GPIO.GPIO_Point := (Pin => 17);  -- aka SCL
 
-  SDA RENAMES GP16;
-  SCL RENAMES GP17;
+  SDA0 RENAMES GP16;
+  SCL0 RENAMES GP17;
 
   -- Right edge (DIP pin order)
 
-  GP21 : RP.GPIO.GPIO_Point := (Pin => 21);
-  GP23 : RP.GPIO.GPIO_Point := (Pin => 23);
-  GP20 : RP.GPIO.GPIO_Point := (Pin => 20);
-  GP22 : RP.GPIO.GPIO_Point := (Pin => 22);
+  GP21 : RP.GPIO.GPIO_Point := (Pin => 21);  -- aka SS
+  GP23 : RP.GPIO.GPIO_Point := (Pin => 23);  -- aka MOSI
+  GP20 : RP.GPIO.GPIO_Point := (Pin => 20);  -- aka MISO
+  GP22 : RP.GPIO.GPIO_Point := (Pin => 22);  -- aka SCK
   GP26 : RP.GPIO.GPIO_Point := (Pin => 26);  -- aka ADC0
   GP27 : RP.GPIO.GPIO_Point := (Pin => 27);  -- aka ADC1
   GP28 : RP.GPIO.GPIO_Point := (Pin => 28);  -- aka ADC2
@@ -61,4 +69,9 @@ PACKAGE SparkFun_Pro_Micro_RP2040 IS
   ADC2 RENAMES GP28;
   ADC3 RENAMES GP29;
 
-END SparkFun_Pro_Micro_RP2040;
+  MISO RENAMES GP20;
+  MOSI RENAMES GP23;
+  SCK  RENAMES GP22;
+  SS   RENAMES GP21;
+
+END SparkFun_ProMicro_RP2040;
