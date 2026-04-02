@@ -27,7 +27,7 @@ alire_mk_default: build
 # Build the project
 
 alire_mk_build:
-	alr build $(ALRFLAGS)
+	alr -v build $(ALRFLAGS)
 
 ###############################################################################
 

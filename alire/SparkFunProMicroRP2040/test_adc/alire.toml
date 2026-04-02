@@ -7,6 +7,7 @@ executables = ["test_adc"]
 [[depends-on]]
 light_tasking_rp2040 = "*"
 rp2040_hal = "^2"
+sparkfun_pro_micro_rp2040 = "^2"
 
 [configuration.values]
 rp2040_hal.Use_Startup = false
