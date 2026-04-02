@@ -22,16 +22,16 @@
 
 WITH RP.ADC;
 WITH RP.Clock;
-WITH SparkFun_Pro_Micro_RP2040;
+WITH SparkFun_ProMicro_RP2040;
 WITH USB_Console; USE USB_Console;
 
 PROCEDURE test_adc IS
 
   ADC0 : CONSTANT RP.ADC.ADC_Channel :=
-    RP.ADC.To_ADC_Channel(SparkFun_Pro_Micro_RP2040.ADC0);
+    RP.ADC.To_ADC_Channel(SparkFun_ProMicro_RP2040.ADC0);
 
 BEGIN
-  RP.Clock.Initialize(SparkFun_Pro_Micro_RP2040.Crystal);
+  RP.Clock.Initialize(SparkFun_ProMicro_RP2040.Crystal);
   USB_Console.Initialize;
 
   New_Line;

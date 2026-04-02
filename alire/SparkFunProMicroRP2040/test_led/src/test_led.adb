@@ -22,15 +22,15 @@
 
 WITH RP.Clock;
 WITH RP.GPIO;
-WITH SparkFun_Pro_Micro_RP2040;
+WITH SparkFun_ProMicro_RP2040;
 WITH USB_Console; USE USB_Console;
 
 PROCEDURE test_led IS
 
-  LED RENAMES SparkFun_Pro_Micro_RP2040.GP2;
+  LED RENAMES SparkFun_ProMicro_RP2040.GP2;
 
 BEGIN
-  RP.Clock.Initialize(SparkFun_Pro_Micro_RP2040.Crystal);
+  RP.Clock.Initialize(SparkFun_ProMicro_RP2040.Crystal);
   USB_Console.Initialize;
 
   New_Line;
