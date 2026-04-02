@@ -8,6 +8,7 @@ executables = ["test_adc"]
 light_tasking_rp2040 = "*"
 rp2040_hal = "^2"
 rp2040_boards = "^2"
+rp2040_usb_console = "^2"
 
 [configuration.values]
 rp2040_hal.Use_Startup = false
