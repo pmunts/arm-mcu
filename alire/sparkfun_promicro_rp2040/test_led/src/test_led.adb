@@ -31,6 +31,7 @@ PROCEDURE test_led IS
 
 BEGIN
   RP.Clock.Initialize(SparkFun_ProMicro_RP2040.Crystal);
+  RP.GPIO.Enable;
   USB_Console.Initialize;
 
   New_Line;
