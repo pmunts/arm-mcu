@@ -1,3 +1,5 @@
+-- Abstract sampled analog data interface definitions
+
 -- Copyright (C)2026, Philip Munts dba Munts Technologies.
 --
 -- Redistribution and use in source and binary forms, with or without
@@ -18,18 +20,30 @@
 -- ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 -- POSSIBILITY OF SUCH DAMAGE.
 
-PACKAGE USB_Console IS
+WITH IO_Interfaces;
 
-  PROCEDURE Initialize;
+PACKAGE Analog IS
 
-  PROCEDURE New_Line;
+  -- Define a type for sampled analog data
 
-  PROCEDURE Put(c : Character);
+  MaxResolution : CONSTANT := 32; -- Bits
 
-  PROCEDURE Put(s : String);
+  TYPE Sample IS MOD 2**MaxResolution;
 
-  PROCEDURE Put_Line(s : String);
+  -- Instantiate abstract interfaces package
 
-  PROCEDURE Delay_Milliseconds(t : Positive);
+  PACKAGE Interfaces IS NEW IO_Interfaces(Sample);
 
-END USB_Console;
+  -- Interfaces
+
+  TYPE InputInterface       IS INTERFACE AND Interfaces.InputInterface;
+  TYPE OutputInterface      IS INTERFACE AND Interfaces.OutputInterface;
+  TYPE InputOutputInterface IS INTERFACE AND Interfaces.InputOutputInterface;
+
+  -- Access types
+
+  TYPE Input       IS ACCESS ALL InputInterface'Class;
+  TYPE Output      IS ACCESS ALL OutputInterface'Class;
+  TYPE InputOutput IS ACCESS ALL InputOutputInterface'Class;
+
+END Analog;

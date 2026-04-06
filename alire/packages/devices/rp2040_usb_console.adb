@@ -24,7 +24,7 @@ WITH USB.Device.Serial;
 
 USE TYPE USB.Device.Init_Result;
 
-PACKAGE BODY USB_Console IS
+PACKAGE BODY RP2040_USB_Console IS
 
   CRLF       : CONSTANT String := ASCII.CR & ASCII.LF;
 
@@ -96,4 +96,4 @@ PACKAGE BODY USB_Console IS
     Put(s & CRLF);
   END Put_Line;
 
-END USB_Console;
+END RP2040_USB_Console;
