@@ -24,7 +24,7 @@ WITH RP.ADC;
 WITH RP.Clock;
 WITH RP.GPIO;
 WITH SparkFun_ProMicro_RP2040;
-WITH USB_Console; USE USB_Console;
+WITH RP2040_USB_Console; USE RP2040_USB_Console;
 
 PROCEDURE test_adc IS
 
@@ -34,7 +34,7 @@ PROCEDURE test_adc IS
 BEGIN
   RP.Clock.Initialize(SparkFun_ProMicro_RP2040.Crystal);
   RP.GPIO.Enable;
-  USB_Console.Initialize;
+  RP2040_USB_Console.Initialize;
 
   New_Line;
   Put_Line("SparkFun Pro Micro RP2040 ADC Test");

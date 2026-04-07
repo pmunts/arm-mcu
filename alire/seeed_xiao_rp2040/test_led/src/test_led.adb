@@ -23,7 +23,7 @@
 WITH RP.Clock;
 WITH RP.GPIO;
 WITH Seeed_Xiao_RP2040;
-WITH USB_Console; USE USB_Console;
+WITH RP2040_USB_Console; USE RP2040_USB_Console;
 
 PROCEDURE test_led IS
 
@@ -32,8 +32,7 @@ PROCEDURE test_led IS
 BEGIN
   RP.Clock.Initialize(Seeed_Xiao_RP2040.Crystal);
   RP.GPIO.Enable;
-
-  USB_Console.Initialize;
+  RP2040_USB_Console.Initialize;
 
   New_Line;
   Put_Line("Seeed Studio Xiao RP2040 LED Test");

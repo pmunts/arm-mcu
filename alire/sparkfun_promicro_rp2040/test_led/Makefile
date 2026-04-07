@@ -1,6 +1,6 @@
 # Makefile to build an Ada program for the RP2040 microcontroller
 
-# Copyright (C)2025-2026, Philip Munts dba Munts Technologies.
+# Copyright (C)2026, Philip Munts dba Munts Technologies.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -20,14 +20,26 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-include $(ARMSRC)/alire/include/alire.mk
+###############################################################################
 
-# Build the Alire project
+# Build the project
 
-build: alire_mk_build
+build:
+	alr build $(ALRFLAGS)
 
-# Remove working files
+###############################################################################
 
-clean: alire_mk_reallyclean
+# Remove project working files
 
-distclean: alire_mk_distclean
+clean:
+	rm -rf alire bin config obj share
+	find . -type f -exec chmod 644 {} ";"
+	find . -type f -name '*.sh' -exec chmod 755 {} ";"
+
+distclean: clean
+	# Unix
+	rm -rf ~/.local/share/alire/builds
+	rm -rf ~/.local/share/alire/releases
+	# Windows
+	rm -rf ~/AppData/Local/alire/cache/builds
+	rm -rf ~/AppData/Local/alire/cache/releases
