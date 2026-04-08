@@ -33,8 +33,8 @@ build:
 
 clean:
 	rm -rf alire bin config obj share
-	find . -type f -exec chmod 644 {} ";"
-	find . -type f -name '*.sh' -exec chmod 755 {} ";"
+	@find . -type f -exec chmod 644 {} ";"
+	@find . -type f -name '*.sh' -exec chmod 755 {} ";"
 
 distclean: clean
 	# Unix
