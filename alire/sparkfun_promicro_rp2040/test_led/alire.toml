@@ -5,15 +5,15 @@ version = "1.0.0"
 executables = ["test_led"]
 
 [[depends-on]]
-light_tasking_rp2040 = "*"
-rp2040_hal = "^2"
-rp2040_munts_lib = "^2"
+embedded_rp2040 = "*"
+rp2040_hal = "*"
+rp2040_munts_lib = "*"
 
 [configuration.values]
 rp2040_hal.Use_Startup = false
 rp2040_hal.Interrupts = "bb_runtimes"
-light_tasking_rp2040.Max_CPUs = 2
-light_tasking_rp2040.Board = "sparkfun_promicro"
+embedded_rp2040.Max_CPUs = 2
+embedded_rp2040.Board = "sparkfun_promicro"
 
 [[actions]]
 type = "post-build"
