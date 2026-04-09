@@ -69,9 +69,8 @@ PACKAGE BODY GPIO.RP2040 IS
     fast_slew  : Boolean                := False) IS
 
   BEGIN
-    self.Destroy;
-    self.point := (Pin => desg);
-    self.point.Configure(mode, pull, RP.GPIO.SIO, hysteresis, fast_slew, drive);
+    self.Initialize(RP.GPIO.GPIO_Point'(Pin => desg), mode, state, pull,
+      drive, hysteresis, fast_slew);
   END Initialize;
 
   -- GPIO pin object instance initializer
@@ -88,8 +87,19 @@ PACKAGE BODY GPIO.RP2040 IS
 
   BEGIN
     self.Destroy;
+
+    CASE mode IS
+      WHEN RP.GPIO.Input  => self.kind := KindInput;
+      WHEN RP.GPIO.Output => self.kind := KindOutput;
+      WHEN OTHERS         => RAISE Error WITH "Illegal mode value";
+    END CASE;
+
     self.point := desg;
     self.point.Configure(mode, pull, RP.GPIO.SIO, hysteresis, fast_slew, drive);
+
+    IF self.kind = KindOutput THEN
+      self.Put(state);
+    END IF;
   END Initialize;
 
   -- GPIO pin object instance destroyer
@@ -97,7 +107,7 @@ PACKAGE BODY GPIO.RP2040 IS
   PROCEDURE Destroy(self : IN OUT PinSubclass) IS
 
   BEGIN
-    self.kind := unconfigured;
+    self.kind := KindUnconfigured;
   END Destroy;
 
   -- Read GPIO pin state
@@ -107,7 +117,7 @@ PACKAGE BODY GPIO.RP2040 IS
   BEGIN
     self.CheckDestroyed;
 
-    IF self.kind = input THEN
+    IF self.kind = KindInput THEN
       RETURN self.point.Get;
     ELSE
       RETURN self.point.Set;
@@ -121,6 +131,10 @@ PACKAGE BODY GPIO.RP2040 IS
   BEGIN
     self.CheckDestroyed;
 
+    IF self.kind = KindInput THEN
+      RAISE Error WITH "Cannot write to an input pin";
+    END IF;
+
     IF state THEN
       self.point.Set;
     ELSE
@@ -133,7 +147,7 @@ PACKAGE BODY GPIO.RP2040 IS
   PROCEDURE CheckDestroyed(self : PinSubclass) IS
 
   BEGIN
-    IF self.kind = unconfigured THEN
+    IF self.kind = KindUnconfigured THEN
       RAISE GPIO.Error WITH "GPIO pin has been destroyed";
     END IF;
   END CheckDestroyed;
