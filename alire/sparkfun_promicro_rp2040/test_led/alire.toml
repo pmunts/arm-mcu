@@ -5,9 +5,7 @@ version = "1.0.0"
 executables = ["test_led"]
 
 [[depends-on]]
-embedded_rp2040 = "*"
-rp2040_hal = "*"
-rp2040_munts_lib = "*"
+munts_rp2040_lib_embedded = "*"
 
 [configuration.values]
 rp2040_hal.Use_Startup = false

@@ -20,6 +20,7 @@
 -- ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 -- POSSIBILITY OF SUCH DAMAGE.
 
+WITH GPIO.RP2040;
 WITH RP.Clock;
 WITH RP.GPIO;
 WITH Seeed_Xiao_RP2040;
@@ -27,7 +28,7 @@ WITH RP2040_USB_Console; USE RP2040_USB_Console;
 
 PROCEDURE test_led IS
 
-  LED RENAMES Seeed_Xiao_RP2040.GP2;
+  LED : CONSTANT GPIO.Pin := GPIO.RP2040.Create(Seeed_Xiao_RP2040.GP2, RP.GPIO.Output);
 
 BEGIN
   RP.Clock.Initialize(Seeed_Xiao_RP2040.Crystal);
@@ -38,10 +39,8 @@ BEGIN
   Put_Line("Seeed Studio Xiao RP2040 LED Test");
   New_Line;
 
-  LED.Configure(RP.GPIO.Output);
-
   LOOP
-    LED.Toggle;
+    LED.Put(NOT LED.Get);
     Delay_Milliseconds(500);
   END LOOP;
 END test_led;
