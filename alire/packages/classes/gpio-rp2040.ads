@@ -88,11 +88,11 @@ PRIVATE
 
   PROCEDURE CheckDestroyed(Self : PinSubclass);
 
-  TYPE Kinds IS (input, output, unconfigured);
+  TYPE Kinds IS (KindInput, KindOutput, KindUnconfigured);
 
   TYPE PinSubclass IS NEW GPIO.PinInterface WITH RECORD
     point : RP.GPIO.GPIO_Point := (Pin => 0);
-    kind  : Kinds              := unconfigured;
+    kind  : Kinds              := KindUnconfigured;
   END RECORD;
 
 END GPIO.RP2040;
