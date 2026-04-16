@@ -5,8 +5,7 @@ version = "1.0.0"
 executables = ["@@NAME@@"]
 
 [[depends-on]]
-rp2040_hal = "^2"
-@@PROFILE@@_rp2040 = "^15"
+munts_rp2040_lib_@@PROFILE@@ = "^2"
 
 [configuration.values]
 rp2040_hal.Use_Startup = false
