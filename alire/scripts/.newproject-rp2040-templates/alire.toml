@@ -1,0 +1,19 @@
+name = "@@NAME@@"
+description = "@@DESCRIPTION@@"
+version = "1.0.0"
+
+executables = ["@@NAME@@"]
+
+[[depends-on]]
+rp2040_hal = "^2"
+@@PROFILE@@_rp2040 = "^15"
+
+[configuration.values]
+rp2040_hal.Use_Startup = false
+rp2040_hal.Interrupts = "bb_runtimes"
+@@PROFILE@@_rp2040.Max_CPUs = 2
+@@PROFILE@@_rp2040.Board = "@@BOARD@@"
+
+[[actions]]
+type = "post-build"
+command = ["sh", "-c", "./postbuild.sh"]

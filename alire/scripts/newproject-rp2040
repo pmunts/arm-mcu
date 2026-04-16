@@ -1,0 +1,183 @@
+#! /bin/sh
+
+# Copyright (C)2026, Philip Munts dba Munts Technologies.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+#
+# * Redistributions of source code must retain the above copyright notice,
+#   this list of conditions and the following disclaimer.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+# ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+# LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+# CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+# SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+# INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+# CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+# ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+# POSSIBILITY OF SUCH DAMAGE.
+
+# Transform named parameters to environment variables
+
+for x ; do export ${x%=*}="${x#*=}"; done
+
+echo "DEBUG: number of arguments => $#"
+
+if [ $# -lt 1 ]; then
+  echo ""
+  echo "Alire RP2040 ARM Microcontroller Project Creator"
+  echo ""
+  echo "Usage: alire-newproject-rp2040 <program name> [desc=\"<description>\"] [profile=<GNAT profile>] [board=<board name>]"
+  echo ""
+  echo "Default description is \"RP2040 Firmware\"."
+  echo "Default profile     is \"embedded\". Other possibilities are: \"light_tasking\"."
+  echo "Default board       is \"generic_board\"."
+  echo ""
+  exit 1
+fi
+
+if [ -e ${1} ]; then
+  echo ""
+  echo "Alire RP2040 ARM Microcontroller Project Creator"
+  echo ""
+  echo "ERROR: $1 already exists."
+  echo ""
+  echo "Usage: alire-newproject-rp2040 <program name> [desc=\"<description>\"] [profile=<GNAT profile>] [board=<board name>]"
+  echo ""
+  echo "Default description is \"RP2040 Firmware\"."
+  echo "Default profile     is \"embedded\". Other possibilities are: \"light_tasking\"."
+  echo "Default board       is \"generic_board\"."
+  echo ""
+  exit 1
+fi
+
+# Create project directory skeleton
+
+mkdir -p ${1}/src
+mkdir -p ${1}/.vscode
+cd ${1}
+
+##############################################################################
+
+# Create alire.toml
+
+base64 -d <<EOD >alire.toml
+bmFtZSA9ICJAQE5BTUVAQCIKZGVzY3JpcHRpb24gPSAiQEBERVNDUklQVElPTkBAIgp2ZXJzaW9u
+ID0gIjEuMC4wIgoKZXhlY3V0YWJsZXMgPSBbIkBATkFNRUBAIl0KCltbZGVwZW5kcy1vbl1dCnJw
+MjA0MF9oYWwgPSAiXjIiCkBAUFJPRklMRUBAX3JwMjA0MCA9ICJeMTUiCgpbY29uZmlndXJhdGlv
+bi52YWx1ZXNdCnJwMjA0MF9oYWwuVXNlX1N0YXJ0dXAgPSBmYWxzZQpycDIwNDBfaGFsLkludGVy
+cnVwdHMgPSAiYmJfcnVudGltZXMiCkBAUFJPRklMRUBAX3JwMjA0MC5NYXhfQ1BVcyA9IDIKQEBQ
+Uk9GSUxFQEBfcnAyMDQwLkJvYXJkID0gIkBAQk9BUkRAQCIKCltbYWN0aW9uc11dCnR5cGUgPSAi
+cG9zdC1idWlsZCIKY29tbWFuZCA9IFsic2giLCAiLWMiLCAiLi9wb3N0YnVpbGQuc2giXQo=
+EOD
+
+##############################################################################
+
+# Create ${1}.gpr
+
+base64 -d <<EOD >${1}.gpr
+d2l0aCAiY29uZmlnL0BATkFNRUBAX2NvbmZpZy5ncHIiOwp3aXRoICJydW50aW1lX2J1aWxkLmdw
+ciI7Cgpwcm9qZWN0IEBATkFNRUBAIGlzCgogICBmb3IgVGFyZ2V0IHVzZSBydW50aW1lX2J1aWxk
+J1RhcmdldDsKICAgZm9yIFJ1bnRpbWUgKCJBZGEiKSB1c2UgcnVudGltZV9idWlsZCdSdW50aW1l
+ICgiQWRhIik7CiAgIGZvciBTb3VyY2VfRGlycyB1c2UgKCJjb25maWcvIiwgInNyYy8qKiIpOwog
+ICBmb3IgT2JqZWN0X0RpciB1c2UgIm9iai8iICYgQEBOQU1FQEBfQ29uZmlnLkJ1aWxkX1Byb2Zp
+bGU7CiAgIGZvciBDcmVhdGVfTWlzc2luZ19EaXJzIHVzZSAiVHJ1ZSI7CiAgIGZvciBFeGVjX0Rp
+ciB1c2UgImJpbiI7CiAgIGZvciBNYWluIHVzZSAoIkBATkFNRUBALmFkYiIpOwoKICAgcGFja2Fn
+ZSBDb21waWxlciBpcwogICAgICBmb3IgRGVmYXVsdF9Td2l0Y2hlcyAoIkFkYSIpIHVzZSBAQE5B
+TUVAQF9Db25maWcuQWRhX0NvbXBpbGVyX1N3aXRjaGVzICYgKCItZ25hdDIwMjIiLCAiLWduYXR5
+LWciKTsKICAgZW5kIENvbXBpbGVyOwoKICAgcGFja2FnZSBMaW5rZXIgaXMKICAgICAgZm9yIFN3
+aXRjaGVzICgiQWRhIikgdXNlIFJ1bnRpbWVfQnVpbGQuTGlua2VyX1N3aXRjaGVzICYgKCItV2ws
+LS1nYy1zZWN0aW9ucyIpOwogICBlbmQgTGlua2VyOwoKZW5kIEBATkFNRUBAOwo=
+EOD
+
+##############################################################################
+
+# Create src/${1}.adb
+
+base64 -d <<EOD >src/${1}.adb
+cHJvY2VkdXJlIEBATkFNRUBAIGlzCgpiZWdpbgogIG51bGw7CmVuZCBAQE5BTUVAQDsK
+EOD
+
+##############################################################################
+
+# Create Makefile
+
+base64 -d <<EOD >Makefile
+IyBCdWlsZCB0aGUgcHJvamVjdAoKYnVpbGQ6CglhbHIgYnVpbGQgJChBTFJGTEFHUykKCiMgUmVt
+b3ZlIHByb2plY3Qgd29ya2luZyBmaWxlcwoKY2xlYW46CglybSAtcmYgYWxpcmUgYmluIGNvbmZp
+ZyBvYmogc2hhcmUKCUAjIEZpeHVwIHBlcm1pc3Npb25zIChlLmcuIG9uIFdpbmRvd3MpCglAZmlu
+ZCAuIC10eXBlIGYgLWV4ZWMgY2htb2QgNjQ0IHt9ICI7IgoJQGZpbmQgLiAtdHlwZSBmIC1uYW1l
+ICcqLnNoJyAtZXhlYyBjaG1vZCA3NTUge30gIjsiCgpkaXN0Y2xlYW46IGNsZWFuCgkjIFVuaXgK
+CXJtIC1yZiB+Ly5sb2NhbC9zaGFyZS9hbGlyZS9idWlsZHMKCXJtIC1yZiB+Ly5sb2NhbC9zaGFy
+ZS9hbGlyZS9yZWxlYXNlcwoJIyBXaW5kb3dzCglybSAtcmYgfi9BcHBEYXRhL0xvY2FsL2FsaXJl
+L2NhY2hlL2J1aWxkcwoJcm0gLXJmIH4vQXBwRGF0YS9Mb2NhbC9hbGlyZS9jYWNoZS9yZWxlYXNl
+cwo=
+EOD
+
+##############################################################################
+
+# Create postbuild.sh
+
+base64 -d <<EOD >postbuild.sh
+IyEgL2Jpbi9zaAoKIyBGbGFzaCBBbGlyZSBidWlsdCBFTEYgcHJvZ3JhbSB0byBSYXNwYmVycnkg
+UGkgUGljbyB1c2luZyBib290IGxvYWRlcgoKIyBUZXN0IGltcGxpY2l0IG1vdW50IHBvaW50IGNh
+bmRpZGF0ZQoKVGVzdERlc3REaXIoKQp7CiAgdGVzdCAtZiAkMS9JTkZPX1VGMi5UWFQgJiYgZXhw
+b3J0IFJQMjA0MF9ERVNURElSPSQxCn0KCiMgU2VhcmNoIGZvciBhbiBpbXBsaWNpdCBtb3VudCBw
+b2ludAoKRmluZERlc3REaXIoKQp7CiAgIyBDaHJvbWVvcwogIFRlc3REZXN0RGlyIC9tbnQvY2hy
+b21lb3MvcmVtb3ZhYmxlL1JQSS1SUDIKICAjIExpbnV4CiAgVGVzdERlc3REaXIgL21lZGlhLyR7
+VVNFUn0vUlBJLVJQMgogICMgbWFjT1MKICBUZXN0RGVzdERpciAvVm9sdW1lcy9SUEktUlAyCiAg
+IyBXaW5kb3dzCiAgVGVzdERlc3REaXIgL2QKICBUZXN0RGVzdERpciAvZQogIFRlc3REZXN0RGly
+IC9mCiAgVGVzdERlc3REaXIgL2cKICBUZXN0RGVzdERpciAvaAogIFRlc3REZXN0RGlyIC9pCiAg
+VGVzdERlc3REaXIgL2oKICBUZXN0RGVzdERpciAvawp9CgojIElmIG5vIGV4cGxpY2l0IG1vdW50
+IHBvaW50IHNwZWNpZmllZCwgc2VhcmNoIGZvciBhbiBpbXBsaWNpdCBvbmUKCnRlc3QgLXogIiR7
+UlAyMDQwX0RFU1RESVJ9IiAmJiBGaW5kRGVzdERpcgoKUFJPR05BTUU9YGJhc2VuYW1lIGJpbi8q
+YAoKdGVzdCAtbiAiJHtSUDIwNDBfREVTVERJUn0iICYmIHRlc3QgLWYgIiR7UlAyMDQwX0RFU1RE
+SVJ9L0lORk9fVUYyLlRYVCIgJiYgJHtFTEYyVUYyLWVsZjJ1ZjJ9IGJpbi8ke1BST0dOQU1FfSAk
+e1JQMjA0MF9ERVNURElSfS8ke1BST0dOQU1FfS51ZjIKZXhpdCAwCg==
+EOD
+
+##############################################################################
+
+# Create tasks.json
+
+base64 -d <<EOD >.vscode/tasks.json
+ew0KICAgIC8vIFNlZSBodHRwczovL2dvLm1pY3Jvc29mdC5jb20vZndsaW5rLz9MaW5rSWQ9NzMz
+NTU4DQogICAgLy8gZm9yIHRoZSBkb2N1bWVudGF0aW9uIGFib3V0IHRoZSB0YXNrcy5qc29uIGZv
+cm1hdA0KICAgICJ2ZXJzaW9uIjogIjIuMC4wIiwNCiAgICAidGFza3MiOiBbDQogICAgICAgICB7
+DQogICAgICAgICAgICAibGFiZWwiOiAibWFrZSA8cHJvZ3JhbT4iLA0KICAgICAgICAgICAgInR5
+cGUiOiAic2hlbGwiLA0KICAgICAgICAgICAgImNvbW1hbmQiOiAibWFrZSBjbGVhbiBidWlsZCIs
+DQogICAgICAgICAgICAicHJvYmxlbU1hdGNoZXIiOiBbXSwNCiAgICAgICAgICAgICJncm91cCI6
+IHsNCiAgICAgICAgICAgICAgICAia2luZCI6ICJidWlsZCIsDQogICAgICAgICAgICAgICAgImlz
+RGVmYXVsdCI6IHRydWUNCiAgICAgICAgICAgIH0NCiAgICAgICAgIH0NCiAgICAgICAgIHsNCiAg
+ICAgICAgICAgICJsYWJlbCI6ICJtYWtlIGJ1aWxkIiwNCiAgICAgICAgICAgICJ0eXBlIjogInNo
+ZWxsIiwNCiAgICAgICAgICAgICJjb21tYW5kIjogIm1ha2UgY2xlYW4gYnVpbGQiLA0KICAgICAg
+ICAgICAgInByb2JsZW1NYXRjaGVyIjogW10sDQogICAgICAgICAgICAiZ3JvdXAiOiB7DQogICAg
+ICAgICAgICAgICAgImtpbmQiOiAiYnVpbGQiLA0KICAgICAgICAgICAgICAgICJpc0RlZmF1bHQi
+OiBmYWxzZQ0KICAgICAgICAgICAgfQ0KICAgICAgICAgfQ0KICAgICAgICAgew0KICAgICAgICAg
+ICAgImxhYmVsIjogIm1ha2UgY2xlYW4iLA0KICAgICAgICAgICAgInR5cGUiOiAic2hlbGwiLA0K
+ICAgICAgICAgICAgImNvbW1hbmQiOiAibWFrZSBjbGVhbiIsDQogICAgICAgICAgICAicHJvYmxl
+bU1hdGNoZXIiOiBbXSwNCiAgICAgICAgICAgICJncm91cCI6IHsNCiAgICAgICAgICAgICAgICAi
+a2luZCI6ICJidWlsZCIsDQogICAgICAgICAgICAgICAgImlzRGVmYXVsdCI6IGZhbHNlDQogICAg
+ICAgICAgICB9DQogICAgICAgICB9DQogICAgXQ0KfQ0K
+EOD
+
+##############################################################################
+
+# Patch template files
+
+if [ "`uname`" = "Darwin" ] ; then
+  sed -i '' "s/@@NAME@@/${1}/g" alire.toml ${1}.gpr src/${1}.adb
+  sed -i '' "s/@@BOARD@@/${desc-generic_board}/g" alire.toml
+  sed -i '' "s/@@DESCRIPTION@@/${desc-RP2040 Firmware}/g" alire.toml
+  sed -i '' "s/@@PROFILE@@/${profile-embedded}/g" alire.toml
+else
+  sed -i "s/@@NAME@@/${1}/g" alire.toml ${1}.gpr src/${1}.adb
+  sed -i "s/@@BOARD@@/${board-generic_board}/g" alire.toml
+  sed -i "s/@@DESCRIPTION@@/${desc-RP2040 Firmware}/g" alire.toml
+  sed -i "s/@@PROFILE@@/${profile-embedded}/g" alire.toml
+fi
+
+chmod 755 postbuild.sh
