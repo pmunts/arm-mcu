@@ -33,40 +33,8 @@
 #define A5
 #define A6
 #define A7
-#ifdef COMPAT_NANO
-// Arduino Nano compatible pin definitions
-#define D1	0	// TXD
-#define D0	1	// RXD
-#define D2	2
-#define D3	3
-#define D4	4
-#define D5	5
-#define D6	6
-#define D7	7
-#define D8	8
-#define D9	9
-#define D10	17
-#define D11	19
-#define D12	16
-#define D13	18
-#define D14	26	// A0
-#define D15	27	// A1
-#define D16	28	// A2
-#define D17	29	// A3
-#define D18	12	// SDA0
-#define D19	13	// SCL0
-#define D20	14	// SDA1
-#define D21	15	// SCL1
-#define D22
-#define D23
-#define D24
-#define D25
-#define D26
-#define D27
-#define D28
-#define D29
-#else
-// PCB silkscreen pin definitions
+#ifdef COMPAT_SILKSCREEN
+// PCB silkscreen compatible pin definitions
 #define D0	0	// TXD
 #define D1	1	// RXD
 #define D2	2
@@ -97,6 +65,38 @@
 #define D27	27	// A1
 #define D28	28	// A2
 #define D29	29	// A3
+#else
+// Arduino Nano compatible pin definitions
+#define D0	1	// RXD
+#define D1	0	// TXD
+#define D2	2
+#define D3	3
+#define D4	4
+#define D5	5
+#define D6	6
+#define D7	7
+#define D8	8
+#define D9	9
+#define D10	17
+#define D11	19
+#define D12	16
+#define D13	18
+#define D14	26	// A0
+#define D15	27	// A1
+#define D16	28	// A2
+#define D17	29	// A3
+#define D18	12	// SDA0
+#define D19	13	// SCL0
+#define D20	14	// SDA1
+#define D21	15	// SCL1
+#define D22
+#define D23
+#define D24
+#define D25
+#define D26
+#define D27
+#define D28
+#define D29
 #endif
 #endif
 
