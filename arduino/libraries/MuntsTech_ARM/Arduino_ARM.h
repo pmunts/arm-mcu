@@ -23,22 +23,82 @@
 
 #include <Arduino.h>
 
-// Arduino compatible GPIO pins
-
-#define D0	0	// RXD
-#define D1	1	// TXD
+#ifdef ARDUINO_CYTRON_MAKER_NANO_RP2040
+// Analog pins
+#define A0	26
+#define A1	27
+#define A2	28
+#define A3	29
+#define A4
+#define A5
+#define A6
+#define A7
+#ifdef COMPAT_NANO
+// Arduino Nano compatible pin definitions
+#define D1	0	// TXD
+#define D0	1	// RXD
 #define D2	2
-#define D3	3	// PWM
+#define D3	3
 #define D4	4
-#define D5	5	// PWM
-#define D6	6	// PWM
+#define D5	5
+#define D6	6
 #define D7	7
 #define D8	8
-#define D9	9	// PWM
-#define D10	10	// PWM CS
-#define D11	11	// PWM MOSI
-#define D12	12	//     MISO
-#define D13	13	// LED SCLK
+#define D9	9
+#define D10	17
+#define D11	19
+#define D12	16
+#define D13	18
+#define D14	26	// A0
+#define D15	27	// A1
+#define D16	28	// A2
+#define D17	29	// A3
+#define D18	12	// SDA0
+#define D19	13	// SCL0
+#define D20	14	// SDA1
+#define D21	15	// SCL1
+#define D22
+#define D23
+#define D24
+#define D25
+#define D26
+#define D27
+#define D28
+#define D29
+#else
+// PCB silkscreen pin definitions
+#define D0	0	// TXD
+#define D1	1	// RXD
+#define D2	2
+#define D3	3
+#define D4	4
+#define D5	5
+#define D6	6
+#define D7	7
+#define D8	8
+#define D9	9
+#define D10
+#define D11
+#define D12	12	// SDA0
+#define D13	13	// SCL0
+#define D14	14	// SDA1
+#define D15	15	// SCL1
+#define D16	16
+#define D17	17
+#define D18	18
+#define D19	19
+#define D20
+#define D21
+#define D22
+#define D23
+#define D24
+#define D25
+#define D26	26	// A0
+#define D27	27	// A1
+#define D28	28	// A2
+#define D29	29	// A3
+#endif
+#endif
 
 // User LED configuration
 
@@ -51,6 +111,9 @@ MuntsTech::GPIO::Arduino::Pin_Class _UserLED(LED_PIN, OUTPUT);
 // Use Grove LED Button (plugged into Grove socket D2) for user LED
 #include <GPIO-Arduino.h>
 MuntsTech::GPIO::Arduino::Pin_Class _UserLED(D2, OUTPUT);
+#elifdef ARDUINO_CYTRON_MAKER_NANO_RP2040
+#include <GPIO-Arduino.h>
+MuntsTech::GPIO::Arduino::Pin_Class _UserLED(18, OUTPUT);
 #elifdef ARDUINO_SPARKFUN_PROMICRO_RP2040
 // Use NeoPixel LED for user LED
 #include <GPIO-NeoPixel.h>
@@ -89,6 +152,9 @@ MuntsTech::GPIO::Arduino::Pin_Class _UserButton(BUTTON_PIN, BUTTON_MODE, BUTTON_
 // Active low button on D3
 #include <GPIO-Arduino.h>
 MuntsTech::GPIO::Arduino::Pin_Class _UserButton(D3, INPUT, true);
+#elifdef ARDUINO_CYTRON_MAKER_NANO_RP2040
+#include <GPIO-Arduino.h>
+MuntsTech::GPIO::Arduino::Pin_Class _UserButton(20, INPUT, true);
 #elifdef ARDUINO_SEEED_XIAO_RP2040
 // Xiao RP2040 doesn't have an uncommitted GPIO pin for a user button
 #elifdef ARDUINO_SEEED_XIAO_RP2350
