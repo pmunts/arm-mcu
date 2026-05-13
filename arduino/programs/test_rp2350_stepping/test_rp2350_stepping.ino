@@ -22,19 +22,39 @@
 
 #include <Arduino_ARM.h>
 
-const uint32_t *CHIP_ID = (uint32_t *) 0x40000000;
+const uint32_t *CHIP_ID       = (uint32_t *) 0x40000000;
+const uint32_t *PACKAGE_SEL   = (uint32_t *) 0x40000004;
+const uint32_t *PLATFORM      = (uint32_t *) 0x40000008;
+const uint32_t *GITREF_RP2350 = (uint32_t *) 0x40000014;
 
 void setup()
 {
+  char outbuf[32];
+
   Serial.begin(115200);
   while (!BOOTSEL);
   Serial.println("\n\n\ecArduino RP2350 Stepping Test\n");
-  Serial.print("rp2350_chip_version() => ");
+  Serial.print("rp2350_chip_version()  => ");
   Serial.println(rp2350_chip_version());
-  Serial.print("CHIP_ID register      => ");
-  char outbuf[32];
+
+  Serial.print("CHIP_ID register       => ");
   memset(outbuf, 0, sizeof(outbuf));
-  snprintf(outbuf, 255, "%08X", *CHIP_ID);
+  snprintf(outbuf, sizeof(outbuf)-1, "%08X", *CHIP_ID);
+  Serial.println(outbuf);
+
+  Serial.print("PACKAGE_SEL register   => ");
+  memset(outbuf, 0, sizeof(outbuf));
+  snprintf(outbuf, sizeof(outbuf)-1, "%08X", *PACKAGE_SEL);
+  Serial.println(outbuf);
+
+  Serial.print("PLATFORM register      => ");
+  memset(outbuf, 0, sizeof(outbuf));
+  snprintf(outbuf, sizeof(outbuf)-1, "%08X", *PLATFORM);
+  Serial.println(outbuf);
+
+  Serial.print("GITREF_RP2350 register => ");
+  memset(outbuf, 0, sizeof(outbuf));
+  snprintf(outbuf, sizeof(outbuf)-1, "%08X", *GITREF_RP2350);
   Serial.println(outbuf);
 }
 
