@@ -131,6 +131,7 @@ MuntsTech::GPIO::Arduino::Pin_Class _UserLEDGreen(16, OUTPUT, true, false);
 MuntsTech::GPIO::Arduino::Pin_Class _UserLEDBlue(25, OUTPUT, true, false);
 #elifdef ARDUINO_SEEED_XIAO_RP2350
 // Xiao RP2350 has one active low user LED
+#include <GPIO-Arduino.h>
 MuntsTech::GPIO::Arduino::Pin_Class _UserLED(LED_BUILTIN, OUTPUT, true, false);
 #elifdef LED_BUILTIN
 // Most other boards have an on-board LED, often connected to D13
