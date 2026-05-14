@@ -6,7 +6,30 @@ the following command:
 
     git clone https://github.com/pmunts/arm-mcu.git
 
-## GNU Make Projects
+## [GNU Make](https://www.gnu.org/software/make)
+
+Each Arduino ARM program project contains a minimal `Makefile` for
+[gmake](https://www.gnu.org/software/make) that simply defines a default
+value for the macro `SKETCHBOOK` and then includes
+`$(SKETCHBOOK)/libraries/MuntsTech_ARM/Arduino_ARM.mk`, which defines
+default values for some more macros and the project default target
+`arduino_arm_mk_default`, and finally includes a platform dependent
+board family `gmake` include file selected by the `BOARDFAMILY` macro.
+The following `BOARDFAMILY` values are supported:
+
+- `Disco` [STMicroelectronics
+  Discovery](https://www.st.com/en/evaluation-tools/stm32-discovery-kits.html)
+  evaluation boards
+- `Nucleo_32` [STMicroelectronics
+  Nucleo-32](https://www.st.com/en/evaluation-tools/stm32-nucleo-boards/products.html?querycriteria=productId=LN1847$$1574=Nucleo-32)
+  evaluation boards
+- `Nucleo_64` [STMicroelectronics
+  Nucleo-64](https://www.st.com/en/evaluation-tools/stm32-nucleo-boards/products.html?querycriteria=productId=LN1847$$1574=Nucleo-64)
+  evaluation boards
+- `RP2040` [Raspberry Pi
+  RP2040](https://www.raspberrypi.com/products/rp2040) boards
+- `RP2350` [Raspberry Pi
+  RP2350](https://www.raspberrypi.com/products/rp2350) boards
 
 ## Arduino IDE 2
 

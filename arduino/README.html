@@ -5,7 +5,33 @@ with the following command:</p>
 <pre><b>
 git clone https://github.com/pmunts/arm-mcu.git
 </b></pre>
-<h2>GNU Make Projects</h2>
+<h2><a href="https://www.gnu.org/software/make">GNU Make</a></h2>
+<p>Each Arduino ARM program project contains a minimal <samp>Makefile</samp>
+for <a href="https://www.gnu.org/software/make">gmake</a> that simply defines a
+default value for the macro <samp>SKETCHBOOK</samp> and then includes
+<samp>$(SKETCHBOOK)/libraries/MuntsTech_ARM/Arduino_ARM.mk</samp>, which
+defines default values for some more macros and the project default target
+<samp>arduino_arm_mk_default</samp>, and finally includes a platform dependent
+board family <samp>gmake</samp> include file selected by the
+<samp>BOARDFAMILY</samp> macro. The following <samp>BOARDFAMILY</samp> values
+are supported:</p>
+<ul>
+<li><samp>Disco</samp> <a href=
+"https://www.st.com/en/evaluation-tools/stm32-discovery-kits.html">STMicroelectronics
+Discovery</a> evaluation boards</li>
+<li><samp>Nucleo_32</samp> <a href=
+"https://www.st.com/en/evaluation-tools/stm32-nucleo-boards/products.html?querycriteria=productId=LN1847$$1574=Nucleo-32">
+STMicroelectronics Nucleo-32</a> evaluation boards</li>
+<li><samp>Nucleo_64</samp> <a href=
+"https://www.st.com/en/evaluation-tools/stm32-nucleo-boards/products.html?querycriteria=productId=LN1847$$1574=Nucleo-64">
+STMicroelectronics Nucleo-64</a> evaluation boards</li>
+<li><samp>RP2040</samp> <a href=
+"https://www.raspberrypi.com/products/rp2040">Raspberry Pi RP2040</a>
+boards</li>
+<li><samp>RP2350</samp> <a href=
+"https://www.raspberrypi.com/products/rp2350">Raspberry Pi RP2350</a>
+boards</li>
+</ul>
 <h2>Arduino IDE 2</h2>
 This framework works well with <a href=
 "https://docs.arduino.cc/software/ide/#ide-v2">Arduino IDE 2</a>. To use this
