@@ -1,34 +1,34 @@
 <h1>Arduino Framework for ARM MCU Platforms</h1>
 <p>In order to use this framework, you will need to clone the <a href=
-"https://github.com/pmunts/arm-mcu">arm-mcu</a> <samp>git</samp> repository
+"https://github.com/pmunts/arm-mcu">arm-mcu</a> <code>git</code> repository
 with the following command:</p>
 <pre>
 git clone https://github.com/pmunts/arm-mcu.git
 </pre>
 <h2><a href="https://www.gnu.org/software/make">GNU Make</a></h2>
-<p>Each Arduino ARM program project contains a minimal <samp>Makefile</samp>
-for <samp>gmake</samp> that simply defines a default value for the macro
-<samp>SKETCHBOOK</samp> and then includes
-<samp>$(SKETCHBOOK)/libraries/MuntsTech_ARM/Arduino_ARM.mk</samp>, which
+<p>Each Arduino ARM program project contains a minimal <code>Makefile</code>
+for <code>gmake</code> that simply defines a default value for the macro
+<code>SKETCHBOOK</code> and then includes
+<code>$(SKETCHBOOK)/libraries/MuntsTech_ARM/Arduino_ARM.mk</code>, which
 defines default values for some more macros and the project default target
-<samp>arduino_arm_mk_default</samp>, and finally includes a platform dependent
-board family <samp>gmake</samp> include file selected by the
-<samp>BOARDFAMILY</samp> macro. The following <samp>BOARDFAMILY</samp> values
+<code>arduino_arm_mk_default</code>, and finally includes a platform dependent
+board family <code>gmake</code> include file selected by the
+<code>BOARDFAMILY</code> macro. The following <code>BOARDFAMILY</code> values
 are supported:</p>
 <ul>
-<li><samp>Disco</samp> <a href=
+<li><code>Disco</code> <a href=
 "https://www.st.com/en/evaluation-tools/stm32-discovery-kits.html">STMicroelectronics
 Discovery</a> evaluation boards</li>
-<li><samp>Nucleo_32</samp> <a href=
+<li><code>Nucleo_32</code> <a href=
 "https://www.st.com/en/evaluation-tools/stm32-nucleo-boards/products.html?querycriteria=productId=LN1847$$1574=Nucleo-32">
 STMicroelectronics Nucleo-32</a> evaluation boards</li>
-<li><samp>Nucleo_64</samp> <a href=
+<li><code>Nucleo_64</code> <a href=
 "https://www.st.com/en/evaluation-tools/stm32-nucleo-boards/products.html?querycriteria=productId=LN1847$$1574=Nucleo-64">
 STMicroelectronics Nucleo-64</a> evaluation boards</li>
-<li><samp>RP2040</samp> <a href=
+<li><code>RP2040</code> <a href=
 "https://www.raspberrypi.com/products/rp2040">Raspberry Pi RP2040</a>
 boards</li>
-<li><samp>RP2350</samp> <a href=
+<li><code>RP2350</code> <a href=
 "https://www.raspberrypi.com/products/rp2350">Raspberry Pi RP2350</a>
 boards</li>
 </ul>
@@ -38,14 +38,14 @@ This framework works well with <a href=
 framework within the Arduino IDE 2, all you need to do is:
 <ul>
 <li>Start Arduino IDE 2.</li>
-<li>Select your <b>target platform</b> from <samp>Tools &rarr;
-Board</samp>.</li>
-<li>Select the <b>communication port</b> from <samp>Tools &rarr;
-Port</samp>.</li>
+<li>Select your <b>target platform</b> from <code>Tools &rarr;
+Board</code>.</li>
+<li>Select the <b>communication port</b> from <code>Tools &rarr;
+Port</code>.</li>
 <li>Set the <b>sketchbook directory</b> to your <b>Arduino Framework for ARM
 MCU Platforms</b> checkout directory (<i>e.g.</i>
-<samp>~/arm-mcu/arduino/</samp>) from <samp>File &rarr; Preferences &rarr;
-Sketchbook location</samp>.</li>
+<code>~/arm-mcu/arduino/</code>) from <code>File &rarr; Preferences &rarr;
+Sketchbook location</code>.</li>
 </ul>
 <p>Your project does <b><i>not</i></b> need to be within the <b>Arduino
 Framework for ARM MCU Platforms</b> checkout directory.</p>
@@ -70,8 +70,8 @@ the creation of microcontroller <a href=
 to feed AWS backend applications. FreeRTOS has been very widely used throughout
 the world by developers across industries ranging from hobbyists to <a href=
 "https://us500.com/fortune-500-companies">Fortune 500</a> companies.</p>
-<p>To enable FreeRTOS, just add <samp>#define ENABLE_FREERTOS</samp> before
-<samp>#include &lt;Arduino_ARM.h&gt;</samp>.</p>
+<p>To enable FreeRTOS, just add <code>#define ENABLE_FREERTOS</code> before
+<code>#include &lt;Arduino_ARM.h&gt;</code>.</p>
 <h3>RP2040/RP2350</h3>
 <p>The <a href=
 "https://github.com/earlephilhower/arduino-pico">Arduino-Pico</a> core package
@@ -112,21 +112,21 @@ void setup()
   xTaskCreate(Task0, "task1", 512, NULL, 1, NULL);
 }
 </pre>
-<p>All of <samp>loop()</samp>, <samp>setup1()</samp>, and <samp>loop1()</samp>
+<p>All of <code>loop()</code>, <code>setup1()</code>, and <code>loop1()</code>
 are optional. For compatibility, an idle task running on core 0 will call
-<samp>loop()</samp> if it is defined and an idle task running on core 1 will
-call <samp>loop1()</samp> if it is defined. The Arduino-Pico
-<samp>main()</samp> function calls <samp>vTaskStartScheduler()</samp> therefore
-<samp>setup()</samp> must <b>not</b> call it again. For this reason,
-<samp>Arduino_ARM.h</samp> defines <samp>vTaskStartScheduler()</samp> as an
+<code>loop()</code> if it is defined and an idle task running on core 1 will
+call <code>loop1()</code> if it is defined. The Arduino-Pico
+<code>main()</code> function calls <code>vTaskStartScheduler()</code> therefore
+<code>setup()</code> must <b>not</b> call it again. For this reason,
+<code>Arduino_ARM.h</code> defines <code>vTaskStartScheduler()</code> as an
 empty macro for RP2040 and RP2350 platforms.</p>
 <p>To build an RP2040 or RP2350 FreeRTOS application, you must append
-<samp>:os=freertos</samp> to the FQBN (Fully Qualified Board Name). When
-building with <samp>gmake</samp>, either from the command line or from Visual
-Studio Code, this is automatically done by <samp>RP2040.mk</samp> or
-<samp>RP2350.mk</samp>. When building with Arduino IDE 2, this must be done
-explicitly from <samp>Tools &rarr; Operating System &rarr; FreeRTOS
-SMP</samp>.</p>
+<code>:os=freertos</code> to the FQBN (Fully Qualified Board Name). When
+building with <code>gmake</code>, either from the command line or from Visual
+Studio Code, this is automatically done by <code>RP2040.mk</code> or
+<code>RP2350.mk</code>. When building with Arduino IDE 2, this must be done
+explicitly from <code>Tools &rarr; Operating System &rarr; FreeRTOS
+SMP</code>.</p>
 <p>Because of how well FreeRTOS has been integrated into the Arduino-Pico core
 package, it is now probably easier to develop a FreeRTOS application for an
 Arduino RP2040 or RP2350 platform than for any other hardware/software
@@ -161,11 +161,11 @@ void loop()
 {
 }
 </pre>
-<p>Your <samp>setup()</samp> function must call <samp>xTaskCreate()</samp> to
+<p>Your <code>setup()</code> function must call <code>xTaskCreate()</code> to
 create at least one FreeRTOS task and then call
-<samp>vTaskStartScheduler()</samp> which does not return and replaces all of
+<code>vTaskStartScheduler()</code> which does not return and replaces all of
 the normal Arduino background processing. For compatibility, the FreeRTOS idle
-task calls <samp>loop()</samp>.</p>
+task calls <code>loop()</code>.</p>
 <h2>Libraries</h2>
 <hr>
 Questions or comments to Philip Munts <a href=
