@@ -1,16 +1,16 @@
 # Arduino Framework for ARM MCU Platforms
 
 In order to use this framework, you will need to clone the
-[arm-mcu](https://github.com/pmunts/arm-mcu) **`git`** repository with
-the following command:
+[arm-mcu](https://github.com/pmunts/arm-mcu) `git` repository with the
+following command:
 
     git clone https://github.com/pmunts/arm-mcu.git
 
 ## [GNU Make](https://www.gnu.org/software/make)
 
 Each Arduino ARM program project contains a minimal `Makefile` for
-[gmake](https://www.gnu.org/software/make) that simply defines a default
-value for the macro `SKETCHBOOK` and then includes
+`gmake` that simply defines a default value for the macro `SKETCHBOOK`
+and then includes
 `$(SKETCHBOOK)/libraries/MuntsTech_ARM/Arduino_ARM.mk`, which defines
 default values for some more macros and the project default target
 `arduino_arm_mk_default`, and finally includes a platform dependent
@@ -38,11 +38,11 @@ This framework works well with [Arduino IDE
 within the Arduino IDE 2, all you need to do is:
 
 - Start Arduino IDE 2.
-- Select your **target platform** from **`Tools → Board`**.
-- Select the **communication port** from **`Tools → Port`**.
+- Select your **target platform** from `Tools → Board`.
+- Select the **communication port** from `Tools → Port`.
 - Set the **sketchbook directory** to your **Arduino Framework for ARM
-  MCU Platforms** checkout directory (*e.g.* **`~/arm-mcu/arduino/`**)
-  from **`File → Preferences → Sketchbook location`**.
+  MCU Platforms** checkout directory (*e.g.* `~/arm-mcu/arduino/`) from
+  `File → Preferences → Sketchbook location`.
 
 Your project does ***not*** need to be within the **Arduino Framework
 for ARM MCU Platforms** checkout directory.
@@ -73,8 +73,8 @@ AWS backend applications. FreeRTOS has been very widely used throughout
 the world by developers across industries ranging from hobbyists to
 [Fortune 500](https://us500.com/fortune-500-companies) companies.
 
-To enable FreeRTOS, just add **`#define ENABLE_FREERTOS`** before
-**`#include <Arduino_ARM.h>`**.
+To enable FreeRTOS, just add `#define ENABLE_FREERTOS` before
+`#include <Arduino_ARM.h>`.
 
 ### RP2040/RP2350
 
@@ -116,21 +116,20 @@ application:
       xTaskCreate(Task0, "task1", 512, NULL, 1, NULL);
     }
 
-All of **`loop()`**, **`setup1()`**, and **`loop1()`** are optional. For
-compatibility, an idle task running on core 0 will call **`loop()`** if
-it is defined and an idle task running on core 1 will call **`loop1()`**
-if it is defined. The Arduino-Pico **`main()`** function calls
-**`vTaskStartScheduler()`** therefore **`setup()`** must **not** call it
-again. For this reason, **`Arduino_ARM.h`** defines
-**`vTaskStartScheduler()`** as an empty macro for RP2040 and RP2350
-platforms.
+All of `loop()`, `setup1()`, and `loop1()` are optional. For
+compatibility, an idle task running on core 0 will call `loop()` if it
+is defined and an idle task running on core 1 will call `loop1()` if it
+is defined. The Arduino-Pico `main()` function calls
+`vTaskStartScheduler()` therefore `setup()` must **not** call it again.
+For this reason, `Arduino_ARM.h` defines `vTaskStartScheduler()` as an
+empty macro for RP2040 and RP2350 platforms.
 
 To build an RP2040 or RP2350 FreeRTOS application, you must append
-**`:os=freertos`** to the FQBN (Fully Qualified Board Name). When
-building with **`gmake`**, either from the command line or from Visual
-Studio Code, this is automatically done by **`RP2040.mk`** or
-**`RP2350.mk`**. When building with Arduino IDE 2, this must be done
-explicitly from **`Tools → Operating System → FreeRTOS SMP`**.
+`:os=freertos` to the FQBN (Fully Qualified Board Name). When building
+with `gmake`, either from the command line or from Visual Studio Code,
+this is automatically done by `RP2040.mk` or `RP2350.mk`. When building
+with Arduino IDE 2, this must be done explicitly from
+`Tools → Operating System → FreeRTOS SMP`.
 
 Because of how well FreeRTOS has been integrated into the Arduino-Pico
 core package, it is now probably easier to develop a FreeRTOS
@@ -169,11 +168,10 @@ Arduino FreeRTOS application:
     {
     }
 
-Your **`setup()`** function must call **`xTaskCreate()`** to create at
-least one FreeRTOS task and then call **`vTaskStartScheduler()`** which
-does not return and replaces all of the normal Arduino background
-processing. For compatibility, the FreeRTOS idle task calls
-**`loop()`**.
+Your `setup()` function must call `xTaskCreate()` to create at least one
+FreeRTOS task and then call `vTaskStartScheduler()` which does not
+return and replaces all of the normal Arduino background processing. For
+compatibility, the FreeRTOS idle task calls `loop()`.
 
 ## Libraries
 
