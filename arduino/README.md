@@ -25,6 +25,17 @@ The following `BOARDFAMILY` values are supported:
 | `RP2040`      | [Raspberry Pi RP2040](https://www.raspberrypi.com/products/rp2040/) boards                                                                                                | [Arduino-Pico](https://github.com/earlephilhower/arduino-pico) |
 | `RP2350`      | [Raspberry Pi RP2040](https://www.raspberrypi.com/products/rp2040/) boards                                                                                                | [Arduino-Pico](https://github.com/earlephilhower/arduino-pico) |
 
+Another macro `BOARDNAME` selects a particular board within each board
+family. For the STM32 board families, the Arduino FQBN (Fully Qualified
+Board Name) passed to `arduino-cli compile` will be defined as:
+
+    ARDUINOFQBN := STMicroelectronics:stm32:$(BOARDFAMILY):pnum=$(BOARDNAME),upload_method=swdMethod
+
+For the RP2040 and RP2350 board families, the Arduino FQBN will be
+defined as:
+
+    ARDUINOFQBN := rp2040:rp2040:$(BOARDNAME)
+
 ## Arduino IDE 2
 
 This framework works well with [Arduino IDE
