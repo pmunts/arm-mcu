@@ -24,7 +24,6 @@ ARDUINOCORESRC	:= $(ARDUINOPKGSDIR)/STMicroelectronics/hardware/stm32/2.12.0
 ARDUINOCOREGCC	:= $(ARDUINOPKGSDIR)/STMicroelectronics/tools/xpack-arm-none-eabi-gcc/14.2.1-1.1/bin/arm-none-eabi-gcc
 VSCODE		?= code
 
-
 # Fix Arduino core pathnames for Windows
 
 ifeq ($(shell uname -o), Cygwin)
