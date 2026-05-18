@@ -1,15 +1,28 @@
 <h1>Arduino Framework for ARM MCU Platforms</h1>
-<p>In order to use this framework, you will need to clone the <a href=
+<p>Unless you use <i>only</i> <b>Arduino IDE 2</b>, you will need to use whatever
+command line shell your development computer operating system has to make use
+of this framework. macOS and Linux computers (including <a href=
+"https://chromeos.dev/en/linux">Linux On ChromeOS <i>aka</i>Crostini</a>
+containers) always have one or more command line shells, named something like
+<code>Terminal</code> or <code>Console</code>.</p>
+<p>In order to use this framework, you will first need to clone the <a href=
 "https://github.com/pmunts/arm-mcu">arm-mcu</a> <code>git</code> repository
 with the following command:</p>
 <pre>
 git clone https://github.com/pmunts/arm-mcu.git
 </pre>
 <p>After you have cloned the repository, you will most likely want to set the
-<code>SKETCHBOOK</code> environment variable to point it (<i>e.g.</i>
-<code>export SKETCHBOOK=$HOME/arm-mcu/arduino</code>). You can add the
-<code>export</code> command to <i>e.g.</i> <code>~/.bashrc</code> to make it
-permanent.</p>
+<code>SKETCHBOOK</code> environment variable to point to the
+<code>arduino/</code> subdirectory of the <code>arm-mcu</code> checkout
+directory (<i>e.g.</i> <code>export SKETCHBOOK=$HOME/arm-mcu/arduino</code>).
+You can add the <code>export</code> command to <i>e.g.</i>
+<code>~/.bashrc</code> to make it permanent.</p>
+<p>An <b>Arduino Framework for ARM MCU Platforms</b> project directory contains
+a number of files. The easiest way to create a new project is with the
+<code>newproject</code> shell script:</p>
+<pre>
+$HOME/arm-mcu/arduino/scripts/newproject myproject
+</pre>
 <h1><a href="https://www.gnu.org/software/make">GNU Make</a></h1>
 <p>Each <b>Arduino Framework for ARM MCU Platforms</b> program project contains
 a minimal <code>Makefile</code> for <code>gmake</code> that simply defines a

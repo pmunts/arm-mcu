@@ -1,6 +1,13 @@
 # Arduino Framework for ARM MCU Platforms
 
-In order to use this framework, you will need to clone the
+Unless you use *only* **Arduino IDE 2**, you will need to use whatever
+command line shell your development computer operating system has to
+make use of this framework. macOS and Linux computers (including [Linux
+On ChromeOS *aka*Crostini](https://chromeos.dev/en/linux) containers)
+always have one or more command line shells, named something like
+`Terminal` or `Console`.
+
+In order to use this framework, you will first need to clone the
 [arm-mcu](https://github.com/pmunts/arm-mcu) `git` repository with the
 following command:
 
@@ -8,9 +15,17 @@ following command:
     git clone https://github.com/pmunts/arm-mcu.git
 
 After you have cloned the repository, you will most likely want to set
-the `SKETCHBOOK` environment variable to point it (*e.g.*
+the `SKETCHBOOK` environment variable to point to the `arduino/`
+subdirectory of the `arm-mcu` checkout directory (*e.g.*
 `export SKETCHBOOK=$HOME/arm-mcu/arduino`). You can add the `export`
 command to *e.g.* `~/.bashrc` to make it permanent.
+
+An **Arduino Framework for ARM MCU Platforms** project directory
+contains a number of files. The easiest way to create a new project is
+with the `newproject` shell script:
+
+
+    $HOME/arm-mcu/arduino/scripts/newproject myproject
 
 # [GNU Make](https://www.gnu.org/software/make)
 
