@@ -1,4 +1,4 @@
-# Arduino ARM Framework
+# Arduino Framework for ARM MCU Platforms
 
 In order to use this framework, you will need to clone the
 [arm-mcu](https://github.com/pmunts/arm-mcu) `git` repository with the
