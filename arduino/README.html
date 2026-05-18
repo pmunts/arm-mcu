@@ -10,7 +10,7 @@ git clone https://github.com/pmunts/arm-mcu.git
 <code>export SKETCHBOOK=$HOME/arm-mcu/arduino</code>). You can add the
 <code>export</code> command to <i>e.g.</i> <code>~/.bashrc</code> to make it
 permanent.</p>
-<h2><a href="https://www.gnu.org/software/make">GNU Make</a></h2>
+<h1><a href="https://www.gnu.org/software/make">GNU Make</a></h1>
 <p>Each <b>Arduino Framework for ARM MCU Platforms</b> program project contains
 a minimal <code>Makefile</code> for <code>gmake</code> that simply defines a
 default value for the macro <code>SKETCHBOOK</code> and then includes
@@ -18,8 +18,7 @@ default value for the macro <code>SKETCHBOOK</code> and then includes
 defines default values for some more macros and the project default target
 <code>arduino_arm_mk_default</code>, and finally includes a platform dependent
 board family <code>gmake</code> include file selected by the
-<code>BOARDFAMILY</code> macro. Finally, another macro <code>BOARDNAME</code>
-selects a particular board within a family.</p>
+<code>BOARDFAMILY</code> macro.</p>
 <h2>Supported Board Families</h2>
 <table>
 <tr>
@@ -94,7 +93,8 @@ Equivalent to <code>clean build</code>.
 <h2>Make Command Syntax</h2>
 <p>The exact target board is selected by two <code>gmake</code> macros:
 <code>BOARDFAMILY</code> and <code>BOARDNAME</code>. Both of these can and
-should be initialized by environment variables.</p>
+should be initialized by environment variables before invoking
+<code>gmake</code>.</p>
 <p>For the STM32 board families, the Arduino FQBN (Fully Qualified Board Name)
 passed to <code>arduino-cli compile</code> will be defined as:</p>
 <pre>
@@ -116,25 +116,24 @@ make &lt;your make target&gt;
 </pre>
 <h2>Make Command examples</h2>
 <pre>
-# Select board
-export SKETCHBOOK=$HOME/arm-mcu=arduino
+export SKETCHBOOK=$HOME/arm-mcu/arduino
 export BOARDFAMILY=RP2040
 export BARDNAME=sparkfun_promicrorp2040
 
 # Build without flashing target board
 make build
 
-# Flash target board with rebuilding
+# Flash target board without rebuilding unnecessarily
 make install
 
-# The two following commands are equivalent
+# The two following commands are equivalent:
+# Build from scratch and then flash target board
 make clean install
 make
 </pre>
-<h2>Arduino IDE 2</h2>
-This framework works well with <a href=
-"https://docs.arduino.cc/software/ide/#ide-v2">Arduino IDE 2</a>. To use this
-framework within the Arduino IDE 2, all you need to do is:
+<h1><a href="https://docs.arduino.cc/software/ide/#ide-v2">Arduino IDE
+2</a></h1>
+<p>To use this framework within the Arduino IDE 2, all you need to do is:</p>
 <ul>
 <li>Start Arduino IDE 2.</li>
 <li>Select your <b>target platform</b> from <code>Tools &rarr;
@@ -148,15 +147,15 @@ Sketchbook location</code>.</li>
 </ul>
 <p>Your project does <b><i>not</i></b> need to be within the <b>Arduino
 Framework for ARM MCU Platforms</b> checkout directory.</p>
-<p>The Arduino IDE 2 does not use anything from the GNU make project except for
-the sketch source file(s).</p>
-<p>An Arduino IDE 2 Debian package for Linux x86-64 <i>aka</i> amd64 machines
-is available at the <a href="https://repo.munts.com/debian13/">Munts
-Technologies Debian Package Repository</a>. It is packaged from the official
-Arduino release. Unfortunately there is no official Arduino IDE 2 release for
-ARMv8 <i>aka</i> arm64 machines.</p>
-<h2>Visual Studio Code</h2>
-<h2><a href="https://www.freertos.org">FreeRTOS</a></h2>
+<p>The Arduino IDE 2 does not use anything from the GNU <code>make</code>
+project except for the sketch source file(s).</p>
+<p>An <b>official</b> Arduino IDE 2 release Debian package for Linux x86-64
+<i>aka</i> amd64 machines and an <b>unofficial</b> release Debian package for
+arm64 <i>aka</i> AArch64 machines are available at the <a href=
+"https://repo.munts.com/debian13/">Munts Technologies Debian Package
+Repository</a>.</p>
+<h1><a href="https://code.visualstudio.com">Visual Studio Code</a></h1>
+<h1><a href="https://www.freertos.org">FreeRTOS</a></h1>
 <p>FreeRTOS is an <a href="https://en.wikipedia.org/wiki/Open_source">open
 source</a> lightweight <a href=
 "https://en.wikipedia.org/wiki/Real-time_operating_system">Real Time Operating
@@ -171,7 +170,7 @@ the world by developers across industries ranging from hobbyists to <a href=
 "https://us500.com/fortune-500-companies">Fortune 500</a> companies.</p>
 <p>To enable FreeRTOS, just add <code>#define ENABLE_FREERTOS</code> before
 <code>#include &lt;Arduino_ARM.h&gt;</code>.</p>
-<h3>RP2040/RP2350</h3>
+<h2>RP2040/RP2350</h2>
 <p>The <a href=
 "https://github.com/earlephilhower/arduino-pico">Arduino-Pico</a> core package
 for RP2040 and RP2350 microcontrollers includes a tightly integrated
@@ -230,7 +229,7 @@ SMP</code>.</p>
 package, it is now probably easier to develop a FreeRTOS application for an
 Arduino RP2040 or RP2350 platform than for any other hardware/software
 combination.</p>
-<h3>STM32</h3>
+<h2>STM32</h2>
 <p>The <a href="https://github.com/stm32duino/STM32FreeRTOS">STM32FreeRTOS</a>
 Arduino library provides FreeRTOS support for STM32 microcontrollers. Since it
 is delivered as a library, it is not integrated as tightly with the STM32 core
@@ -265,7 +264,7 @@ create at least one FreeRTOS task and then call
 <code>vTaskStartScheduler()</code> which does not return and replaces all of
 the normal Arduino background processing. For compatibility, the FreeRTOS idle
 task calls <code>loop()</code>.</p>
-<h2>Libraries</h2>
+<h1>Libraries</h1>
 <hr>
 Questions or comments to Philip Munts <a href=
 "mailto:phil@munts.net">phil@munts.net</a>
