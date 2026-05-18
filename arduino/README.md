@@ -17,13 +17,14 @@ default values for some more macros and the project default target
 board family `gmake` include file selected by the `BOARDFAMILY` macro.
 The following `BOARDFAMILY` values are supported:
 
-| `BOARDFAMILY` | Description                                                                                                                                                               | Core Package                                                   |
-|---------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------|
-| `Disco`       | [STMicroelectronics Discovery](https://www.st.com/en/evaluation-tools/stm32-discovery-kits.html) evaluation boards                                                        | [STM32Duino](https://github.com/stm32duino)                    |
-| `Nucleo_32`   | [STMicroelectronics Nucleo-32](https://www.st.com/en/evaluation-tools/stm32-nucleo-boards/products.html?querycriteria=productId=LN1847$$1574=Nucleo-32) evaluation boards | [STM32Duino](https://github.com/stm32duino)                    |
-| `Nucleo_64`   | [STMicroelectronics Nucleo-64](https://www.st.com/en/evaluation-tools/stm32-nucleo-boards/products.html?querycriteria=productId=LN1847$$1574=Nucleo-64) evaluation boards | [STM32Duino](https://github.com/stm32duino)                    |
-| `RP2040`      | [Raspberry Pi RP2040](https://www.raspberrypi.com/products/rp2040/) boards                                                                                                | [Arduino-Pico](https://github.com/earlephilhower/arduino-pico) |
-| `RP2350`      | [Raspberry Pi RP2040](https://www.raspberrypi.com/products/rp2040/) boards                                                                                                | [Arduino-Pico](https://github.com/earlephilhower/arduino-pico) |
+| `BOARDFAMILY` | Description                                                                                                                                                                 | Core Package                                                   |
+|---------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------|
+| `Disco`       | [STMicroelectronics Discovery](https://www.st.com/en/evaluation-tools/stm32-discovery-kits.html) evaluation boards                                                          | [STM32Duino](https://github.com/stm32duino)                    |
+| `Nucleo_32`   | [STMicroelectronics Nucleo-32](https://www.st.com/en/evaluation-tools/stm32-nucleo-boards/products.html?querycriteria=productId=LN1847$$1574=Nucleo-32) evaluation boards   | [STM32Duino](https://github.com/stm32duino)                    |
+| `Nucleo_64`   | [STMicroelectronics Nucleo-64](https://www.st.com/en/evaluation-tools/stm32-nucleo-boards/products.html?querycriteria=productId=LN1847$$1574=Nucleo-64) evaluation boards   | [STM32Duino](https://github.com/stm32duino)                    |
+| `Nucleo_144`  | [STMicroelectronics Nucleo-144](https://www.st.com/en/evaluation-tools/stm32-nucleo-boards/products.html?querycriteria=productId=LN1847$$1574=Nucleo-144) evaluation boards | [STM32Duino](https://github.com/stm32duino)                    |
+| `RP2040`      | [Raspberry Pi RP2040](https://www.raspberrypi.com/products/rp2040/) boards                                                                                                  | [Arduino-Pico](https://github.com/earlephilhower/arduino-pico) |
+| `RP2350`      | [Raspberry Pi RP2350](https://www.raspberrypi.com/products/rp2350/) boards                                                                                                  | [Arduino-Pico](https://github.com/earlephilhower/arduino-pico) |
 
 Another macro `BOARDNAME` selects a particular board within each board
 family. For the STM32 board families, the Arduino FQBN (Fully Qualified
