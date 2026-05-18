@@ -1,41 +1,108 @@
-# Arduino Framework for ARM MCU Platforms
+# Arduino ARM Framework
 
 In order to use this framework, you will need to clone the
 [arm-mcu](https://github.com/pmunts/arm-mcu) `git` repository with the
 following command:
 
+
     git clone https://github.com/pmunts/arm-mcu.git
+
+After you have cloned the repository, you will most likely want to set
+the `SKETCHBOOK` environment variable to point it (*e.g.*
+`export SKETCHBOOK=$HOME/arm-mcu/arduino`). You can add the `export`
+command to *e.g.* `~/.bashrc` to make it permanent.
 
 ## [GNU Make](https://www.gnu.org/software/make)
 
-Each Arduino ARM program project contains a minimal `Makefile` for
-`gmake` that simply defines a default value for the macro `SKETCHBOOK`
-and then includes
+Each **Arduino Framework for ARM MCU Platforms** program project
+contains a minimal `Makefile` for `gmake` that simply defines a default
+value for the macro `SKETCHBOOK` and then includes
 `$(SKETCHBOOK)/libraries/MuntsTech_ARM/Arduino_ARM.mk`, which defines
 default values for some more macros and the project default target
 `arduino_arm_mk_default`, and finally includes a platform dependent
 board family `gmake` include file selected by the `BOARDFAMILY` macro.
-The following `BOARDFAMILY` values are supported:
+Finally, another macro `BOARDNAME` selects a particular board within a
+family.
 
-| `BOARDFAMILY` | Description                                                                                                                                                                 | Core Package                                                   |
-|---------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------|
-| `Disco`       | [STMicroelectronics Discovery](https://www.st.com/en/evaluation-tools/stm32-discovery-kits.html) evaluation boards                                                          | [STM32Duino](https://github.com/stm32duino)                    |
-| `Nucleo_32`   | [STMicroelectronics Nucleo-32](https://www.st.com/en/evaluation-tools/stm32-nucleo-boards/products.html?querycriteria=productId=LN1847$$1574=Nucleo-32) evaluation boards   | [STM32Duino](https://github.com/stm32duino)                    |
-| `Nucleo_64`   | [STMicroelectronics Nucleo-64](https://www.st.com/en/evaluation-tools/stm32-nucleo-boards/products.html?querycriteria=productId=LN1847$$1574=Nucleo-64) evaluation boards   | [STM32Duino](https://github.com/stm32duino)                    |
-| `Nucleo_144`  | [STMicroelectronics Nucleo-144](https://www.st.com/en/evaluation-tools/stm32-nucleo-boards/products.html?querycriteria=productId=LN1847$$1574=Nucleo-144) evaluation boards | [STM32Duino](https://github.com/stm32duino)                    |
-| `RP2040`      | [Raspberry Pi RP2040](https://www.raspberrypi.com/products/rp2040/) boards                                                                                                  | [Arduino-Pico](https://github.com/earlephilhower/arduino-pico) |
-| `RP2350`      | [Raspberry Pi RP2350](https://www.raspberrypi.com/products/rp2350/) boards                                                                                                  | [Arduino-Pico](https://github.com/earlephilhower/arduino-pico) |
+## Supported Board Families
 
-Another macro `BOARDNAME` selects a particular board within each board
-family. For the STM32 board families, the Arduino FQBN (Fully Qualified
-Board Name) passed to `arduino-cli compile` will be defined as:
+| `BOARDFAMILY` Value | Description | Core Package | Default `BOARDNAME` |
+|----|----|----|----|
+| `Disco` | [STMicroelectronics Discovery](https://www.st.com/en/evaluation-tools/stm32-discovery-kits.html) evaluation boards | [STM32Duino](https://github.com/stm32duino) | `DISCO_F407VG` |
+| `Nucleo_32` | [STMicroelectronics Nucleo-32](https://www.st.com/en/evaluation-tools/stm32-nucleo-boards/products.html?querycriteria=productId=LN1847$$1574=Nucleo-32) evaluation boards | [STM32Duino](https://github.com/stm32duino) | `NUCLEO_F042K6` |
+| `Nucleo_64` | [STMicroelectronics Nucleo-64](https://www.st.com/en/evaluation-tools/stm32-nucleo-boards/products.html?querycriteria=productId=LN1847$$1574=Nucleo-64) evaluation boards | [STM32Duino](https://github.com/stm32duino) | `NUCLEO_F411RE` |
+| `Nucleo_144` | [STMicroelectronics Nucleo-144](https://www.st.com/en/evaluation-tools/stm32-nucleo-boards/products.html?querycriteria=productId=LN1847$$1574=Nucleo-144) evaluation boards | [STM32Duino](https://github.com/stm32duino) | `NUCLEO_F767ZI` |
+| `RP2040` | [Raspberry Pi RP2040](https://www.raspberrypi.com/products/rp2040/) boards | [Arduino-Pico](https://github.com/earlephilhower/arduino-pico) | `sparkfun_promicrorp2040` |
+| `RP2350` | [Raspberry Pi RP2350](https://www.raspberrypi.com/products/rp2350/) boards | [Arduino-Pico](https://github.com/earlephilhower/arduino-pico) | `sparkfun_promicrorp2350` |
+
+This is a small subset of the vast variety of 32-bit ARM
+microcontrollers supported by the Arduino ecosystem, and limited to the
+boards that I actually possess and can validate support for. It is
+almost trivially easy to add support for more board families.
+
+## Make Targets
+
+### build
+
+Builds the sketch with `arduino-cli compile`.
+
+### install
+
+Uploads (more properly: *Downloads*) the compiled sketch to a target
+microcontroller board.
+
+### clean
+
+Removes working files (*i.e.* `build/`).
+
+### No target
+
+Equivalent to `clean build`.
+
+## Make Command Syntax
+
+The exact target board is selected by two `gmake` macros: `BOARDFAMILY`
+and `BOARDNAME`. Both of these can and should be initialized by
+environment variables.
+
+For the STM32 board families, the Arduino FQBN (Fully Qualified Board
+Name) passed to `arduino-cli compile` will be defined as:
+
 
     ARDUINOFQBN := STMicroelectronics:stm32:$(BOARDFAMILY):pnum=$(BOARDNAME),upload_method=swdMethod
 
 For the RP2040 and RP2350 board families, the Arduino FQBN will be
 defined as:
 
+
     ARDUINOFQBN := rp2040:rp2040:$(BOARDNAME)
+
+The following shell pseudocode illustrates how to build an **Arduino
+Framework for ARM MCU Platforms** project with `gmake` (most operating
+systems symlink or alias `make` to `gmake`):
+
+
+    export BOARDFAMILY=<your board family>
+    export BOARDNAME=<your board name>
+    make <your make target>
+
+## Make Command examples
+
+
+    # Select board
+    export SKETCHBOOK=$HOME/arm-mcu=arduino
+    export BOARDFAMILY=RP2040
+    export BARDNAME=sparkfun_promicrorp2040
+
+    # Build without flashing target board
+    make build
+
+    # Flash target board with rebuilding
+    make install
+
+    # The two following commands are equivalent
+    make clean install
+    make
 
 ## Arduino IDE 2
 
@@ -91,6 +158,7 @@ SMP](https://www.freertos.org/Documentation/02-Kernel/02-Kernel-features/13-Symm
 (Symmetric Multi-Processing). The following minimal sketch skeleton
 illustrates how to create a multicore RP2040 or RP2350 Arduino FreeRTOS
 application:
+
 
     #define ENABLE_FREERTOS
 
@@ -151,6 +219,7 @@ STM32 core package, and FreeRTOS applications for Arduino are
 implemented exactly the same as with any other GCC C or C++ framework.
 The following minimal sketch skeleton illustrates how create an STM32
 Arduino FreeRTOS application:
+
 
     #define ENABLE_FREERTOS
 

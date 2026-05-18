@@ -1,25 +1,32 @@
-<h1>Arduino Framework for ARM MCU Platforms</h1>
+<h1>Arduino ARM Framework</h1>
 <p>In order to use this framework, you will need to clone the <a href=
 "https://github.com/pmunts/arm-mcu">arm-mcu</a> <code>git</code> repository
 with the following command:</p>
 <pre>
 git clone https://github.com/pmunts/arm-mcu.git
 </pre>
+<p>After you have cloned the repository, you will most likely want to set the
+<code>SKETCHBOOK</code> environment variable to point it (<i>e.g.</i>
+<code>export SKETCHBOOK=$HOME/arm-mcu/arduino</code>). You can add the
+<code>export</code> command to <i>e.g.</i> <code>~/.bashrc</code> to make it
+permanent.</p>
 <h2><a href="https://www.gnu.org/software/make">GNU Make</a></h2>
-<p>Each Arduino ARM program project contains a minimal <code>Makefile</code>
-for <code>gmake</code> that simply defines a default value for the macro
-<code>SKETCHBOOK</code> and then includes
+<p>Each <b>Arduino Framework for ARM MCU Platforms</b> program project contains
+a minimal <code>Makefile</code> for <code>gmake</code> that simply defines a
+default value for the macro <code>SKETCHBOOK</code> and then includes
 <code>$(SKETCHBOOK)/libraries/MuntsTech_ARM/Arduino_ARM.mk</code>, which
 defines default values for some more macros and the project default target
 <code>arduino_arm_mk_default</code>, and finally includes a platform dependent
 board family <code>gmake</code> include file selected by the
-<code>BOARDFAMILY</code> macro. The following <code>BOARDFAMILY</code> values
-are supported:</p>
+<code>BOARDFAMILY</code> macro. Finally, another macro <code>BOARDNAME</code>
+selects a particular board within a family.</p>
+<h2>Supported Board Families</h2>
 <table>
 <tr>
-<th><code>BOARDFAMILY</code></th>
+<th><code>BOARDFAMILY</code> Value</th>
 <th>Description</th>
 <th>Core Package</th>
+<th>Default <code>BOARDNAME</code></th>
 </tr>
 <tr>
 <td><code>Disco</code></td>
@@ -27,6 +34,7 @@ are supported:</p>
 "https://www.st.com/en/evaluation-tools/stm32-discovery-kits.html">STMicroelectronics
 Discovery</a> evaluation boards</td>
 <td><a href="https://github.com/stm32duino">STM32Duino</a></td>
+<td><code>DISCO_F407VG</code></td>
 </tr>
 <tr>
 <td><code>Nucleo_32</code></td>
@@ -34,6 +42,7 @@ Discovery</a> evaluation boards</td>
 "https://www.st.com/en/evaluation-tools/stm32-nucleo-boards/products.html?querycriteria=productId=LN1847$$1574=Nucleo-32">
 STMicroelectronics Nucleo-32</a> evaluation boards</td>
 <td><a href="https://github.com/stm32duino">STM32Duino</a></td>
+<td><code>NUCLEO_F042K6</code></td>
 </tr>
 <tr>
 <td><code>Nucleo_64</code></td>
@@ -41,6 +50,7 @@ STMicroelectronics Nucleo-32</a> evaluation boards</td>
 "https://www.st.com/en/evaluation-tools/stm32-nucleo-boards/products.html?querycriteria=productId=LN1847$$1574=Nucleo-64">
 STMicroelectronics Nucleo-64</a> evaluation boards</td>
 <td><a href="https://github.com/stm32duino">STM32Duino</a></td>
+<td><code>NUCLEO_F411RE</code></td>
 </tr>
 <tr>
 <td><code>Nucleo_144</code></td>
@@ -48,6 +58,7 @@ STMicroelectronics Nucleo-64</a> evaluation boards</td>
 "https://www.st.com/en/evaluation-tools/stm32-nucleo-boards/products.html?querycriteria=productId=LN1847$$1574=Nucleo-144">
 STMicroelectronics Nucleo-144</a> evaluation boards</td>
 <td><a href="https://github.com/stm32duino">STM32Duino</a></td>
+<td><code>NUCLEO_F767ZI</code></td>
 </tr>
 <tr>
 <td><code>RP2040</code></td>
@@ -55,6 +66,7 @@ STMicroelectronics Nucleo-144</a> evaluation boards</td>
 RP2040</a> boards</td>
 <td><a href=
 "https://github.com/earlephilhower/arduino-pico">Arduino-Pico</a></td>
+<td><code>sparkfun_promicrorp2040</code></td>
 </tr>
 <tr>
 <td><code>RP2350</code></td>
@@ -62,11 +74,29 @@ RP2040</a> boards</td>
 RP2350</a> boards</td>
 <td><a href=
 "https://github.com/earlephilhower/arduino-pico">Arduino-Pico</a></td>
+<td><code>sparkfun_promicrorp2350</code></td>
 </tr>
 </table>
-<p>Another macro <code>BOARDNAME</code> selects a particular board within each
-board family. For the STM32 board families, the Arduino FQBN (Fully Qualified
-Board Name) passed to <code>arduino-cli compile</code> will be defined as:</p>
+<p>This is a small subset of the vast variety of 32-bit ARM microcontrollers
+supported by the Arduino ecosystem, and limited to the boards that I actually
+possess and can validate support for. It is almost trivially easy to add
+support for more board families.</p>
+<h2>Make Targets</h2>
+<h3>build</h3>
+<p>Builds the sketch with <code>arduino-cli compile</code>.</p>
+<h3>install</h3>
+<p>Uploads (more properly: <i>Downloads</i>) the compiled sketch to a target
+microcontroller board.</p>
+<h3>clean</h3>
+Removes working files (<i>i.e.</i> <code>build/</code>).
+<h3>No target</h3>
+Equivalent to <code>clean build</code>.
+<h2>Make Command Syntax</h2>
+<p>The exact target board is selected by two <code>gmake</code> macros:
+<code>BOARDFAMILY</code> and <code>BOARDNAME</code>. Both of these can and
+should be initialized by environment variables.</p>
+<p>For the STM32 board families, the Arduino FQBN (Fully Qualified Board Name)
+passed to <code>arduino-cli compile</code> will be defined as:</p>
 <pre>
 ARDUINOFQBN := STMicroelectronics:stm32:$(BOARDFAMILY):pnum=$(BOARDNAME),upload_method=swdMethod
 </pre>
@@ -74,6 +104,32 @@ ARDUINOFQBN := STMicroelectronics:stm32:$(BOARDFAMILY):pnum=$(BOARDNAME),upload_
 as:</p>
 <pre>
 ARDUINOFQBN := rp2040:rp2040:$(BOARDNAME)
+</pre>
+<p>The following shell pseudocode illustrates how to build an <b>Arduino
+Framework for ARM MCU Platforms</b> project with <code>gmake</code> (most
+operating systems symlink or alias <code>make</code> to
+<code>gmake</code>):</p>
+<pre>
+export BOARDFAMILY=&lt;your board family&gt;
+export BOARDNAME=&lt;your board name&gt;
+make &lt;your make target&gt;
+</pre>
+<h2>Make Command examples</h2>
+<pre>
+# Select board
+export SKETCHBOOK=$HOME/arm-mcu=arduino
+export BOARDFAMILY=RP2040
+export BARDNAME=sparkfun_promicrorp2040
+
+# Build without flashing target board
+make build
+
+# Flash target board with rebuilding
+make install
+
+# The two following commands are equivalent
+make clean install
+make
 </pre>
 <h2>Arduino IDE 2</h2>
 This framework works well with <a href=
