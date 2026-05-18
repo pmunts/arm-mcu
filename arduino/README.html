@@ -80,23 +80,38 @@ RP2350</a> boards</td>
 supported by the Arduino ecosystem, and limited to the boards that I actually
 possess and can validate support for. It is almost trivially easy to add
 support for more board families.</p>
+<p>All of the STM32 board families I have chosen to support (to date) have an
+on-board <a href=
+"https://www.st.com/en/development-tools/st-link-v2.html">ST-LINK</a>
+in-circuit debugger/flash programmer. At some point I will probably search
+through my inventory for compelling STM32 boards that require an external
+ST-LINK and add support for them.</p>
 <h2>Make Targets</h2>
 <h3>build</h3>
 <p>Builds the sketch with <code>arduino-cli compile</code>.</p>
 <h3>install</h3>
-<p>Uploads (more properly: <i>Downloads</i>) the compiled sketch to a target
-microcontroller board.</p>
+<p>Uploads (more properly: <i>Downloads</i>) the compiled sketch with
+<code>arduino-cli upload</code> to a target microcontroller board.</p>
+<p><i>For the <code>RP2040</code> and <code>RP2350</code> board families,
+setting environment variable <code>FLASHPICO=yes</code> before <code>make
+install</code> switches from <code>arduino-cli upload</code> to a script named
+<a href=
+"https://github.com/pmunts/arm-mcu/tree/main/utilities/flashpico"><code>flashpico</code></a>.
+Across the range of RP2040 and RP2350 boards, and
+Chromebook/Linux/macOS/Windows development host computers, I have found
+<code>flashpico</code> to be more reliable than <code>arduino-cli
+upload</code>.</i></p>
 <h3>clean</h3>
 Removes working files (<i>i.e.</i> <code>build/</code>).
 <h3>No target</h3>
-Equivalent to <code>clean build</code>.
+Equivalent to <code>clean install</code>.
 <h2>Make Command Syntax</h2>
 <p>The exact target board is selected by two <code>gmake</code> macros:
 <code>BOARDFAMILY</code> and <code>BOARDNAME</code>. Both of these can and
 should be initialized by environment variables before invoking
 <code>gmake</code>.</p>
 <p>For the STM32 board families, the Arduino FQBN (Fully Qualified Board Name)
-passed to <code>arduino-cli compile</code> will be defined as:</p>
+passed to <code>arduino-cli</code> will be defined as:</p>
 <pre>
 ARDUINOFQBN := STMicroelectronics:stm32:$(BOARDFAMILY):pnum=$(BOARDNAME),upload_method=swdMethod
 </pre>
@@ -129,6 +144,10 @@ make install
 # The two following commands are equivalent:
 # Build from scratch and then flash target board
 make clean install
+make
+
+# Use flashpico instead of arduino-cli upload
+export FLASHPICO=yes
 make
 </pre>
 <h1><a href="https://docs.arduino.cc/software/ide/#ide-v2">Arduino IDE

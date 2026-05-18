@@ -38,6 +38,13 @@ microcontrollers supported by the Arduino ecosystem, and limited to the
 boards that I actually possess and can validate support for. It is
 almost trivially easy to add support for more board families.
 
+All of the STM32 board families I have chosen to support (to date) have
+an on-board
+[ST-LINK](https://www.st.com/en/development-tools/st-link-v2.html)
+in-circuit debugger/flash programmer. At some point I will probably
+search through my inventory for compelling STM32 boards that require an
+external ST-LINK and add support for them.
+
 ## Make Targets
 
 ### build
@@ -46,8 +53,16 @@ Builds the sketch with `arduino-cli compile`.
 
 ### install
 
-Uploads (more properly: *Downloads*) the compiled sketch to a target
-microcontroller board.
+Uploads (more properly: *Downloads*) the compiled sketch with
+`arduino-cli upload` to a target microcontroller board.
+
+*For the `RP2040` and `RP2350` board families, setting environment
+variable `FLASHPICO=yes` before `make install` switches from
+`arduino-cli upload` to a script named
+[`flashpico`](https://github.com/pmunts/arm-mcu/tree/main/utilities/flashpico).
+Across the range of RP2040 and RP2350 boards, and
+Chromebook/Linux/macOS/Windows development host computers, I have found
+`flashpico` to be more reliable than `arduino-cli upload`.*
 
 ### clean
 
@@ -55,7 +70,7 @@ Removes working files (*i.e.* `build/`).
 
 ### No target
 
-Equivalent to `clean build`.
+Equivalent to `clean install`.
 
 ## Make Command Syntax
 
@@ -64,7 +79,7 @@ and `BOARDNAME`. Both of these can and should be initialized by
 environment variables before invoking `gmake`.
 
 For the STM32 board families, the Arduino FQBN (Fully Qualified Board
-Name) passed to `arduino-cli compile` will be defined as:
+Name) passed to `arduino-cli` will be defined as:
 
 
     ARDUINOFQBN := STMicroelectronics:stm32:$(BOARDFAMILY):pnum=$(BOARDNAME),upload_method=swdMethod
@@ -100,6 +115,10 @@ systems symlink or alias `make` to `gmake`):
     # The two following commands are equivalent:
     # Build from scratch and then flash target board
     make clean install
+    make
+
+    # Use flashpico instead of arduino-cli upload
+    export FLASHPICO=yes
     make
 
 # [Arduino IDE 2](https://docs.arduino.cc/software/ide/#ide-v2)
