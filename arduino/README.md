@@ -124,27 +124,59 @@ systems symlink or alias `make` to `gmake`):
 
 # [Arduino IDE 2](https://docs.arduino.cc/software/ide/#ide-v2)
 
-To use this framework within the Arduino IDE 2, all you need to do is:
+To use this framework within the **Arduino IDE 2**, all you need to do
+is:
 
-- Start Arduino IDE 2.
+- Start **Arduino IDE 2**.
 - Select your **target platform** from `Tools → Board`.
 - Select the **communication port** from `Tools → Port`.
 - Set the **sketchbook directory** to your **Arduino Framework for ARM
   MCU Platforms** checkout directory (*e.g.* `~/arm-mcu/arduino/`) from
   `File → Preferences → Sketchbook location`.
 
-Your project does ***not*** need to be within the **Arduino Framework
-for ARM MCU Platforms** checkout directory.
+Your project directory does ***not*** need to be within the **Arduino
+Framework for ARM MCU Platforms** checkout directory tree.
 
-The Arduino IDE 2 does not use anything from the GNU `make` project
+The **Arduino IDE 2** does not use anything from the GNU `make` project
 except for the sketch source file(s).
 
-An **official** Arduino IDE 2 release Debian package for Linux x86-64
-*aka* amd64 machines and an **unofficial** release Debian package for
-arm64 *aka* AArch64 machines are available at the [Munts Technologies
-Debian Package Repository](https://repo.munts.com/debian13/).
+An **official** **Arduino IDE 2** release Debian package for Linux
+x86-64 *aka* amd64 machines and an **unofficial** release Debian package
+for arm64 *aka* AArch64 machines are available at the [Munts
+Technologies Debian Package
+Repository](https://repo.munts.com/debian13/).
 
 # [Visual Studio Code](https://code.visualstudio.com)
+
+## [IntelliSense](https://code.visualstudio.com/docs/editing/intellisense)
+
+You will need to install the [Microsoft C/C++ for Visual Studio
+Code](https://github.com/microsoft/vscode-cpptools) extension *and*
+invoke **Visual Studio Code** with `make code` or `make edit` instead of
+the usual `code .`. The `gmake` targets `code` or `edit` prepend some
+environment variables to the `code` command that are necessary for
+**IntelliSense** to find system header files.
+
+**IntelliSense** for **Arduino Framework for ARM MCU Platforms**
+projects is not perfect: Indexing library source files within the
+Arduino core packages can take a **very** long time, and declarations
+and/or definitions qualified by preprocessing directives are often
+invisible, as they often cannot be resolved until compile time. On the
+whole, I still prefer **Visual Studio Code** over **Arduino IDE 2**,
+because the latter does not store target configuration in the project
+directory.
+
+## Usage
+
+The file `.vscode/tasks.json` within each **Arduino Framework for ARM
+MCU Platforms** project defines some task actions `make <program>` *et
+al* that simply run `make clean install` *et al*. These can be invoked
+from the command menu `Terminal → Run Task...` or
+`Terminal → Run Build Task...`.
+
+The most efficient way to build and install from within **Visual Studio
+Code** is to press `CONTROL + SHIFT + B` (⌘ + SHIFT + B for macOS), the
+shortcut key sequence for `Run Build Task...`.
 
 # [FreeRTOS](https://www.freertos.org)
 

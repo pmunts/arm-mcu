@@ -153,9 +153,10 @@ make
 </pre>
 <h1><a href="https://docs.arduino.cc/software/ide/#ide-v2">Arduino IDE
 2</a></h1>
-<p>To use this framework within the Arduino IDE 2, all you need to do is:</p>
+<p>To use this framework within the <b>Arduino IDE 2</b>, all you need to do
+is:</p>
 <ul>
-<li>Start Arduino IDE 2.</li>
+<li>Start <b>Arduino IDE 2</b>.</li>
 <li>Select your <b>target platform</b> from <code>Tools &rarr;
 Board</code>.</li>
 <li>Select the <b>communication port</b> from <code>Tools &rarr;
@@ -165,16 +166,43 @@ MCU Platforms</b> checkout directory (<i>e.g.</i>
 <code>~/arm-mcu/arduino/</code>) from <code>File &rarr; Preferences &rarr;
 Sketchbook location</code>.</li>
 </ul>
-<p>Your project does <b><i>not</i></b> need to be within the <b>Arduino
-Framework for ARM MCU Platforms</b> checkout directory.</p>
-<p>The Arduino IDE 2 does not use anything from the GNU <code>make</code>
-project except for the sketch source file(s).</p>
-<p>An <b>official</b> Arduino IDE 2 release Debian package for Linux x86-64
-<i>aka</i> amd64 machines and an <b>unofficial</b> release Debian package for
-arm64 <i>aka</i> AArch64 machines are available at the <a href=
+<p>Your project directory does <b><i>not</i></b> need to be within the
+<b>Arduino Framework for ARM MCU Platforms</b> checkout directory tree.</p>
+<p>The <b>Arduino IDE 2</b> does not use anything from the GNU
+<code>make</code> project except for the sketch source file(s).</p>
+<p>An <b>official</b> <b>Arduino IDE 2</b> release Debian package for Linux
+x86-64 <i>aka</i> amd64 machines and an <b>unofficial</b> release Debian
+package for arm64 <i>aka</i> AArch64 machines are available at the <a href=
 "https://repo.munts.com/debian13/">Munts Technologies Debian Package
 Repository</a>.</p>
 <h1><a href="https://code.visualstudio.com">Visual Studio Code</a></h1>
+<h2><a href=
+"https://code.visualstudio.com/docs/editing/intellisense">IntelliSense</a></h2>
+<p>You will need to install the <a href=
+"https://github.com/microsoft/vscode-cpptools">Microsoft C/C++ for Visual
+Studio Code</a> extension <i>and</i> invoke <b>Visual Studio Code</b> with
+<code>make code</code> or <code>make edit</code> instead of the usual
+<code>code .</code>. The <code>gmake</code> targets <code>code</code> or
+<code>edit</code> prepend some environment variables to the <code>code</code>
+command that are necessary for <b>IntelliSense</b> to find system header
+files.</p>
+<p><b>IntelliSense</b> for <b>Arduino Framework for ARM MCU Platforms</b>
+projects is not perfect: Indexing library source files within the Arduino core
+packages can take a <b>very</b> long time, and declarations and/or definitions
+qualified by preprocessing directives are often invisible, as they often cannot
+be resolved until compile time. On the whole, I still prefer <b>Visual Studio
+Code</b> over <b>Arduino IDE 2</b>, because the latter does not store target
+configuration in the project directory.</p>
+<h2>Usage</h2>
+<p>The file <code>.vscode/tasks.json</code> within each <b>Arduino Framework
+for ARM MCU Platforms</b> project defines some task actions <code>make
+&lt;program&gt;</code> <i>et al</i> that simply run <code>make clean
+install</code> <i>et al</i>. These can be invoked from the command menu
+<code>Terminal &rarr; Run Task...</code> or <code>Terminal &rarr; Run Build
+Task...</code>.</p>
+<p>The most efficient way to build and install from within <b>Visual Studio
+Code</b> is to press <code>CONTROL + SHIFT + B</code> (&#8984; + SHIFT + B for
+macOS), the shortcut key sequence for <code>Run Build Task...</code>.</p>
 <h1><a href="https://www.freertos.org">FreeRTOS</a></h1>
 <p>FreeRTOS is an <a href="https://en.wikipedia.org/wiki/Open_source">open
 source</a> lightweight <a href=
