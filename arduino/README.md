@@ -95,6 +95,7 @@ Framework for ARM MCU Platforms** project with `gmake` (most operating
 systems symlink or alias `make` to `gmake`):
 
 
+    export SKETCHBOOK=<your arm-mcu checkout directory>/arduino
     export BOARDFAMILY=<your board family>
     export BOARDNAME=<your board name>
     make <your make target>
