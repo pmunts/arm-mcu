@@ -18,8 +18,8 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef _USER_LED_H_
-#define _USER_LED_H_
+#ifndef _MUNTSTECH_LED_H_
+#define _MUNTSTECH_LED_H_
 
 #include <GPIO-Arduino.h>
 #include <GPIO-Neopixel.h>
