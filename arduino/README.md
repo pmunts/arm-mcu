@@ -3,7 +3,7 @@
 Unless you use *only* **Arduino IDE 2**, you will need to use whatever
 command line shell your development computer operating system has to
 make use of this framework. macOS and Linux computers (including [Linux
-On ChromeOS *aka*Crostini](https://chromeos.dev/en/linux) containers)
+On ChromeOS *aka* Crostini](https://chromeos.dev/en/linux) containers)
 always have one or more command line shells, named something like
 `Terminal` or `Console`.
 
