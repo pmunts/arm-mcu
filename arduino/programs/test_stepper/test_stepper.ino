@@ -34,6 +34,7 @@ void setup()
 {
   Serial.begin(115200);
   Serial.println("\n\n\ecArduino Stepper Motor Test\n");
+  Serial.flush();
 
   pinMode(Dir,  OUTPUT);
   pinMode(Step, OUTPUT);

@@ -30,6 +30,7 @@ void setup()
 {
   Serial.begin(115200);
   Serial.println("\n\n\ecArduino NeoPixel LED Test\n");
+  Serial.flush();
 }
 
 void loop()

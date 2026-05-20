@@ -34,6 +34,7 @@ void setup()
 {
   Serial.begin(115200);
   Serial.println("\n\n\ecArduino Servo Output Test\n");
+  Serial.flush();
 
   dev.Initialize(0x40, 50);
   pwmout.Initialize(&dev, 0);

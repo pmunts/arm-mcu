@@ -29,6 +29,7 @@ void setup()
 {
   Serial.begin(115200);
   Serial.println("\n\n\ecArduino DC Motor Test\n");
+  Serial.flush();
 
   outp.Initialize(3, 4, 5, 1000);
 }

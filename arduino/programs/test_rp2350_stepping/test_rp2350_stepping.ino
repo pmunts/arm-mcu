@@ -34,6 +34,8 @@ void setup()
   Serial.begin(115200);
   while (!BOOTSEL);
   Serial.println("\n\n\ecArduino RP2350 Stepping Test\n");
+  Serial.flush();
+
   Serial.print("rp2350_chip_version()  => ");
   Serial.println(rp2350_chip_version());
 

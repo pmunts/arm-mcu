@@ -32,6 +32,7 @@ void setup()
 {
   Serial.begin(115200);
   Serial.println("\n\n\ecArduino PCA9685 PWM Output Test\n");
+  Serial.flush();
 
   dev.Initialize(0x40, 1000);
   outp.Initialize(&dev, 0);

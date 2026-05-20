@@ -26,6 +26,8 @@ void setup()
 {
   Serial.begin(115200);
   Serial.println("\n\n\ecArduino Tone Test\n");
+  Serial.flush();
+
   pinMode(22, OUTPUT);
 }
 

@@ -78,6 +78,7 @@ void setup()
   Serial.begin(115200);
   while (!BOOTSEL);
   Serial.println("\n\n\ecArduino FreeRTOS SMP Test\n");
+  Serial.flush();
 
   SerialMutex = xSemaphoreCreateMutex();
 

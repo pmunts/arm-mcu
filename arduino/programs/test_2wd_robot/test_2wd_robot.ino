@@ -65,6 +65,7 @@ void setup()
 {
   Serial.begin(115200);
   Serial.println("\n\n\ecArduino DC Motor\n");
+  Serial.flush();
 
   pinMode(DIRA, OUTPUT);
   pinMode(PWMA, OUTPUT);

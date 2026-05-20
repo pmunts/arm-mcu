@@ -66,6 +66,7 @@ void setup()
 {
   Serial.begin(115200);
   Serial.println("\n\n\ecArduino Button and LED Test using FreeRTOS\n");
+  Serial.flush();
 
   UserButton = MuntsTech::Factories::ButtonSwitch::Create();
   UserLED    = MuntsTech::Factories::LED::Create();

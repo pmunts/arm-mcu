@@ -28,6 +28,7 @@ void setup()
 {
   Serial.begin(115200);
   Serial.println("\n\n\ecArduino LED Test\n");
+  Serial.flush();
 
   UserLED = MuntsTech::Factories::LED::Create();
 }
