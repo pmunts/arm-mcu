@@ -274,6 +274,15 @@ hardware/software combination.
 
 ## STM32
 
+*Note: Many, if not most, STM32 Nucleo evaluation boards have too little
+RAM to run FreeRTOS, especially if the sketch allocates C++ objects with
+the `new` operator. The
+**[Nucleo-L432KC](https://www.st.com/en/evaluation-tools/nucleo-l432kc.html)**
+and
+**[Nucleo-F411RE](https://www.st.com/en/evaluation-tools/nucleo-f411re.html)**
+successfully run
+[`test_button_led_freertos`](programs/test_button_led_freertos).*
+
 The [STM32FreeRTOS](https://github.com/stm32duino/STM32FreeRTOS) Arduino
 library provides FreeRTOS support for STM32 microcontrollers. Since it
 is delivered as a library, it is not integrated as tightly with the

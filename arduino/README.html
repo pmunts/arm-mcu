@@ -1,7 +1,7 @@
 <h1>Arduino Framework for ARM MCU Platforms</h1>
-<p>Unless you use <i>only</i> <b>Arduino IDE 2</b>, you will need to use whatever
-command line shell your development computer operating system has to make use
-of this framework. macOS and Linux computers (including <a href=
+<p>Unless you use <i>only</i> <b>Arduino IDE 2</b>, you will need to use
+whatever command line shell your development computer operating system has to
+make use of this framework. macOS and Linux computers (including <a href=
 "https://chromeos.dev/en/linux">Linux On ChromeOS <i>aka</i>Crostini</a>
 containers) always have one or more command line shells, named something like
 <code>Terminal</code> or <code>Console</code>.</p>
@@ -291,6 +291,14 @@ package, it is now probably easier to develop a FreeRTOS application for an
 Arduino RP2040 or RP2350 platform than for any other hardware/software
 combination.</p>
 <h2>STM32</h2>
+<p><i>Note: Many, if not most, STM32 Nucleo evaluation boards have too little
+RAM to run FreeRTOS, especially if the sketch allocates C++ objects with the
+<code>new</code> operator. The <b><a href=
+"https://www.st.com/en/evaluation-tools/nucleo-l432kc.html">Nucleo-L432KC</a></b>
+and <b><a href=
+"https://www.st.com/en/evaluation-tools/nucleo-f411re.html">Nucleo-F411RE</a></b>
+successfully run <a href=
+"programs/test_button_led_freertos"><code>test_button_led_freertos</code></a>.</i></p>
 <p>The <a href="https://github.com/stm32duino/STM32FreeRTOS">STM32FreeRTOS</a>
 Arduino library provides FreeRTOS support for STM32 microcontrollers. Since it
 is delivered as a library, it is not integrated as tightly with the STM32 core
