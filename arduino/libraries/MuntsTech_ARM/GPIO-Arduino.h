@@ -64,7 +64,7 @@ namespace MuntsTech::GPIO::Arduino
       this->output = (mode == OUTPUT) || ((mode >= OUTPUT_OPENDRAIN) && (mode <= OUTPUT_12MA));
 #elifdef ARDUINO_ARCH_STM32
       assert(mode <= OUTPUT_OPEN_DRAIN);
-      this->output = (mode == OUTPUT) || (mode = OUTPUT_OPEN_DRAIN);
+      this->output = (mode == OUTPUT) || (mode == OUTPUT_OPEN_DRAIN);
 #else
       assert(node <= INPUT_PULLUP);
       this->output = (mode == OUTPUT);
