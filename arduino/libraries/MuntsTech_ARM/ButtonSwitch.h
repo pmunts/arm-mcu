@@ -1,5 +1,3 @@
-// Arduino Button and LED Test Using Interrupt
-
 // Copyright (C)2026, Philip Munts dba Munts Technologies.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -20,33 +18,19 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#include <Arduino_ARM.h>
+#ifndef _MUNTSTECH_BUTTON_SWITCH_H_
+#define _MUNTSTECH_BUTTON_SWITCH_H_
 
-MuntsTech::Interfaces::GPIO::Pin UserButton;
-MuntsTech::Interfaces::GPIO::Pin UserLED;
+#include <GPIO-Arduino.h>
 
-void EdgeHandler(void)
+namespace MuntsTech::Factories::ButtonSwitch
 {
-  UserLED->write(UserButton->read());
-  Serial.println(UserLED->read() ? "PRESS" : "RELEASE");
+  // Create board specific default user button (e.g. USER_BTN) object instance
+  MuntsTech::Interfaces::GPIO::Pin Create(void);
+
+  // Create arbitrary button switch object instance
+  MuntsTech::Interfaces::GPIO::Pin Create(unsigned pin, unsigned mode = INPUT,
+    bool activelow = false);
 }
 
-void setup()
-{
-  Serial.begin(115200);
-  Serial.println("\n\n\ecArduino Button and LED Test Using Interrupt\n");
-
-  UserButton = MuntsTech::Factories::ButtonSwitch::Create();
-  UserLED    = MuntsTech::Factories::LED::Create();
-
-  UserLED->write(UserButton->read());
-
-  // Attach button GPIO pin interrupt service routine
-
-  unsigned pin = ((MuntsTech::GPIO::Arduino::Pin_Class *) UserButton)->pin();
-  attachInterrupt(digitalPinToInterrupt(pin), EdgeHandler, CHANGE);
-}
-
-void loop()
-{
-}
+#endif

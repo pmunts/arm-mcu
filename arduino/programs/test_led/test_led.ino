@@ -22,15 +22,19 @@
 
 #include <Arduino_ARM.h>
 
+MuntsTech::Interfaces::GPIO::Pin UserLED;
+
 void setup()
 {
   Serial.begin(115200);
   Serial.println("\n\n\ecArduino LED Test\n");
+
+  UserLED = MuntsTech::Factories::LED::Create();
 }
 
 void loop()
 {
   // Toggle the LED
-  UserLED.write(!UserLED.read());
+  UserLED->write(!UserLED->read());
   delay(500);
 }

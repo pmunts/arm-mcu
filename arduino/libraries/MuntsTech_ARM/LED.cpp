@@ -19,7 +19,6 @@
 // POSSIBILITY OF SUCH DAMAGE.
 
 #include <Arduino_ARM.h>
-#include <LED.h>
 
 // Create board specific default user LED (e.g. LED_BUILTIN) object instance
 

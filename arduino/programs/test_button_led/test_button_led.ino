@@ -22,27 +22,33 @@
 
 #include <Arduino_ARM.h>
 
+MuntsTech::Interfaces::GPIO::Pin UserButton;
+MuntsTech::Interfaces::GPIO::Pin UserLED;
+
 void setup()
 {
   Serial.begin(115200);
   Serial.println("\n\n\ecArduino Button and LED Test\n");
+
+  UserButton = MuntsTech::Factories::ButtonSwitch::Create();
+  UserLED    = MuntsTech::Factories::LED::Create();
 }
 
 void loop()
 {
-  static bool oldstate = !UserButton.read();
-  bool newstate = UserButton.read();
+  static bool oldstate = !UserButton->read();
+  bool newstate = UserButton->read();
 
   if (!oldstate && newstate)
   {
     Serial.println("PRESS");
-    UserLED.write(true);
+    UserLED->write(true);
   }
 
   if (oldstate && !newstate)
   {
     Serial.println("RELEASE");
-    UserLED.write(false);
+    UserLED->write(false);
   }
 
   oldstate = newstate;

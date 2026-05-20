@@ -24,13 +24,16 @@
 
 #include <Arduino_ARM.h>
 
+MuntsTech::Interfaces::GPIO::Pin UserButton;
+MuntsTech::Interfaces::GPIO::Pin UserLED;
+
 QueueHandle_t EdgeQueue;
 
 // Button Interrupt Service Routine -- Enqueue button transitions
 
 void EdgeHandler(void)
 {
-  bool newstate = UserButton.read();
+  bool newstate = UserButton->read();
   xQueueSendFromISR(EdgeQueue, &newstate, NULL);
 }
 
@@ -40,7 +43,8 @@ void MainTaskFunction(void *parameters)
 {
   // Attach button GPIO pin interrupt service routine
 
-  attachInterrupt(digitalPinToInterrupt(UserButton.pin()), EdgeHandler, CHANGE);
+  unsigned pin = ((MuntsTech::GPIO::Arduino::Pin_Class *) UserButton)->pin();
+  attachInterrupt(digitalPinToInterrupt(pin), EdgeHandler, CHANGE);
 
   // Main event loop
 
@@ -51,7 +55,7 @@ void MainTaskFunction(void *parameters)
     if (xQueueReceive(EdgeQueue, &newstate, pdMS_TO_TICKS(1000)) == pdPASS)
     {
       Serial.println(newstate ? "PRESS" : "RELEASE");
-      UserLED.write(newstate);
+      UserLED->write(newstate);
     }
     else
       Serial.println("Tick...");
@@ -63,7 +67,10 @@ void setup()
   Serial.begin(115200);
   Serial.println("\n\n\ecArduino Button and LED Test using FreeRTOS\n");
 
-  UserLED.write(UserButton.read());
+  UserButton = MuntsTech::Factories::ButtonSwitch::Create();
+  UserLED    = MuntsTech::Factories::LED::Create();
+
+  UserLED->write(UserButton->read());
 
   // Create FreeRTOS entities and start the scheduler
 
