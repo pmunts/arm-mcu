@@ -21,6 +21,19 @@
 // POSSIBILITY OF SUCH DAMAGE.
 
 #include <Arduino_ARM.h>
+#include <GPIO-NeoPixel.h>
+
+// Configure a NeoPixel LED
+
+#ifdef ARDUINO_SPARKFUN_PROMICRO_RP2040
+MuntsTech::GPIO::NeoPixel::Pin_Class NeoPixelLED(LED_BUILTIN);
+#elifdef ARDUINO_SPARKFUN_PROMICRO_RP2350
+MuntsTech::GPIO::NeoPixel::Pin_Class NeoPixelLED(LED_BUILTIN);
+#elifdef ARDUINO_SEEED_XIAO_RP2040
+MuntsTech::GPIO::NeoPixel::Pin_Class NeoPixelLED(12, 11);
+#elifdef ARDUINO_SEEED_XIAO_RP2350
+MuntsTech::GPIO::NeoPixel::Pin_Class NeoPixelLED(22, 23);
+#endif
 
 #define RED   0x00100000
 #define GREEN 0x00001000
