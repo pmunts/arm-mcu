@@ -25,14 +25,23 @@
 
 // Configure a NeoPixel LED
 
-#ifdef ARDUINO_SPARKFUN_PROMICRO_RP2040
-MuntsTech::GPIO::NeoPixel::Pin_Class NeoPixelLED(LED_BUILTIN);
-#elifdef ARDUINO_SPARKFUN_PROMICRO_RP2350
-MuntsTech::GPIO::NeoPixel::Pin_Class NeoPixelLED(LED_BUILTIN);
+#ifdef ARDUINO_CYTRON_MAKER_NANO_RP2040
+Adafruit_NeoPixel NeoPixelChain(2, 11, NEO_GRB + NEO_KHZ800);
+MuntsTech::GPIO::NeoPixel::Pin_Class NeoPixelLED(&NeoPixelChain, 0);
 #elifdef ARDUINO_SEEED_XIAO_RP2040
-MuntsTech::GPIO::NeoPixel::Pin_Class NeoPixelLED(12, 11);
+MuntsTech::GPIO::Arduino::Pin_Class NeoPixelPowerPin(11, OUTPUT, true);
+Adafruit_NeoPixel NeoPixelChain(1, 12, NEO_GRB + NEO_KHZ800);
+MuntsTech::GPIO::NeoPixel::Pin_Class NeoPixelLED(&NeoPixelChain, 0);
 #elifdef ARDUINO_SEEED_XIAO_RP2350
-MuntsTech::GPIO::NeoPixel::Pin_Class NeoPixelLED(22, 23);
+MuntsTech::GPIO::Arduino::Pin_Class NeoPixelPowerPin(23, OUTPUT, true);
+Adafruit_NeoPixel NeoPixelChain(1, 22, NEO_GRB + NEO_KHZ800);
+MuntsTech::GPIO::NeoPixel::Pin_Class NeoPixelLED(&NeoPixelChain, 0);
+#elifdef ARDUINO_SPARKFUN_PROMICRO_RP2040
+Adafruit_NeoPixel NeoPixelChain(1, LED_BUILTIN, NEO_GRB + NEO_KHZ800);
+MuntsTech::GPIO::NeoPixel::Pin_Class NeoPixelLED(&NeoPixelChain, 0);
+#elifdef ARDUINO_SPARKFUN_PROMICRO_RP2350
+Adafruit_NeoPixel NeoPixelChain(1, LED_BUILTIN, NEO_GRB + NEO_KHZ800);
+MuntsTech::GPIO::NeoPixel::Pin_Class NeoPixelLED(&NeoPixelChain, 0);
 #endif
 
 #define RED   0x00100000
@@ -44,6 +53,8 @@ void setup()
   Serial.begin(115200);
   Serial.println("\n\n\ecArduino NeoPixel LED Test\n");
   Serial.flush();
+
+  NeoPixelChain.begin();
 }
 
 void loop()

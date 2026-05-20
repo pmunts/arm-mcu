@@ -41,48 +41,37 @@ namespace MuntsTech::GPIO::NeoPixel
 
     Pin_Class()
     {
-      this->LED   = NULL;
-      this->state = false;
+      this->chain = NULL;
       this->index = 0xFFFF;
+      this->state = false;
       this->color = 0x00000000;
     }
 
     // GPIO pin constructor
 
-    Pin_Class(unsigned pin, unsigned pwrpin = PowerUnused, bool state = false,
-      unsigned nleds = 1, unsigned index = 0, uint32_t color = DefaultOnColor)
+    Pin_Class(Adafruit_NeoPixel *chain, unsigned index, bool state = false,
+      uint32_t color = DefaultOnColor)
     {
-      this->Initialize(pin, pwrpin, state, nleds, index, color);
+      this->Initialize(chain, index, state, color);
     }
 
     // GPIO pin initializer
 
-    void Initialize(unsigned pin, unsigned pwrpin = PowerUnused, bool state = false,
-      unsigned nleds = 1, unsigned index = 0, uint32_t color = DefaultOnColor)
+    void Initialize(Adafruit_NeoPixel *chain, unsigned index, bool state = false,
+      uint32_t color = DefaultOnColor)
     {
-      // Certain boards (e.g. Seeed Studio Xiao RP2040) can control power to the
-      // NeoPixel LED with a GPIO pin.
-
-      if (pwrpin < PowerUnused)
-      {
-        pinMode(pwrpin, OUTPUT);
-        digitalWrite(pwrpin, true);
-      }
-
-      this->LED     = new Adafruit_NeoPixel(nleds, pin, NEO_GRB + NEO_KHZ800);
-      this->state   = state;
-      this->index   = index;
-      this->color   = color;
-      this->LED->begin();
-      this->write(state);
+      this->chain = chain;
+      this->index = index;
+      this->state = state;
+      this->color = color;
     }
 
     // GPIO pin methods
 
     virtual void write(bool state)
     {
-      this->LED->setPixelColor(this->index, state ? this->color : 0);
-      this->LED->show();
+      this->chain->setPixelColor(this->index, state ? this->color : 0);
+      this->chain->show();
       this->state = state;
     }
 
@@ -112,9 +101,9 @@ namespace MuntsTech::GPIO::NeoPixel
 
   private:
 
-    Adafruit_NeoPixel *LED;
-    bool state;
+    Adafruit_NeoPixel *chain;
     uint16_t index;
+    bool state;
     uint32_t color;
   };
 }
