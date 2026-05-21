@@ -19,6 +19,13 @@
 // POSSIBILITY OF SUCH DAMAGE.
 
 #include <Arduino_ARM.h>
+#include <GPIO-NeoPixel.h>
+
+// Configure a board specific NeoPixel chain
+
+#if defined(ARDUINO_SPARKFUN_PROMICRO_RP2040) || defined(ARDUINO_SPARKFUN_PROMICRO_RP2350)
+static Adafruit_NeoPixel _LED_NeoPixelChain(1, LED_BUILTIN, NEO_GRB + NEO_KHZ800);
+#endif
 
 // Create board specific default user LED (e.g. LED_BUILTIN) object instance
 
@@ -31,14 +38,14 @@ MuntsTech::Interfaces::GPIO::Pin MuntsTech::Factories::LED::Create(bool state)
   // GPIO user LED on D2 (overrides board default user LED)
   return CreateGPIO(D2, state);
 #elifdef ARDUINO_CYTRON_MAKER_NANO_RP2040
-  // GPIO user LED on GP18
+  // GPIO user LED on GP18 aka D13
   return CreateGPIO(18, state);
 #elif defined(ARDUINO_SEEED_XIAO_RP2040) || defined(ARDUINO_SEEED_XIAO_RP2350)
   // Active low GPIO user LED
   return CreateGPIO(LED_BUILTIN, state, true);
 #elif defined(ARDUINO_SPARKFUN_PROMICRO_RP2040) || defined(ARDUINO_SPARKFUN_PROMICRO_RP2350)
   // NeoPixel user LED
-  return CreateNeoPixel(LED_BUILTIN, state);
+  return CreateNeoPixel(&_LED_NeoPixelChain, 0, state);
 #elifdef LED_BUILTIN
   // Most other boards have an active high GPIO LED, often connected to D13
   return CreateGPIO(LED_BUILTIN, state);
@@ -57,8 +64,9 @@ MuntsTech::Interfaces::GPIO::Pin MuntsTech::Factories::LED::CreateGPIO(unsigned 
 
 // Create arbitrary NeoPixel LED object instance
 
-MuntsTech::Interfaces::GPIO::Pin MuntsTech::Factories::LED::CreateNeoPixel(unsigned pin,
-  bool state, unsigned pwrpin, unsigned nleds, unsigned index, uint32_t color)
+MuntsTech::Interfaces::GPIO::Pin MuntsTech::Factories::LED::CreateNeoPixel(
+  Adafruit_NeoPixel *chain, unsigned index, bool state, uint32_t color)
 {
-  return new MuntsTech::GPIO::NeoPixel::Pin_Class(pin, pwrpin, state, nleds, index, color);
+  chain->begin();
+  return new MuntsTech::GPIO::NeoPixel::Pin_Class(chain, index, state, color);
 }

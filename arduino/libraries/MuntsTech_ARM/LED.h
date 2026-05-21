@@ -36,9 +36,8 @@ namespace MuntsTech::Factories::LED
     bool state = false, bool activelow = false);
 
   // Create arbitrary NeoPixel LED object instance
-  MuntsTech::Interfaces::GPIO::Pin CreateNeoPixel(unsigned pin,
-    bool state = false, unsigned pwrpin = PowerUnused,
-    unsigned nleds = 1, unsigned index = 0, uint32_t color = DefaultOnColor);
+  MuntsTech::Interfaces::GPIO::Pin CreateNeoPixel(Adafruit_NeoPixel *chain,
+    unsigned index, bool state = false, uint32_t color = DefaultOnColor);
 }
 
 #endif
