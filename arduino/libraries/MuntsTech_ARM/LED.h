@@ -22,7 +22,7 @@
 #define _MUNTSTECH_LED_H_
 
 #include <GPIO-Arduino.h>
-#include <GPIO-Neopixel.h>
+#include <GPIO-NeoPixel.h>
 
 using namespace MuntsTech::GPIO::NeoPixel;
 
