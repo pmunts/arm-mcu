@@ -19,7 +19,7 @@
 // POSSIBILITY OF SUCH DAMAGE.
 
 #include <Arduino_ARM.h>
-#include <GPIO-NeoPixel.h>
+#include <GPIO-Arduino.h>
 
 // Configure a board specific NeoPixel chain
 
