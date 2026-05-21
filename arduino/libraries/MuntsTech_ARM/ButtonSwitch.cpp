@@ -19,6 +19,7 @@
 // POSSIBILITY OF SUCH DAMAGE.
 
 #include <Arduino_ARM.h>
+#include <ButtonSwitch.h>
 
 // Create board specific default user button (e.g. USER_BTN) object instance
 

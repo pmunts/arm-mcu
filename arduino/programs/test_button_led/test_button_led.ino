@@ -21,6 +21,8 @@
 // POSSIBILITY OF SUCH DAMAGE.
 
 #include <Arduino_ARM.h>
+#include <ButtonSwitch.h>
+#include <LED.h>
 
 MuntsTech::Interfaces::GPIO::Pin UserButton;
 MuntsTech::Interfaces::GPIO::Pin UserLED;

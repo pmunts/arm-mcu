@@ -100,9 +100,6 @@
 #endif
 #endif
 
-#include <ButtonSwitch.h>
-#include <LED.h>
-
 // Default I2C bus pins
 
 #ifdef ARDUINO_ARCH_RP2040

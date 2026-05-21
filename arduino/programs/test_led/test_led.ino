@@ -21,6 +21,7 @@
 // POSSIBILITY OF SUCH DAMAGE.
 
 #include <Arduino_ARM.h>
+#include <LED.h>
 
 MuntsTech::Interfaces::GPIO::Pin UserLED;
 
