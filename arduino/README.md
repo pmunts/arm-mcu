@@ -11,7 +11,6 @@ In order to use this framework, you will first need to clone the
 [arm-mcu](https://github.com/pmunts/arm-mcu) `git` repository with the
 following command:
 
-
     git clone https://github.com/pmunts/arm-mcu.git
 
 After you have cloned the repository, you will most likely want to set
@@ -23,7 +22,6 @@ command to *e.g.* `~/.bashrc` to make it permanent.
 An **Arduino Framework for ARM MCU Platforms** project directory
 contains a number of files. The easiest way to create a new project is
 with the `newproject` shell script:
-
 
     $HOME/arm-mcu/arduino/scripts/newproject myproject
 
@@ -39,26 +37,24 @@ board family `gmake` include file selected by the `BOARDFAMILY` macro.
 
 ## Supported Board Families
 
-| `BOARDFAMILY` Value | Description | Core Package | Default `BOARDNAME` |
-|----|----|----|----|
-| `Disco` | [STMicroelectronics Discovery](https://www.st.com/en/evaluation-tools/stm32-discovery-kits.html) evaluation boards | [STM32Duino](https://github.com/stm32duino) | `DISCO_F407VG` |
-| `Nucleo_32` | [STMicroelectronics Nucleo-32](https://www.st.com/en/evaluation-tools/stm32-nucleo-boards/products.html?querycriteria=productId=LN1847$$1574=Nucleo-32) evaluation boards | [STM32Duino](https://github.com/stm32duino) | `NUCLEO_F042K6` |
-| `Nucleo_64` | [STMicroelectronics Nucleo-64](https://www.st.com/en/evaluation-tools/stm32-nucleo-boards/products.html?querycriteria=productId=LN1847$$1574=Nucleo-64) evaluation boards | [STM32Duino](https://github.com/stm32duino) | `NUCLEO_F411RE` |
-| `Nucleo_144` | [STMicroelectronics Nucleo-144](https://www.st.com/en/evaluation-tools/stm32-nucleo-boards/products.html?querycriteria=productId=LN1847$$1574=Nucleo-144) evaluation boards | [STM32Duino](https://github.com/stm32duino) | `NUCLEO_F767ZI` |
-| `RP2040` | [Raspberry Pi RP2040](https://www.raspberrypi.com/products/rp2040/) boards | [Arduino-Pico](https://github.com/earlephilhower/arduino-pico) | `sparkfun_promicrorp2040` |
-| `RP2350` | [Raspberry Pi RP2350](https://www.raspberrypi.com/products/rp2350/) boards | [Arduino-Pico](https://github.com/earlephilhower/arduino-pico) | `sparkfun_promicrorp2350` |
+| `BOARDFAMILY` Value | Description                                                                                                                                                                 | Core Package                                                   | Default `BOARDNAME`       |
+|---------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------|---------------------------|
+| `Disco`             | [STMicroelectronics Discovery](https://www.st.com/en/evaluation-tools/stm32-discovery-kits.html) evaluation boards                                                          | [STM32Duino](https://github.com/stm32duino)                    | `DISCO_F407VG`            |
+| `Nucleo_32`         | [STMicroelectronics Nucleo-32](https://www.st.com/en/evaluation-tools/stm32-nucleo-boards/products.html?querycriteria=productId=LN1847$$1574=Nucleo-32) evaluation boards   | [STM32Duino](https://github.com/stm32duino)                    | `NUCLEO_F042K6`           |
+| `Nucleo_64`         | [STMicroelectronics Nucleo-64](https://www.st.com/en/evaluation-tools/stm32-nucleo-boards/products.html?querycriteria=productId=LN1847$$1574=Nucleo-64) evaluation boards   | [STM32Duino](https://github.com/stm32duino)                    | `NUCLEO_F411RE`           |
+| `Nucleo_144`        | [STMicroelectronics Nucleo-144](https://www.st.com/en/evaluation-tools/stm32-nucleo-boards/products.html?querycriteria=productId=LN1847$$1574=Nucleo-144) evaluation boards | [STM32Duino](https://github.com/stm32duino)                    | `NUCLEO_F767ZI`           |
+| `RP2040`            | [Raspberry Pi RP2040](https://www.raspberrypi.com/products/rp2040/) boards                                                                                                  | [Arduino-Pico](https://github.com/earlephilhower/arduino-pico) | `sparkfun_promicrorp2040` |
+| `RP2350`            | [Raspberry Pi RP2350](https://www.raspberrypi.com/products/rp2350/) boards                                                                                                  | [Arduino-Pico](https://github.com/earlephilhower/arduino-pico) | `sparkfun_promicrorp2350` |
 
 This is a small subset of the vast variety of 32-bit ARM
 microcontrollers supported by the Arduino ecosystem, and limited to the
 boards that I actually possess and can validate support for. It is
 almost trivially easy to add support for more board families.
 
-All of the STM32 board families I have chosen to support (to date) have
-an on-board
+All of the STM32 board families I have chosen to support have an
+on-board
 [ST-LINK](https://www.st.com/en/development-tools/st-link-v2.html)
-in-circuit debugger/flash programmer. At some point I will probably
-search through my inventory for compelling STM32 boards that require an
-external ST-LINK and add support for them.
+in-circuit debugger/flash programmer.
 
 ## Make Targets
 
@@ -96,12 +92,10 @@ environment variables before invoking `gmake`.
 For the STM32 board families, the Arduino FQBN (Fully Qualified Board
 Name) passed to `arduino-cli` will be defined as:
 
-
     ARDUINOFQBN := STMicroelectronics:stm32:$(BOARDFAMILY):pnum=$(BOARDNAME),upload_method=swdMethod
 
 For the RP2040 and RP2350 board families, the Arduino FQBN will be
 defined as:
-
 
     ARDUINOFQBN := rp2040:rp2040:$(BOARDNAME)
 
@@ -109,14 +103,12 @@ The following shell pseudocode illustrates how to build an **Arduino
 Framework for ARM MCU Platforms** project with `gmake` (most operating
 systems symlink or alias `make` to `gmake`):
 
-
     export SKETCHBOOK=<your arm-mcu checkout directory>/arduino
     export BOARDFAMILY=<your board family>
     export BOARDNAME=<your board name>
     make <your make target>
 
 ## Make Command examples
-
 
     export SKETCHBOOK=$HOME/arm-mcu/arduino
     export BOARDFAMILY=RP2040
@@ -221,7 +213,6 @@ SMP](https://www.freertos.org/Documentation/02-Kernel/02-Kernel-features/13-Symm
 illustrates how to create a multicore RP2040 or RP2350 Arduino FreeRTOS
 application:
 
-
     #define ENABLE_FREERTOS
 
     #include <Arduino_ARM.h>
@@ -290,7 +281,6 @@ STM32 core package, and FreeRTOS applications for Arduino are
 implemented exactly the same as with any other GCC C or C++ framework.
 The following minimal sketch skeleton illustrates how create an STM32
 Arduino FreeRTOS application:
-
 
     #define ENABLE_FREERTOS
 
