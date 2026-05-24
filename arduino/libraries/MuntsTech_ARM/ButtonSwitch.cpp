@@ -37,13 +37,12 @@ MuntsTech::Interfaces::GPIO::Pin MuntsTech::Factories::ButtonSwitch::Create(void
 #elifdef ARDUINO_DISCO_F407VG
   // STM32F4-Discovery has an on-board active high button switch.
   return Create(USER_BTN, INPUT, false);
-#elifdef ARDUINO_NUCLEO_F042K6
-  // See https://github.com/stm32duino/Arduino_Core_STM32/commit/42393da0cfe46391a1c2ceba9bcf162564eb5a97
-  // External active low button switch on D3
-  return Create(D3, INPUT_PULLUP, true);
-#elif defined(USER_BTN) && USER_BTN != PNUM_NOT_DEFINED
-// All Nucleo-64 and Nucleo-144 boards have an on-board active low button switch.
+#elifdef ARDUINO_NUCLEO_64
+  // Nucleo-64 boards have an on-board active low button switch.
   return Create(USER_BTN, INPUT, true);
+#elifdef ARDUINO_NUCLEO_144
+  // Nucleo-144 boards have an on-board active high button switch.
+  return Create(USER_BTN, INPUT, false);
 #else
   // External active low button switch on D3
   return Create(D3, INPUT_PULLUP, true);
