@@ -42,6 +42,9 @@ MuntsTech::Interfaces::GPIO::Pin MuntsTech::Factories::LED::Create(bool state)
 #elifdef ARDUINO_CYTRON_MAKER_NANO_RP2040
   // GPIO user LED on GP18 aka D13
   return CreateGPIO(18, state);
+#elif defined(ARDUINO_PIMORONI_TINY2040) || defined(ARDUINO_PIMORONI_TINY2350)
+  // Active low GPIO user LED
+  return CreateGPIO(LED_BUILTIN, state, true);
 #elif defined(ARDUINO_SEEED_XIAO_RP2040) || defined(ARDUINO_SEEED_XIAO_RP2350)
   // Active low GPIO user LED
   return CreateGPIO(LED_BUILTIN, state, true);
