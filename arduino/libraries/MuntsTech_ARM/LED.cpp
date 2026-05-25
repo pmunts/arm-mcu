@@ -25,6 +25,8 @@
 
 #if defined(ARDUINO_SPARKFUN_PROMICRO_RP2040) || defined(ARDUINO_SPARKFUN_PROMICRO_RP2350)
 static Adafruit_NeoPixel _LED_NeoPixelChain(1, LED_BUILTIN, NEO_GRB + NEO_KHZ800);
+#elif defined(ARDUINO_WAVESHARE_RP2040_ZERO) || defined(ARDUINO_WAVESHARE_RP2350_ZERO)
+static Adafruit_NeoPixel _LED_NeoPixelChain(1, PIN_NEOPIXEL, NEO_GRB + NEO_KHZ800);
 #endif
 
 // Create board specific default user LED (e.g. LED_BUILTIN) object instance
