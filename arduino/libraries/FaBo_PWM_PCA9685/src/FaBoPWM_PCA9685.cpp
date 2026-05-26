@@ -9,9 +9,9 @@
 @author FaBo<info@fabo.io>
 */
 
+#include <Arduino_ARM.h>
 #include <I2C.h>
 #include <FaBoPWM_PCA9685.h>
-#include <Wire.h>
 
 /**
  @brief Constructor
