@@ -27,7 +27,7 @@
 // RP2040/RP2350 Boards, using the Arduino-Pico core package
 
 #ifdef ARDUINO_ARCH_RP2040
-#ifdef ARDUINO_CYTRON_MAKE_NANO_RP2040
+#ifdef ARDUINO_CYTRON_MAKER_NANO_RP2040
 // I2C bus on GP26 and GP27 (Maker Port 1 aka QWIIC socket 1)
 #define I2C_SDA_PIN 26
 #define I2C_SCL_PIN 27
