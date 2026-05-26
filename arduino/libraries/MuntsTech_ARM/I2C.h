@@ -22,15 +22,28 @@
 #ifndef _MUNTSTECH_I2C_H_
 #define _MUNTSTECH_I2C_H_
 
+#include <Wire.h>
+
 /*****************************************************************************/
 
 // RP2040/RP2350 Boards, using the Arduino-Pico core package
 
 #ifdef ARDUINO_ARCH_RP2040
 #ifdef ARDUINO_CYTRON_MAKER_NANO_RP2040
-// I2C bus on GP26 and GP27 (Maker Port 1 aka QWIIC socket 1)
+#ifdef I2C_MAKER0
+// I2C bus on GP0  and GP1  (Maker Port aka QWIIC socket 0)
+#define I2C_SDA_PIN 0
+#define I2C_SCL_PIN 1
+#elifdef I2C_MAKER1
+// I2C bus on GP26 and GP27 (Maker Port aka QWIIC socket 1)
 #define I2C_SDA_PIN 26
 #define I2C_SCL_PIN 27
+#define Wire Wire1
+#else
+// I2C bus on GP12 and GP13 (Arduino Nano D18 and D19)
+#define I2C_SDA_PIN 12
+#define I2C_SCL_PIN 13
+#endif
 #elifdef ARDUINO_PIMORONI_TINY2350
 // I2C bus on GP12 and GP13 (QWIIC socket)
 #define I2C_SDA_PIN 12
@@ -45,7 +58,7 @@
 #define I2C_SCL_PIN 17
 #else
 // All other RP2040/RP2350 boards: Same as Raspberry Pi Pico default,
-// I2C bus on GP4 and GP5
+// I2C bus on D4 and D5
 #define I2C_SDA_PIN 4
 #define I2C_SCL_PIN 5
 #endif
