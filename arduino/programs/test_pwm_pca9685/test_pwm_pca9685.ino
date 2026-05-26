@@ -23,6 +23,10 @@
 #include <Arduino_ARM.h>
 #include <PWM-PCA9685.h>
 
+#ifndef PCA9685_ADDR
+#define PCA9685_ADDR 0x40
+#endif
+
 using namespace MuntsTech::Interfaces::PWM;
 
 MuntsTech::PWM::PCA9685::Device dev;
@@ -34,7 +38,7 @@ void setup()
   Serial.println("\n\n\ecArduino PCA9685 PWM Output Test\n");
   Serial.flush();
 
-  dev.Initialize(0x40, 1000);
+  dev.Initialize(PCA9685_ADDR, 1000);
   outp.Initialize(&dev, 0);
 }
 
