@@ -18,7 +18,7 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-BOARDNAME	?= NUCLEO_F042K6
+BOARDNAME	?= NUCLEO_L432KC
 ARDUINOFQBN	:= STMicroelectronics:stm32:$(BOARDFAMILY):pnum=$(BOARDNAME),upload_method=swdMethod
 ARDUINOCORESRC	:= $(ARDUINOPKGSDIR)/STMicroelectronics/hardware/stm32/2.12.0
 ARDUINOCOREGCC	:= $(ARDUINOPKGSDIR)/STMicroelectronics/tools/xpack-arm-none-eabi-gcc/14.2.1-1.1/bin/arm-none-eabi-gcc
