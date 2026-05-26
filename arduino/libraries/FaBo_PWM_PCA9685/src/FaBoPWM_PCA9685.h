@@ -5,15 +5,15 @@
   Released under APACHE LICENSE, VERSION 2.0
 
   http://www.apache.org/licenses/
-0x75
+
 @author FaBo<info@fabo.io>
 */
 
 #ifndef FABOPWM_PCA9685_H
 #define FABOPWM_PCA9685_H
 
-#include "Arduino_ARM.h"
-#include "Wire.h"
+#include <cstdbool>
+#include <cstdint>
 
 /** PCA9685 Slave Address register */
 #define PCA9685_SLAVE_ADDRESS 0x40
@@ -64,7 +64,7 @@ public:
 	uint16_t get_channel_value(uint8_t channel);
 private:
 	uint8_t _i2caddr;
-	boolean checkI2c(uint8_t register_addr);
+	bool checkI2c(uint8_t register_addr);
 	void writeI2c(uint8_t register_addr, uint8_t value);
 	void readI2c(uint8_t register_addr, int num, uint8_t *buf);
 };

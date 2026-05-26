@@ -9,7 +9,9 @@
 @author FaBo<info@fabo.io>
 */
 
-#include "FaBoPWM_PCA9685.h"
+#include <I2C.h>
+#include <FaBoPWM_PCA9685.h>
+#include <Wire.h>
 
 /**
  @brief Constructor
@@ -168,7 +170,7 @@ void FaBoPWM::readI2c(uint8_t register_addr, int num, uint8_t *buf) {
  @param [in] register_addr register address
  @param [out] boolean true or false.
 */
-boolean FaBoPWM::checkI2c(uint8_t register_addr) {
+bool FaBoPWM::checkI2c(uint8_t register_addr) {
   Wire.beginTransmission(_i2caddr);
   Wire.write(register_addr);
   Wire.endTransmission();
