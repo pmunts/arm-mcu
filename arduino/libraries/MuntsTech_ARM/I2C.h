@@ -24,6 +24,8 @@
 
 #include <Wire.h>
 
+#if !defined(I2C_SCL_PIN) || !defined(I2C_SDA_PIN)
+
 /*****************************************************************************/
 
 // RP2040/RP2350 Boards, using the Arduino-Pico core package
@@ -66,4 +68,27 @@
 
 /*****************************************************************************/
 
+// STM32 Nucleo-32 boards, using the STM32duino core package
+
+#ifdef ARDUINO_NUCLEO_32
+// I2C bus on Arduino Nano A4 and A5, *IF* solder bridges SB16 and SB18
+// are installed (default).
+#define I2C_SDA_PIN PIN_WIRE_SDA
+#define i2C_SCL_PIN PIN_WIRE_SCL
+#endif
+
+/*****************************************************************************/
+
+// STM32 Nucleo-64 boards, using the STM32duino core package
+
+#ifdef ARDUINO_NUCLEO_64
+// I2C bus on Arduino Uno D18 and D19 *AND* A4 and A5 *IF* solder bridges
+// SB46 and SB52 are installed (not default).
+#define I2C_SDA_PIN PIN_WIRE_SDA
+#define i2C_SCL_PIN PIN_WIRE_SCL
+#endif
+
+/*****************************************************************************/
+
+#endif
 #endif
