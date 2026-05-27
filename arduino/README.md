@@ -39,12 +39,12 @@ board family `gmake` include file selected by the `BOARDFAMILY` macro.
 
 | `BOARDFAMILY` Value | Description                                                                                                                                                                 | Core Package                                                   | Default `BOARDNAME`       |
 |---------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------|---------------------------|
+| `RP2040`            | [Raspberry Pi RP2040](https://www.raspberrypi.com/products/rp2040/) boards                                                                                                  | [Arduino-Pico](https://github.com/earlephilhower/arduino-pico) | `sparkfun_promicrorp2040` |
+| `RP2350`            | [Raspberry Pi RP2350](https://www.raspberrypi.com/products/rp2350/) boards                                                                                                  | [Arduino-Pico](https://github.com/earlephilhower/arduino-pico) | `sparkfun_promicrorp2350` |
 | `Disco`             | [STMicroelectronics Discovery](https://www.st.com/en/evaluation-tools/stm32-discovery-kits.html) evaluation boards                                                          | [STM32Duino](https://github.com/stm32duino)                    | `DISCO_F407VG`            |
 | `Nucleo_32`         | [STMicroelectronics Nucleo-32](https://www.st.com/en/evaluation-tools/stm32-nucleo-boards/products.html?querycriteria=productId=LN1847$$1574=Nucleo-32) evaluation boards   | [STM32Duino](https://github.com/stm32duino)                    | `NUCLEO_L432KC`           |
 | `Nucleo_64`         | [STMicroelectronics Nucleo-64](https://www.st.com/en/evaluation-tools/stm32-nucleo-boards/products.html?querycriteria=productId=LN1847$$1574=Nucleo-64) evaluation boards   | [STM32Duino](https://github.com/stm32duino)                    | `NUCLEO_F411RE`           |
 | `Nucleo_144`        | [STMicroelectronics Nucleo-144](https://www.st.com/en/evaluation-tools/stm32-nucleo-boards/products.html?querycriteria=productId=LN1847$$1574=Nucleo-144) evaluation boards | [STM32Duino](https://github.com/stm32duino)                    | `NUCLEO_F767ZI`           |
-| `RP2040`            | [Raspberry Pi RP2040](https://www.raspberrypi.com/products/rp2040/) boards                                                                                                  | [Arduino-Pico](https://github.com/earlephilhower/arduino-pico) | `sparkfun_promicrorp2040` |
-| `RP2350`            | [Raspberry Pi RP2350](https://www.raspberrypi.com/products/rp2350/) boards                                                                                                  | [Arduino-Pico](https://github.com/earlephilhower/arduino-pico) | `sparkfun_promicrorp2350` |
 
 This is a small subset of the vast variety of 32-bit ARM
 microcontrollers supported by the Arduino ecosystem, and limited to the
@@ -89,15 +89,15 @@ The exact target board is selected by two `gmake` macros: `BOARDFAMILY`
 and `BOARDNAME`. Both of these can and should be initialized by
 environment variables before invoking `gmake`.
 
-For the STM32 board families, the Arduino FQBN (Fully Qualified Board
-Name) passed to `arduino-cli` will be defined as:
-
-    ARDUINOFQBN := STMicroelectronics:stm32:$(BOARDFAMILY):pnum=$(BOARDNAME),upload_method=swdMethod
-
-For the RP2040 and RP2350 board families, the Arduino FQBN will be
-defined as:
+For the RP2040 and RP2350 board families, the Arduino FQBN (Fully
+Qualified Board Name) shall be defined as:
 
     ARDUINOFQBN := rp2040:rp2040:$(BOARDNAME)
+
+For the various STM32 board families, the Arduino FQBN passed to
+`arduino-cli` shall be defined as:
+
+    ARDUINOFQBN := STMicroelectronics:stm32:$(BOARDFAMILY):pnum=$(BOARDNAME),upload_method=swdMethod
 
 The following shell pseudocode illustrates how to build an **Arduino
 Framework for ARM MCU Platforms** project with `gmake` (most operating
@@ -249,7 +249,9 @@ is defined and an idle task running on core 1 will call `loop1()` if it
 is defined. The Arduino-Pico `main()` function calls
 `vTaskStartScheduler()` therefore `setup()` must **not** call it again.
 For this reason, `Arduino_ARM.h` defines `vTaskStartScheduler()` as an
-empty macro for RP2040 and RP2350 platforms.
+empty macro for RP2040 and RP2350 platforms, *with the side effect that
+the classic STM32 FreeRTOS sketch in the next subsection will also run
+on RP2040 and RP2350 boards.*
 
 To build an RP2040 or RP2350 FreeRTOS application, you must append
 `:os=freertos` to the FQBN (Fully Qualified Board Name). When building
@@ -266,8 +268,10 @@ hardware/software combination.
 ## STM32
 
 *Note: Many, if not most, STM32 Nucleo evaluation boards have too little
-RAM to run FreeRTOS, especially if the sketch allocates C++ objects with
-the `new` operator. The
+RAM to run FreeRTOS, especially if the sketch creates C++ object
+instances with the `new` operator which uses memory from the
+[heap](https://dev.to/olivestem/understanding-heap-memory-allocation-in-c-sbrk-and-brk-3coj).
+The
 **[Nucleo-L432KC](https://www.st.com/en/evaluation-tools/nucleo-l432kc.html)**
 and
 **[Nucleo-F411RE](https://www.st.com/en/evaluation-tools/nucleo-f411re.html)**
@@ -278,7 +282,8 @@ The [STM32FreeRTOS](https://github.com/stm32duino/STM32FreeRTOS) Arduino
 library provides FreeRTOS support for STM32 microcontrollers. Since it
 is delivered as a library, it is not integrated as tightly with the
 STM32 core package, and FreeRTOS applications for Arduino are
-implemented exactly the same as with any other GCC C or C++ framework.
+implemented exactly the same as with any other GCC C or C++ framework,
+albeit with the FreeRTOS setup code moved from `main()` to `setup()`.
 The following minimal sketch skeleton illustrates how create an STM32
 Arduino FreeRTOS application:
 
@@ -307,7 +312,8 @@ Arduino FreeRTOS application:
 Your `setup()` function must call `xTaskCreate()` to create at least one
 FreeRTOS task and then call `vTaskStartScheduler()` which does not
 return and replaces all of the normal Arduino background processing. For
-compatibility, the FreeRTOS idle task calls `loop()`.
+compatibility, the FreeRTOS idle task calls `loop()`, which is not
+optional.
 
 # Libraries
 

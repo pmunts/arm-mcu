@@ -41,6 +41,22 @@ board family <code>gmake</code> include file selected by the
 <th>Default <code>BOARDNAME</code></th>
 </tr>
 <tr>
+<td><code>RP2040</code></td>
+<td><a href="https://www.raspberrypi.com/products/rp2040/">Raspberry Pi
+RP2040</a> boards</td>
+<td><a href=
+"https://github.com/earlephilhower/arduino-pico">Arduino-Pico</a></td>
+<td><code>sparkfun_promicrorp2040</code></td>
+</tr>
+<tr>
+<td><code>RP2350</code></td>
+<td><a href="https://www.raspberrypi.com/products/rp2350/">Raspberry Pi
+RP2350</a> boards</td>
+<td><a href=
+"https://github.com/earlephilhower/arduino-pico">Arduino-Pico</a></td>
+<td><code>sparkfun_promicrorp2350</code></td>
+</tr>
+<tr>
 <td><code>Disco</code></td>
 <td><a href=
 "https://www.st.com/en/evaluation-tools/stm32-discovery-kits.html">STMicroelectronics
@@ -71,22 +87,6 @@ STMicroelectronics Nucleo-64</a> evaluation boards</td>
 STMicroelectronics Nucleo-144</a> evaluation boards</td>
 <td><a href="https://github.com/stm32duino">STM32Duino</a></td>
 <td><code>NUCLEO_F767ZI</code></td>
-</tr>
-<tr>
-<td><code>RP2040</code></td>
-<td><a href="https://www.raspberrypi.com/products/rp2040/">Raspberry Pi
-RP2040</a> boards</td>
-<td><a href=
-"https://github.com/earlephilhower/arduino-pico">Arduino-Pico</a></td>
-<td><code>sparkfun_promicrorp2040</code></td>
-</tr>
-<tr>
-<td><code>RP2350</code></td>
-<td><a href="https://www.raspberrypi.com/products/rp2350/">Raspberry Pi
-RP2350</a> boards</td>
-<td><a href=
-"https://github.com/earlephilhower/arduino-pico">Arduino-Pico</a></td>
-<td><code>sparkfun_promicrorp2350</code></td>
 </tr>
 </table>
 <p>This is a small subset of the vast variety of 32-bit ARM microcontrollers
@@ -120,15 +120,15 @@ Equivalent to <code>clean install</code>.
 <code>BOARDFAMILY</code> and <code>BOARDNAME</code>. Both of these can and
 should be initialized by environment variables before invoking
 <code>gmake</code>.</p>
-<p>For the STM32 board families, the Arduino FQBN (Fully Qualified Board Name)
-passed to <code>arduino-cli</code> will be defined as:</p>
-<pre>
-ARDUINOFQBN := STMicroelectronics:stm32:$(BOARDFAMILY):pnum=$(BOARDNAME),upload_method=swdMethod
-</pre>
-<p>For the RP2040 and RP2350 board families, the Arduino FQBN will be defined
-as:</p>
+<p>For the RP2040 and RP2350 board families, the Arduino FQBN (Fully Qualified
+Board Name) shall be defined as:</p>
 <pre>
 ARDUINOFQBN := rp2040:rp2040:$(BOARDNAME)
+</pre>
+<p>For the various STM32 board families, the Arduino FQBN passed to
+<code>arduino-cli</code> shall be defined as:</p>
+<pre>
+ARDUINOFQBN := STMicroelectronics:stm32:$(BOARDFAMILY):pnum=$(BOARDNAME),upload_method=swdMethod
 </pre>
 <p>The following shell pseudocode illustrates how to build an <b>Arduino
 Framework for ARM MCU Platforms</b> project with <code>gmake</code> (most
@@ -275,7 +275,9 @@ call <code>loop1()</code> if it is defined. The Arduino-Pico
 <code>main()</code> function calls <code>vTaskStartScheduler()</code> therefore
 <code>setup()</code> must <b>not</b> call it again. For this reason,
 <code>Arduino_ARM.h</code> defines <code>vTaskStartScheduler()</code> as an
-empty macro for RP2040 and RP2350 platforms.</p>
+empty macro for RP2040 and RP2350 platforms, <i>with the side effect that the
+classic STM32 FreeRTOS sketch in the next subsection will also run on RP2040
+and RP2350 boards.</i></p>
 <p>To build an RP2040 or RP2350 FreeRTOS application, you must append
 <code>:os=freertos</code> to the FQBN (Fully Qualified Board Name). When
 building with <code>gmake</code>, either from the command line or from Visual
@@ -289,8 +291,10 @@ Arduino RP2040 or RP2350 platform than for any other hardware/software
 combination.</p>
 <h2>STM32</h2>
 <p><i>Note: Many, if not most, STM32 Nucleo evaluation boards have too little
-RAM to run FreeRTOS, especially if the sketch allocates C++ objects with the
-<code>new</code> operator. The <b><a href=
+RAM to run FreeRTOS, especially if the sketch creates C++ object instances with
+the <code>new</code> operator which uses memory from the <a href=
+"https://dev.to/olivestem/understanding-heap-memory-allocation-in-c-sbrk-and-brk-3coj">
+heap</a>. The <b><a href=
 "https://www.st.com/en/evaluation-tools/nucleo-l432kc.html">Nucleo-L432KC</a></b>
 and <b><a href=
 "https://www.st.com/en/evaluation-tools/nucleo-f411re.html">Nucleo-F411RE</a></b>
@@ -300,8 +304,10 @@ successfully run <a href=
 Arduino library provides FreeRTOS support for STM32 microcontrollers. Since it
 is delivered as a library, it is not integrated as tightly with the STM32 core
 package, and FreeRTOS applications for Arduino are implemented exactly the same
-as with any other GCC C or C++ framework. The following minimal sketch skeleton
-illustrates how create an STM32 Arduino FreeRTOS application:</p>
+as with any other GCC C or C++ framework, albeit with the FreeRTOS setup code
+moved from <code>main()</code> to <code>setup()</code>. The following minimal
+sketch skeleton illustrates how create an STM32 Arduino FreeRTOS
+application:</p>
 <pre>
 #define ENABLE_FREERTOS
 
@@ -329,7 +335,7 @@ void loop()
 create at least one FreeRTOS task and then call
 <code>vTaskStartScheduler()</code> which does not return and replaces all of
 the normal Arduino background processing. For compatibility, the FreeRTOS idle
-task calls <code>loop()</code>.</p>
+task calls <code>loop()</code>, which is not optional.</p>
 <h1>Libraries</h1>
 <hr>
 Questions or comments to Philip Munts <a href=
