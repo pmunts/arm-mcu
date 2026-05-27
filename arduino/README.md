@@ -21,9 +21,9 @@ command to *e.g.* `~/.bashrc` to make it permanent.
 
 An **Arduino Framework for ARM MCU Platforms** project directory
 contains a number of files. The easiest way to create a new project is
-with the `newproject` shell script:
+with the `arduino-arm-newproject` shell script:
 
-    $HOME/arm-mcu/arduino/scripts/newproject myproject
+    $HOME/arm-mcu/arduino/scripts/arduino-arm-newproject myproject
 
 # [GNU Make](https://www.gnu.org/software/make)
 
