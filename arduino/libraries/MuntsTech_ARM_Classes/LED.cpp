@@ -51,6 +51,9 @@ MuntsTech::Interfaces::GPIO::Pin MuntsTech::Factories::LED::Create(bool state)
 #elif defined(ARDUINO_SPARKFUN_PROMICRO_RP2040) || defined(ARDUINO_SPARKFUN_PROMICRO_RP2350)
   // NeoPixel user LED
   return CreateNeoPixel(&_LED_NeoPixelChain, 0, state);
+#elif defined(ARDUINO_WAVESHARE_RP2040_ZERO) || defined(ARDUINO_WAVESHARE_RP2350_ZERO)
+  // NeoPixel user LED
+  return CreateNeoPixel(&_LED_NeoPixelChain, 0, state);
 #elifdef LED_BUILTIN
   // Most other boards have an active high GPIO LED, often connected to D13
   return CreateGPIO(LED_BUILTIN, state);
