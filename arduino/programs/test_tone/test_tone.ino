@@ -22,17 +22,25 @@
 
 #include <Arduino_ARM.h>
 
+#ifdef ARDUINO_CYTRON_MAKER_NANO_RP2040
+// Internal piezo buzzer
+#define SOUNDER D22
+// External piezo buzzer e.g. Murata PMK22EPP-20
+#else
+#define SOUNDER D5
+#endif
+
 void setup()
 {
   Serial.begin(115200);
   Serial.println("\n\n\ecArduino Tone Test\n");
   Serial.flush();
 
-  pinMode(22, OUTPUT);
+  pinMode(SOUNDER, OUTPUT);
 }
 
 void loop()
 {
-  tone(22, 1000, 250);
+  tone(SOUNDER, 1000, 250);
   delay(500);
 }
