@@ -33,7 +33,7 @@ void setup()
   Serial.println("\n\n\ecArduino Hardware PWM Output Test\n");
   Serial.flush();
 
-  outp.Initialize(3, 1000);
+  outp.Initialize(D3, 1000);
 }
 
 void loop()

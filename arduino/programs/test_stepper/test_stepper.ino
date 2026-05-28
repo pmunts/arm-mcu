@@ -27,8 +27,8 @@
 #include <Arduino_ARM.h>
 
 const int MaxSteps = 2048;
-const int Dir      = 2;
-const int Step     = 3;
+const int Dir      = D2;
+const int Step     = D3;
 
 void setup()
 {

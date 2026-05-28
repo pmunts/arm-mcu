@@ -44,10 +44,10 @@ void WriteMotor(uint8_t dirpin, uint8_t pwmpin, int velocity)
 
 // Pin assignments
 
-const int DIRA = 1;  // Left  wheel direction control
-const int PWMA = 2;  // Left  wheel speed control
+const int DIRA = 2;  // Left  wheel direction control
+const int PWMA = 3;  // Left  wheel speed control
 const int DIRB = 4;  // Right wheel direction control
-const int PWMB = 3;  // Right wheel speed control
+const int PWMB = 5;  // Right wheel speed control
 
 // High level motion command -- left and right are velocity values
 // from -255 (full speed reverse) to +255 (full speed ahead).

@@ -31,7 +31,7 @@ void setup()
   Serial.println("\n\n\ecArduino DC Motor Test\n");
   Serial.flush();
 
-  outp.Initialize(3, 4, 5, 1000);
+  outp.Initialize(D3, D4, D5, 1000);
 }
 
 void loop()

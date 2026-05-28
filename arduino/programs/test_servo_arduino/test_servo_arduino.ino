@@ -35,7 +35,7 @@ void setup()
   Serial.println("\n\n\ecArduino Servo Output Test\n");
   Serial.flush();
 
-  outp.Initialize(3);
+  outp.Initialize(D2);
 }
 
 void loop()

@@ -35,7 +35,7 @@ void setup()
   Serial.println("\n\n\ecArduino Hardware PWM Servo Output Test\n");
   Serial.flush();
 
-  pwmout.Initialize(1, 50);
+  pwmout.Initialize(D2, 50);
   outp.Initialize(&pwmout, 50);
 }
 
