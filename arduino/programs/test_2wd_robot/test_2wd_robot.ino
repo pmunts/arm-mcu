@@ -44,10 +44,19 @@ void WriteMotor(uint8_t dirpin, uint8_t pwmpin, int velocity)
 
 // Pin assignments
 
-const int DIRA = 2;  // Left  wheel direction control
-const int PWMA = 3;  // Left  wheel speed control
-const int DIRB = 4;  // Right wheel direction control
-const int PWMB = 5;  // Right wheel speed control
+#if defined(ARDUINO_SEEED_XIAO_RP2040) || defined(ARDUINO_SEEED_XIAO_RP2040)
+// MUNTS-0021 River Tech Motor Driver Board
+const int DIRA = D7;  // Left  wheel direction control
+const int PWMA = D8;  // Left  wheel speed control
+const int DIRB = D9;  // Right wheel direction control
+const int PWMB = D10; // Right wheel speed control
+#else
+// Grove sockets D2 and D4
+const int DIRA = D2;  // Left  wheel direction control
+const int PWMA = D3;  // Left  wheel speed control
+const int DIRB = D4;  // Right wheel direction control
+const int PWMB = D5;  // Right wheel speed control
+#endif
 
 // High level motion command -- left and right are velocity values
 // from -255 (full speed reverse) to +255 (full speed ahead).
