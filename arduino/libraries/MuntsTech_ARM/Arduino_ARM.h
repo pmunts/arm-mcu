@@ -55,9 +55,9 @@
 #define D17	17
 #define D18	18
 #define D19	19
-#define D20
+#define D20	20	// Button switch
 #define D21
-#define D22
+#define D22	22	// Piezo buzzer
 #define D23
 #define D24
 #define D25
@@ -87,9 +87,9 @@
 #define D17	29	// A3
 #define D18	12	// SDA0
 #define D19	13	// SCL0
-#define D20	14	// SDA1
-#define D21	15	// SCL1
-#define D22
+#define D20	20	// Button switch
+#define D21
+#define D22	22	// Piezo buzzer
 #define D23
 #define D24
 #define D25
