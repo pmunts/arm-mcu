@@ -21,7 +21,7 @@
 SRCURL		:= https://github.com/micropython/micropython.git
 SRCDIR		:= micropython.src
 MPYCROSS	:= $(SRCDIR)/mpy-cross/build/mpy-cross
-
+TOOLCHAIN	?= $(HOME)/.arduino15/packages/rp2040/tools/pqt-gcc/4.1.0-1aec55e
 TARGETPORT	?= rp2
 TARGETBOARD	?= SEEED_XIAO_RP2350
 
@@ -42,9 +42,9 @@ $(MPYCROSS): $(SRCDIR)
 # Build firmware
 
 $(TARGETBOARD).uf2: $(MPYCROSS)
-	$(MAKE) -C $(SRCDIR)/ports/$(TARGETPORT) BOARD=$(TARGETBOARD) submodules
-	$(MAKE) -C $(SRCDIR)/ports/$(TARGETPORT) BOARD=$(TARGETBOARD) clean
-	$(MAKE) -C $(SRCDIR)/ports/$(TARGETPORT) BOARD=$(TARGETBOARD)
+	PICO_TOOLCHAIN_PATH=$(TOOLCHAIN) $(MAKE) -C $(SRCDIR)/ports/$(TARGETPORT) BOARD=$(TARGETBOARD) submodules
+	PICO_TOOLCHAIN_PATH=$(TOOLCHAIN) $(MAKE) -C $(SRCDIR)/ports/$(TARGETPORT) BOARD=$(TARGETBOARD) clean
+	PICO_TOOLCHAIN_PATH=$(TOOLCHAIN) $(MAKE) -C $(SRCDIR)/ports/$(TARGETPORT) BOARD=$(TARGETBOARD)
 	cp $(SRCDIR)/ports/$(TARGETPORT)/build-$(TARGETBOARD)/firmware.uf2 $@
 
 # Install firmware
