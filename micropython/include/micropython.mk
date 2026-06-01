@@ -20,15 +20,17 @@
 
 ARMSRC		?= $(HOME)/arm-mcu
 MPREMOTE	?= mpremote
+ifeq ($(BOARDFAMILY), STM32)
+DSTPATH		?= :/flash
+else
+DSTPATH		?= :/
+endif
 
 # Install Python3 script(s) to target MCU
 
 install:
-ifeq ($(BOARDFAMILY), STM32)
-	cd src && $(MPREMOTE) fs cp -r . :/flash
-else
-	cd src && $(MPREMOTE) fs cp -r . :.
-endif
+	-$(MPREMOTE) fs rm -rv $(DSTPATH)
+	$(MPREMOTE) fs cp -r src/* $(DSTPATH)
 	$(MPREMOTE) reset
 	sleep 1
 	$(MPREMOTE) resume
@@ -41,7 +43,7 @@ ls:
 # Uninstall all Python3 script(s), libraries, modules
 
 uninstall:
-	$(MPREMOTE) fs rm -rv :/
+	-$(MPREMOTE) fs rm -rv $(DSTPATH)
 	$(MPREMOTE) reset
 
 # Pull in board specific firmware management
