@@ -24,7 +24,7 @@ include $(ARMSRC)/gcc/include/stlink.mk
 
 # Install micropython firmware to code flash.
 
-FIRMWARE := $(ARMSRC)/micropython/firmware/NUCLEO_F411RE.hex
+FIRMWARE := $(ARMSRC)/micropython/firmware/$(BOARDNAME).hex
 
 install_firmware:
 	$(STM32CUBEPROG) $(STM32CUBEPROGOPTS) -e all -w $(FIRMWARE) -hardRst
