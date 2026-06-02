@@ -66,18 +66,18 @@ add support for more board families.</p>
 in-circuit debugger/flash programmer.</p>
 <h2>Make Targets</h2>
 <h3>run</h3>
-<p>Runs your <b>MicroPython</b></p>
-<b>project on the target board. Press <code>CONTROL-C</code> twice (and ignore
-the error message from <code>mpremote</code>) to terminate the program, if
-necessary.<br>
-<br></b>
+<p>Runs your <b>MicroPython</b> project on the target board. Press
+<code>CONTROL-C</code> twice (and ignore the error message from
+<code>mpremote</code>) to terminate the program, if necessary.</p>
+<h3>clean</h3>
+<p>Removes working files (<i>i.e.</i> <code>__pycache__/</code>) from the
+project directory.</p>
 <h3>install</h3>
 <p>Copies the contents of the project subdirectory <code>src/</code> to the
 target board's flash file system, and then resets the target board to begin
 execution.</p>
-<p><i>Note: Some boards with limited flash memory (e.g.
-<code>NUCLEO_F042K6</code>do not have a flash file system, and this make target
-will always fail.</i></p>
+<p><i>Note: Some boards with limited flash memory do not have a flash file
+system, and this make target will always fail.</i></p>
 <h3>ls</h3>
 <p>List files in the target board's flash file system.</p>
 <p><i>Note: Some boards with limited flash memory do not have a flash file
@@ -87,8 +87,6 @@ system, and this make target will always fail.</i></p>
 resets the target board.</p>
 <p><i>Note: Some boards with limited flash memory do not have a flash file
 system, and this make target will always fail.</i></p>
-<h3>clean</h3>
-Removes working files (<i>i.e.</i> <code>__pycache__/</code>).
 <h3>No target</h3>
 Equivalent to <code>run</code>.
 <h2>Make Command Syntax</h2>

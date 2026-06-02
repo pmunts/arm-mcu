@@ -61,11 +61,14 @@ in-circuit debugger/flash programmer.
 
 ### run
 
-Runs your **MicroPython**
+Runs your **MicroPython** project on the target board. Press `CONTROL-C`
+twice (and ignore the error message from `mpremote`) to terminate the
+program, if necessary.
 
-**project on the target board. Press `CONTROL-C` twice (and ignore the
-error message from `mpremote`) to terminate the program, if necessary.\
-\**
+### clean
+
+Removes working files (*i.e.* `__pycache__/`) from the project
+directory.
 
 ### install
 
@@ -73,8 +76,8 @@ Copies the contents of the project subdirectory `src/` to the target
 board's flash file system, and then resets the target board to begin
 execution.
 
-*Note: Some boards with limited flash memory (e.g. `NUCLEO_F042K6`do not
-have a flash file system, and this make target will always fail.*
+*Note: Some boards with limited flash memory do not have a flash file
+system, and this make target will always fail.*
 
 ### ls
 
@@ -90,10 +93,6 @@ then resets the target board.
 
 *Note: Some boards with limited flash memory do not have a flash file
 system, and this make target will always fail.*
-
-### clean
-
-Removes working files (*i.e.* `__pycache__/`).
 
 ### No target
 
