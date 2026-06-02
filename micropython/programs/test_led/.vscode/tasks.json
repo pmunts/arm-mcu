@@ -1,0 +1,37 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+         {
+            "label": "Run project",
+            "type": "shell",
+            "command": "make run",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+         }
+         {
+            "label": "Write project files to flash memory file system",
+            "type": "shell",
+            "command": "make install",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+         }
+         {
+            "label": "Remove project files from flash memory file system",
+            "type": "shell",
+            "command": "make uninstall",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+         }
+    ]
+}
