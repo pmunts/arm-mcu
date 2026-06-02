@@ -4,9 +4,9 @@
     "version": "2.0.0",
     "tasks": [
          {
-            "label": "make <program>",
+            "label": "Run project",
             "type": "shell",
-            "command": "make install",
+            "command": "make run",
             "problemMatcher": [],
             "group": {
                 "kind": "build",
@@ -14,7 +14,7 @@
             }
          }
          {
-            "label": "make install",
+            "label": "Write project files to flash memory file system",
             "type": "shell",
             "command": "make install",
             "problemMatcher": [],
@@ -24,19 +24,9 @@
             }
          }
          {
-            "label": "make uninstall",
+            "label": "Remove project files from flash memory file system",
             "type": "shell",
-            "command": "make install",
-            "problemMatcher": [],
-            "group": {
-                "kind": "build",
-                "isDefault": false
-            }
-         }
-         {
-            "label": "make install_firmware",
-            "type": "shell",
-            "command": "make install_firmware",
+            "command": "make uninstall",
             "problemMatcher": [],
             "group": {
                 "kind": "build",
