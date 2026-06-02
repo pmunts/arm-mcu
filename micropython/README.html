@@ -1,0 +1,147 @@
+<h1>MicroPython Framework for ARM MCU Platforms</h1>
+<p>You will need to use whatever command line shell your development computer
+operating system has to make use of this framework. macOS and Linux computers
+(including <a href="https://chromeos.dev/en/linux">Linux On ChromeOS <i>aka</i>
+Crostini</a> containers) always have one or more command line shells, named
+something like <code>Terminal</code> or <code>Console</code>.</p>
+<p>First, you must clone the <a href=
+"https://github.com/pmunts/arm-mcu">arm-mcu</a> <code>git</code> repository
+with the following command:</p>
+<pre>
+git clone https://github.com/pmunts/arm-mcu.git
+</pre>
+<p>It is advisable to define the environment variable <code>ARMSRC</code> to
+the location of the checkout directory:</p>
+<pre>
+export ARMSRC=$(HOME)/arm-mcu
+</pre>
+<p>A <b>MicroPython Framework for ARM MCU Platforms</b> project directory
+contains a number of files. The easiest way to create a new project is to copy
+the contents of the <code>template</code> project directory into your new
+project directory:</p>
+<pre>
+mkdir myproject
+cp -r $ARMSRC/micropython/programs/template/. myproject
+</pre>
+<p>It is <b>not</b> necessary for your new project to reside within the
+<code>arm-mcu</code> directory tree.</p>
+<h1><a href="https://www.gnu.org/software/make">GNU Make</a></h1>
+<p>Each <b>MicroPython Framework for ARM MCU Platforms</b> program project
+contains a minimal <code>Makefile</code> for GNU Make (<i>aka</i>
+<code>gmake</code>) that simply defines a default value for the macro variable
+<code>ARMSRC</code> and then includes
+<code>$(ARMSRC)/micropython/include/micropython.mk</code>, which defines
+default values for some more macro variables (notably <code>BOARDFAMILY</code>
+and <code>BOARDNAME</code>), some universal make targets, and finally includes
+a platform dependent board family include file selected by the
+<code>BOARDFAMILY</code> macro variable.</p>
+<h2>Supported Board Families</h2>
+<table>
+<tr>
+<th><code>BOARDFAMILY</code></th>
+<th>Description</th>
+<th>Default <code>BOARDNAME</code></th>
+</tr>
+<tr>
+<td><code>RP2</code></td>
+<td>Raspberry Pi <a href=
+"https://www.raspberrypi.com/products/rp2040">RP2040</a> and <a href=
+"https://www.raspberrypi.com/products/rp2350">RP2350</a> boards</td>
+<td><code>SEEED_XIAO_RP2350</code></td>
+</tr>
+<tr>
+<td><code>STM32</code></td>
+<td>STMicroelectronics <a href=
+"https://www.st.com/en/microcontrollers-microprocessors/stm32-32-bit-arm-cortex-mcus.html">
+STM32</a> boards</td>
+<td><code>NUCLEO_F411RE</code></td>
+</tr>
+</table>
+<p>This is a small subset of the vast variety of 32-bit ARM microcontrollers
+supported by the <b>MicroPython</b> ecosystem, and limited to the boards that I
+actually possess and can validate support for. It is almost trivially easy to
+add support for more board families.</p>
+<p>All of the STM32 boards I have chosen to support have an on-board <a href=
+"https://www.st.com/en/development-tools/st-link-v2.html">ST-LINK</a>
+in-circuit debugger/flash programmer.</p>
+<h2>Make Targets</h2>
+<h3>run</h3>
+<p>Runs your <b>MicroPython</b></p>
+<b>project on the target board. Press <code>CONTROL-C</code> twice (and ignore
+the error message from <code>mpremote</code>) to terminate the program, if
+necessary.<br>
+<br></b>
+<h3>install</h3>
+<p>Copies the contents of the project subdirectory <code>src/</code> to the
+target board's flash file system, and then resets the target board to begin
+execution.</p>
+<p><i>Note: Some boards with limited flash memory (e.g.
+<code>NUCLEO_F042K6</code>do not have a flash file system, and this make target
+will always fail.</i></p>
+<h3>ls</h3>
+<p>List files in the target board's flash file system.</p>
+<p><i>Note: Some boards with limited flash memory do not have a flash file
+system, and this make target will always fail.</i></p>
+<h3>uninstall</h3>
+<p>Remove all project files from the target board's flash file system, and then
+resets the target board.</p>
+<p><i>Note: Some boards with limited flash memory do not have a flash file
+system, and this make target will always fail.</i></p>
+<h3>clean</h3>
+Removes working files (<i>i.e.</i> <code>__pycache__/</code>).
+<h3>No target</h3>
+Equivalent to <code>run</code>.
+<h2>Make Command Syntax</h2>
+<p>The exact target board is selected by two <code>gmake</code> macro
+variables: <code>BOARDFAMILY</code> and <code>BOARDNAME</code>. Both of these
+can and should be initialized by environment variables before invoking
+<code>gmake</code>.</p>
+<p>The following command line pseudocode illustrates how to run, install, or
+uninstall a <b>MicroPython Framework for ARM MCU Platforms</b> project with
+<code>gmake</code> (<i>most operating systems symlink or alias
+<code>make</code> to <code>gmake</code></i>):</p>
+<pre>
+export ARMSRC=&lt;your arm-mcu checkout directory&gt;
+export BOARDFAMILY=&lt;your board family&gt;
+export BOARDNAME=&lt;your board name&gt;
+make &lt;your make target&gt;
+</pre>
+<h2>Make Command examples</h2>
+<pre>
+export ARMSRC=$HOME/arm-mcu
+export BOARDFAMILY=RP2
+export BARDNAME=sparkfun_promicrorp2040
+
+# Run project on the target board
+make run
+make
+
+# Copy project to target board flash file system
+make install
+
+# Remove project from target board flash file system
+make uninstall
+</pre>
+<h1><a href="https://code.visualstudio.com">Visual Studio Code</a></h1>
+<h2><a href=
+"https://code.visualstudio.com/docs/editing/intellisense">IntelliSense</a></h2>
+<p>You will need to install the Microsoft <a href=
+"https://github.com/microsoft/vscode-python">Python</a> extension to enable
+<b>IntelliSense</b> for Python3.</p>
+<h2>Usage</h2>
+<p>Invoke Visual Studio Code by running the command <code>code .</code> in your
+project directory.</p>
+<p>The file <code>.vscode/tasks.json</code> within each <b>MicroPython
+Framework for ARM MCU Platforms</b> project defines some task actions that
+simply run <code>make run</code> <i>et al</i>. These can be invoked from the
+command menu <code>Terminal &rarr; Run Task...</code> or <code>Terminal &rarr;
+Run Build Task...</code>.</p>
+<p>Run your <b>MicroPython</b> project from within <b>Visual Studio Code</b>
+with <code>CONTROL + SHIFT + B</code> (&#8984; + SHIFT + B for macOS), the
+shortcut key sequence for <code>Run Build Task...</code>, which runs <code>make
+run</code>. Press <code>CONTROL-C</code> <b>twice</b> in the Visual Studio
+terminal output tab to terminate the Python3 program running on the target
+computer.</p>
+<hr>
+Questions or comments to Philip Munts <a href=
+"mailto:phil@munts.net">phil@munts.net</a>
