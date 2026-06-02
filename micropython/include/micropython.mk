@@ -26,14 +26,23 @@ else
 DSTPATH		?= :/
 endif
 
+# Run Python3 script on target MCU
+
+run:
+	$(MPREMOTE) mount src run src/main.py
+
+# Remove working files
+
+clean:
+	find . -name "__pycache__" -exec rm -rf {} ";"
+
 # Install Python3 script(s) to target MCU
 
 install:
 	-$(MPREMOTE) fs rm -rv $(DSTPATH)
 	$(MPREMOTE) fs cp -r src/* $(DSTPATH)
 	$(MPREMOTE) reset
-	sleep 1
-	$(MPREMOTE) resume
+	$(MPREMOTE) sleep 1
 
 # List files on target MCU
 
