@@ -34,7 +34,7 @@ sinclude $(ARMSRC)/micropython/include/$(BOARDFAMILY).mk
 # Run Python3 script on target MCU
 
 run:
-	$(MPREMOTE) mount src run src/main.py
+	$(MPREMOTE) mount src run --no-follow src/main.py repl
 
 # Reset target MCU
 
@@ -46,21 +46,20 @@ reset:
 clean:
 	find . -name "__pycache__" -exec rm -rf {} ";"
 
-# Install Python3 script(s) to target MCU
+# Copy project source files to the target MCU flash memory file system
 
 install:
-	-$(MPREMOTE) fs rm -rv $(DSTPATH)
+	-$(MPREMOTE) fs rm -rv $(DSTPATH) 2>&1 | grep -v "cannot remove :/"
 	$(MPREMOTE) fs cp -r src/* $(DSTPATH)
 	$(MPREMOTE) reset
-	$(MPREMOTE) sleep 1
 
 # List files on target MCU
 
 ls:
 	$(MPREMOTE) tree
 
-# Uninstall all Python3 script(s), libraries, modules
+# Remove all files from the target MCU flash memory file system
 
 uninstall:
-	-$(MPREMOTE) fs rm -rv $(DSTPATH)
+	-$(MPREMOTE) fs rm -rv $(DSTPATH) 2>&1 | grep -v "cannot remove :/"
 	$(MPREMOTE) reset
