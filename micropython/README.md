@@ -18,10 +18,9 @@ location of the checkout directory:
 
     export ARMSRC=$(HOME)/arm-mcu
 
-A **MicroPython Framework for ARM MCU Platforms** project directory
-contains a number of files. The easiest way to create a new project is
-to copy the contents of the `template` project directory into your new
-project directory:
+A **MicroPython** project directory contains a number of files. The
+easiest way to create a new project is to copy the contents of the
+`template` project directory into your new project directory:
 
 
     mkdir myproject
@@ -32,16 +31,71 @@ It is **not** necessary for your new project to reside within the
 
 # [GNU Make](https://www.gnu.org/software/make)
 
-Each **MicroPython Framework for ARM MCU Platforms** program project
-contains a minimal `Makefile` for GNU Make (*aka* `gmake`) that simply
-defines a default value for the macro variable `ARMSRC` and then
-includes `$(ARMSRC)/micropython/include/micropython.mk`, which defines
-default values for some more macro variables (notably `BOARDFAMILY` and
-`BOARDNAME`), some universal make targets, and finally includes a
-platform dependent board family include file selected by the
-`BOARDFAMILY` macro variable.
+Each **MicroPython** program project contains a minimal `Makefile` for
+GNU Make (*aka* `gmake`) that simply defines a default value for the
+macro variable `ARMSRC` and then includes
+`$(ARMSRC)/micropython/include/micropython.mk`, which defines default
+values for some more macro variables, defines some make targets
+applicable to all target boards (`make run` *et al*), and finally
+includes an *optional* a target board family dependent include file
+(selected by the `BOARDFAMILY` macro variable) that defines some
+firmware management targets (`make install_firmware` and `make nuke`).
 
-## Supported Board Families
+## Make Targets
+
+### run
+
+Runs your **MicroPython** project on the target board and connects to
+its serial console.\
+Press `CONTROL-X` to terminate the project running on the target board
+and disconnect from its serial console.
+
+### reset
+
+Resets the target board, exactly as if you pressed its reset button.
+This will stop a **MicroPython** project started by `make run` or
+(re)start a project stored in flash memory by `make install`.
+
+### clean
+
+Removes working files (*i.e.* `__pycache__/`) from the project
+directory.
+
+### ls
+
+List files in the target board's file system(s).
+
+### install
+
+Copies your **MicroPython** project to the target board's flash memory,
+and then resets the target board to begin execution.
+
+*Note: Some boards with limited flash memory do not have a flash file
+system, and this make target will always fail.*
+
+### uninstall
+
+Remove all files from the target board's flash memory, and then resets
+the target board.
+
+*Note: Some boards with limited flash memory do not have a flash file
+system, and this make target will always fail.*
+
+### No target
+
+Equivalent to `run`.
+
+## *Optional* Firmware Management Targets
+
+These are not necessary for routine **MicroPython** usage. Use only with
+great caution.
+
+#### Supported Board Families
+
+The target board flash memory programming mechanism (*e.g.*
+[ST-Link](https://www.st.com/en/development-tools/st-link-v2.html)) is
+selected by the `BOARDFAMILY` macro variable and the target board
+firmware image file is selected by the `BOARDNAME` macro variable.
 
 | `BOARDFAMILY` | Description | Default `BOARDNAME` |
 |----|----|----|
@@ -53,50 +107,18 @@ microcontrollers supported by the **MicroPython** ecosystem, and limited
 to the boards that I actually possess and can validate support for. It
 is almost trivially easy to add support for more board families.
 
-All of the STM32 boards I have chosen to support have an on-board
-[ST-LINK](https://www.st.com/en/development-tools/st-link-v2.html)
+All of the STM32 boards I have chosen to support have enough memory for
+a flash file system as well as an on-board
+[ST-Link](https://www.st.com/en/development-tools/st-link-v2.html)
 in-circuit debugger/flash programmer.
 
-## Make Targets
+### install_firmware
 
-### run
+Installs **MicroPython** firmware to the target board flash memory.
 
-Runs your **MicroPython** project on the target board. Press `CONTROL-C`
-twice (and ignore the error message from `mpremote`) to terminate the
-program, if necessary.
+### nuke
 
-### clean
-
-Removes working files (*i.e.* `__pycache__/`) from the project
-directory.
-
-### install
-
-Copies the contents of the project subdirectory `src/` to the target
-board's flash file system, and then resets the target board to begin
-execution.
-
-*Note: Some boards with limited flash memory do not have a flash file
-system, and this make target will always fail.*
-
-### ls
-
-List files in the target board's flash file system.
-
-*Note: Some boards with limited flash memory do not have a flash file
-system, and this make target will always fail.*
-
-### uninstall
-
-Remove all project files from the target board's flash file system, and
-then resets the target board.
-
-*Note: Some boards with limited flash memory do not have a flash file
-system, and this make target will always fail.*
-
-### No target
-
-Equivalent to `run`.
+Erases all of the target board flash memory (*i.e.* factory reset).
 
 ## Make Command Syntax
 
@@ -105,31 +127,26 @@ The exact target board is selected by two `gmake` macro variables:
 initialized by environment variables before invoking `gmake`.
 
 The following command line pseudocode illustrates how to run, install,
-or uninstall a **MicroPython Framework for ARM MCU Platforms** project
-with `gmake` (*most operating systems symlink or alias `make` to
-`gmake`*):
+or uninstall a **MicroPython** project with `gmake` (*most operating
+systems symlink or alias `make` to `gmake`*):
 
 
     export ARMSRC=<your arm-mcu checkout directory>
-    export BOARDFAMILY=<your board family>
-    export BOARDNAME=<your board name>
     make <your make target>
 
 ## Make Command examples
 
 
     export ARMSRC=$HOME/arm-mcu
-    export BOARDFAMILY=RP2
-    export BARDNAME=sparkfun_promicrorp2040
 
     # Run project on the target board
     make run
     make
 
-    # Copy project to target board flash file system
+    # Copy project to target board flash memory
     make install
 
-    # Remove project from target board flash file system
+    # Remove project from target board flash memory
     make uninstall
 
 # [Visual Studio Code](https://code.visualstudio.com)
