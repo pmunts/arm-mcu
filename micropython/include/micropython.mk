@@ -19,26 +19,17 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 ARMSRC		?= $(HOME)/arm-mcu
-BOARDFAMILY	?= RP2
-#BOARDFAMILY	?= STM32
-#BOARDNAME	?= NUCLEO_F401RE
-#BOARDNAME	?= NUCLEO_F411RE
-#BOARDNAME	?= NUCLEO_F446RE
-#BOARDNAME	?= NUCLEO_F767ZI
-#BOARDNAME	?= PIMORONI_TINY2040
-#BOARDNAME	?= SEEED_XIAO_RP2040
-BOARDNAME	?= SEEED_XIAO_RP2350
-#BOARDNAME	?= SPARKFUN_PROMICRO_RP2040
-#BOARDNAME	?= SPARKFUN_PROMICRO_RP2350
-#BOARDNAME	?= STM32F4_DISCOVERY
-#BOARDNAME	?= WAVESHARE_RP2040_ZERO
+BOARDFAMILY	?= UNKNOWN
+DSTPATH		?= $(shell mpremote tree | tail -n 1)
 MPREMOTE	?= mpremote
 
-ifeq ($(BOARDFAMILY), STM32)
-DSTPATH		?= :/flash
-else
-DSTPATH		?= :/
-endif
+# Default make target
+
+default: run
+
+# Pull in optional board family specific firmware management
+
+sinclude $(ARMSRC)/micropython/include/$(BOARDFAMILY).mk
 
 # Run Python3 script on target MCU
 
@@ -68,7 +59,3 @@ ls:
 uninstall:
 	-$(MPREMOTE) fs rm -rv $(DSTPATH)
 	$(MPREMOTE) reset
-
-# Pull in board specific firmware management
-
-include $(ARMSRC)/micropython/include/$(BOARDFAMILY).mk

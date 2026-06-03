@@ -20,6 +20,11 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
+#BOARDNAME	?= NUCLEO_F401RE
+BOARDNAME	?= NUCLEO_F411RE
+#BOARDNAME	?= NUCLEO_F446RE
+#BOARDNAME	?= NUCLEO_F767ZI
+
 include $(ARMSRC)/gcc/include/stlink.mk
 
 # Install micropython firmware to code flash.
@@ -29,7 +34,7 @@ FIRMWARE := $(ARMSRC)/micropython/firmware/$(BOARDNAME).hex
 install_firmware:
 	$(STM32CUBEPROG) $(STM32CUBEPROGOPTS) -e all -w $(FIRMWARE) -hardRst
 
-# Nuke (completely erase) code flash.
+# Nuke (completely erase) code flash (i.e. factory reset).
 
 nuke:
 	$(STM32CUBEPROG) $(STM32CUBEPROGOPTS) -e all -hardRst
