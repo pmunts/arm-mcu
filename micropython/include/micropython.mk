@@ -20,7 +20,7 @@
 
 ARMSRC		?= $(HOME)/arm-mcu
 BOARDFAMILY	?= UNKNOWN
-DSTPATH		?= $(shell mpremote tree | tail -n 1)
+DSTPATH		?= $(shell mpremote tree | head -n 2 | tail -n 1)
 MPREMOTE	?= mpremote
 
 # Default make target
