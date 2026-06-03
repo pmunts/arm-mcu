@@ -14,6 +14,16 @@
             }
          }
          {
+            "label": "Reset target MCU",
+            "type": "shell",
+            "command": "make reset",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+         }
+         {
             "label": "Write project files to flash memory file system",
             "type": "shell",
             "command": "make install",

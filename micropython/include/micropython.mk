@@ -36,6 +36,11 @@ sinclude $(ARMSRC)/micropython/include/$(BOARDFAMILY).mk
 run:
 	$(MPREMOTE) mount src run src/main.py
 
+# Reset target MCU
+
+reset:
+	$(MPREMOTE) reset
+
 # Remove working files
 
 clean:
