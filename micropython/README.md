@@ -164,7 +164,7 @@ defines **tasks** (*i.e.* actions) that can be invoked from the **Visual
 Studio Code** command menu. These actions just run some of the `make`
 commands described above.
 
-### `CONTROL + SHIFT + B` or ⌘ + SHIFT + B `Terminal → Run Build Task...` `Terminal → Run Task... → Run project`
+### `Terminal → Run Build Task...` `Terminal → Run Task... → Run project` Keyboard Shortcut: `CONTROL + SHIFT + B` (Linux and Windows) Keyboard Shortcut: `⌘ + SHIFT + B` (macOS)
 
 Executes `make run` to run your **MicroPython** project on your target
 MCU. Press `CONTROL-X` in the **Visual Studio Code** terminal output tab
