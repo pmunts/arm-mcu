@@ -1,4 +1,4 @@
-# MicroPython Framework for ARM MCU Platforms
+# [MicroPython](https://micropython.org) Framework for ARM MCU Platforms
 
 You will need to use whatever command line shell your development
 computer operating system has to make use of this framework. macOS and
@@ -9,19 +9,16 @@ more command line shells, named something like `Terminal` or `Console`.
 First, you must clone the [arm-mcu](https://github.com/pmunts/arm-mcu)
 `git` repository with the following command:
 
-
     git clone https://github.com/pmunts/arm-mcu.git
 
 It is advisable to define the environment variable `ARMSRC` to the
 location of the checkout directory:
-
 
     export ARMSRC=$(HOME)/arm-mcu
 
 A **MicroPython** project directory contains a number of files. The
 easiest way to create a new project is to copy the contents of the
 `template` project directory into your new project directory:
-
 
     mkdir myproject
     cp -r $ARMSRC/micropython/programs/template/. myproject
@@ -45,8 +42,8 @@ firmware management targets (`make install_firmware` and `make nuke`).
 
 ### run
 
-Runs your **MicroPython** project on the target board and connects to
-its serial console.\
+Executes your **MicroPython** project on the target board and connects
+to its serial console.  
 Press `CONTROL-X` to terminate the project running on the target board
 and disconnect from its serial console.
 
@@ -97,10 +94,10 @@ The target board flash memory programming mechanism (*e.g.*
 selected by the `BOARDFAMILY` macro variable and the target board
 firmware image file is selected by the `BOARDNAME` macro variable.
 
-| `BOARDFAMILY` | Description | Default `BOARDNAME` |
-|----|----|----|
-| `RP2` | Raspberry Pi [RP2040](https://www.raspberrypi.com/products/rp2040) and [RP2350](https://www.raspberrypi.com/products/rp2350) boards | `SEEED_XIAO_RP2350` |
-| `STM32` | STMicroelectronics [STM32](https://www.st.com/en/microcontrollers-microprocessors/stm32-32-bit-arm-cortex-mcus.html) boards | `NUCLEO_F411RE` |
+| `BOARDFAMILY` | Description                                                                                                                         | Default `BOARDNAME` |
+|---------------|-------------------------------------------------------------------------------------------------------------------------------------|---------------------|
+| `RP2`         | Raspberry Pi [RP2040](https://www.raspberrypi.com/products/rp2040) and [RP2350](https://www.raspberrypi.com/products/rp2350) boards | `SEEED_XIAO_RP2350` |
+| `STM32`       | STMicroelectronics [STM32](https://www.st.com/en/microcontrollers-microprocessors/stm32-32-bit-arm-cortex-mcus.html) boards         | `NUCLEO_F411RE`     |
 
 This is a small subset of the vast variety of 32-bit ARM
 microcontrollers supported by the **MicroPython** ecosystem, and limited
@@ -130,12 +127,10 @@ The following command line pseudocode illustrates how to run, install,
 or uninstall a **MicroPython** project with `gmake` (*most operating
 systems symlink or alias `make` to `gmake`*):
 
-
     export ARMSRC=<your arm-mcu checkout directory>
     make <your make target>
 
 ## Make Command examples
-
 
     export ARMSRC=$HOME/arm-mcu
 
@@ -159,19 +154,33 @@ You will need to install the Microsoft
 
 ## Usage
 
-Invoke Visual Studio Code by running the command `code .` in your
-project directory.
+Start **Visual Studio Code** by running the command `code .` in your
+**MicroPython** project directory.
 
-The file `.vscode/tasks.json` within each **MicroPython Framework for
-ARM MCU Platforms** project defines some task actions that simply run
-`make run` *et al*. These can be invoked from the command menu
-`Terminal → Run Task...` or `Terminal → Run Build Task...`.
+## Terminal Tasks
 
-Run your **MicroPython** project from within **Visual Studio Code** with
-`CONTROL + SHIFT + B` (⌘ + SHIFT + B for macOS), the shortcut key
-sequence for `Run Build Task...`, which runs `make run`. Press
-`CONTROL-C` **twice** in the Visual Studio terminal output tab to
-terminate the Python3 program running on the target computer.
+The file `.vscode/tasks.json` within each **MicroPython** project
+defines **tasks** (*i.e.* actions) that can be invoked from the **Visual
+Studio Code** command menu. These actions just run some of the `make`
+commands described above.
+
+### `CONTROL + SHIFT + B` or ⌘ + SHIFT + B `Terminal → Run Build Task...` `Terminal → Run Task... → Run project`
+
+Executes `make run` to run your **MicroPython** project on your target
+MCU. Press `CONTROL-X` in the **Visual Studio Code** terminal output tab
+to terminate the project.
+
+### `Terminal → Run Task... → Reset target MCU`
+
+Executes `make reset` to reset the target MCU.
+
+### `Terminal → Run Task... → Write project files to flash memory file system`
+
+Executes `make install` to copy the project to the target MCU.
+
+### `Terminal → Run Task... → Remove project files from flash memory file system`
+
+Executes `make uninstall` to remove the project from the target MCU.
 
 ------------------------------------------------------------------------
 

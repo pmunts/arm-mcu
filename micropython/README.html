@@ -1,4 +1,5 @@
-<h1>MicroPython Framework for ARM MCU Platforms</h1>
+<h1><a href="https://micropython.org">MicroPython</a> Framework for ARM MCU
+Platforms</h1>
 <p>You will need to use whatever command line shell your development computer
 operating system has to make use of this framework. macOS and Linux computers
 (including <a href="https://chromeos.dev/en/linux">Linux On ChromeOS <i>aka</i>
@@ -37,8 +38,8 @@ some firmware management targets (<code>make install_firmware</code> and
 <code>make nuke</code>).</p>
 <h2>Make Targets</h2>
 <h3>run</h3>
-<p>Runs your <b>MicroPython</b> project on the target board and connects to its
-serial console.<br>
+<p>Executes your <b>MicroPython</b> project on the target board and connects to
+its serial console.<br>
 Press <code>CONTROL-X</code> to terminate the project running on the target
 board and disconnect from its serial console.</p>
 <h3>reset</h3>
@@ -138,19 +139,29 @@ make uninstall
 "https://github.com/microsoft/vscode-python">Python</a> extension to enable
 <b>IntelliSense</b> for Python3.</p>
 <h2>Usage</h2>
-<p>Invoke Visual Studio Code by running the command <code>code .</code> in your
-project directory.</p>
-<p>The file <code>.vscode/tasks.json</code> within each <b>MicroPython
-Framework for ARM MCU Platforms</b> project defines some task actions that
-simply run <code>make run</code> <i>et al</i>. These can be invoked from the
-command menu <code>Terminal &rarr; Run Task...</code> or <code>Terminal &rarr;
-Run Build Task...</code>.</p>
-<p>Run your <b>MicroPython</b> project from within <b>Visual Studio Code</b>
-with <code>CONTROL + SHIFT + B</code> (&#8984; + SHIFT + B for macOS), the
-shortcut key sequence for <code>Run Build Task...</code>, which runs <code>make
-run</code>. Press <code>CONTROL-C</code> <b>twice</b> in the Visual Studio
-terminal output tab to terminate the Python3 program running on the target
-computer.</p>
+<p>Start <b>Visual Studio Code</b> by running the command <code>code .</code>
+in your <b>MicroPython</b> project directory.</p>
+<h2>Terminal Tasks</h2>
+<p>The file <code>.vscode/tasks.json</code> within each <b>MicroPython</b>
+project defines <b>tasks</b> (<i>i.e.</i> actions) that can be invoked from the
+<b>Visual Studio Code</b> command menu. These actions just run some of the
+<code>make</code> commands described above.</p>
+<h3><code>CONTROL + SHIFT + B</code> or &#8984; + SHIFT + B<br>
+<code>Terminal &rarr; Run Build Task...</code><br>
+<code>Terminal &rarr; Run Task... &rarr; Run project</code></h3>
+<p>Executes <code>make run</code> to run your <b>MicroPython</b> project on
+your target MCU. Press <code>CONTROL-X</code> in the <b>Visual Studio Code</b>
+terminal output tab to terminate the project.</p>
+<h3><code>Terminal &rarr; Run Task... &rarr; Reset target MCU</code></h3>
+<p>Executes <code>make reset</code> to reset the target MCU.</p>
+<h3><code>Terminal &rarr; Run Task... &rarr; Write project files to flash
+memory file system</code></h3>
+<p>Executes <code>make install</code> to copy the project to the target
+MCU.</p>
+<h3><code>Terminal &rarr; Run Task... &rarr; Remove project files from flash
+memory file system</code></h3>
+<p>Executes <code>make uninstall</code> to remove the project from the target
+MCU.</p>
 <hr>
 Questions or comments to Philip Munts <a href=
 "mailto:phil@munts.net">phil@munts.net</a>
