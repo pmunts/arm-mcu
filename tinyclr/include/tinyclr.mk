@@ -1,4 +1,5 @@
-# Makefile definitions for GHI Electronics TinyCLR C# application programs
+# Makefile definitions for building and deploying GHI Electronics TinyCLR
+# C# application programs
 
 # Copyright (C)2026, Philip Munts dba Munts Technologies.
 #
@@ -20,19 +21,51 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-CONFIGURATION	?= Release
-MSBUILD		?= C:/Program Files/Microsoft Visual Studio/18/Community/MSBuild/Current/Bin/MSBuild.exe
-MSBUILDTARGET	?= /t:Build
-MSBUILDFLAGS	?= /p:Configuration=$(CONFIGURATION)
+APPCONFIG	?= Release
+APPKEY		?= 00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+APPVERSION	?= 1.0.0.0
+DEVICE		?= SC13048
 NUGET		?= nuget.exe
+PROJECTNAME	?= $(shell basename *.csproj .csproj)
+PROJECTFILE	:= $(PROJECTNAME).csproj
+TCAFILE		:= $(PROJECTNAME).tca
+TINYCLRCONFIG	?= GHIElectronics.TinyCLR.Config.exe
+
+BUILDFLAGS	:= -cmd:build-tca
+BUILDFLAGS	+= --project:$(PROJECTNAME).csproj
+BUILDFLAGS	+= --configuration:$(APPCONFIG)
+BUILDFLAGS	+= --device:$(DEVICE)
+BUILDFLAGS	+= --key:$(APPKEY)
+BUILDFLAGS	+= --version:$(APPVERSION)
+
+LOADAPPFLAGS	:= -cmd:load-app
+LOADAPPFLAGS	+= --port:$(DEVICE)
+LOADAPPFLAGS	+= --file:bin/$(APPCONFIG)/$(TCAFILE)
+LOADAPPFLAGS	+= --key:$(APPKEY)
+
+REBOOTFLAGS	:= -cmd:reboot
+REBOOTFLAGS	+= --port:$(DEVICE)
+
+# Default target
+
+tinyclr_mk_default: tinyclr_mk_deploy
 
 # Build project
 
-tinyclr_mk_build:
+tinyclr_mk_restore:
 	"$(NUGET)" restore packages.config -PackagesDirectory packages
-	"$(MSBUILD)" $(MSBUILDTARGET) $(MSBUILDFLAGS)
 
-# TODO: Deploy project with TinyCLR Config CLI
+# Build project
+
+tinyclr_mk_build: tinyclr_mk_restore
+	"$(TINYCLRCONFIG)" $(BUILDFLAGS)
+
+# Deploy project
+
+tinyclr_mk_deploy: clean tinyclr_mk_build
+	"$(TINYCLRCONFIG)" $(LOADAPPFLAGS)
+	"$(TINYCLRCONFIG)" $(REBOOTFLAGS)
+	"$(TINYCLRCONFIG)" $(REBOOTFLAGS)
 
 # Fixup target for Cygwin development host
 
@@ -48,6 +81,7 @@ endif
 # Clean out working files
 
 clean:
+	rm -rf *.bin *.key.txt *.pdbx *.pe *.tca *.tinyresources
 	$(ARMSRC)/tinyclr/include/vsclean.sh
 
 reallyclean: clean
