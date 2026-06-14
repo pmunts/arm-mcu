@@ -24,7 +24,7 @@ using IO.Objects.TinyCLR.GPIO;
 using static GHIElectronics.TinyCLR.Devices.Gpio.GpioPinDriveMode;
 using static System.Threading.Thread;
 
-var LED = new Pin(FEZFlea.GpioPin.Led, Output, false);
+var LED = new Pin(SC13048.GpioPin.PA8, Output, false);
 
 while (true)
 {
