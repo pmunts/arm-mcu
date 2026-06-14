@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("test_led")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("HP")]
+[assembly: AssemblyCompany("Philip Munts dba Munts Technologies")]
 [assembly: AssemblyProduct("test_led")]
-[assembly: AssemblyCopyright("Copyright © HP 2026")]
+[assembly: AssemblyCopyright("Copyright ©2026 Philip Munts dba Munts Technologies")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
