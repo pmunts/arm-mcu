@@ -62,11 +62,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="gpio*.cs" />
-  </ItemGroup>
-  <ItemGroup>
+    <Compile Include="*.cs" />
+    <None Include="Makefile" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
