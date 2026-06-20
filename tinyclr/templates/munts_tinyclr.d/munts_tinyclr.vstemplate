@@ -1,0 +1,27 @@
+<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
+  <TemplateData>
+    <Name>Munts Technologies TinyCLR Application Template</Name>
+    <Description>Munts Technologies TinyCLR application template.</Description>
+    <ProjectType>CSharp</ProjectType>
+    <ProjectSubType></ProjectSubType>
+    <DefaultName>MuntsTinyCLRApp</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <LanguageTag>C#</LanguageTag>
+    <PlatformTag>.Net</PlatformTag>
+    <PlatformTag>SITCore</PlatformTag>
+    <PlatformTag>TinyCLROS</PlatformTag>
+    <ProjectTypeTag>Microcontroller</ProjectTypeTag>
+    <LocationField>Enabled</LocationField>
+    <CreateNewFolder>false</CreateNewFolder>
+    <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+    <SortOrder>10</SortOrder>
+  </TemplateData>
+  <TemplateContent>
+    <Project File="munts_tinyclr.csproj" ReplaceParameters="true">
+      <ProjectItem ReplaceParameters="true" TargetFileName="AssemblyInfo.cs">AssemblyInfo.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="Makefile">Makefile</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="Program.cs">Program.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="packages.config">packages.config</ProjectItem>
+    </Project>
+  </TemplateContent>
+</VSTemplate>
