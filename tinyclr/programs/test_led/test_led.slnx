@@ -1,5 +1,5 @@
 <Solution>
-  <Project Path="test_led.csproj" Id="efa830b8-7669-4a53-9a9c-9ffe0789c1b6">
+  <Project Path="test_led.csproj">
     <Deploy />
   </Project>
 </Solution>
