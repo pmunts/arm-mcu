@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="packages\GHIElectronics.TinyCLR.Pins.3.0.0.2000-prerelease\build\net48\GHIElectronics.TinyCLR.Pins.props" Condition="Exists('packages\GHIElectronics.TinyCLR.Pins.3.0.0.2000-prerelease\build\net48\GHIElectronics.TinyCLR.Pins.props')" />
   <Import Project="packages\GHIElectronics.TinyCLR.Devices.Gpio.3.0.0.2000-prerelease\build\net48\GHIElectronics.TinyCLR.Devices.Gpio.props" Condition="Exists('packages\GHIElectronics.TinyCLR.Devices.Gpio.3.0.0.2000-prerelease\build\net48\GHIElectronics.TinyCLR.Devices.Gpio.props')" />
-  <Import Project="packages\GHIElectronics.TinyCLR.Native.3.0.0.2000-prerelease\build\net48\GHIElectronics.TinyCLR.Native.props" Condition="Exists('packages\GHIElectronics.TinyCLR.Native.3.0.0.2000-prerelease\build\net48\GHIElectronics.TinyCLR.Native.props')" />
-  <Import Project="packages\GHIElectronics.TinyCLR.Core.3.0.0.2000-prerelease\build\net48\GHIElectronics.TinyCLR.Core.props" Condition="Exists('packages\GHIElectronics.TinyCLR.Core.3.0.0.2000-prerelease\build\net48\GHIElectronics.TinyCLR.Core.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <Import Project="packages\GHIElectronics.TinyCLR.Core.3.0.0.2000-prerelease\build\net48\GHIElectronics.TinyCLR.Core.props" Condition="Exists('packages\GHIElectronics.TinyCLR.Core.3.0.0.2000-prerelease\build\net48\GHIElectronics.TinyCLR.Core.props')" />
+  <Import Project="packages\GHIElectronics.TinyCLR.Native.3.0.0.2000-prerelease\build\net48\GHIElectronics.TinyCLR.Native.props" Condition="Exists('packages\GHIElectronics.TinyCLR.Native.3.0.0.2000-prerelease\build\net48\GHIElectronics.TinyCLR.Native.props')" />
+  <Import Project="packages\GHIElectronics.TinyCLR.Pins.3.0.0.2000-prerelease\build\net48\GHIElectronics.TinyCLR.Pins.props" Condition="Exists('packages\GHIElectronics.TinyCLR.Pins.3.0.0.2000-prerelease\build\net48\GHIElectronics.TinyCLR.Pins.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -87,7 +87,7 @@
     </PropertyGroup>
     <Error Condition="!Exists('packages\GHIElectronics.TinyCLR.Core.3.0.0.2000-prerelease\build\net48\GHIElectronics.TinyCLR.Core.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\GHIElectronics.TinyCLR.Core.3.0.0.2000-prerelease\build\net48\GHIElectronics.TinyCLR.Core.props'))" />
     <Error Condition="!Exists('packages\GHIElectronics.TinyCLR.Native.3.0.0.2000-prerelease\build\net48\GHIElectronics.TinyCLR.Native.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\GHIElectronics.TinyCLR.Native.3.0.0.2000-prerelease\build\net48\GHIElectronics.TinyCLR.Native.props'))" />
-    <Error Condition="!Exists('packages\GHIElectronics.TinyCLR.Devices.Gpio.3.0.0.2000-prerelease\build\net48\GHIElectronics.TinyCLR.Devices.Gpio.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\GHIElectronics.TinyCLR.Devices.Gpio.3.0.0.2000-prerelease\build\net48\GHIElectronics.TinyCLR.Devices.Gpio.props'))" />
     <Error Condition="!Exists('packages\GHIElectronics.TinyCLR.Pins.3.0.0.2000-prerelease\build\net48\GHIElectronics.TinyCLR.Pins.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\GHIElectronics.TinyCLR.Pins.3.0.0.2000-prerelease\build\net48\GHIElectronics.TinyCLR.Pins.props'))" />
+    <Error Condition="!Exists('packages\GHIElectronics.TinyCLR.Devices.Gpio.3.0.0.2000-prerelease\build\net48\GHIElectronics.TinyCLR.Devices.Gpio.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\GHIElectronics.TinyCLR.Devices.Gpio.3.0.0.2000-prerelease\build\net48\GHIElectronics.TinyCLR.Devices.Gpio.props'))" />
   </Target>
 </Project>
