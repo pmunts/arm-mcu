@@ -22,10 +22,10 @@ BOARDFAMILY	?= RP2040
 
 ARDUINOCLI	?= arduino-cli
 ARDUINOPKGSDIR	?= $(HOME)/.arduino15/packages
-SKETCHBOOK	?= $(HOME)/arduino-arm
+ARMSKETCHBOOK	?= $(HOME)/arduino-arm
 COMPILEFLAGS	+= --build-property build.extra_flags="-DMUNTSTECH $(EXTRACFLAGS)"
-COMPILEFLAGS	+= --libraries "$(SKETCHBOOK)/libraries"
+COMPILEFLAGS	+= --libraries "$(ARMSKETCHBOOK)/libraries"
 
 arduino_arm_mk_default: clean install
 
-include $(SKETCHBOOK)/libraries/MuntsTech_ARM/$(BOARDFAMILY).mk
+include $(ARMSKETCHBOOK)/libraries/MuntsTech_ARM/$(BOARDFAMILY).mk

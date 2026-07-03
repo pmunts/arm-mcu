@@ -14,9 +14,9 @@ following command:
     git clone https://github.com/pmunts/arm-mcu.git
 
 After you have cloned the repository, you will most likely want to set
-the `SKETCHBOOK` environment variable to point to the `arduino/`
+the `ARMSKETCHBOOK` environment variable to point to the `arduino/`
 subdirectory of the `arm-mcu` checkout directory (*e.g.*
-`export SKETCHBOOK=$HOME/arm-mcu/arduino`). You can add the `export`
+`export ARMSKETCHBOOK=$HOME/arm-mcu/arduino`). You can add the `export`
 command to *e.g.* `~/.bashrc` to make it permanent.
 
 An **Arduino Framework for ARM MCU Platforms** project directory
@@ -29,8 +29,8 @@ with the `arduino-arm-newproject` shell script:
 
 Each **Arduino Framework for ARM MCU Platforms** program project
 contains a minimal `Makefile` for `gmake` that simply defines a default
-value for the macro `SKETCHBOOK` and then includes
-`$(SKETCHBOOK)/libraries/MuntsTech_ARM/Arduino_ARM.mk`, which defines
+value for the macro `ARMSKETCHBOOK` and then includes
+`$(ARMSKETCHBOOK)/libraries/MuntsTech_ARM/Arduino_ARM.mk`, which defines
 default values for some more macros and the project default target
 `arduino_arm_mk_default`, and finally includes a platform dependent
 board family `gmake` include file selected by the `BOARDFAMILY` macro.
@@ -103,14 +103,14 @@ The following shell pseudocode illustrates how to build an **Arduino
 Framework for ARM MCU Platforms** project with `gmake` (most operating
 systems symlink or alias `make` to `gmake`):
 
-    export SKETCHBOOK=<your arm-mcu checkout directory>/arduino
+    export ARMSKETCHBOOK=<your arm-mcu checkout directory>/arduino
     export BOARDFAMILY=<your board family>
     export BOARDNAME=<your board name>
     make <your make target>
 
 ## Make Command examples
 
-    export SKETCHBOOK=$HOME/arm-mcu/arduino
+    export ARMSKETCHBOOK=$HOME/arm-mcu/arduino
     export BOARDFAMILY=RP2040
     export BARDNAME=sparkfun_promicrorp2040
 

@@ -12,9 +12,9 @@ with the following command:</p>
 git clone https://github.com/pmunts/arm-mcu.git
 </pre>
 <p>After you have cloned the repository, you will most likely want to set the
-<code>SKETCHBOOK</code> environment variable to point to the
+<code>ARMSKETCHBOOK</code> environment variable to point to the
 <code>arduino/</code> subdirectory of the <code>arm-mcu</code> checkout
-directory (<i>e.g.</i> <code>export SKETCHBOOK=$HOME/arm-mcu/arduino</code>).
+directory (<i>e.g.</i> <code>export ARMSKETCHBOOK=$HOME/arm-mcu/arduino</code>).
 You can add the <code>export</code> command to <i>e.g.</i>
 <code>~/.bashrc</code> to make it permanent.</p>
 <p>An <b>Arduino Framework for ARM MCU Platforms</b> project directory contains
@@ -26,8 +26,8 @@ $HOME/arm-mcu/arduino/scripts/arduino-arm-newproject myproject
 <h1><a href="https://www.gnu.org/software/make">GNU Make</a></h1>
 <p>Each <b>Arduino Framework for ARM MCU Platforms</b> program project contains
 a minimal <code>Makefile</code> for <code>gmake</code> that simply defines a
-default value for the macro <code>SKETCHBOOK</code> and then includes
-<code>$(SKETCHBOOK)/libraries/MuntsTech_ARM/Arduino_ARM.mk</code>, which
+default value for the macro <code>ARMSKETCHBOOK</code> and then includes
+<code>$(ARMSKETCHBOOK)/libraries/MuntsTech_ARM/Arduino_ARM.mk</code>, which
 defines default values for some more macros and the project default target
 <code>arduino_arm_mk_default</code>, and finally includes a platform dependent
 board family <code>gmake</code> include file selected by the
@@ -135,14 +135,14 @@ Framework for ARM MCU Platforms</b> project with <code>gmake</code> (most
 operating systems symlink or alias <code>make</code> to
 <code>gmake</code>):</p>
 <pre>
-export SKETCHBOOK=&lt;your arm-mcu checkout directory&gt;/arduino
+export ARMSKETCHBOOK=&lt;your arm-mcu checkout directory&gt;/arduino
 export BOARDFAMILY=&lt;your board family&gt;
 export BOARDNAME=&lt;your board name&gt;
 make &lt;your make target&gt;
 </pre>
 <h2>Make Command examples</h2>
 <pre>
-export SKETCHBOOK=$HOME/arm-mcu/arduino
+export ARMSKETCHBOOK=$HOME/arm-mcu/arduino
 export BOARDFAMILY=RP2040
 export BARDNAME=sparkfun_promicrorp2040
 

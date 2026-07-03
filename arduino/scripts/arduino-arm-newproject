@@ -53,9 +53,9 @@ if [ -f ${COPYING}.sh ]; then
 fi
 
 cat <<EOD >>"$1"/Makefile
-SKETCHBOOK ?= \$(HOME)/arduino-arm
+ARMSKETCHBOOK ?= \$(HOME)/arduino-arm
 
-include \$(SKETCHBOOK)/libraries/MuntsTech_ARM/Arduino_ARM.mk
+include \$(ARMSKETCHBOOK)/libraries/MuntsTech_ARM/Arduino_ARM.mk
 EOD
 
 if [ -f ${COPYING}.h ]; then
@@ -86,7 +86,7 @@ cat <<EOD >"$1"/.vscode/c_cpp_properties.json
             "includePath": [
                 "\${workspaceFolder}/**",
                 "\${env:CORESRC}/**",
-                "\${env:SKETCHBOOK}/libraries/**"
+                "\${env:ARMSKETCHBOOK}/libraries/**"
             ],
             "compilerPath": "\${env:COREGCC}",
             "intelliSenseMode": "\${default}"

@@ -5,7 +5,7 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "${env:CORESRC}/**",
-                "${env:SKETCHBOOK}/libraries/**"
+                "${env:ARMSKETCHBOOK}/libraries/**"
             ],
             "compilerPath": "${env:COREGCC}",
             "intelliSenseMode": "${default}"

@@ -20,6 +20,6 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-SKETCHBOOK ?= $(HOME)/arduino-arm
+ARMSKETCHBOOK ?= $(HOME)/arduino-arm
 
-include $(SKETCHBOOK)/libraries/MuntsTech_ARM/Arduino_ARM.mk
+include $(ARMSKETCHBOOK)/libraries/MuntsTech_ARM/Arduino_ARM.mk
