@@ -22,7 +22,6 @@ BOARDFAMILY	?= RP2040
 
 ARDUINOCLI	?= arduino-cli
 ARDUINOPKGSDIR	?= $(HOME)/.arduino15/packages
-ARMSKETCHBOOK	?= $(HOME)/arduino-arm
 COMPILEFLAGS	+= --build-property build.extra_flags="-DMUNTSTECH $(EXTRACFLAGS)"
 COMPILEFLAGS	+= --libraries "$(ARMSKETCHBOOK)/libraries"
 
