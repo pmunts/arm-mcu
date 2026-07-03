@@ -53,7 +53,7 @@ if [ -f ${COPYING}.sh ]; then
 fi
 
 cat <<EOD >>"$1"/Makefile
-ARMSKETCHBOOK ?= \$(HOME)/arduino-arm
+ARMSKETCHBOOK ?= \$(HOME)/arm-mcu/arduino
 
 include \$(ARMSKETCHBOOK)/libraries/MuntsTech_ARM/Arduino_ARM.mk
 EOD
