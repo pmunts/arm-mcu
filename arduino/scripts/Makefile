@@ -18,44 +18,52 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
+DESTDIR	?= /usr/local/bin
+
 install:
 ifeq ($(shell uname -o), Cygwin)
-	install -cm 0555 arduino-clean		/usr/local/bin/arduino-clean.sh
-	install -cm 0555 arduino-distclean	/usr/local/bin/arduino-distclean.sh
-	install -cm 0555 arduino-install-cores	/usr/local/bin/arduino-install-cores.sh
-	install -cm 0555 arduino-zip-library	/usr/local/bin/arduino-zip-library.sh
-	install -cm 0555 arduino-arm-newproject	/usr/local/bin/arduino-arm-newproject.sh
+	install -cm 0555 arduino-clean		$(DESTDIR)/arduino-clean.sh
+	install -cm 0555 arduino-distclean	$(DESTDIR)/arduino-distclean.sh
+	install -cm 0555 arduino-install-cores	$(DESTDIR)/arduino-install-cores.sh
+	install -cm 0555 arduino-zip-library	$(DESTDIR)/arduino-zip-library.sh
+	install -cm 0555 arduino-arm-newproject	$(DESTDIR)/arduino-arm-newproject.sh
+else ifeq ($(shell uname -o), Msys)
+	install -cm 0555 arduino-clean		$(DESTDIR)/arduino-clean.sh
+	install -cm 0555 arduino-distclean	$(DESTDIR)/arduino-distclean.sh
+	install -cm 0555 arduino-install-cores	$(DESTDIR)/arduino-install-cores.sh
+	install -cm 0555 arduino-zip-library	$(DESTDIR)/arduino-zip-library.sh
+	install -cm 0555 arduino-arm-newproject	$(DESTDIR)/arduino-arm-newproject.sh
 else
-	install -cm 0555 arduino-clean		/usr/local/bin
-	install -cm 0555 arduino-distclean	/usr/local/bin
-	install -cm 0555 arduino-install-cores	/usr/local/bin
-	install -cm 0555 arduino-zip-library	/usr/local/bin
-	install -cm 0555 arduino-arm-newproject	/usr/local/bin
+	install -cm 0555 arduino-clean		$(DESTDIR)
+	install -cm 0555 arduino-distclean	$(DESTDIR)
+	install -cm 0555 arduino-install-cores	$(DESTDIR)
+	install -cm 0555 arduino-zip-library	$(DESTDIR)
+	install -cm 0555 arduino-arm-newproject	$(DESTDIR)
 endif
 ifeq ($(shell uname), Darwin)
-	install -cm 0555 arduino-link-port	/usr/local/bin
+	install -cm 0555 arduino-link-port	$(DESTDIR)
 endif
 ifeq ($(shell uname), Linux)
-	install -cm 0555 arduino-select-port	/usr/local/bin
+	install -cm 0555 arduino-select-port	$(DESTDIR)
 endif
 
 uninstall:
 ifeq ($(shell uname -o), Cygwin)
-	rm -f /usr/local/bin/arduino-clean.sh
-	rm -f /usr/local/bin/arduino-distclean.sh
-	rm -f /usr/local/bin/arduino-install-cores.sh
-	rm -f /usr/local/bin/arduino-zip-library.sh
-	rm -f /usr/local/bin/arduino-arm-newproject.sh
+	rm -f $(DESTDIR)/arduino-clean.sh
+	rm -f $(DESTDIR)/arduino-distclean.sh
+	rm -f $(DESTDIR)/arduino-install-cores.sh
+	rm -f $(DESTDIR)/arduino-zip-library.sh
+	rm -f $(DESTDIR)/arduino-arm-newproject.sh
 else
-	rm -f /usr/local/bin/arduino-clean
-	rm -f /usr/local/bin/arduino-distclean
-	rm -f /usr/local/bin/arduino-install-cores
-	rm -f /usr/local/bin/arduino-zip-library
-	rm -f /usr/local/bin/arduino-arm-newproject
+	rm -f $(DESTDIR)/arduino-clean
+	rm -f $(DESTDIR)/arduino-distclean
+	rm -f $(DESTDIR)/arduino-install-cores
+	rm -f $(DESTDIR)/arduino-zip-library
+	rm -f $(DESTDIR)/arduino-arm-newproject
 endif
 ifeq ($(shell uname), Darwin)
-	rm -f /usr/local/bin/arduino-link-port
+	rm -f $(DESTDIR)/arduino-link-port
 endif
 ifeq ($(shell uname), Linux)
-	rm -f /usr/local/bin/arduino-select-port
+	rm -f $(DESTDIR)/arduino-select-port
 endif
