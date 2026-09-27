@@ -115,23 +115,18 @@ namespace LPC1114_IOP
   {
   }
 
-  void Transport_Class::Init(uint8_t addr, int ready)
+  void Transport_Class::Init(TwoWire *bus, uint8_t addr, int scl, int sda,
+    int ready)
   {
-    if (ready >= 0) pinMode(ready, INPUT);
-
+    this->bus   = bus;
     this->addr  = addr;
     this->ready = ready;
 
-#ifdef I2C_SDA_PIN
-    // Override normal SDA PIN
-    I2C_BUS.setSDA(I2C_SDA_PIN);
-#endif
-#ifdef I2C_SCL_PIN
-    // Override normal SCL PIN
-    I2C_BUS.setSCL(I2C_SCL_PIN);
-#endif
+    if (scl   >= 0) this->bus->setSCL(scl);
+    if (sda   >= 0) this->bus->setSDA(sda);
+    if (ready >= 0) pinMode(ready, INPUT);
 
-    I2C_BUS.begin();
+    this->bus->begin();
   }
 
   void Transport_Class::Transaction(SPIAGENT_COMMAND_MSG_t *cmd,
@@ -144,12 +139,12 @@ namespace LPC1114_IOP
 
     p = (uint8_t *) cmd;
 
-    I2C_BUS.beginTransmission(this->addr);
+    this->bus->beginTransmission(this->addr);
 
-    len = I2C_BUS.write(p, sizeof(SPIAGENT_COMMAND_MSG_t));
-    if (len != sizeof(SPIAGENT_COMMAND_MSG_t)) RaiseError("I2C_BUS.write() failed");
+    len = this->bus->write(p, sizeof(SPIAGENT_COMMAND_MSG_t));
+    if (len != sizeof(SPIAGENT_COMMAND_MSG_t)) RaiseError("this->bus->write() failed");
 
-    I2C_BUS.endTransmission();
+    this->bus->endTransmission();
 
     // Pause between I2C write and read, to give the LPC1114 time to
     // execute the command
@@ -171,15 +166,15 @@ namespace LPC1114_IOP
     p = (uint8_t *) resp;
     len = 0;
 
-    I2C_BUS.requestFrom(this->addr, sizeof(SPIAGENT_RESPONSE_MSG_t));
+    this->bus->requestFrom(this->addr, sizeof(SPIAGENT_RESPONSE_MSG_t));
 
-    while (I2C_BUS.available())
+    while (this->bus->available())
     {
-      *p++ = I2C_BUS.read();
+      *p++ = this->bus->read();
       len++;
     }
 
-    if (len != sizeof(SPIAGENT_RESPONSE_MSG_t)) RaiseError("I2C_BUS.read() failed");
+    if (len != sizeof(SPIAGENT_RESPONSE_MSG_t)) RaiseError("this->bus->read() failed");
   }
 #endif
 }

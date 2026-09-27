@@ -33,6 +33,7 @@
 #else
 #include <Arduino.h>
 #endif
+#include <Wire.h>
 #endif
 
 #include "LPC1114_IOP_Common.h"
@@ -76,16 +77,14 @@ namespace LPC1114_IOP
 #ifdef ARDUINO
     // Arduino platforms use I2C
 
-#ifndef I2C_BUS
-#define I2C_BUS Wire
-#endif
-
     static const uint8_t DefaultAddress = 0x44;
 
-    void Init(uint8_t addr = DefaultAddress, int ready = -1);
+    void Init(TwoWire *bus = &Wire, uint8_t addr = DefaultAddress, int scl = -1,
+      int sda = -1, int ready = -1);
 
   private:
 
+    TwoWire *bus;
     uint8_t addr;
     int ready;
 #endif
