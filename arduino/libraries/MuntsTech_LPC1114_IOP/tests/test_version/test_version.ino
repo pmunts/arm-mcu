@@ -32,10 +32,27 @@ void setup()
   Serial.print("LPC1114 I/O Processor Version Test\r\n\n");
   Serial.flush();
 
-  Wire1.setSCL(3);
-  Wire1.setSDA(2);
+  // Board specific I2C bus initialization
 
-  IOP.Init(&Wire1);
+#if   defined(ARDUINO_CYTRON_MAKER_NANO_RP2040)
+  // Maker Port 0
+  Wire.setSCL(1);
+  Wire.setSDA(0);
+  IOP.Init(&Wire);
+#elif defined(ARDUINO_SPARKFUN_PROMICRO_RP2040) || defined(ARDUINO_SPARKFUN_PROMICRO_RP2350)
+  Wire.setSCL(17);
+  Wire.setSDA(16);
+  IOP.Init(&Wire);
+#elif defined(ARDUINO_PIMORONI_TINY2350)
+  Wire.setSCL(13);
+  Wire.setSDA(12);
+  IOP.Init(&Wire);
+#else
+  // Raspberry Pi Pico default
+  Wire.setSCL(5);
+  Wire.setSDA(4);
+  IOP.Init(&Wire);
+#endif
 
   SPIAGENT_COMMAND_MSG_t cmd;
   SPIAGENT_RESPONSE_MSG_t resp;
