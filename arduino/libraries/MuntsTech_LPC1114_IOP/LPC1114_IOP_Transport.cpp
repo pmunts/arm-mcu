@@ -20,10 +20,6 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef ARDUINO
-#include <Wire.h>
-#endif
-
 #include "LPC1114_IOP_Transport.h"
 
 namespace LPC1114_IOP
@@ -113,17 +109,17 @@ namespace LPC1114_IOP
 
   Transport_Class::Transport_Class(void)
   {
+    this->bus   = nullptr;
+    this->addr  = 0x00;
+    this->ready = -1;
   }
 
-  void Transport_Class::Init(TwoWire *bus, uint8_t addr, int scl, int sda,
-    int ready)
+  void Transport_Class::Init(TwoWire *bus, uint8_t addr, int ready)
   {
     this->bus   = bus;
     this->addr  = addr;
     this->ready = ready;
 
-    if (scl   >= 0) this->bus->setSCL(scl);
-    if (sda   >= 0) this->bus->setSDA(sda);
     if (ready >= 0) pinMode(ready, INPUT);
 
     this->bus->begin();

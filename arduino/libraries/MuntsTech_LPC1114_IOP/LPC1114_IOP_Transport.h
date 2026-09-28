@@ -79,8 +79,7 @@ namespace LPC1114_IOP
 
     static const uint8_t DefaultAddress = 0x44;
 
-    void Init(TwoWire *bus = &Wire, uint8_t addr = DefaultAddress, int scl = -1,
-      int sda = -1, int ready = -1);
+    void Init(TwoWire *bus = &Wire, uint8_t addr = DefaultAddress, int ready = -1);
 
   private:
 
