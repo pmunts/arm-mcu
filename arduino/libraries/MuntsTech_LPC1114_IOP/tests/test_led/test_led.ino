@@ -35,7 +35,7 @@ void setup()
   Wire.setSCL(1);
   Wire.setSDA(0);
   IOP.Init(&Wire);
-#elif   defined(ARDUINO_SPARKFUN_PROMICRO_RP2040) || defined(ARDUINO_SPARKFUN_PROMICRO_RP2350)
+#elif defined(ARDUINO_SPARKFUN_PROMICRO_RP2040) || defined(ARDUINO_SPARKFUN_PROMICRO_RP2350)
   Wire.setSCL(17);
   Wire.setSDA(16);
   IOP.Init(&Wire);
