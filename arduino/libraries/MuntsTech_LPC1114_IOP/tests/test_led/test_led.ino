@@ -28,22 +28,33 @@ LPC1114_IOP::GPIO LED;
 
 void setup()
 {
-  Serial.begin(115200);
-  Serial.println("LPC1114 I/O Processor LED Test\n");
+  // Board specific I2C bus initialization
 
-  Wire1.setSCL(7);
-  Wire1.setSDA(6);
+#if   defined(ARDUINO_CYTRON_MAKER_NANO_RP2040)
+  // Maker Port 0
+  Wire.setSCL(1);
+  Wire.setSDA(0);
+  IOP.Init(&Wire);
+#elif   defined(ARDUINO_SPARKFUN_PROMICRO_RP2040) || defined(ARDUINO_SPARKFUN_PROMICRO_RP2350)
+  Wire.setSCL(17);
+  Wire.setSDA(16);
+  IOP.Init(&Wire);
+#elif defined(ARDUINO_PIMORONI_TINY2350)
+  Wire.setSCL(13);
+  Wire.setSDA(12);
+  IOP.Init(&Wire);
+#else
+  // Raspberry Pi Pico default
+  Wire.setSCL(5);
+  Wire.setSDA(4);
+  IOP.Init(&Wire);
+#endif
 
-  IOP.Init(&Wire1);
   LED.Init(&IOP, LPC1114_LED, LPC1114_GPIO_OUTPUT, false);
 }
 
 void loop()
 {
-  Serial.print("Turning LED ");
-  Serial.print(LED ? "OFF" : "ON");
-  Serial.print("\r\n");
-
   // Toggle the LED
 
   LED = !LED;
