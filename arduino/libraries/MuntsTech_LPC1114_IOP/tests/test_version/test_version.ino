@@ -20,6 +20,8 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
+#define MUNTS_0021_REV3
+
 #include <Arduino_ARM.h>
 #include <LPC1114_IOP.h>
 
@@ -38,6 +40,17 @@ void setup()
   // Maker Port 0
   Wire.setSCL(1);
   Wire.setSDA(0);
+  IOP.Init(&Wire);
+#elif defined(ARDUINO_SEEED_XIAO_RP2040) || defined(ARDUINO_SEEED_XIAO_RP2350) 
+  #ifdef MUNTS_0021_REV3
+    // Edge pins D8 and D10
+    Wire.setSCL(3);
+    Wire.setSDA(2);
+  #else
+    // Edge pins D4 and D5
+    Wire.setSCL(7);
+    Wire.setSDA(6);
+  #endif
   IOP.Init(&Wire);
 #elif defined(ARDUINO_SPARKFUN_PROMICRO_RP2040) || defined(ARDUINO_SPARKFUN_PROMICRO_RP2350)
   Wire.setSCL(17);
