@@ -35,6 +35,16 @@ void setup()
   Wire.setSCL(1);
   Wire.setSDA(0);
   IOP.Init(&Wire);
+#elif defined(ARDUINO_SEEED_XIAO_RP2040)
+  // Edge pins D4 and D5
+  Wire.setSCL(7);
+  Wire.setSDA(6);
+  IOP.Init(&Wire);
+#elif defined(ARDUINO_SEEED_XIAO_RP2350)
+  // Edge pins D4 and D5
+  Wire.setSCL(7);
+  Wire.setSDA(6);
+  IOP.Init(&Wire);
 #elif defined(ARDUINO_SPARKFUN_PROMICRO_RP2040) || defined(ARDUINO_SPARKFUN_PROMICRO_RP2350)
   Wire.setSCL(17);
   Wire.setSDA(16);
