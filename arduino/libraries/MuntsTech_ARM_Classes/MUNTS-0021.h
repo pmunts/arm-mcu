@@ -27,7 +27,7 @@
 
 namespace MuntsTech::MUNTS_0021::Motors
 {
-#ifdef BOARDREV2
+#ifdef MUNTS_0021_REV2
   const unsigned DIRA = 1;
   const unsigned PWMA = 2;
   const unsigned DIRB = 4;
@@ -42,7 +42,7 @@ namespace MuntsTech::MUNTS_0021::Motors
   #else
     #error Unknown MCU module.
   #endif
-#elifdef BOARDREV3
+#elifdef MUNTS_0021_REV3
   const unsigned DIRA = 6;
   #ifdef ARDUINO_SEEED_XIAO_RP2040
     const unsigned PWMA = 29;
