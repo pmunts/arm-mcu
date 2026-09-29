@@ -49,6 +49,7 @@ SearchMounts /Volumes
 SearchMounts /media/${USER}
 # Chromeos
 SearchMounts /mnt/chromeos/removable
+SearchMounts /mnt/chromeos/shared/removable
 # Windows
 for D in d e f g h i j k ; do FindDestDir /${D} ; done
 
