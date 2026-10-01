@@ -49,7 +49,7 @@ namespace MuntsTech::Motor::TB6612
     // Motor driver output constuctor
 
     Output_Class(unsigned pwmpin, unsigned in1pin, unsigned in2pin,
-      unsigned freq, unsigned velocity = SPEED_STOP)
+      unsigned freq, float velocity = SPEED_STOP)
     {
       this->Initialize(pwmpin, in1pin, in2pin, freq, velocity);
     }
@@ -57,7 +57,7 @@ namespace MuntsTech::Motor::TB6612
     // Motor driver output initializer
 
     void Initialize(unsigned pwmpin, unsigned in1pin, unsigned in2pin,
-      unsigned freq, unsigned velocity = SPEED_STOP)
+      unsigned freq, float velocity = SPEED_STOP)
     {
       assert(velocity >= SPEED_MIN);
       assert(velocity <= SPEED_MAX);
