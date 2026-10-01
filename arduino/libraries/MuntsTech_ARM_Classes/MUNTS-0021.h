@@ -66,7 +66,13 @@ namespace MuntsTech::MUNTS_0021::Motors
   MuntsTech::Motor::PWM1::Output_Class MotorC;
   MuntsTech::Motor::PWM1::Output_Class MotorD;
 
-  void InitializeMotors(unsigned freq)
+  void InitializeAB(unsigned freq)
+  {
+    MotorA.Initialize(DIRA, PWMA, freq);
+    MotorB.Initialize(DIRB, PWMB, freq);
+  }
+
+  void InitializeABCD(unsigned freq)
   {
     MotorA.Initialize(DIRA, PWMA, freq);
     MotorB.Initialize(DIRB, PWMB, freq);
