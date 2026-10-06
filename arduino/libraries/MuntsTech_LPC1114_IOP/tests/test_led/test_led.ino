@@ -32,12 +32,12 @@ void setup()
 {
   // Board specific I2C bus initialization
 
-#if   defined(ARDUINO_CYTRON_MAKER_NANO_RP2040) 
+#if   defined(ARDUINO_CYTRON_MAKER_NANO_RP2040)
   // Maker Port 0
   Wire.setSCL(1);
   Wire.setSDA(0);
   IOP.Init(&Wire);
-#elif defined(ARDUINO_SEEED_XIAO_RP2040) || defined(ARDUINO_SEEED_XIAO_RP2350) 
+#elif defined(ARDUINO_SEEED_XIAO_RP2040) || defined(ARDUINO_SEEED_XIAO_RP2350)
   #ifdef MUNTS_0021_REV3
     // Edge pins D8 and D10
     Wire.setSCL(3);

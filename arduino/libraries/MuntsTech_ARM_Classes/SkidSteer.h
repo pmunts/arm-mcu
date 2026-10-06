@@ -38,7 +38,8 @@ namespace MuntsTech::SkidSteer
   static const float STEER_NONE =  0.0F;
 
   static const float SteeringSensitivity = 0.2;
-  
+
+  struct Vehicle2WD
   struct Vehicle2WD
   {
     // Parameterless stub constructor--Requires a subsequent
