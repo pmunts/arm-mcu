@@ -39,25 +39,6 @@ namespace MuntsTech::SkidSteer
 
   static const float SteeringSensitivity = 0.2;
   
-  float DeltaV(float velocity, float steering)
-  {
-    if (velocity > SPEED_STOP)
-    {
-      // Moving forward
-      return steering*SteeringSensitivity; 
-    }
-    else if (velocity < SPEED_STOP)
-    {
-      // Moving reverse
-      return -steering*SteeringSensitivity;
-    }
-    else
-    {
-      // Spin in place
-      return steering;
-    }
-  }
-
   struct Vehicle2WD
   {
     // Parameterless stub constructor--Requires a subsequent
@@ -116,11 +97,28 @@ namespace MuntsTech::SkidSteer
       assert((steering >= STEER_MIN) && (steering <= STEER_MAX));
       if (steering == STEER_NONE) return;
 
-      this->LeftMotor->write(this->GoVelocity *(1.0 - SteeringSensitivity) + DeltaV(this->GoVelocity, steering));
-      this->RightMotor->write(this->GoVelocity*(1.0 - SteeringSensitivity) - DeltaV(this->GoVelocity, steering));
+      if (this->GoVelocity == SPEED_STOP)
+      {
+        // Spin in place
+        this->LeftMotor->write(this->GoVelocity *(1.0 - SteeringSensitivity) + steering);
+        this->RightMotor->write(this->GoVelocity*(1.0 - SteeringSensitivity) - steering);
+      }
+      else if (this->GoVelocity > SPEED_STOP)
+      {
+        // Moving forward
+        this->LeftMotor->write(this->GoVelocity *(1.0 - SteeringSensitivity) + steering*SteeringSensitivity);
+        this->RightMotor->write(this->GoVelocity*(1.0 - SteeringSensitivity) - steering*SteeringSensitivity);
+      }
+      else if (this->GoVelocity < SPEED_STOP)
+      {
+        // Moving reverse
+        this->LeftMotor->write(this->GoVelocity *(1.0 - SteeringSensitivity) - steering*SteeringSensitivity);
+        this->RightMotor->write(this->GoVelocity*(1.0 - SteeringSensitivity) + steering*SteeringSensitivity);
+      }
 
       delay(milliseconds);
 
+      // Resume forward or reverse motion
       Go(this->GoVelocity);
     }
 
