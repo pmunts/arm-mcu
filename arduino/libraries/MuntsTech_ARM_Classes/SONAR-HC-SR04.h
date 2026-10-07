@@ -18,10 +18,9 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef _HC_SR04_H_
-#define _HC_SR04_H_
+#ifndef _SONAR_HC_SR04_H_
+#define _SONAR_HC_SR04_H_
 
-#include <cassert>
 #include <rangefinder-interface.h>
 
 using namespace MuntsTech::Interfaces::RangeFinder;

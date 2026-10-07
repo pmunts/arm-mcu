@@ -19,7 +19,7 @@
 // POSSIBILITY OF SUCH DAMAGE.
 
 #include <Arduino_ARM.h>
-#include <HC-SR04.h>
+#include <SONAR-HC-SR04.h>
 
 MuntsTech::SONAR::HC_SR04::RangeFinder_Class SONAR;
 
