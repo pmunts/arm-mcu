@@ -65,6 +65,7 @@ namespace MuntsTech::SkidSteer
       this->LeftMotor   = leftmotor;
       this->RightMotor  = rightmotor;
       this->Sensitivity = sensitivity;
+      this->GoVelocity  = SPEED_STOP;
     }
 
     // Initiate forward or reverse motion
@@ -109,8 +110,8 @@ namespace MuntsTech::SkidSteer
       else
       {
         // Stopped, so just spin in place
-        this->LeftMotor->write(this->GoVelocity *(1.0 - this->Sensitivity) + steering);
-        this->RightMotor->write(this->GoVelocity*(1.0 - this->Sensitivity) - steering);
+        this->LeftMotor->write(steering);
+        this->RightMotor->write(- steering);
       }
 
       delay(milliseconds);
