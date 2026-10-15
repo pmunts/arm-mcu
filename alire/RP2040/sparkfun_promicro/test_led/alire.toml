@@ -1,18 +1,30 @@
-name = "test_led"
-description = "SparkFun Pro Micro RP2040 LED Test"
-version = "1.0.0"
-
+name        = "test_led"
+description = "RP2040 Embedded Profile Firmware"
+version     = "1.0.0"
 executables = ["test_led"]
-
-[[depends-on]]
-munts_rp2040_lib_embedded = "^2"
-
+[configuration]
+auto_gpr_with = true
+disabled = false
+generate_ada = true
+generate_c = true
+generate_gpr = true
+output_dir = "config"
 [configuration.values]
-rp2040_hal.Use_Startup = false
-rp2040_hal.Interrupts = "bb_runtimes"
-embedded_rp2040.Max_CPUs = 2
-embedded_rp2040.Board = "sparkfun_promicro"
-
+[configuration.values.embedded_rp2040]
+Board = "generic_board"
+Max_CPUs = 2
+[configuration.values.rp2040_hal]
+Interrupts = "bb_runtimes"
+Use_Startup = false
 [[actions]]
+command = [
+"sh",
+"-c",
+"./postbuild.sh",
+]
+directory = "."
 type = "post-build"
-command = ["sh", "-c", "./postbuild.sh"]
+[[depends-on]]
+embedded_rp2040 = "^16"
+rp2040_hal = "^2"
+munts_rp2040_lib_embedded = "^16"

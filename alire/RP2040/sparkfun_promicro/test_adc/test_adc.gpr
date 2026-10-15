@@ -1,5 +1,6 @@
-with "config/test_adc_config.gpr";
 with "runtime_build.gpr";
+with "ravenscar_build.gpr";
+with "config/test_adc_config.gpr";
 
 project test_adc is
 
