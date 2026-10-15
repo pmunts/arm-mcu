@@ -22,13 +22,13 @@
 
 ShowHelp() {
   echo ""
-  echo "Alire RP2040 ARM Microcontroller Embedded Profile Project Creator"
+  echo "RP2040 Embedded Profile Firmware Alire Project Creator"
   echo ""
   if [ $# -eq 1 ]; then
     echo $1
     echo ""
   fi
-  echo "Usage: alire-newproject-rp2040 <project name>"
+  echo "Usage: ${0} <project name>"
   echo ""
   exit 1
 }
@@ -53,7 +53,7 @@ sed -i '0,/^\website = /d' ${1}/alire.toml
 
 # Regenerate stuff now missing from alire.toml
 
-sed -i "1 i\executables = [\"${1}\"]"          ${1}/alire.toml
-sed -i "1 i\version     = \"1.0.0\""           ${1}/alire.toml
-sed -i "1 i\description = \"RP2040 Firmware\"" ${1}/alire.toml
-sed -i "1 i\name        = \"test_led\""        ${1}/alire.toml
+sed -i "1 i\executables = [\"${1}\"]"                           ${1}/alire.toml
+sed -i "1 i\version     = \"1.0.0\""                            ${1}/alire.toml
+sed -i "1 i\description = \"RP2040 Embedded Profile Firmware\"" ${1}/alire.toml
+sed -i "1 i\name        = \"${1}\""                             ${1}/alire.toml
