@@ -27,17 +27,6 @@ PACKAGE GPIO.RP2040 IS
   -- Constructor returning GPIO.Pin
 
   FUNCTION Create
-   (desg       : RP.GPIO.GPIO_Pin;
-    mode       : RP.GPIO.GPIO_Config_Mode;
-    state      : Boolean                := False;
-    pull       : RP.GPIO.GPIO_Pull_Mode := RP.GPIO.Floating;
-    drive      : RP.GPIO.GPIO_Drive     := RP.GPIO.Drive_4ma;
-    hysteresis : Boolean                := False;
-    fast_slew  : Boolean                := False) RETURN Pin;
-
-  -- Constructor returning GPIO.Pin
-
-  FUNCTION Create
    (desg       : RP.GPIO.GPIO_Point;
     mode       : RP.GPIO.GPIO_Config_Mode;
     state      : Boolean                := False;
@@ -45,18 +34,6 @@ PACKAGE GPIO.RP2040 IS
     drive      : RP.GPIO.GPIO_Drive     := RP.GPIO.Drive_4ma;
     hysteresis : Boolean                := False;
     fast_slew  : Boolean                := False) RETURN Pin;
-
-  -- GPIO pin object instance initializer
-
-  PROCEDURE Initialize
-   (self       : OUT PinSubclass;
-    desg       : RP.GPIO.GPIO_Pin;
-    mode       : RP.GPIO.GPIO_Config_Mode;
-    state      : Boolean                := False;
-    pull       : RP.GPIO.GPIO_Pull_Mode := RP.GPIO.Floating;
-    drive      : RP.GPIO.GPIO_Drive     := RP.GPIO.Drive_4ma;
-    hysteresis : Boolean                := False;
-    fast_slew  : Boolean                := False);
 
   -- GPIO pin object instance initializer
 
@@ -72,19 +49,22 @@ PACKAGE GPIO.RP2040 IS
 
   -- Read state from GPIO input pin
 
-  FUNCTION Get(Self : IN OUT PinSubclass) RETURN Boolean;
+  FUNCTION Get(self : IN OUT PinSubclass) RETURN Boolean;
 
   -- Write state to GPIO output pin
 
-  PROCEDURE Put(Self : IN OUT PinSubclass; state : Boolean);
+  PROCEDURE Put(self : IN OUT PinSubclass; state : Boolean);
+
+  -- Convert GPIO_Pin (number) to GPIO_Point (record)
+
+  FUNCTION To_Point(desg : RP.GPIO.GPIO_Pin) RETURN RP.GPIO.GPIO_Point;
 
 PRIVATE
 
-  TYPE Kinds IS (KindUnconfigured, KindInput, KindOutput);
-
   TYPE PinSubclass IS NEW GPIO.PinInterface WITH RECORD
-    point : RP.GPIO.GPIO_Point;
-    kind  : Kinds := KindUnconfigured;
+    point      : RP.GPIO.GPIO_Point;
+    dir        : GPIO.Direction;
+    configured : Boolean := False;
   END RECORD;
 
 END GPIO.RP2040;

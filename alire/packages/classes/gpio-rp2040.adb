@@ -18,25 +18,13 @@
 -- ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 -- POSSIBILITY OF SUCH DAMAGE.
 
+WITH RP.GPIO;
+
+USE TYPE RP.GPIO.GPIO_Config_Mode;
+
 PACKAGE BODY GPIO.RP2040 IS
 
-  -- Constructor returning GPIO.Pin
-
-  FUNCTION Create
-   (desg       : RP.GPIO.GPIO_Pin;
-    mode       : RP.GPIO.GPIO_Config_Mode;
-    state      : Boolean                := False;
-    pull       : RP.GPIO.GPIO_Pull_Mode := RP.GPIO.Floating;
-    drive      : RP.GPIO.GPIO_Drive     := RP.GPIO.Drive_4ma;
-    hysteresis : Boolean                := False;
-    fast_slew  : Boolean                := False) RETURN Pin IS
-
-    self : PinSubclass;
-
-  BEGIN
-    self.Initialize(desg, mode, state, pull, drive, hysteresis, fast_slew);
-    RETURN NEW PinSubclass'(self);
-  END Create;
+  HardwareIsInitialized : Boolean := False;
 
   -- Constructor returning GPIO.Pin
 
@@ -60,23 +48,6 @@ PACKAGE BODY GPIO.RP2040 IS
 
   PROCEDURE Initialize
    (self       : OUT PinSubclass;
-    desg       : RP.GPIO.GPIO_Pin;
-    mode       : RP.GPIO.GPIO_Config_Mode;
-    state      : Boolean                := False;
-    pull       : RP.GPIO.GPIO_Pull_Mode := RP.GPIO.Floating;
-    drive      : RP.GPIO.GPIO_Drive     := RP.GPIO.Drive_4ma;
-    hysteresis : Boolean                := False;
-    fast_slew  : Boolean                := False) IS
-
-  BEGIN
-    self.Initialize(RP.GPIO.GPIO_Point'(Pin => desg), mode, state, pull,
-      drive, hysteresis, fast_slew);
-  END Initialize;
-
-  -- GPIO pin object instance initializer
-
-  PROCEDURE Initialize
-   (self       : OUT PinSubclass;
     desg       : RP.GPIO.GPIO_Point;
     mode       : RP.GPIO.GPIO_Config_Mode;
     state      : Boolean                := False;
@@ -87,15 +58,25 @@ PACKAGE BODY GPIO.RP2040 IS
 
   BEGIN
     CASE mode IS
-      WHEN RP.GPIO.Input  => self.kind := KindInput;
-      WHEN RP.GPIO.Output => self.kind := KindOutput;
+      WHEN RP.GPIO.Input  => self.dir := GPIO.Input;
+      WHEN RP.GPIO.Output => self.dir := GPIO.Output;
       WHEN OTHERS         => RAISE Error WITH "Illegal mode value";
     END CASE;
 
-    self.point := desg;
-    self.point.Configure(mode, pull, RP.GPIO.SIO, hysteresis, fast_slew, drive);
+    -- Initialize GPIO hardware subsystem, if necessary
 
-    IF self.kind = KindOutput THEN
+    IF NOT HardwareIsInitialized THEN
+      RP.GPIO.Enable;
+      HardwareIsInitialized := True;
+    END IF;
+
+    -- Configure the GPIO pin
+
+    self.point      := desg;
+    self.point.Configure(mode, pull, RP.GPIO.SIO, hysteresis, fast_slew, drive);
+    self.configured := True;
+
+    IF self.dir = GPIO.Output THEN
       self.Put(state);
     END IF;
   END Initialize;
@@ -105,14 +86,15 @@ PACKAGE BODY GPIO.RP2040 IS
   FUNCTION Get(self : IN OUT PinSubclass) RETURN Boolean IS
 
   BEGIN
-    CASE self.kind IS
-      WHEN KindUnconfigured =>
-        RAISE Error WITH "Cannot read from unconfigured GPIO pin";
-    
-      WHEN KindInput =>
+    IF NOT self.configured THEN
+      RAISE Error WITH "Cannot read from unconfigured GPIO pin";
+    END IF;
+
+    CASE self.dir IS
+      WHEN GPIO.Input =>
         RETURN self.point.Get;
 
-      WHEN KindOutput =>
+      WHEN GPIO.Output =>
         RETURN self.point.Set;
     END CASE;
   END Get;
@@ -122,14 +104,15 @@ PACKAGE BODY GPIO.RP2040 IS
   PROCEDURE Put(self : IN OUT PinSubclass; state : Boolean) IS
 
   BEGIN
-    CASE self.kind IS
-      WHEN KindUnconfigured =>
-        RAISE Error WITH "Cannot write to unconfigured GPIO pin";
-    
-      WHEN KindInput =>
+    IF NOT self.configured THEN
+      RAISE Error WITH "Cannot read from unconfigured GPIO pin";
+    END IF;
+
+    CASE self.dir IS
+      WHEN GPIO.Input =>
         RAISE Error WITH "Cannot write to GPIO input pin";
 
-      WHEN KindOutput =>
+      WHEN GPIO.Output =>
         IF state THEN
           self.point.Set;
         ELSE
@@ -137,5 +120,13 @@ PACKAGE BODY GPIO.RP2040 IS
         END IF;
     END CASE;
   END Put;
+
+  -- Convert GPIO_Pin (number) to GPIO_Point (record)
+
+  FUNCTION To_Point(desg: RP.GPIO.GPIO_Pin) RETURN RP.GPIO.GPIO_Point IS
+
+  BEGIN
+    RETURN RP.GPIO.GPIO_Point'(Pin => desg);
+  END To_Point;
 
 END GPIO.RP2040;
