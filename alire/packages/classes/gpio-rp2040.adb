@@ -59,7 +59,7 @@ PACKAGE BODY GPIO.RP2040 IS
   -- GPIO pin object instance initializer
 
   PROCEDURE Initialize
-   (self       : IN OUT PinSubclass;
+   (self       : OUT PinSubclass;
     desg       : RP.GPIO.GPIO_Pin;
     mode       : RP.GPIO.GPIO_Config_Mode;
     state      : Boolean                := False;
@@ -76,7 +76,7 @@ PACKAGE BODY GPIO.RP2040 IS
   -- GPIO pin object instance initializer
 
   PROCEDURE Initialize
-   (self       : IN OUT PinSubclass;
+   (self       : OUT PinSubclass;
     desg       : RP.GPIO.GPIO_Point;
     mode       : RP.GPIO.GPIO_Config_Mode;
     state      : Boolean                := False;
@@ -86,8 +86,6 @@ PACKAGE BODY GPIO.RP2040 IS
     fast_slew  : Boolean                := False) IS
 
   BEGIN
-    self.Destroy;
-
     CASE mode IS
       WHEN RP.GPIO.Input  => self.kind := KindInput;
       WHEN RP.GPIO.Output => self.kind := KindOutput;
@@ -102,54 +100,42 @@ PACKAGE BODY GPIO.RP2040 IS
     END IF;
   END Initialize;
 
-  -- GPIO pin object instance destroyer
-
-  PROCEDURE Destroy(self : IN OUT PinSubclass) IS
-
-  BEGIN
-    self.kind := KindUnconfigured;
-  END Destroy;
-
-  -- Read GPIO pin state
+  -- Read state from GPIO input pin
 
   FUNCTION Get(self : IN OUT PinSubclass) RETURN Boolean IS
 
   BEGIN
-    self.CheckDestroyed;
+    CASE self.kind IS
+      WHEN KindUnconfigured =>
+        RAISE Error WITH "Cannot read from unconfigured GPIO pin";
+    
+      WHEN KindInput =>
+        RETURN self.point.Get;
 
-    IF self.kind = KindInput THEN
-      RETURN self.point.Get;
-    ELSE
-      RETURN self.point.Set;
-    END IF;
+      WHEN KindOutput =>
+        RETURN self.point.Set;
+    END CASE;
   END Get;
 
-  -- Write GPIO pin state
+  -- Write state to GPIO output pin
 
   PROCEDURE Put(self : IN OUT PinSubclass; state : Boolean) IS
 
   BEGIN
-    self.CheckDestroyed;
+    CASE self.kind IS
+      WHEN KindUnconfigured =>
+        RAISE Error WITH "Cannot write to unconfigured GPIO pin";
+    
+      WHEN KindInput =>
+        RAISE Error WITH "Cannot write to GPIO input pin";
 
-    IF self.kind = KindInput THEN
-      RAISE Error WITH "Cannot write to an input pin";
-    END IF;
-
-    IF state THEN
-      self.point.Set;
-    ELSE
-      self.point.Clear;
-    END IF;
+      WHEN KindOutput =>
+        IF state THEN
+          self.point.Set;
+        ELSE
+          self.point.Clear;
+        END IF;
+    END CASE;
   END Put;
-
-  -- Check whether GPIO pin object has been destroyed
-
-  PROCEDURE CheckDestroyed(self : PinSubclass) IS
-
-  BEGIN
-    IF self.kind = KindUnconfigured THEN
-      RAISE GPIO.Error WITH "GPIO pin has been destroyed";
-    END IF;
-  END CheckDestroyed;
 
 END GPIO.RP2040;

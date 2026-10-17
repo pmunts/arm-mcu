@@ -49,7 +49,7 @@ PACKAGE GPIO.RP2040 IS
   -- GPIO pin object instance initializer
 
   PROCEDURE Initialize
-   (self       : IN OUT PinSubclass;
+   (self       : OUT PinSubclass;
     desg       : RP.GPIO.GPIO_Pin;
     mode       : RP.GPIO.GPIO_Config_Mode;
     state      : Boolean                := False;
@@ -61,7 +61,7 @@ PACKAGE GPIO.RP2040 IS
   -- GPIO pin object instance initializer
 
   PROCEDURE Initialize
-   (self       : IN OUT PinSubclass;
+   (self       : OUT PinSubclass;
     desg       : RP.GPIO.GPIO_Point;
     mode       : RP.GPIO.GPIO_Config_Mode;
     state      : Boolean                := False;
@@ -70,25 +70,17 @@ PACKAGE GPIO.RP2040 IS
     hysteresis : Boolean                := False;
     fast_slew  : Boolean                := False);
 
-  -- GPIO pin object instance destroyer
-
-  PROCEDURE Destroy(self : IN OUT PinSubclass);
-
-  -- Read GPIO pin state
+  -- Read state from GPIO input pin
 
   FUNCTION Get(Self : IN OUT PinSubclass) RETURN Boolean;
 
-  -- Write GPIO pin state
+  -- Write state to GPIO output pin
 
   PROCEDURE Put(Self : IN OUT PinSubclass; state : Boolean);
 
 PRIVATE
 
-  -- Check whether GPIO pin object has been destroyed
-
-  PROCEDURE CheckDestroyed(Self : PinSubclass);
-
-  TYPE Kinds IS (KindInput, KindOutput, KindUnconfigured);
+  TYPE Kinds IS (KindUnconfigured, KindInput, KindOutput);
 
   TYPE PinSubclass IS NEW GPIO.PinInterface WITH RECORD
     point : RP.GPIO.GPIO_Point := (Pin => 0);
