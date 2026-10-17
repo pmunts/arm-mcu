@@ -28,13 +28,13 @@ PACKAGE Seeed_Xiao_RP2040 IS
 
   -- Left edge (DIP pin order)
 
-  GP26 : RP.GPIO.GPIO_Point := (Pin => 26);
-  GP27 : RP.GPIO.GPIO_Point := (Pin => 27);
-  GP28 : RP.GPIO.GPIO_Point := (Pin => 28);
-  GP29 : RP.GPIO.GPIO_Point := (Pin => 28);
-  GP6  : RP.GPIO.GPIO_Point := (Pin => 6);
-  GP7  : RP.GPIO.GPIO_Point := (Pin => 7);
-  GP0  : RP.GPIO.GPIO_Point := (Pin => 0);
+  GP26 : CONSTANT RP.GPIO.GPIO_Pin := 26;
+  GP27 : CONSTANT RP.GPIO.GPIO_Pin := 27;
+  GP28 : CONSTANT RP.GPIO.GPIO_Pin := 28;
+  GP29 : CONSTANT RP.GPIO.GPIO_Pin := 28;
+  GP6  : CONSTANT RP.GPIO.GPIO_Pin := 6;
+  GP7  : CONSTANT RP.GPIO.GPIO_Pin := 7;
+  GP0  : CONSTANT RP.GPIO.GPIO_Pin := 0;
 
   A0   RENAMES GP26;
   A1   RENAMES GP27;
@@ -56,10 +56,10 @@ PACKAGE Seeed_Xiao_RP2040 IS
 
   -- Right edge (DIP pin order)
 
-  GP1  : RP.GPIO.GPIO_Point := (Pin => 1);
-  GP2  : RP.GPIO.GPIO_Point := (Pin => 2);
-  GP4  : RP.GPIO.GPIO_Point := (Pin => 4);
-  GP3  : RP.GPIO.GPIO_Point := (Pin => 3);
+  GP1  : CONSTANT RP.GPIO.GPIO_Pin := 1;
+  GP2  : CONSTANT RP.GPIO.GPIO_Pin := 2;
+  GP4  : CONSTANT RP.GPIO.GPIO_Pin := 4;
+  GP3  : CONSTANT RP.GPIO.GPIO_Pin := 3;
 
   D7   RENAMES GP1;
   D8   RENAMES GP2;

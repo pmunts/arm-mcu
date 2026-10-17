@@ -29,7 +29,7 @@ PACKAGE BODY GPIO.RP2040 IS
   -- Constructor returning GPIO.Pin
 
   FUNCTION Create
-   (desg       : RP.GPIO.GPIO_Point;
+   (desg       : RP.GPIO.GPIO_Pin;
     mode       : RP.GPIO.GPIO_Config_Mode;
     state      : Boolean                := False;
     pull       : RP.GPIO.GPIO_Pull_Mode := RP.GPIO.Floating;
@@ -48,7 +48,7 @@ PACKAGE BODY GPIO.RP2040 IS
 
   PROCEDURE Initialize
    (self       : OUT PinSubclass;
-    desg       : RP.GPIO.GPIO_Point;
+    desg       : RP.GPIO.GPIO_Pin;
     mode       : RP.GPIO.GPIO_Config_Mode;
     state      : Boolean                := False;
     pull       : RP.GPIO.GPIO_Pull_Mode := RP.GPIO.Floating;
@@ -72,7 +72,7 @@ PACKAGE BODY GPIO.RP2040 IS
 
     -- Configure the GPIO pin
 
-    self.point      := desg;
+    self.point      := To_Point(desg);
     self.point.Configure(mode, pull, RP.GPIO.SIO, hysteresis, fast_slew, drive);
     self.configured := True;
 

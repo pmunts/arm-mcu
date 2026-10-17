@@ -28,16 +28,16 @@ PACKAGE SparkFun_ProMicro_RP2040 IS
 
   -- Left edge (DIP pin order)
 
-  GP0  : RP.GPIO.GPIO_Point := (Pin => 0);
-  GP1  : RP.GPIO.GPIO_Point := (Pin => 1);
-  GP2  : RP.GPIO.GPIO_Point := (Pin => 2);
-  GP3  : RP.GPIO.GPIO_Point := (Pin => 3);
-  GP4  : RP.GPIO.GPIO_Point := (Pin => 4);
-  GP5  : RP.GPIO.GPIO_Point := (Pin => 5);
-  GP6  : RP.GPIO.GPIO_Point := (Pin => 6);
-  GP7  : RP.GPIO.GPIO_Point := (Pin => 7);
-  GP8  : RP.GPIO.GPIO_Point := (Pin => 8);
-  GP9  : RP.GPIO.GPIO_Point := (Pin => 9);
+  GP0  : RP.GPIO.GPIO_Pin := 0;
+  GP1  : RP.GPIO.GPIO_Pin := 1;
+  GP2  : RP.GPIO.GPIO_Pin := 2;
+  GP3  : RP.GPIO.GPIO_Pin := 3;
+  GP4  : RP.GPIO.GPIO_Pin := 4;
+  GP5  : RP.GPIO.GPIO_Pin := 5;
+  GP6  : RP.GPIO.GPIO_Pin := 6;
+  GP7  : RP.GPIO.GPIO_Pin := 7;
+  GP8  : RP.GPIO.GPIO_Pin := 8;
+  GP9  : RP.GPIO.GPIO_Pin := 9;
 
   TXD0 RENAMES GP0;
   RXD0 RENAMES GP1;
@@ -47,22 +47,22 @@ PACKAGE SparkFun_ProMicro_RP2040 IS
 
   -- QWIIC connector
 
-  GP16 : RP.GPIO.GPIO_Point := (Pin => 16);  -- aka SDA
-  GP17 : RP.GPIO.GPIO_Point := (Pin => 17);  -- aka SCL
+  GP16 : RP.GPIO.GPIO_Pin := 16;  -- aka SDA
+  GP17 : RP.GPIO.GPIO_Pin := 17;  -- aka SCL
 
   SDA0 RENAMES GP16;
   SCL0 RENAMES GP17;
 
   -- Right edge (DIP pin order)
 
-  GP21 : RP.GPIO.GPIO_Point := (Pin => 21);  -- aka SS
-  GP23 : RP.GPIO.GPIO_Point := (Pin => 23);  -- aka MOSI
-  GP20 : RP.GPIO.GPIO_Point := (Pin => 20);  -- aka MISO
-  GP22 : RP.GPIO.GPIO_Point := (Pin => 22);  -- aka SCK
-  GP26 : RP.GPIO.GPIO_Point := (Pin => 26);  -- aka ADC0
-  GP27 : RP.GPIO.GPIO_Point := (Pin => 27);  -- aka ADC1
-  GP28 : RP.GPIO.GPIO_Point := (Pin => 28);  -- aka ADC2
-  GP29 : RP.GPIO.GPIO_Point := (Pin => 29);  -- aka ADC3
+  GP21 : RP.GPIO.GPIO_Pin := 21;  -- aka SS
+  GP23 : RP.GPIO.GPIO_Pin := 23;  -- aka MOSI
+  GP20 : RP.GPIO.GPIO_Pin := 20;  -- aka MISO
+  GP22 : RP.GPIO.GPIO_Pin := 22;  -- aka SCK
+  GP26 : RP.GPIO.GPIO_Pin := 26;  -- aka ADC0
+  GP27 : RP.GPIO.GPIO_Pin := 27;  -- aka ADC1
+  GP28 : RP.GPIO.GPIO_Pin := 28;  -- aka ADC2
+  GP29 : RP.GPIO.GPIO_Pin := 29;  -- aka ADC3
 
   ADC0 RENAMES GP26;
   ADC1 RENAMES GP27;
