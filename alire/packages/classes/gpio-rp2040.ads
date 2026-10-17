@@ -83,8 +83,8 @@ PRIVATE
   TYPE Kinds IS (KindUnconfigured, KindInput, KindOutput);
 
   TYPE PinSubclass IS NEW GPIO.PinInterface WITH RECORD
-    point : RP.GPIO.GPIO_Point := (Pin => 0);
-    kind  : Kinds              := KindUnconfigured;
+    point : RP.GPIO.GPIO_Point;
+    kind  : Kinds := KindUnconfigured;
   END RECORD;
 
 END GPIO.RP2040;
