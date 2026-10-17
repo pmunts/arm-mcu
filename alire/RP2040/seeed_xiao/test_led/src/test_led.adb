@@ -32,7 +32,6 @@ PROCEDURE test_led IS
 
 BEGIN
   RP.Clock.Initialize(Seeed_Xiao_RP2040.Crystal);
-  RP.GPIO.Enable;
   RP2040_USB_Console.Initialize;
 
   New_Line;
