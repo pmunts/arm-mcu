@@ -22,7 +22,6 @@
 
 ELF2UF2NAME	:= elf2uf2
 ELF2UF2SRC	:= elf2uf2.src
-INSTALLDIR	:= /usr/local/bin
 BUILDNUM	?= 1
 OSNAME		?= unknown
 PKGNAME		:= $(ELF2UF2NAME)
@@ -37,17 +36,13 @@ default: package.deb
 
 source.done:
 	git clone https://github.com/rej696/elf2uf2.git elf2uf2.src
+	touch $@
 
 # Compile elf2uf2
 
 build.done: source.done
 	$(MAKE) -C $(ELF2UF2SRC)
 	touch $@
-
-# Install elf2uf2
-
-install: build.done
-	sudo install -csm 0555 $(ELF2UF2SRC)/elf2uf2 $(INSTALLDIR)
 
 # Create Debian package file
 
@@ -57,11 +52,13 @@ package.deb: build.done
 	sed -i 's/@@ARCH@@/$(PKGARCH)/g'		$(PKGDIR)/DEBIAN/control
 	sed -i 's/@@NAME@@/$(PKGNAME)/g'		$(PKGDIR)/DEBIAN/control
 	sed -i 's/@@VERSION@@/$(PKGVERSION)/g'		$(PKGDIR)/DEBIAN/control
-	mkdir -p					$(PKGDIR)$(INSTALLDIR)
-	install -csm 755 $(ELF2UF2SRC)/elf2uf2		$(PKGDIR)$(INSTALLDIR)
-	chmod -R ugo-w $(PKGDIR)$(INSTALLDIR)/*
-	fakeroot dpkg-deb --build $(PKGDIR)
-	chmod -R ugo+w $(PKGDIR)$(INSTALLDIR)/*
+	mkdir -p					$(PKGDIR)/usr/local/share/elf2uf2
+	install -cm 0644 $(ELF2UF2SRC)/LICENSE.TXT	$(PKGDIR)/usr/local/share/elf2uf2
+	mkdir -p					$(PKGDIR)/usr/local/bin
+	install -csm 0755 $(ELF2UF2SRC)/elf2uf2		$(PKGDIR)/usr/local/bin
+	chmod -R ugo-w					$(PKGDIR)/usr/local/bin/*
+	fakeroot dpkg-deb --build			$(PKGDIR)
+	chmod -R ugo+w					$(PKGDIR)/usr/local/bin/*
 
 # Clean out working files
 
