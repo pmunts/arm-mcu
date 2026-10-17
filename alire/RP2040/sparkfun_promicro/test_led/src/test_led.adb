@@ -28,11 +28,11 @@ WITH RP2040_USB_Console; USE RP2040_USB_Console;
 
 PROCEDURE test_led IS
 
-  LED : CONSTANT GPIO.Pin := GPIO.RP2040.Create(2, RP.GPIO.Output);
+  LED : CONSTANT GPIO.Pin := GPIO.RP2040.Create(SparkFun_ProMicro_RP2040.GP2,
+    RP.GPIO.Output);
 
 BEGIN
   RP.Clock.Initialize(SparkFun_ProMicro_RP2040.Crystal);
-  RP.GPIO.Enable;
   RP2040_USB_Console.Initialize;
 
   New_Line;
