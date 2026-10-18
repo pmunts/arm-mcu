@@ -18,6 +18,15 @@
 -- ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 -- POSSIBILITY OF SUCH DAMAGE.
 
+-- The following specifications are for an RP2040 clocked at 200 MHz.
+--
+-- This implementation maintains maximum hardware PWM resolution (16 bits,
+-- 65536 discrete PWM pulse widths) for frequencies up to 3051 Hz.  PWM pulse
+-- frequencies above 3051 Hz are still achievable by reducing the resolution.
+--
+-- At the PWM pulse frequency of 48,828 Hz, resolution has dropped to 12 bits,
+-- 4096 discrete PWM pulse widths.
+
 WITH RP.GPIO;
 WITH RP.PWM;
 
