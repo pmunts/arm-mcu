@@ -35,6 +35,13 @@ PACKAGE GPIO.RP2040 IS
     hysteresis : Boolean                := False;
     fast_slew  : Boolean                := False) RETURN Pin;
 
+  -- Constructor returning GPIO.Pin
+
+  FUNCTION Create
+   (desg       : RP.GPIO.GPIO_Pin;
+    direction  : GPIO.Direction;
+    state      : Boolean := False) RETURN Pin;
+
   -- GPIO pin object instance initializer
 
   PROCEDURE Initialize
@@ -46,6 +53,14 @@ PACKAGE GPIO.RP2040 IS
     drive      : RP.GPIO.GPIO_Drive     := RP.GPIO.Drive_4ma;
     hysteresis : Boolean                := False;
     fast_slew  : Boolean                := False);
+
+  -- GPIO pin object instance initializer
+
+  PROCEDURE Initialize
+   (self       : OUT PinSubclass;
+    desg       : RP.GPIO.GPIO_Pin;
+    direction  : GPIO.Direction;
+    state      : Boolean := False);
 
   -- Read state from GPIO input pin
 

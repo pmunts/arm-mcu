@@ -44,6 +44,17 @@ PACKAGE BODY GPIO.RP2040 IS
     RETURN NEW PinSubclass'(self);
   END Create;
 
+  -- Constructor returning GPIO.Pin
+
+  FUNCTION Create
+   (desg       : RP.GPIO.GPIO_Pin;
+    direction  : GPIO.Direction;
+    state      : Boolean := False) RETURN Pin IS
+
+  BEGIN
+    RETURN Create(desg, (IF direction = GPIO.Input THEN RP.GPIO.Input ELSE RP.GPIO.Output), state);
+  END Create;
+
   -- GPIO pin object instance initializer
 
   PROCEDURE Initialize
@@ -79,6 +90,18 @@ PACKAGE BODY GPIO.RP2040 IS
     IF self.dir = GPIO.Output THEN
       self.Put(state);
     END IF;
+  END Initialize;
+
+  -- GPIO pin object instance initializer
+
+  PROCEDURE Initialize
+   (self       : OUT PinSubclass;
+    desg       : RP.GPIO.GPIO_Pin;
+    direction  : GPIO.Direction;
+    state      : Boolean := False) IS
+
+  BEGIN
+    self.Initialize(desg, (IF direction = GPIO.Input THEN RP.GPIO.Input ELSE RP.GPIO.Output), state);
   END Initialize;
 
   -- Read state from GPIO input pin
