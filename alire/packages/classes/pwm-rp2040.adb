@@ -21,7 +21,6 @@
 WITH GPIO.RP2040;
 WITH HAL;
 WITH RP.Clock;
-WITH RP.GPIO;
 
 USE TYPE HAL.UInt16;
 
@@ -53,8 +52,8 @@ PACKAGE BODY PWM.RP2040 IS
 
     gpoint : RP.GPIO.GPIO_Point := GPIO.RP2040.To_Point(desg);
 
-    myDIV : RP.PWM.Divider;
-    myTOP : RP.PWM.Period  := 65535;
+    myTOP : Natural;         -- To PWM subsystem register TOP
+    myDIV : RP.PWM.Divider;  -- To PWM subsystem register DIV
 
   BEGIN
 
@@ -66,17 +65,23 @@ PACKAGE BODY PWM.RP2040 IS
       HardwareIsInitialized := True;
     END IF;
 
-    myDIV := RP.PWM.Divider(Float(RP.Clock.Frequency(RP.Clock.SYS))/Float(frequency)/65536.0);
+    myTOP := Natural(Float(RP.Clock.Frequency(RP.Clock.SYS))/Float(frequency)) - 1;
+
+    IF myTOP > 65535 THEN
+      myTOP := 65535;
+    END IF;
+
+    myDIV := RP.PWM.Divider(Float(RP.Clock.Frequency(RP.Clock.SYS))/Float(frequency)/Float(myTOP));
 
     gpoint.Configure(RP.GPIO.Output, RP.GPIO.Pull_Up, RP.GPIO.PWM);
 
     self.point  := To_Point(desg);
     RP.PWM.Set_Mode(self.point.Slice, RP.PWM.Free_Running);
     RP.PWM.Set_Phase_Correction(self.point.Slice, False);
-    RP.PWM.Set_Divider(self.point.Slice, myDIV);  -- DIV register
-    RP.PWM.Set_Interval(self.point.Slice, myTOP); -- TOP register
+    RP.PWM.Set_Divider(self.point.Slice, myDIV);
+    RP.PWM.Set_Interval(self.point.Slice, RP.PWM.Period(myTOP));
     RP.PWM.Enable(self.point.Slice);
-    self.period     := myTOP;
+    self.period     := RP.PWM.Period(myTOP);
     self.configured := True;
 
     self.Put(dutycycle);
