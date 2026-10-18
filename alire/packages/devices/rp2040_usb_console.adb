@@ -20,6 +20,7 @@
 
 WITH HAL;
 WITH RP.Device;
+WITH RP.GPIO;
 WITH USB.Device.Serial;
 
 USE TYPE USB.Device.Init_Result;
@@ -42,6 +43,8 @@ PACKAGE BODY RP2040_USB_Console IS
     IF NOT USB_Stack.Register_Class (USB_Serial'Unchecked_Access) THEN
       RAISE Program_Error;
     END IF;
+
+    RP.GPIO.Enable;
 
     Status := USB_Stack.Initialize
      (Controller      => RP.Device.UDC'Access,
