@@ -25,7 +25,6 @@ WITH Motor.PWM;
 WITH RP.Clock;
 WITH PWM.RP2040;
 WITH Seeed_Xiao_RP2040;
-WITH RP2040_USB_Console; USE RP2040_USB_Console;
 
 PROCEDURE test_motor IS
 
@@ -37,11 +36,6 @@ PROCEDURE test_motor IS
 
 BEGIN
   RP.Clock.Initialize(Seeed_Xiao_RP2040.Crystal, SYS_PLL_Config => RP.Clock.PLL_200_MHz);
-  RP2040_USB_Console.Initialize;
-
-  New_Line;
-  Put_Line("Seeed Studio Xiao RP2040 Motor Output Test");
-  New_Line;
 
   DIRA.Initialize(Seeed_Xiao_RP2040.GP1, GPIO.Output);
   PWMA.Initialize(Seeed_Xiao_RP2040.GP2, 10000);

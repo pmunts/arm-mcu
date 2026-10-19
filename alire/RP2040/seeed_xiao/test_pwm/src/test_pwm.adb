@@ -23,7 +23,6 @@
 WITH RP.Clock;
 WITH PWM.RP2040;
 WITH Seeed_Xiao_RP2040;
-WITH RP2040_USB_Console; USE RP2040_USB_Console;
 
 PROCEDURE test_pwm IS
 
@@ -31,23 +30,18 @@ PROCEDURE test_pwm IS
 
 BEGIN
   RP.Clock.Initialize(Seeed_Xiao_RP2040.Crystal, SYS_PLL_Config => RP.Clock.PLL_200_MHz);
-  RP2040_USB_Console.Initialize;
-
-  New_Line;
-  Put_Line("Seeed Studio Xiao RP2040 PWM Output Test");
-  New_Line;
 
   outp := PWM.RP2040.Create(Seeed_Xiao_RP2040.GP2, 1000);
 
   LOOP
     FOR d IN 0 .. 100 LOOP
       outp.Put(PWM.DutyCycle(d));
-      Delay_Milliseconds(50);
+      DELAY 0.05;
     END LOOP;
 
     FOR d IN REVERSE 0 .. 100 LOOP
       outp.Put(PWM.DutyCycle(d));
-      Delay_Milliseconds(50);
+      DELAY 0.05;
     END LOOP;
   END LOOP;
 END test_pwm;
