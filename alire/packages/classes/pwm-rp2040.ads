@@ -44,7 +44,7 @@ PACKAGE PWM.RP2040 IS
   -- PWM output object instance initializer
 
   PROCEDURE Initialize
-   (Self      : OUT OutputSubclass;
+   (self      : OUT OutputSubclass;
     desg      : RP.GPIO.GPIO_Pin;
     frequency : Positive;
     dutycycle : PWM.DutyCycle := PWM.MinimumDutyCycle);
@@ -52,7 +52,7 @@ PACKAGE PWM.RP2040 IS
   -- Write PWM output duty cycle
 
   PROCEDURE Put
-   (Self      : IN OUT OutputSubclass;
+   (self      : IN OUT OutputSubclass;
     dutycycle : PWM.DutyCycle);
 
   -- Convert GPIO_Pin to PWM_Point

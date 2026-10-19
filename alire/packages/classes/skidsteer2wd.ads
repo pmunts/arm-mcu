@@ -35,7 +35,7 @@ PACKAGE SkidSteer2WD IS
   -- 2WD skidsteer vehicle object initializer
 
   PROCEDURE Initialize
-   (Self                : OUT SkidSteerClass;
+   (self                : OUT SkidSteerClass;
     LeftMotorDriver     : NOT NULL Motor.Output;
     RightMotorDriver    : NOT NULL Motor.Output;
     SteeringSensitivity : Vehicle.Steering := 0.2);
@@ -43,18 +43,18 @@ PACKAGE SkidSteer2WD IS
   -- Start or change forward or reverse speed
 
   PROCEDURE Go
-   (Self : IN OUT SkidSteerClass;
+   (self : IN OUT SkidSteerClass;
     v    : Motor.Velocity;
     t    : DURATION := 0.0);
 
   -- Stop forward or reverse motion
 
-  PROCEDURE Stop(Self : IN OUT SkidSteerClass);
+  PROCEDURE Stop(self : IN OUT SkidSteerClass);
 
   -- Execute a turn
 
   PROCEDURE Turn
-   (Self : IN OUT SkidSteerClass;
+   (self : IN OUT SkidSteerClass;
     s    : Vehicle.Steering;
     t    : DURATION);
 

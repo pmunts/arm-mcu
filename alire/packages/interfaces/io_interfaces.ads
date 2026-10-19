@@ -32,7 +32,7 @@ PACKAGE IO_Interfaces IS
 
   -- Define a method for reading from an input
 
-  FUNCTION Get(Self : IN OUT InputInterface) RETURN Property IS ABSTRACT;
+  FUNCTION Get(self : IN OUT InputInterface) RETURN Property IS ABSTRACT;
 
   ----------------------------------------------------------------------------
 
@@ -42,11 +42,11 @@ PACKAGE IO_Interfaces IS
 
   -- Define a method for reading from an input
 
-  FUNCTION Get(Self : IN OUT InputOutputInterface) RETURN Property IS ABSTRACT;
+  FUNCTION Get(self : IN OUT InputOutputInterface) RETURN Property IS ABSTRACT;
 
   -- Define a method for writing to an output
 
-  PROCEDURE Put(Self : IN OUT InputOutputInterface; value : Property) IS ABSTRACT;
+  PROCEDURE Put(self : IN OUT InputOutputInterface; value : Property) IS ABSTRACT;
 
   ----------------------------------------------------------------------------
 
@@ -56,6 +56,6 @@ PACKAGE IO_Interfaces IS
 
   -- Define a method for writing to an output
 
-  PROCEDURE Put(Self : IN OUT OutputInterface; value : Property) IS ABSTRACT;
+  PROCEDURE Put(self : IN OUT OutputInterface; value : Property) IS ABSTRACT;
 
 END IO_Interfaces;

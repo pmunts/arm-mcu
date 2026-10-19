@@ -44,18 +44,18 @@ PACKAGE Vehicle IS
   -- Start or change forward or reverse speed
 
   PROCEDURE Go
-   (Self : IN OUT ControllerInterface;
+   (self : IN OUT ControllerInterface;
     v    : Motor.Velocity;
     t    : DURATION := DURATION'Last) IS ABSTRACT;
 
   -- Stop forward or reverse motion
 
-  PROCEDURE Stop(Self : IN OUT ControllerInterface) IS ABSTRACT;
+  PROCEDURE Stop(self : IN OUT ControllerInterface) IS ABSTRACT;
 
   -- Execute a turn
 
   PROCEDURE Turn
-   (Self : IN OUT ControllerInterface;
+   (self : IN OUT ControllerInterface;
     s    : Steering;
     t    : DURATION) IS ABSTRACT;
 

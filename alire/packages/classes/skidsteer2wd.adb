@@ -41,44 +41,44 @@ PACKAGE BODY SkidSteer2WD IS
   -- 2WD skidsteer vehicle object initializer
 
   PROCEDURE Initialize
-   (Self                : OUT SkidSteerClass;
+   (self                : OUT SkidSteerClass;
     LeftMotorDriver     : NOT NULL Motor.Output;
     RightMotorDriver    : NOT NULL Motor.Output;
     SteeringSensitivity : Vehicle.Steering := 0.2) IS
 
   BEGIN
-    Self.left  := LeftMotorDriver;
-    Self.right := RightMotorDriver;
-    Self.sens  := SteeringSensitivity;
-    Self.velo  := Vehicle.SPEED_STOP;
+    self.left  := LeftMotorDriver;
+    self.right := RightMotorDriver;
+    self.sens  := SteeringSensitivity;
+    self.velo  := Vehicle.SPEED_STOP;
   END Initialize;
 
   -- Start or change forward or reverse speed
 
   PROCEDURE Go
-   (Self : IN OUT SkidSteerClass;
+   (self : IN OUT SkidSteerClass;
     v    : Motor.Velocity;
     t    : DURATION := 0.0) IS
 
   BEGIN
-    Self.left.Put(v);
-    Self.right.Put(v);
-    Self.velo := v;
+    self.left.Put(v);
+    self.right.Put(v);
+    self.velo := v;
     DELAY t;
   END Go;
 
   -- Stop forward or reverse motion
 
-  PROCEDURE Stop(Self : IN OUT SkidSteerClass) IS
+  PROCEDURE Stop(self : IN OUT SkidSteerClass) IS
 
   BEGIN
-    Self.Go(Vehicle.SPEED_STOP);
+    self.Go(Vehicle.SPEED_STOP);
   END Stop;
 
   -- Execute a turn
 
   PROCEDURE Turn
-   (Self : IN OUT SkidSteerClass;
+   (self : IN OUT SkidSteerClass;
     s    : Vehicle.Steering;
     t    : DURATION) IS
 
@@ -86,27 +86,27 @@ PACKAGE BODY SkidSteer2WD IS
     IF s = Vehicle.STEER_NONE THEN
       -- No turn, so just keep moving
       RETURN;
-    ELSIF Self.velo > Vehicle.SPEED_STOP THEN
+    ELSIF self.velo > Vehicle.SPEED_STOP THEN
       -- Moving forward
-      Self.left.Put (Self.velo*Motor.Velocity(1.0 - Self.sens) +
-        Motor.Velocity(s*Self.sens));
-      Self.right.Put(Self.velo*Motor.Velocity(1.0 - Self.sens) -
-        Motor.Velocity(s*Self.sens));
-    ELSIF Self.velo < Vehicle.SPEED_STOP THEN
+      self.left.Put (self.velo*Motor.Velocity(1.0 - self.sens) +
+        Motor.Velocity(s*self.sens));
+      self.right.Put(self.velo*Motor.Velocity(1.0 - self.sens) -
+        Motor.Velocity(s*self.sens));
+    ELSIF self.velo < Vehicle.SPEED_STOP THEN
       -- Moving reverse
-      Self.left.Put (Self.velo*Motor.Velocity(1.0 - Self.sens) -
-        Motor.Velocity(s*Self.sens));
-      Self.right.Put(Self.velo*Motor.Velocity(1.0 - Self.sens) +
-        Motor.Velocity(s*Self.sens));
+      self.left.Put (self.velo*Motor.Velocity(1.0 - self.sens) -
+        Motor.Velocity(s*self.sens));
+      self.right.Put(self.velo*Motor.Velocity(1.0 - self.sens) +
+        Motor.Velocity(s*self.sens));
     ELSE
       -- Stopped, so just spin in place
-      Self.left.Put(Motor.Velocity(s));
-      Self.right.Put(Motor.Velocity(-s));
+      self.left.Put(Motor.Velocity(s));
+      self.right.Put(Motor.Velocity(-s));
     END IF;
 
     DELAY t;
 
     -- Resume forward or reverse motion
-    Self.Go(Self.velo);
+    self.Go(self.velo);
   END Turn;
 END SkidSteer2WD;

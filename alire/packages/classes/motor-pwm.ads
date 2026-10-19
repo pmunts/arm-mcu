@@ -42,7 +42,7 @@ PACKAGE Motor.PWM IS
     velo   : Velocity := 0.0);
 
   PROCEDURE Put
-   (Self : IN OUT OutputSubclass1;
+   (self : IN OUT OutputSubclass1;
     velo : Velocity);
 
   -- Type 2 motor outputs: Consisting of CW (clockwise) and CCW
@@ -62,7 +62,7 @@ PACKAGE Motor.PWM IS
     velo   : Velocity := 0.0);
 
   PROCEDURE Put
-   (Self   : IN OUT OutputSubclass2;
+   (self   : IN OUT OutputSubclass2;
     velo   : Velocity);
 
   -- Type 3 motor outputs: Consisting of one PWM output, driving a locked
@@ -80,7 +80,7 @@ PACKAGE Motor.PWM IS
     velo   : Velocity := 0.0);
 
   PROCEDURE Put
-   (Self : IN OUT OutputSubclass3;
+   (self : IN OUT OutputSubclass3;
     velo : Velocity);
 
 PRIVATE
