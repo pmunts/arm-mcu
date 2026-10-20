@@ -47,30 +47,27 @@ namespace MuntsTech::PWM::Hardware
 
     // PWM output constructor
 
-    Output_Class(unsigned pin, unsigned frequency,
+    Output_Class(unsigned pin, unsigned fpwm,
       float dutycycle = MuntsTech::Interfaces::PWM::DUTYCYCLE_MIN)
     {
-      this->Initialize(pin, frequency, dutycycle);
+      this->Initialize(pin, fpwm, dutycycle);
     }
 
     // PWM output initializer method
 
-    void Initialize(unsigned pin, unsigned frequency,
+    void Initialize(unsigned pin, unsigned fpwm,
       float dutycycle = MuntsTech::Interfaces::PWM::DUTYCYCLE_MIN)
     {
       assert(pin <= 29);
-      assert(frequency >= 50);
+      assert(fpwm >= 50);
       assert(dutycycle >= MuntsTech::Interfaces::PWM::DUTYCYCLE_MIN);
       assert(dutycycle <= MuntsTech::Interfaces::PWM::DUTYCYCLE_MAX);
-
-      unsigned slice   = pwm_gpio_to_slice_num(pin);
-      unsigned channel = pwm_gpio_to_channel(pin);
-      unsigned top;
-      unsigned div_int;
-      unsigned div_frac;
-
-      GetDividers(frequency_count_khz(CLOCKS_FC0_SRC_VALUE_CLK_SYS)*1000,
-        frequency, &top, &div_int, &div_frac);
+      unsigned slice    = pwm_gpio_to_slice_num(pin);
+      unsigned channel  = pwm_gpio_to_channel(pin);
+      unsigned fsys     = frequency_count_khz(CLOCKS_FC0_SRC_VALUE_CLK_SYS)*1000;
+      unsigned top      = min(fsys/fpwm - 1, 65535);
+      unsigned div_int  = ((fsys/(top + 1))/fpwm);
+      unsigned div_frac = ((fsys/(top + 1))%fpwm)*16/fpwm;
 
       pwm_set_clkdiv_mode(slice, PWM_DIV_FREE_RUNNING);
       pwm_set_clkdiv_int_frac4(slice, div_int, div_frac);
@@ -111,38 +108,6 @@ namespace MuntsTech::PWM::Hardware
 
     unsigned pin;
     unsigned period;
-
-    static float fpwm_actual(float fsys, float top, float div_int,
-      float div_frac)
-    {
-      return fsys/((top + 1.0F)*(div_int + div_frac/16.0F));
-    }
-
-    static float error(float desired, float measured)
-    {
-      return fabs(desired - measured)/desired;
-    }
-
-    static bool GetDividers(unsigned fsys, unsigned fpwm, unsigned *top,
-      unsigned *div_int, unsigned *div_frac)
-    {
-      for (unsigned t = 65536; t > 0; t--)
-        for (unsigned i = 1; i <= 256; i++)
-          for (unsigned frac = 0; frac < 16; frac++)
-          {
-            if ((i == 256) && (frac > 0)) continue;
-
-            if (error(fpwm, fpwm_actual(fsys, t, i, frac)) < 0.01F)
-            {
-              *top = t - 1;
-              *div_int = i;
-              *div_frac= frac;
-              return true;
-            }
-          }
-
-      return false;
-    }
   };
 }
 
