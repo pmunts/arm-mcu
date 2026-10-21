@@ -128,6 +128,117 @@ namespace MuntsTech::SkidSteer
     float GoVelocity  = MuntsTech::Interfaces::Motor::SPEED_STOP;
     float Sensitivity = 0.2;
   };
+
+  struct Vehicle4WD
+  {
+    // Parameterless stub constructor--Requires a subsequent
+    // call to Initialize().
+
+    Vehicle4WD()
+    {
+      this->LeftFrontMotor  = nullptr;
+      this->LeftRearMotor  = nullptr;
+      this->RightFrontMotor = nullptr;
+      this->RightRearMotor = nullptr;
+    }
+
+    // 4WD Skid Steer vehicle constructor
+
+    Vehicle4WD(Output leftfrontmotor, Output leftrearmotor, Output rightfrontmotor,
+      Output rightrearmotor, float sensitivity = 0.2)
+    {
+      this->Initialize(leftfrontmotor, leftrearmotor, rightfrontmotor,
+        rightrearmotor, sensitivity);
+    }
+
+    // 4WD Skid Steer vehicle initializer
+
+    void Initialize(Output leftfrontmotor, Output leftrearmotor, Output rightfrontmotor,
+      Output rightrearmotor, float sensitivity = 0.2)
+    {
+      assert(leftfrontmotor  != nullptr);
+      assert(leftrearmotor   != nullptr);
+      assert(rightfrontmotor != nullptr);
+      assert(rightrearmotor  != nullptr);
+      assert(sensitivity > 0.0);
+      this->LeftFrontMotor  = leftfrontmotor;
+      this->LeftRearMotor   = leftrearmotor;
+      this->RightFrontMotor = rightfrontmotor;
+      this->RightRearMotor  = rightrearmotor;
+      this->Sensitivity = sensitivity;
+      this->GoVelocity  = SPEED_STOP;
+    }
+
+    // Initiate forward or reverse motion
+
+    void Go(float newvelocity, unsigned milliseconds = 0)
+    {
+      assert((newvelocity >= SPEED_MIN) && (newvelocity <= SPEED_MAX));
+      this->LeftFrontMotor->write(newvelocity);
+      this->LeftRearMotor->write(newvelocity);
+      this->RightFrontMotor->write(newvelocity);
+      this->RightRearMotor->write(newvelocity);
+      this->GoVelocity = newvelocity;
+      delay(milliseconds);
+    }
+
+    // Stop motion
+
+    void Stop(void)
+    {
+      Go(SPEED_STOP);
+    }
+
+    // Initiate a turn
+
+    void Turn(float steering, unsigned milliseconds)
+    {
+      assert((steering >= STEER_MIN) && (steering <= STEER_MAX));
+
+      if (steering == STEER_NONE)
+        // No turn, so just keep moving
+        return;
+      else if (this->GoVelocity > SPEED_STOP)
+      {
+        // Moving forward
+        this->LeftFrontMotor->write(this->GoVelocity *(1.0 - this->Sensitivity) + steering*this->Sensitivity);
+        this->LeftRearMotor->write(this->GoVelocity  *(1.0 - this->Sensitivity) + steering*this->Sensitivity);
+        this->RightFrontMotor->write(this->GoVelocity*(1.0 - this->Sensitivity) - steering*this->Sensitivity);
+        this->RightRearMotor->write(this->GoVelocity *(1.0 - this->Sensitivity) - steering*this->Sensitivity);
+      }
+      else if (this->GoVelocity < SPEED_STOP)
+      {
+        // Moving reverse
+        this->LeftFrontMotor->write(this->GoVelocity *(1.0 - this->Sensitivity) - steering*this->Sensitivity);
+        this->LeftRearMotor->write(this->GoVelocity  *(1.0 - this->Sensitivity) - steering*this->Sensitivity);
+        this->RightFrontMotor->write(this->GoVelocity*(1.0 - this->Sensitivity) + steering*this->Sensitivity);
+        this->RightRearMotor->write(this->GoVelocity *(1.0 - this->Sensitivity) + steering*this->Sensitivity);
+      }
+      else
+      {
+        // Stopped, so just spin in place
+        this->LeftFrontMotor->write(steering);
+        this->LeftRearMotor->write(steering);
+        this->RightFrontMotor->write(-steering);
+        this->RightRearMotor->write(-steering);
+      }
+
+      delay(milliseconds);
+
+      // Resume forward or reverse motion
+      Go(this->GoVelocity);
+    }
+
+  private:
+
+    MuntsTech::Interfaces::Motor::Output LeftFrontMotor;
+    MuntsTech::Interfaces::Motor::Output LeftRearMotor;
+    MuntsTech::Interfaces::Motor::Output RightFrontMotor;
+    MuntsTech::Interfaces::Motor::Output RightRearMotor;
+
+    float GoVelocity  = MuntsTech::Interfaces::Motor::SPEED_STOP;
+    float Sensitivity = 0.2;
+  };
 }
 
 #endif
