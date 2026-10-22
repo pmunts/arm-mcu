@@ -24,31 +24,31 @@ WITH Vehicle;
 USE TYPE Motor.Velocity;
 USE TYPE Vehicle.Steering;
 
-PACKAGE BODY SkidSteer2WD IS
+PACKAGE BODY SkidSteer IS
 
-  -- 2WD skidsteer vehicle object constructor
+  -- Skidsteer vehicle object constructor
 
   FUNCTION Create
-   (LeftMotorDriver     : NOT NULL Motor.Output;
-    RightMotorDriver    : NOT NULL Motor.Output;
+   (LeftMotorDrivers    : Motors;
+    RightMotorDrivers   : Motors;
     SteeringSensitivity : Vehicle.Steering := 0.2) RETURN Vehicle.Controller IS
 
   BEGIN
-    RETURN NEW SkidSteerClass'(LeftMotorDriver, RightMotorDriver,
+    RETURN NEW SkidSteerClass'(LeftMotorDrivers, RightMotorDrivers,
       SteeringSensitivity, 0.0);
   END Create;
 
-  -- 2WD skidsteer vehicle object initializer
+  -- Skidsteer vehicle object initializer
 
   PROCEDURE Initialize
    (self                : OUT SkidSteerClass;
-    LeftMotorDriver     : NOT NULL Motor.Output;
-    RightMotorDriver    : NOT NULL Motor.Output;
+    LeftMotorDrivers    : Motors;
+    RightMotorDrivers   : Motors;
     SteeringSensitivity : Vehicle.Steering := 0.2) IS
 
   BEGIN
-    self.left  := LeftMotorDriver;
-    self.right := RightMotorDriver;
+    self.LeftMotors  := LeftMotorDrivers;
+    self.RightMotors := RightMotorDrivers;
     self.sens  := SteeringSensitivity;
     self.velo  := Vehicle.SPEED_STOP;
   END Initialize;
@@ -61,8 +61,14 @@ PACKAGE BODY SkidSteer2WD IS
     t    : DURATION := 0.0) IS
 
   BEGIN
-    self.left.Put(v);
-    self.right.Put(v);
+    FOR m OF self.LeftMotors LOOP
+      m.Put(v);
+    END LOOP;
+
+    FOR m OF self.RightMotors LOOP
+      m.Put(v);
+    END LOOP;
+
     self.velo := v;
     DELAY t;
   END Go;
@@ -88,20 +94,35 @@ PACKAGE BODY SkidSteer2WD IS
       RETURN;
     ELSIF self.velo > Vehicle.SPEED_STOP THEN
       -- Moving forward
-      self.left.Put (self.velo*Motor.Velocity(1.0 - self.sens) +
-        Motor.Velocity(s*self.sens));
-      self.right.Put(self.velo*Motor.Velocity(1.0 - self.sens) -
-        Motor.Velocity(s*self.sens));
+      FOR m OF self.LeftMotors LOOP
+        m.Put(self.velo*Motor.Velocity(1.0 - self.sens) +
+          Motor.Velocity(s*self.sens));
+      END LOOP;
+
+      FOR m OF self.RightMotors LOOP
+        m.Put(self.velo*Motor.Velocity(1.0 - self.sens) -
+          Motor.Velocity(s*self.sens));
+      END LOOP;
     ELSIF self.velo < Vehicle.SPEED_STOP THEN
       -- Moving reverse
-      self.left.Put (self.velo*Motor.Velocity(1.0 - self.sens) -
-        Motor.Velocity(s*self.sens));
-      self.right.Put(self.velo*Motor.Velocity(1.0 - self.sens) +
-        Motor.Velocity(s*self.sens));
+      FOR m OF self.LeftMotors LOOP
+        m.Put (self.velo*Motor.Velocity(1.0 - self.sens) -
+          Motor.Velocity(s*self.sens));
+      END LOOP;
+
+      FOR m OF self.RightMotors LOOP
+        m.Put(self.velo*Motor.Velocity(1.0 - self.sens) +
+          Motor.Velocity(s*self.sens));
+      END LOOP;
     ELSE
       -- Stopped, so just spin in place
-      self.left.Put(Motor.Velocity(s));
-      self.right.Put(Motor.Velocity(-s));
+      FOR m OF self.LeftMotors LOOP
+        m.Put(Motor.Velocity(s));
+      END LOOP;
+
+      FOR m OF self.RightMotors LOOP
+        m.Put(Motor.Velocity(-s));
+      END LOOP;
     END IF;
 
     DELAY t;
@@ -109,4 +130,4 @@ PACKAGE BODY SkidSteer2WD IS
     -- Resume forward or reverse motion
     self.Go(self.velo);
   END Turn;
-END SkidSteer2WD;
+END SkidSteer;
