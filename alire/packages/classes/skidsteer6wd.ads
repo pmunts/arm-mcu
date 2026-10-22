@@ -20,4 +20,4 @@
 
 WITH SkidSteer;
 
-PACKAGE SkidSteer4WD IS NEW SkidSteer(MotorsPerSide => 3);
+PACKAGE SkidSteer6WD IS NEW SkidSteer(MotorsPerSide => 3);
