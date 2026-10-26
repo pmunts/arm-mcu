@@ -8,6 +8,8 @@ licenses = "BSD-1-Clause"
 website = "https://github.com/pmunts/arm-mcu"
 executables = ["munts_rp2040_firmware_embedded"]
 
+tags = ["microcontroller", "rp2040"]
+
 long-description = """
 # Introduction
 
