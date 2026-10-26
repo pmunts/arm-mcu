@@ -1,0 +1,19 @@
+with "runtime_build.gpr";
+with "ravenscar_build.gpr";
+with "config/munts_rp2040_lib_embedded_config.gpr";
+
+project munts_rp2040_lib_embedded is
+   for Target use runtime_build'Target;
+   for Runtime ("Ada") use runtime_build'Runtime ("Ada");
+   for Source_Dirs use ("config", "src/**");
+   for Object_Dir use "obj/" & munts_rp2040_lib_embedded_Config.Build_Profile;
+   for Create_Missing_Dirs use "True";
+   for Library_Name use "munts_rp2040_lib_embedded";
+   for Library_Version use "@@VERSION@@";
+   for Library_Kind use "static";
+   for Library_Dir use "lib";
+
+   package Compiler is
+      for Default_Switches ("Ada") use munts_rp2040_lib_embedded_Config.Ada_Compiler_Switches & ("-gnat2022", "-gnaty-g");
+   end Compiler;
+end munts_rp2040_lib_embedded;

@@ -1,0 +1,17 @@
+name = "munts_rp2040_lib_embedded"
+version = "@@VERSION@@"
+description = "Phil's RP2040 Microcontroller Embedded Profile Library"
+website = "https://github.com/pmunts/arm-mcu"
+authors = ["Philip Munts"]
+maintainers = ["Philip Munts <phil@munts.net>"]
+maintainers-logins = ["pmunts"]
+licenses = "BSD-1-Clause"
+
+tags = ["gpio", "microcontroller", "rp2040"]
+
+project-files = ["munts_rp2040_lib_embedded.gpr"]
+
+[[depends-on]]
+gnat_arm_elf = "^16"
+embedded_rp2040 = "^16"
+rp2040_hal = "^2"

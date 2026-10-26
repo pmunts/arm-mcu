@@ -1,0 +1,90 @@
+<h1>Introduction</h1>
+<p>This crate provides a comprehensive template for developing Ada firmware for
+the <a href="https://www.raspberrypi.com/products/rp2040">RP2040 ARM 32-bit
+microcontroller</a>, using the <a href=
+"https://docs.adacore.com/gnat_ugx-docs/html/gnat_ugx/gnat_ugx/gnat_runtimes.html#embedded-run-time">
+GNAT Predefined Embedded Runtime</a> implemented by the <a href=
+"https://alire.ada.dev/crates/embedded_rp2040.html"><code>embedded_rp2040</code></a>
+and <a href=
+"https://alire.ada.dev/crates/rp2040_hal.html"><code>rp2040_hal</code></a>
+crates and their dependencies.</p>
+<p>Ada firmware for a microcontroller is realized as a main program procedure
+that is called by otherwise invisible runtime startup code, exactly as C
+firmware is realized by a function <code>main()</code> that is called by
+otherwise invisible runtime startup code.</p>
+<h1>Post-Build Script</h1>
+<p>An Alire project directory created by <code>alr get
+munts_rp2040_firmware_embedded</code> will include a post-build script named
+<code>postbuild.sh</code>. This script will install the newly built firmware to
+a mounted RP2040 ROM boot USB file system. The RP2040 ROM boot code implements
+USB mass storage emulation, in a fashion first popularized by the late and
+lamented <a href="https://os.mbed.com/mbed-os">Mbed OS</a>. To flash RP2040
+firmware, you just assert <code>BOOTSEL</code> and <code>RESET</code> hardware
+signals to force the RP2040 into ROM boot mode, mount the USB mass storage
+device (usually done automatically by the development machine operating
+system), and then copy a <a href="https://github.com/microsoft/uf2">UF2</a>
+firmware image file it. <code>postbuild.sh</code> uses the <a href=
+"https://github.com/rej696/elf2uf2"><code>elf2uf2</code></a> utility program to
+copy the firmware image to the RP2040.</p>
+You can explicitly specify the RP2040 mount point <i>aka</i> destination
+directory with the <code>RP2040_DESTDIR</code> environment variable before
+running <code>alr build</code>. Otherwise <code>postbuild.sh</code> will search
+for the RP2040 mount point at expected locations for ChromeOS, Linux, macOS,
+and Microsoft Windows.
+<p>If an RP2040 mount point cannot be found, <code>postbuild.sh</code> does
+nothing.</p>
+<h1>Makefile</h1>
+<p>An Alire project directory created by <code>alr get
+munts_rp2040_firmware_embedded</code> will include an optional but useful GNU
+<code>Makefile</code> (also available at <a href=
+"https://github.com/pmunts/alire-goodies">https://github.com/pmunts/alire-goodies</a>)
+containing the following <i>goals</i> or <i>targets</i>:</p>
+<ul>
+<li><code>build</code> -- Accomplished by the command <code>gmake build</code>.
+Runs <code>alr build</code> to build the firmware image. Result (upon success)
+is a 32-bit ARM ELF executable file in the <code>bin/</code> subdirectory.</li>
+<li><code>clean</code> -- Accomplished by the command <code>gmake clean</code>.
+Removes all generated working files. What is left will be suitable for checking
+into a source control system.</li>
+<li><code>distclean</code> -- Accomplished by the command <code>gmake
+distclean</code>. Removes all generated working files <i>and</i> removes
+Alire's crate download and build caches.</li>
+</ul>
+<p><i>Note: <code>make</code> is often a synonym (symbolic link, shell alias,
+etc.) for <code>gmake</code> on Linux machines, meaning that <code>make
+build</code> behaves exactly the same as <code>gmake build</code>.</i></p>
+<h1>Visual Studio Code</h1>
+<p>An Alire project directory created by <code>alr get
+munts_rp2040_firmware_embedded</code> will include an optional but useful
+<code>.vscode/tasks.json</code> (also available at <a href=
+"https://github.com/pmunts/alire-goodies">https://github.com/pmunts/alire-goodies</a>)
+which provides some build tasks for <a href=
+"https://code.visualstudio.com">Visual Studio Code</a>.</p>
+<p>You can invoke a Visual Studio build task from the application menu
+<code>Terminal =&gt; Run Task...</code> or <code>Terminal =&gt; Run Build
+Task...</code></p>
+<p>The most straightforward way to build <i>and</i> install RP2040 firmware
+from within Visual Studio Code is to simply press <b>CONTROL + SHIFT + B</b>.
+This key code invokes the default build task which executes the command
+<code>make clean build</code> which executes the command <code>alr build</code>
+which executes script <code>postbuild.sh</code>.</p>
+<h1>Examples</h1>
+<h2>Command line</h2>
+<pre>
+alr -n get munts_rp2040_firmware_embedded
+alire-rename munts_rp2040_firmware_embedded_2.24820.1_45796fc8 myfirmware  # optional
+cd myfirmware
+alr -n with munts_rp2040_lib_embedded  # optional
+alr build
+</pre>
+<h2>Visual Studio Code</h2>
+<pre>
+alr -n get munts_rp2040_firmware_embedded
+alire-rename munts_rp2040_firmware_embedded_2.24820.1_45796fc8 myfirmware  # optional
+cd myfirmware
+alr -n with munts_rp2040_lib_embedded  # optional
+code .
+</pre>
+<p><i>Note: The Alire project rename script <code>alire-rename</code> is
+available at <a href=
+"https://github.com/pmunts/alire-goodies">https://github.com/pmunts/alire-goodies</a>.</i></p>
