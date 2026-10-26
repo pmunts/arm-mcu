@@ -26,7 +26,6 @@ directory = "."
 type = "post-build"
 [[depends-on]]
 embedded_rp2040 = "^16"
-rp2040_hal = "^2"
-
-[[depends-on]]
+gnat_arm_elf = "^16"
 munts_rp2040_lib_embedded = "^16"
+rp2040_hal = "^2"
