@@ -1,4 +1,6 @@
-# Copyright (C)2025-2026, Philip Munts.
+# Build an Alire crate containing Phil's RP2040 Microcontroller Firmware Template
+
+# Copyright (C)2026, Philip Munts.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -18,12 +20,12 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-ALIRE		?= $(HOME)/src/alire
+ALIRE		?= $(shell pwd)/..
 
 REVISION	?= $(shell svn log -l 1 . | awk '/svn/ { print substr($$1, 2) }' | head -n 1)
 BUILDNUM	?= 1
 
-CRATE_NAME	:= munts_rp2040_lib_embedded
+CRATE_NAME	:= munts_rp2040_firmware_embedded
 CRATE_VERSION	:= 16.$(REVISION).$(BUILDNUM)
 
 default: populate.done
@@ -33,7 +35,11 @@ include $(ALIRE)/alire.mk
 # Populate the library crate workspace directory
 
 populate.done: alire_mk_init_lib
-	cp -R -P -p $(ARMSRC)/alire/packages/*	$(CRATE_DIR)/src
+	install -cm 0644 Makefile.firmware	$(CRATE_DIR)/Makefile
+	install -cm 0755 post*			$(CRATE_DIR)
+	install -cm 0644 *.adb			$(CRATE_DIR)/src
+	mkdir -p				$(CRATE_DIR)/.vscode
+	install -cm 0644 tasks.json		$(CRATE_DIR)/.vscode
 
 populate: populate.done
 
