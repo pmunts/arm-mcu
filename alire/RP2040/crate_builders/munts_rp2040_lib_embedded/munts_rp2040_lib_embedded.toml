@@ -7,7 +7,41 @@ maintainers = ["Philip Munts <phil@munts.net>"]
 maintainers-logins = ["pmunts"]
 licenses = "BSD-1-Clause"
 
-tags = ["gpio", "microcontroller", "rp2040"]
+long-description = """
+# Introduction
+
+This crate provides an object oriented I/O library for the [RP2040 ARM
+32-bit microcontroller](https://www.raspberrypi.com/products/rp2040),
+layered upon the [GNAT Predefined Embedded
+Runtime](https://docs.adacore.com/gnat_ugx-docs/html/gnat_ugx/gnat_ugx/gnat_runtimes.html#embedded-run-time)
+implemented by the
+[`embedded_rp2040`](https://alire.ada.dev/crates/embedded_rp2040.html)
+and [`rp2040_hal`](https://alire.ada.dev/crates/rp2040_hal.html) crates
+and their dependencies. It is intended to be a optional but very useful
+add-on to the
+[munts_rp2040_firmware_embedded](https://alire.ada.dev/crates/munts_rp2040_firmware_embedded.html)
+firmware image builder crate.
+
+# Usage Example
+
+    alire-rp2040-embedded-newproject myfirmware
+    cd myfirmware
+    alr -n with munts_rp2040_lib_embedded
+    alr build
+
+The project creator shell script `alire-rp2040-embedded-newproject` and
+its subordinate project renaming shell script `alire-rename` are
+available at:  
+<https://github.com/pmunts/alire-goodies>.
+
+These scripts are also provided by the `alire-goodies` Debian package
+available at:  
+<https://repo.munts.com/debian13/all>.
+"""
+
+tags = ["embedded", "microcontroller", "RP2040", "adc", "dac", "gpio", "hid",
+"i2c", "motor", "pwm", "sensor", "serial", "servo", "spi", "stepper",
+"watchdog"]
 
 project-files = ["munts_rp2040_lib_embedded.gpr"]
 

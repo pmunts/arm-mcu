@@ -1,0 +1,29 @@
+<h1>Introduction</h1>
+<p>This crate provides an object oriented I/O library for the <a href=
+"https://www.raspberrypi.com/products/rp2040">RP2040 ARM 32-bit
+microcontroller</a>, layered upon the <a href=
+"https://docs.adacore.com/gnat_ugx-docs/html/gnat_ugx/gnat_ugx/gnat_runtimes.html#embedded-run-time">
+GNAT Predefined Embedded Runtime</a> implemented by the <a href=
+"https://alire.ada.dev/crates/embedded_rp2040.html"><code>embedded_rp2040</code></a>
+and <a href=
+"https://alire.ada.dev/crates/rp2040_hal.html"><code>rp2040_hal</code></a>
+crates and their dependencies. It is intended to be a optional but very useful
+add-on to the <a href=
+"https://alire.ada.dev/crates/munts_rp2040_firmware_embedded.html">munts_rp2040_firmware_embedded</a>
+firmware image builder crate.</p>
+<h1>Usage Example</h1>
+<pre>
+alire-rp2040-embedded-newproject myfirmware
+cd myfirmware
+alr -n with munts_rp2040_lib_embedded
+alr build
+</pre>
+<p>The project creator shell script
+<code>alire-rp2040-embedded-newproject</code> and its subordinate project
+renaming shell script <code>alire-rename</code> are available at:<br>
+<a href=
+"https://github.com/pmunts/alire-goodies">https://github.com/pmunts/alire-goodies</a>.</p>
+<p>These scripts are also provided by the <code>alire-goodies</code> Debian
+package available at:<br>
+<a href=
+"https://repo.munts.com/debian13/all">https://repo.munts.com/debian13/all</a>.</p>
