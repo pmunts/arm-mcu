@@ -35,14 +35,14 @@ CRATE_DESCR	:= $(shell awk '/^description/ { printf(substr($$0, 16, length($$0)-
 CRATE_MANIFEST	:= $(CRATE_NAME)-$(CRATE_VERSION).toml
 
 CRATES_URL	:= git@github.com:pmunts/alire-crates.git
-CRATES_CHECKOUT	:= $(HOME)/src/alire/alire-crates
+CRATES_CHECKOUT	:= $(ALIRE)/alire-crates
 
 TARBALL_DIR	:= $(CRATE_NAME)-$(CRATE_VERSION)
 TARBALL_FILE	:= $(CRATE_NAME)-$(CRATE_VERSION).tbz2
 TARBALL_COMMIT	:= $(CRATE_NAME)-$(CRATE_VERSION).commit
 
 INDEX_BRANCH	?= $(shell echo $(CRATE_NAME) | tr a-z A-Z)_$(shell date +%Y_%j)
-INDEX_CHECKOUT	:= $(HOME)/src/alire/alire-index
+INDEX_CHECKOUT	:= $(ALIRE)/alire-index
 INDEX_SUBDIR	:= index/$(shell echo $(CRATE_NAME) | cut -c '1-2')/$(CRATE_NAME)
 
 PUBLISH_OPTIONS	+= --skip-submit
@@ -96,7 +96,7 @@ alire_mk_tarball:
 
 alire_mk_commit:
 	test -d $(CRATES_CHECKOUT) || git clone $(CRATES_URL) $(CRATES_CHECKOUT)
-	cd $(CRATES_CHECKOUT) && git rev-list HEAD $(CRATE_NAME)/$(TARBALL_FILE) | head -n 1 >../$(CRATE_NAME)/$(TARBALL_COMMIT)
+	cd $(CRATES_CHECKOUT) && git rev-list HEAD $(CRATE_NAME)/$(TARBALL_FILE) | head -n 1 >$(ALIRE)/$(CRATE_NAME)/$(TARBALL_COMMIT)
 	rm -rf $(CRATES_CHECKOUT)
 
 # Publish the crate
