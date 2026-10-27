@@ -39,7 +39,7 @@ available at:
 <https://repo.munts.com/debian13/all>.
 """
 
-tags = ["embedded", "microcontroller", "RP2040", "adc", "dac", "gpio", "hid",
+tags = ["embedded", "microcontroller", "rp2040", "adc", "dac", "gpio", "hid",
 "i2c", "motor", "pwm", "sensor", "serial", "servo", "spi", "stepper",
 "watchdog"]
 
