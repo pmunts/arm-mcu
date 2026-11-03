@@ -33,6 +33,9 @@ arduino-cli core update-index
 arduino-cli core install arduino:avr
 arduino-cli core upgrade arduino:avr
 
+arduino-cli core install arduino:renesas_uno
+arduino-cli core upgrade arduino:renesas_uno
+
 arduino-cli core install rp2040:rp2040
 arduino-cli core upgrade rp2040:rp2040
 
