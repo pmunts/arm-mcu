@@ -20,7 +20,7 @@
 
 BOARDNAME	?= NUCLEO_F411RE
 ARDUINOFQBN	:= STMicroelectronics:stm32:$(BOARDFAMILY):pnum=$(BOARDNAME),upload_method=swdMethod
-ARDUINOCORESRC	:= $(ARDUINOPKGSDIR)/STMicroelectronics/hardware/stm32/2.12.0
+ARDUINOCORESRC	:= $(ARDUINOPKGSDIR)/STMicroelectronics/hardware/stm32/3.0.0
 ARDUINOCOREGCC	:= $(ARDUINOPKGSDIR)/STMicroelectronics/tools/xpack-arm-none-eabi-gcc/14.2.1-1.1/bin/arm-none-eabi-gcc
 VSCODE		?= code
 
