@@ -24,8 +24,8 @@ ARDUINOFQBN	:= rp2040:rp2040:$(BOARDNAME):os=freertos
 else
 ARDUINOFQBN	:= rp2040:rp2040:$(BOARDNAME)
 endif
-ARDUINOCORESRC	:= $(ARDUINOPKGSDIR)/rp2040/hardware/rp2040/5.5.0
-ARDUINOCOREGCC	:= $(ARDUINOPKGSDIR)/rp2040/tools/pqt-gcc/4.1.0-1aec55e/bin/arm-none-eabi-gcc
+ARDUINOCORESRC	:= $(ARDUINOPKGSDIR)/rp2040/hardware/rp2040/6.3.2
+ARDUINOCOREGCC	:= $(ARDUINOPKGSDIR)/rp2040/tools/pqt-gcc/5.0.0-9576866/bin/arm-none-eabi-gcc
 ARDUINOPORT	?= COM1
 VSCODE		?= code
 
