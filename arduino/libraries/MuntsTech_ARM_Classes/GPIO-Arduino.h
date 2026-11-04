@@ -66,7 +66,7 @@ namespace MuntsTech::GPIO::Arduino
       assert(mode <= OUTPUT_OPEN_DRAIN);
       this->output = (mode == OUTPUT) || (mode == OUTPUT_OPEN_DRAIN);
 #else
-      assert(node <= INPUT_PULLUP);
+      assert(mode <= INPUT_PULLUP);
       this->output = (mode == OUTPUT);
 #endif
       pinMode(pin, mode);
