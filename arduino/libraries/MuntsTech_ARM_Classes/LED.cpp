@@ -36,12 +36,14 @@ MuntsTech::Interfaces::GPIO::Pin MuntsTech::Factories::LED::Create(bool state)
 #ifdef USERLED
   // Use make defined GPIO user LED (overrides board default user LED)
   return CreateGPIO(USERLED, state);
-#elifdef ENABLE_GROVE_LED_BUTTON_D2
+#elif defined(ENABLE_GROVE_LED_BUTTON_D2)
   // GPIO user LED on D2 (overrides board default user LED)
   return CreateGPIO(D2, state);
-#elifdef ARDUINO_CYTRON_MAKER_NANO_RP2040
+#elif defined(ARDUINO_CYTRON_MAKER_NANO_RP2040)
   // GPIO user LED on GP18 aka D13
   return CreateGPIO(18, state);
+//#elif defined(ARDUINO_NANO_R4) || defined(ARDUINO_MINIMA) || defined(ARDUINO_UNOWIFIR4)
+//  return CreateGPIO(LED_BUILTIN);
 #elif defined(ARDUINO_PIMORONI_TINY2040) || defined(ARDUINO_PIMORONI_TINY2350)
   // Active low GPIO user LED
   return CreateGPIO(LED_BUILTIN, state, true);
@@ -54,7 +56,7 @@ MuntsTech::Interfaces::GPIO::Pin MuntsTech::Factories::LED::Create(bool state)
 #elif defined(ARDUINO_WAVESHARE_RP2040_ZERO) || defined(ARDUINO_WAVESHARE_RP2350_ZERO)
   // NeoPixel user LED
   return CreateNeoPixel(&_LED_NeoPixelChain, 0, state);
-#elifdef LED_BUILTIN
+#elif defined(LED_BUILTIN)
   // Most other boards have an active high GPIO LED, often connected to D13
   return CreateGPIO(LED_BUILTIN, state);
 #else
