@@ -129,6 +129,8 @@
 #elif defined(ARDUINO_ARCH_STM32)
 #include <STM32FreeRTOS.h>
 #elif defined(ARDUINO_ARCH_RENESAS_UNO)
+// The core package disables time slicing for some reason--override it!
+#define configUSE_TIME_SLICING 1
 #include <Arduino_FreeRTOS.h>
 #endif
 #endif
