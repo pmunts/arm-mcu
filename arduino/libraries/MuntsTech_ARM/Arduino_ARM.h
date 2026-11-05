@@ -100,6 +100,24 @@
 #endif
 #endif
 
+#if defined(ARDUINO_MINIMA) || defined(ARDUINO_UNOWIFIR4)
+// The following are not defined in pins_arduino.h for some reason
+#define D16	A2
+#define D17	A3
+#define D18	A4
+#define D19	A5
+#endif
+
+#ifdef ARDUINO_NANO_R4
+// The following are not defined in pins_arduino.h for some reason
+#define D16	A2
+#define D17	A3
+#define D18	A4
+#define D19	A5
+#define D20	A6
+#define D21	A7
+#endif
+
 // Enable FreeRTOS
 
 #ifdef ENABLE_FREERTOS
