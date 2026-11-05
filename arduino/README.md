@@ -37,14 +37,15 @@ board family `gmake` include file selected by the `BOARDFAMILY` macro.
 
 ## Supported Board Families
 
-| `BOARDFAMILY` Value | Description                                                                                                                                                                 | Core Package                                                   | Default `BOARDNAME`       |
-|---------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------|---------------------------|
-| `RP2040`            | [Raspberry Pi RP2040](https://www.raspberrypi.com/products/rp2040/) boards                                                                                                  | [Arduino-Pico](https://github.com/earlephilhower/arduino-pico) | `sparkfun_promicrorp2040` |
-| `RP2350`            | [Raspberry Pi RP2350](https://www.raspberrypi.com/products/rp2350/) boards                                                                                                  | [Arduino-Pico](https://github.com/earlephilhower/arduino-pico) | `sparkfun_promicrorp2350` |
-| `Disco`             | [STMicroelectronics Discovery](https://www.st.com/en/evaluation-tools/stm32-discovery-kits.html) evaluation boards                                                          | [STM32Duino](https://github.com/stm32duino)                    | `DISCO_F407VG`            |
-| `Nucleo_32`         | [STMicroelectronics Nucleo-32](https://www.st.com/en/evaluation-tools/stm32-nucleo-boards/products.html?querycriteria=productId=LN1847$$1574=Nucleo-32) evaluation boards   | [STM32Duino](https://github.com/stm32duino)                    | `NUCLEO_L432KC`           |
-| `Nucleo_64`         | [STMicroelectronics Nucleo-64](https://www.st.com/en/evaluation-tools/stm32-nucleo-boards/products.html?querycriteria=productId=LN1847$$1574=Nucleo-64) evaluation boards   | [STM32Duino](https://github.com/stm32duino)                    | `NUCLEO_F411RE`           |
-| `Nucleo_144`        | [STMicroelectronics Nucleo-144](https://www.st.com/en/evaluation-tools/stm32-nucleo-boards/products.html?querycriteria=productId=LN1847$$1574=Nucleo-144) evaluation boards | [STM32Duino](https://github.com/stm32duino)                    | `NUCLEO_F767ZI`           |
+| `BOARDFAMILY` Value | Description                                                                                                                                                                 | Core Package                                                          | Default `BOARDNAME`       |
+|---------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------|---------------------------|
+| `RA4M1`             | [Renesas RA4M1](https://www.renesas.com/en/products/ra4m1) boards                                                                                                           | [ArduinoCore-renesas](https://github.com/arduino/ArduinoCore-renesas) | `nanor4`                  |
+| `RP2040`            | [Raspberry Pi RP2040](https://www.raspberrypi.com/products/rp2040/) boards                                                                                                  | [Arduino-Pico](https://github.com/earlephilhower/arduino-pico)        | `sparkfun_promicrorp2040` |
+| `RP2350`            | [Raspberry Pi RP2350](https://www.raspberrypi.com/products/rp2350/) boards                                                                                                  | [Arduino-Pico](https://github.com/earlephilhower/arduino-pico)        | `sparkfun_promicrorp2350` |
+| `Disco`             | [STMicroelectronics Discovery](https://www.st.com/en/evaluation-tools/stm32-discovery-kits.html) evaluation boards                                                          | [STM32Duino](https://github.com/stm32duino/Arduino_Core_STM32)        | `DISCO_F407VG`            |
+| `Nucleo_32`         | [STMicroelectronics Nucleo-32](https://www.st.com/en/evaluation-tools/stm32-nucleo-boards/products.html?querycriteria=productId=LN1847$$1574=Nucleo-32) evaluation boards   | [STM32Duino](https://github.com/stm32duino/Arduino_Core_STM32)        | `NUCLEO_L432KC`           |
+| `Nucleo_64`         | [STMicroelectronics Nucleo-64](https://www.st.com/en/evaluation-tools/stm32-nucleo-boards/products.html?querycriteria=productId=LN1847$$1574=Nucleo-64) evaluation boards   | [STM32Duino](https://github.com/stm32duino/Arduino_Core_STM32)        | `NUCLEO_F411RE`           |
+| `Nucleo_144`        | [STMicroelectronics Nucleo-144](https://www.st.com/en/evaluation-tools/stm32-nucleo-boards/products.html?querycriteria=productId=LN1847$$1574=Nucleo-144) evaluation boards | [STM32Duino](https://github.com/stm32duino/Arduino_Core_STM32)        | `NUCLEO_F767ZI`           |
 
 This is a small subset of the vast variety of 32-bit ARM
 microcontrollers supported by the Arduino ecosystem, and limited to the
@@ -89,8 +90,13 @@ The exact target board is selected by two `gmake` macros: `BOARDFAMILY`
 and `BOARDNAME`. Both of these can and should be initialized by
 environment variables before invoking `gmake`.
 
-For the RP2040 and RP2350 board families, the Arduino FQBN (Fully
-Qualified Board Name) shall be defined as:
+For the RA4M1 board family, the Arduino FQBN (Fully Qualified Board
+Name) passed to `arduino-cli` shall be defined as:
+
+    ARDUINOFQBN := arduino:renesas_uno:$(BOARDNAME)
+
+For the RP2040 and RP2350 board families, the Arduino FQBN passed to
+`arduino-cli` shall be defined as:
 
     ARDUINOFQBN := rp2040:rp2040:$(BOARDNAME)
 
@@ -203,11 +209,50 @@ the world by developers across industries ranging from hobbyists to
 To enable FreeRTOS, just add `#define ENABLE_FREERTOS` before
 `#include <Arduino_ARM.h>`.
 
+## RA4M1
+
+The
+[ArduinoCore-renesas](https://github.com/arduino/ArduinoCore-renesas%3EArduinoCore-renesas)
+Arduino core package for single core RA4M1 microcontrollers includes a
+FreeRTOS library. Since it is delivered as a library, it is not
+integrated as tightly with the core package as FreeRTOS for the
+RP2040/RP2350 below. FreeRTOS applications are implemented exactly the
+same as with any other GCC C or C++ framework, albeit with the FreeRTOS
+setup code moved from `main()` to `setup()`. The following minimal
+sketch skeleton illustrates how create an RA4M1 Arduino FreeRTOS
+application:
+
+    #define ENABLE_FREERTOS
+
+    #include <Arduino_ARM.h>
+
+    void Task0(void *parameters)
+    {
+      for (;;)
+      {
+        taskYIELD();
+      }
+    }
+
+    void setup()
+    {
+      xTaskCreate(Task0, "main", 512, NULL, 1, NULL);
+      vTaskStartScheduler();
+    }
+
+    void loop()
+    {
+    }
+
+Your `setup()` function must call `xTaskCreate()` to create at least one
+FreeRTOS task and then call `vTaskStartScheduler()` which does not
+return and replaces all of the normal Arduino background processing.
+
 ## RP2040/RP2350
 
-The [Arduino-Pico](https://github.com/earlephilhower/arduino-pico) core
-package for RP2040 and RP2350 microcontrollers includes a tightly
-integrated implementation of [FreeRTOS
+The [Arduino-Pico](https://github.com/earlephilhower/arduino-pico)
+Arduino core package for dual core RP2040 and RP2350 microcontrollers
+includes a tightly integrated implementation of [FreeRTOS
 SMP](https://www.freertos.org/Documentation/02-Kernel/02-Kernel-features/13-Symmetric-multiprocessing-introduction)
 (Symmetric Multi-Processing). The following minimal sketch skeleton
 illustrates how to create a multicore RP2040 or RP2350 Arduino FreeRTOS
@@ -279,13 +324,14 @@ successfully run
 [`test_button_led_freertos`](programs/test_button_led_freertos).*
 
 The [STM32FreeRTOS](https://github.com/stm32duino/STM32FreeRTOS) Arduino
-library provides FreeRTOS support for STM32 microcontrollers. Since it
-is delivered as a library, it is not integrated as tightly with the
-STM32 core package, and FreeRTOS applications for Arduino are
-implemented exactly the same as with any other GCC C or C++ framework,
-albeit with the FreeRTOS setup code moved from `main()` to `setup()`.
-The following minimal sketch skeleton illustrates how create an STM32
-Arduino FreeRTOS application:
+library provides FreeRTOS support for single core STM32
+microcontrollers. Since it is delivered as a separate library, it is not
+integrated as tightly with the core package as FreeRTOS for the
+RP2040/RP2350 above. FreeRTOS applications are implemented exactly the
+same as with any other GCC C or C++ framework, albeit with the FreeRTOS
+setup code moved from `main()` to `setup()`. The following minimal
+sketch skeleton illustrates how create an STM32 Arduino FreeRTOS
+application:
 
     #define ENABLE_FREERTOS
 
