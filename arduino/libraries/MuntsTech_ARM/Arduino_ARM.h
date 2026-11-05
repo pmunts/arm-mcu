@@ -128,6 +128,8 @@
 #define vTaskStartScheduler()
 #elif defined(ARDUINO_ARCH_STM32)
 #include <STM32FreeRTOS.h>
+#elif defined(ARDUINO_ARCH_RENESAS_UNO)
+#include <Arduino_FreeRTOS.h>
 #endif
 #endif
 
