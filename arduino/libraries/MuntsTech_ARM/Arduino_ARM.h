@@ -126,7 +126,7 @@
 // The Arduino-Pico core main() calls vTaskStartScheduler(), so redefine it
 // as an empty macro to prevent application code from calling it again.
 #define vTaskStartScheduler()
-#elifdef ARDUINO_ARCH_STM32
+#elif defined(ARDUINO_ARCH_STM32)
 #include <STM32FreeRTOS.h>
 #endif
 #endif

@@ -62,7 +62,7 @@ namespace MuntsTech::GPIO::Arduino
 #ifdef ARDUINO_ARCH_RP2040
       assert(mode <= OUTPUT_12MA);
       this->output = (mode == OUTPUT) || ((mode >= OUTPUT_OPENDRAIN) && (mode <= OUTPUT_12MA));
-#elifdef ARDUINO_ARCH_STM32
+#elif defined(ARDUINO_ARCH_STM32)
       assert(mode <= OUTPUT_OPEN_DRAIN);
       this->output = (mode == OUTPUT) || (mode == OUTPUT_OPEN_DRAIN);
 #else

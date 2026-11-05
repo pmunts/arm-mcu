@@ -37,16 +37,16 @@ namespace MuntsTech::MUNTS_0021::Motors
   const unsigned DIRD = 6;
   #ifdef ARDUINO_SEEED_XIAO_RP2040
     const unsigned PWMD = 29;
-  #elifdef ARDUINO_SEEED_XIAO_RP2350
+  #elif defined(ARDUINO_SEEED_XIAO_RP2350)
     const unsigned PWMD = 5;
   #else
     #error Unknown MCU module.
   #endif
-#elifdef MUNTS_0021_REV3
+#elif defined(MUNTS_0021_REV3)
   const unsigned DIRA = 6;
   #ifdef ARDUINO_SEEED_XIAO_RP2040
     const unsigned PWMA = 29;
-  #elifdef ARDUINO_SEEED_XIAO_RP2350
+  #elif defined(ARDUINO_SEEED_XIAO_RP2350)
     const unsigned PWMA = 5;
   #else
     #error Unknown MCU module.

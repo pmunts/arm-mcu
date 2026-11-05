@@ -28,19 +28,19 @@ MuntsTech::Interfaces::GPIO::Pin MuntsTech::Factories::ButtonSwitch::Create(void
 #if defined(USERBUTTON_PIN) && defined(USERBUTTON_MODE) && defined(USERBUTTON_ACTIVELOW)
   // Make macro defined user button switch
   return Create(USERBUTTON_PIN, USERBUTTON_MODE, USERBUTTON_ACTIVELOW);
-#elifdef ENABLE_GROVE_LED_BUTTON_D2
+#elif defined(ENABLE_GROVE_LED_BUTTON_D2)
   // Active low button switch on D3
   return Create(D3, INPUT, true);
-#elifdef ARDUINO_CYTRON_MAKER_NANO_RP2040
+#elif defined(ARDUINO_CYTRON_MAKER_NANO_RP2040)
   // Active low button switch on GP20
   return Create(20, INPUT, true);
-#elifdef ARDUINO_DISCO_F407VG
+#elif defined(ARDUINO_DISCO_F407VG)
   // STM32F4-Discovery has an on-board active high button switch.
   return Create(USER_BTN, INPUT, false);
-#elifdef ARDUINO_NUCLEO_64
+#elif defined(ARDUINO_NUCLEO_64)
   // Nucleo-64 boards have an on-board active low button switch.
   return Create(USER_BTN, INPUT, true);
-#elifdef ARDUINO_NUCLEO_144
+#elif defined(ARDUINO_NUCLEO_144)
   // Nucleo-144 boards have an on-board active high button switch.
   return Create(USER_BTN, INPUT, false);
 #else

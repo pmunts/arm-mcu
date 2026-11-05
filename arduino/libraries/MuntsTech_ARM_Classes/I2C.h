@@ -36,7 +36,7 @@
 // I2C bus on GP0  and GP1  (Maker Port aka QWIIC socket 0)
 #define I2C_SDA_PIN 0
 #define I2C_SCL_PIN 1
-#elifdef I2C_MAKER1
+#elif defined(I2C_MAKER1)
 // I2C bus on GP26 and GP27 (Maker Port aka QWIIC socket 1)
 #define I2C_SDA_PIN 26
 #define I2C_SCL_PIN 27
@@ -46,15 +46,15 @@
 #define I2C_SDA_PIN 12
 #define I2C_SCL_PIN 13
 #endif
-#elifdef ARDUINO_PIMORONI_TINY2350
+#elif defined(ARDUINO_PIMORONI_TINY2350)
 // I2C bus on GP12 and GP13 (QWIIC socket)
 #define I2C_SDA_PIN 12
 #define I2C_SCL_PIN 13
-#elifdef ARDUINO_SPARKFUN_PROMICRO_RP2040
+#elif defined(ARDUINO_SPARKFUN_PROMICRO_RP2040)
 // I2C bus on GPIO16 and GPIO17 (QWIIC socket)
 #define I2C_SDA_PIN 16
 #define I2C_SCL_PIN 17
-#elifdef ARDUINO_SPARKFUN_PROMICRO_RP2350
+#elif defined(ARDUINO_SPARKFUN_PROMICRO_RP2350)
 // I2C bus on GPIO16 and GPIO17 (QWIIC socket)
 #define I2C_SDA_PIN 16
 #define I2C_SCL_PIN 17
