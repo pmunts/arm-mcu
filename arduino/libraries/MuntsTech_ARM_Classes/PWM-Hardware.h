@@ -21,9 +21,11 @@
 #ifndef _PWM_HARDWARE_H
 #define _PWM_HARDWARE_H
 
-#ifdef ARDUINO_ARCH_RP2040
+#ifdef   ARDUINO_ARCH_RENESAS_UNO
+#include <RA4M1HardwarePWM.h>
+#elif defined(ARDUINO_ARCH_RP2040)
 #include <RP2040HardwarePWM.h>
-#elifdef ARDUINO_ARCH_STM32
+#elif defined(ARDUINO_ARCH_STM32)
 #include <STM32HardwarePWM.h>
 #else
 #error Unsupported architecture.
