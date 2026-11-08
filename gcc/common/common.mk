@@ -1,6 +1,6 @@
 # Common library make definitions
 
-# Copyright (C)2013-2018, Philip Munts, President, Munts AM Corp.
+# Copyright (C)2013-2026, Philip Munts, President, Munts AM Corp.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -28,7 +28,6 @@ COMMON_OBJS	+= $(COMMON_DIR)/device.o
 COMMON_OBJS	+= $(COMMON_DIR)/inet.o
 COMMON_OBJS	+= $(COMMON_DIR)/leds.o
 COMMON_OBJS	+= $(COMMON_DIR)/lib_crc.o
-COMMON_OBJS	+= $(COMMON_DIR)/liblinx.o
 COMMON_OBJS	+= $(COMMON_DIR)/libstream.o
 COMMON_OBJS	+= $(COMMON_DIR)/msrand32.o
 COMMON_OBJS	+= $(COMMON_DIR)/semihosting.o
