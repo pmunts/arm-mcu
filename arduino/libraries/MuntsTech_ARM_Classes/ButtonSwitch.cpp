@@ -35,13 +35,16 @@ MuntsTech::Interfaces::GPIO::Pin MuntsTech::Factories::ButtonSwitch::Create(void
   // Active low button switch on GP20
   return Create(20, INPUT, true);
 #elif defined(ARDUINO_DISCO_F407VG)
-  // STM32F4-Discovery has an on-board active high button switch.
+  // STM32F4-Discovery has an active high on-board button switch.
+  return Create(USER_BTN, INPUT, false);
+#elif defined(ARDUINO_NUCLEO_H533RE)
+  // NUCLEO_H533RE board has an active high on-board button switch.
   return Create(USER_BTN, INPUT, false);
 #elif defined(ARDUINO_NUCLEO_64)
-  // Nucleo-64 boards have an on-board active low button switch.
+  // Nucleo-64 boards have an active low on-board button switch.
   return Create(USER_BTN, INPUT, true);
 #elif defined(ARDUINO_NUCLEO_144)
-  // Nucleo-144 boards have an on-board active high button switch.
+  // Nucleo-144 boards have an active high on-board button switch.
   return Create(USER_BTN, INPUT, false);
 #else
   // External active low button switch on D3
